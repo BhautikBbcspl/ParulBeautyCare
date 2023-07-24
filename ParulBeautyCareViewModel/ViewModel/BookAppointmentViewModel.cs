@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace ParulBeautyCare.ViewModel
+namespace ParulBeautyCareViewModel.ViewModel
 {
     public class BookAppointmentViewModel
     {

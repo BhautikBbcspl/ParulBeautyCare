@@ -17,6 +17,10 @@ namespace ParulBeautyCare.Controllers
             ViewBag.list = list;
             return View(em);
         }
-    
+        public ActionResult BookAppointment()
+        {
+            return View();
+        }
+
     }
 }
