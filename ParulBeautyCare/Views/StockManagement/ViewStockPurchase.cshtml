@@ -1,0 +1,118 @@
+﻿@model ParulBeautyCareViewModel.ViewModel.StockMgmtViewModel.StockPurchaseViewModel
+@{
+    ViewBag.Title = "Stock Purchase";
+    ViewBag.Module = "Stock Management"; 
+    }
+
+<div class="content-wrapper">
+    <div class="card">
+        @*<div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+            <div class="bg-gradient-pinkHeader shadow-primary border-radius-lg pt-4 pb-3  ">
+                <h2 class="text-white text-capitalize ps-3"><b>STOCK PURCHASE </b></h2>
+                <a class="btn btn-sm btn-outline-primary btn-round mb-3" href="@Url.Action("AddStockPurchase","StockManagement")">
+                    <i class="fa fa-plus mx-2 "></i>Add
+                </a>
+            </div>
+        </div>*@
+        <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+            <div class="bg-gradient-pinkHeader shadow-primary border-radius-lg pt-4 d-flex justify-content-between">
+                <h2 class="text-white text-capitalize ps-3 title_margin"><b>STOCK PURCHASE</b></h2>
+                <a class="btn btn-light btn-rounded btn-icon mb-2 mx-2 title_a"  href="@Url.Action("AddStockPurchase","StockManagement")">
+                    <i class="fa fa-plus mx-2 text-black"></i>
+                </a>
+                
+            </div>
+        </div>
+        <div class="card-body">
+
+            @*<div class="row">
+                <div class="d-xl-flex justify-content-end align-items-end">
+                    <a class="btn btn-sm btn-outline-primary btn-round mb-3" href="@Url.Action("AddStockPurchase","StockManagement")">
+                        <i class="fa fa-plus mx-2 "></i>Add
+                    </a>
+                </div>
+            </div>*@
+            <div class="row">
+                <div class="col-12">
+                    <div class="table-responsive">
+                        <table id="base-style" class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        @Html.DisplayName("Action")
+                                    </th>
+                                    <th>
+                                        @Html.DisplayName("Department Name")
+                                    </th>
+                                    <th>
+                                        @Html.DisplayName("Product Name")
+                                    </th>
+                                    <th>
+                                        @Html.DisplayName("Product Type")
+                                    </th>
+                                    <th>
+                                        @Html.DisplayName("Quantity")
+                                    </th>
+                                    <th>
+                                        @Html.DisplayName("Purchase Date")
+                                    </th>
+                                    <th>
+                                        @Html.DisplayName("Manufacturing Date")
+                                    </th>
+                                    <th>
+                                        @Html.DisplayName("Expiry Date")
+                                    </th>
+                                    <th>
+                                        @Html.DisplayName("Vender")
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.StockPurchaseList)
+                                {
+                                    <tr>
+                                        <td>
+                                            @if (ViewBag.UpdateRight == 1)
+                                            {
+                                                <a href="@Url.Action("EditStockPurchase","StockManagement",new { purchaseid = item.PurchaseId })" class="mx-3"><i class="fa fa-pencil"></i></a>
+                                            }
+                                            else
+                                            {
+                                                <img src="~/Images/edit_dis_2.png" />
+                                            }
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.DepartmentName)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.ProductName)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.ProductTName)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Quantity)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.pDate)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.manufactureDate)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.expiryDate)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Vendor)
+                                        </td>
+                                    </tr>
+                                }
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

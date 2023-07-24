@@ -1,0 +1,78 @@
+﻿@model ParulBeautyCareViewModel.ViewModel.PageModuleViewModel
+@{
+    ViewBag.Title = "Page Module Master";
+    ViewBag.Module = "User Management";
+}
+<script src="~/Content/assets/vendors/jquery-validation/jquery.validate.min.js"></script>
+<div class="content-wrapper">
+    <div class="row">
+        <div class="col-12 grid-margin">
+            <div class="card">
+                <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+                    <div class="bg-gradient-pinkHeader shadow-primary border-radius-lg pt-4 d-flex justify-content-between">
+                        <h2 class="text-white text-capitalize ps-3 title_margin"><b>Page Module Master</b></h2>
+                        <a class="btn btn-light btn-rounded btn-icon mb-2 mx-2 title_a" href="@Url.Action("ViewPageModuleMaster","UserManagement")">
+                            <i class="fa-solid fa-list-check mx-2 text-black"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="card-body">
+                    @*<div class="row">
+                <div class="d-xl-flex justify-content-between align-items-center">
+                    <h1 class="pink"><b>@ViewBag.action Page Module Master </b></h1>
+                    <a class="btn btn-sm btn-outline-primary btn-round mb-3" href="@Url.Action("ViewPageModuleMaster","UserManagement")">
+                        <i class="fa fa-eye mx-2"></i>View
+                    </a>
+                </div>
+            </div>*@
+                    @using (Html.BeginForm("AddPageModuleMaster", "UserManagement", FormMethod.Post, new { @class = "forms-sample" }))
+                    {
+                        @Html.HiddenFor(m => m.Action)
+                        @Html.AntiForgeryToken()
+                        <div class="row form-group">
+                            <div class="col-sm-3">
+                                <label class="col-form-label">
+                                    Module
+                                    @Html.ValidationMessageFor(m => m.ModuleId, "", new { @class = "text-danger h3" })
+                                </label>
+
+                                <div class="input-group input-group-outline mb-3">
+                                    @Html.DropDownListFor(m => m.ModuleId, new SelectList(Model.ModulesList.OrderBy(m => m.ModuleName), "ModuleId", "ModuleName"), "Select Module",
+                                               new Dictionary<string, object>() {
+                                                   {"id","ddlModuleId"},
+                                                   { "class","form-control form-select js-example-basic-single  w-100"}
+                                                   })
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <label class="col-form-label">
+                                    Page
+                                    @Html.ValidationMessageFor(m => m.PageId, "", new { @class = "text-danger h3" })
+                                </label>
+
+                                <div class="input-group input-group-outline mb-3">
+                                    @Html.DropDownListFor(m => m.PageId, new SelectList(Model.PagesList.OrderBy(m => m.PageName), "PageId", "PageName"), "Select Page",
+                                               new Dictionary<string, object>() {
+                                                   {"id","ddlPageId"},
+                                                   { "class","form-control form-select js-example-basic-single  w-100"}
+                                                   })
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <label class="col-form-label">IsActive</label>
+                                <div class="input-group input-group-outline mb-3">
+                                    @Html.DropDownListFor(x => x.IsActive, new List<SelectListItem>
+                                           {
+                                               new SelectListItem{ Text="Enable", Value = "true",Selected=true },
+                                               new SelectListItem{ Text="Disable", Value = "false" }
+                                            }, new { @class = "form-control form-select js-example-basic-single  w-100", @id = "IsActive" })
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary mr-2 mt-3" onclick="return formSubmit('Are You sure you want to save data?')">Submit</button>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

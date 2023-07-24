@@ -1,0 +1,109 @@
+﻿@model IEnumerable<ParulBeautyCareDbClasses.DataModels.PBInteRoleModuleRtr_Result>
+@{
+    ViewBag.Title = "Role Module Master";
+    ViewBag.Module = "User Management";
+}
+
+    <div class="col-lg-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+                <div class="bg-gradient-pinkHeader shadow-primary border-radius-lg pt-4 d-flex justify-content-between">
+                    <h2 class="text-white text-capitalize ps-3 title_margin"><b>Role Module Master</b></h2>
+                    <a class="btn btn-light btn-rounded btn-icon mb-2 mx-2 title_a" href="@Url.Action("AddRoleModuleMaster","UserManagement")">
+                        <i class="fa fa-plus mx-2 text-black"></i>
+                    </a>
+
+                </div>
+            </div>
+            <div class="card-body">
+                @*<div class="row">
+                <div class="d-xl-flex justify-content-between align-items-center">
+                    <h1 class="pink"><b>Role Module Master</b></h1>
+                    <a class="btn btn-sm btn-outline-primary btn-round mb-3" href="@Url.Action("AddRoleModuleMaster","UserManagement")">
+                        <i class="fa fa-plus mx-2 "></i>Add
+                    </a>
+                </div>
+            </div>*@
+                <div class="table-responsive">
+                    <table id="base-style" class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>
+                                    @Html.DisplayName("Role Name")
+                                </th>
+                                <th>
+                                    @Html.DisplayName("Module Name")
+                                </th>
+                                <th>
+                                    @Html.DisplayName("Page Name")
+                                </th>
+                                <th>
+                                    @Html.DisplayName("View Right")
+                                </th>
+                                <th>
+                                    @Html.DisplayName("Insert Right")
+                                </th>
+                                <th>
+                                    @Html.DisplayName("Update Right")
+                                </th>
+                                <th>
+                                    @Html.DisplayName("Delete Right")
+                                </th>
+                                <th>
+                                    @Html.DisplayName("IsActive")
+                                </th>
+                                <th>
+                                    @Html.DisplayName("Create Date")
+                                </th>
+                                <th>
+                                    @Html.DisplayName("Create User")
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.RoleName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.ModuleName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.PageName)
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" disabled="disabled" @(item.ViewRight == 1 ? "checked" : "")>
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" disabled="disabled" @(item.InsertRight == 1 ? "checked" : "")>
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" disabled="disabled" @(item.UpdateRight == 1 ? "checked" : "")>
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" disabled="disabled" @(item.DeleteRight == 1 ? "checked" : "")>
+                                    </td>
+                                    <td>
+                                        @*<label class="toggle">
+            <input class="toggle-checkbox" type="checkbox" onclick='ActiveDeactiveStatusChange(this, "@item.InteId", "InteRoleModule")' @(item.IsActive == true ? "checked" : "")>
+            <span class="toggle-switch"></span>
+        </label>*@
+
+                                        <div class="button r" id="button-2">
+                                            <input type="checkbox" class="checkbox" onclick='ActiveDeactiveStatusChange(this, "@item.InteId", "InteRoleModule")' @(item.IsActive == true ? "checked" : "")>
+                                            <div class="knobs"></div>
+                                            <div class="layer"></div>
+                                        </div>
+                                    </td>
+                                    <td> @Html.DisplayFor(modelItem => item.cdate)</td>
+                                    <td> @Html.DisplayFor(modelItem => item.CreateUser)</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>

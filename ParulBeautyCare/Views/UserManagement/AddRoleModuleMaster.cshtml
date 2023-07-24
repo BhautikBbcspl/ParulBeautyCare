@@ -1,0 +1,177 @@
+﻿@model ParulBeautyCareViewModel.ViewModel.RoleModuleViewModel
+@{
+    ViewBag.Title = "Role Module Master";
+    ViewBag.Module = "User Management";
+}
+
+<div class="content-wrapper">
+    <div class="row">
+        <div class="col-12 grid-margin">
+            <div class="card">
+                <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+                    <div class="bg-gradient-pinkHeader shadow-primary border-radius-lg pt-4 d-flex justify-content-between">
+                        <h2 class="text-white text-capitalize ps-3 title_margin"><b>Role Module Master</b></h2>
+                        <a class="btn btn-light btn-rounded btn-icon mb-2 mx-2 title_a" href="@Url.Action("ViewPageMaster","UserManagement")">
+                            <i class="fa-solid fa-list-check mx-2 text-black"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="card-body">
+                    @*<div class="row">
+                    <div class="d-xl-flex justify-content-between align-items-center">
+                        <h1 class="pink"><b>@ViewBag.action Role Module Master </b></h1>
+                        <a class="btn btn-outline-primary btn-round" href="@Url.Action("ViewPageMaster","UserManagement")">
+                <i class="fa fa-eye mx-2"></i>View Pages
+            </a>
+                    </div>
+                </div>*@
+                    @using (Html.BeginForm("AddRoleModuleMaster", "UserManagement", FormMethod.Post, new { @class = "forms-sample" }))
+                    {
+                        @Html.HiddenFor(m => m.Action)
+                        @Html.AntiForgeryToken()
+                        <div class="row form-group">
+                            <div class="col-sm-3">
+                                <label class="col-form-label">
+                                    Role Name
+                                    @Html.ValidationMessageFor(m => m.RoleId, "", new { @class = "text-danger h3" })
+                                </label>
+                                <div class="input-group input-group-outline mb-3">
+
+                                    @Html.DropDownListFor(m => m.RoleId, new SelectList(Model.RoleList.OrderBy(m => m.RoleName), "RoleId", "RoleName"), "Select Role",
+                                               new Dictionary<string, object>() {
+                                                   {"id","ddlRole"},
+                                                   { "class","form-control form-select js-example-basic-single  w-100"}
+                                                   })
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <label class="col-form-label">
+                                    Module Name
+                                    @Html.ValidationMessageFor(m => m.ModuleId, "", new { @class = "text-danger h3" })
+                                </label>
+                                <div class="input-group input-group-outline mb-3">
+
+                                    @Html.DropDownListFor(m => m.ModuleId, new SelectList(Model.ModuleList.OrderBy(m => m.ModuleName), "ModuleId", "ModuleName"), "Select Module",
+                                               new Dictionary<string, object>() {
+                                                   {"id","ddlModule"},
+                                                   { "class","form-control form-select js-example-basic-single  w-100"},
+                                                     { "onchange", "javascript:GetPage(this.value)" }
+                                                   })
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <label class="col-form-label">
+                                    Page Name
+                                    @Html.ValidationMessageFor(m => m.MPInteId, "", new { @class = "text-danger h3" })
+                                </label>
+                                <div class="input-group input-group-outline mb-3">
+
+                                    @Html.DropDownListFor(m => m.MPInteId, new SelectList(Model.PageList.OrderBy(m => m.PageName), "PageId", "PageName"), "Select Page",
+                                               new Dictionary<string, object>() {
+                                                   {"id","ddlPage"},
+                                                   { "class","form-control form-select js-example-basic-single  w-100"}
+                                                   })
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <label class="col-form-label">IsActive</label>
+                                <div class="input-group input-group-outline mb-3">
+                                    @Html.DropDownListFor(x => x.IsActive, new List<SelectListItem>
+                                               {
+                                                   new SelectListItem{ Text="Enable", Value = "true",Selected=true },
+                                                   new SelectListItem{ Text="Disable", Value = "false" }
+                                                }, new { @class = "form-control form-select js-example-basic-single  w-100", @id = "IsActive" })
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input type="checkbox" name="ViewRight" id="selfPage" value="true" class="form-check-input" @(Model.ViewRight ? "checked" : "")>
+                                        View Right
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input type="checkbox" name="InsertRight" id="InsertRight" value="true" class="form-check-input" @(Model.InsertRight ? "checked" : "")>
+                                        Insert Right
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input type="checkbox" name="UpdateRight" id="UpdateRight" value="true" class="form-check-input" @(Model.UpdateRight ? "checked" : "")>
+                                        Update Right
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input type="checkbox" name="DeleteRight" id="DeleteRight" value="true" class="form-check-input" @(Model.DeleteRight ? "checked" : "")>
+                                        Delete Right
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary mr-2 mt-3" onclick="return formSubmit('Are You sure you want to save data?')">Submit</button>
+                        @*<button class="btn btn-light">Cancel</button>*@
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+        var re = '@Model.Action';
+        if (re == 'update') {
+            $('#ddlRole').attr('disabled', 'true');
+            $('#ddlModule').attr('disabled', 'true');
+            $('#ddlPage').attr('disabled', 'true');
+        }
+</script>
+<script>
+    function GetPage(_Moduleid) {
+        $("#ddlPage option").remove();
+        if (_Moduleid == "") {
+            _Moduleid = 0;
+        }
+        if (_Moduleid != 0) {
+            var url = "/UserManagement/SelectPageJson";
+            $.ajax({
+                url: url,
+                data: { Moduleid: _Moduleid },
+                cache: false,
+                type: "POST",
+                datatype: "json",
+                traditional: true,
+                success: function (data) {
+
+                    var page = "<select id='ddlPage'>";
+
+                    page = page + '<option value="0"> All</option>';
+
+                    for (var i = 0; i < data.PageModuleInteList.length; i++) {
+
+                        page = page + '<option value=' + data.PageModuleInteList[i].InteId + '>' + data.PageModuleInteList[i].PageName + '</option>';
+
+                    }
+                    page = page + '</select>';
+                    $('#ddlPage').html(page);
+                },
+                error: function (reponse) {
+                    var page = "<select id='ddlPage'>";
+                    page = page + '</select>';
+                    $('#ddlPage').html(page);
+                }
+            });
+        }
+        else {
+            var page = "<select id='ddlPage'>";
+            page = page + '</select>';
+            $('#ddlPage').html(page);
+        }
+    }
+</script>

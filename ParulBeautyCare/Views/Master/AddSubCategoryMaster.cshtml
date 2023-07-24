@@ -1,0 +1,187 @@
+﻿@model ParulBeautyCareViewModel.ViewModel.Master.SubCategoryMasterViewModel
+@{
+    ViewBag.Title = "AddSubCategoryMaster";
+}
+
+<div class="content-wrapper">
+    <div class="row">
+        <div class="col-12 grid-margin">
+            <div class="card">
+                <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+                    <div class="bg-gradient-pinkHeader shadow-primary border-radius-lg pt-4 d-flex justify-content-between">
+                        <h2 class="text-white text-capitalize ps-3 title_margin"><b>Sub Category Master</b></h2>
+                        @*@if (Convert.ToInt32(TempData["ViewRight"]) == 1)
+                        {*@
+                            <a class="btn btn-light btn-rounded btn-icon mb-2 mx-2 title_a" href="@Url.Action("ViewSubCategoryMaster", "Master")">
+                                <i class="fa-solid fa-list-check mx-2 text-black"></i>
+                            </a>
+                        @*}*@
+                    </div>
+                </div>
+                <div class="card-body">
+                    @*<div class="row">
+            <div class="d-xl-flex justify-content-between align-items-center">
+                <h1 class="pink"><b>@ViewBag.action Subcategory Master </b></h1>
+                <a class="btn btn-outline-primary btn-round" href="@Url.Action("ViewSubCategoryMaster","Master")">
+                    <i class="fa fa-eye mx-2"></i>View
+                </a>
+            </div>
+        </div>*@
+                    @using (Html.BeginForm("AddSubCategoryMaster", "Master", FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.HiddenFor(x => x.Action)
+                        @Html.HiddenFor(x => x.SubCategoryId)
+                        @Html.HiddenFor(x => x.CreateUser)
+                        @Html.HiddenFor(x => x.CreateDate)
+                        <div class="row form-group">
+                            <div class="col-sm-3">
+                                <label for="exampleInputUsername2" class="col-form-label">
+                                    Category
+                                    @Html.ValidationMessageFor(m => m.CategoryId, "", new { @class = "text-danger" })
+                                </label>
+                                @Html.DropDownListFor(model => model.CategoryId, new SelectList(Model.CategoryMasterList, "CategoryId", "CategoryName"), "Select Category", new Dictionary<string, object>
+                                          () {
+                                          {"id","ddlCategory"},
+                                          { "class","js-example-basic-single  w-100"},
+                                          {"autocomplete","off"},
+                                          {"required","required"},
+                                          {"placeholder","Enter category"}
+                                           })
+                            </div>
+                            <div class="col-sm-3">
+                                <label for="exampleInputUsername2" class="col-form-label">
+                                    Sub Category Name
+                                    @Html.ValidationMessageFor(m => m.SubCategoryName, "", new { @class = "text-danger" })
+                                </label>
+
+                                @Html.TextBoxFor(m => m.SubCategoryName, new Dictionary<string, object>() {
+                                                                            {"id","txtSubCategoryName"},
+                                                                            {"class","form-control"},
+                                                                               {"autocomplete","off"},
+                                                                            {"required","required"},
+                                                                            {"placeholder","Enter SubCategory Name"}
+                                                                            })
+                            </div>
+                            <div class="col-sm-3">
+                                <label for="exampleInputPassword2" class="col-form-label">IsMultiPerson</label>
+                                <div class="input-group input-group-outline mb-3">
+                                    @Html.DropDownListFor(x => x.IsMultiPerson, new List<SelectListItem>
+                                         {
+                                               new SelectListItem{ Text="Enable", Value = "true",Selected=true },
+                                               new SelectListItem{ Text="Disable", Value = "false" }
+                                            }, new { @class = "js-example-basic-single  w-100", @id = "IsMultiPerson" })
+                                </div>
+                            </div>
+                            <div class="col-sm-3" id="divtxtNumberOfPerson">
+                                <label for="exampleInputUsername2" class="col-form-label">Number Of Person</label>
+                                @Html.TextBoxFor(m => m.NumberOfPerson, new Dictionary<string, object>() {
+                                                                            {"id","txtNumberOfPerson"},
+                                                                            {"class","form-control"},
+                                                                               {"autocomplete","off"},
+                                                                            {"required","required"},
+                                                                            {"placeholder","Enter Person Number"}
+                                                                            })
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-sm-3">
+                                <label for="exampleInputUsername2" class="col-form-label">
+                                    Yearperiod
+                                    @Html.ValidationMessageFor(m => m.YearId, "", new { @class = "text-danger" })
+                                </label>
+                                @Html.DropDownListFor(model => model.YearId, new SelectList(Model.YearMasterList, "YearId", "yearperiod"), "Select Yearperiod", new Dictionary<string, object>
+                                          () {
+                                          {"id","ddlYearperiod"},
+                                          { "class","js-example-basic-single  w-100"},
+                                          {"autocomplete","off"},
+                                          {"required","required"},
+                                          {"placeholder","Enter Yearperiod"}
+                                           })
+                            </div>
+                            <div class="col-sm-3">
+                                <label for="exampleInputUsername2" class="col-form-label">
+                                    NoOfSitting
+                                    @Html.ValidationMessageFor(m => m.NoOfSitting, "", new { @class = "text-danger" })
+                                </label>
+                                @Html.TextBoxFor(m => m.NoOfSitting, new Dictionary<string, object>() {
+                                                                   {"id","txtNumberOfSitting"},
+                                                                   {"class","form-control"},
+                                                                      {"autocomplete","off"},
+                                                                   {"required","required"},
+                                                                   {"placeholder","Enter Sitting Number"}
+                                                                   })
+                            </div>
+                            <div class="col-sm-3">
+                                <label for="exampleInputUsername2" class="col-form-label">
+                                    TimeDuration
+                                    @Html.ValidationMessageFor(m => m.TimeDuraion, "", new { @class = "text-danger" })
+                                </label>
+                                @Html.TextBoxFor(m => m.TimeDuraion, new Dictionary<string, object>() {
+                                                                   {"id","txtTimeDuraion"},
+                                                                   {"class","form-control"},
+                                                                      {"autocomplete","off"},
+                                                                   {"required","required"},
+                                                                   {"placeholder","Enter Time Duraion"}
+                                                                   })
+                            </div>
+                            <div class="col-sm-3">
+                                <label for="exampleInputUsername2" class="col-form-label">
+                                    Amount
+                                    @Html.ValidationMessageFor(m => m.Amount, "", new { @class = "text-danger" })
+                                </label>
+                                @Html.TextBoxFor(m => m.Amount, new Dictionary<string, object>() {
+                                                                   {"id","txtAmount"},
+                                                                   {"class","form-control"},
+                                                                      {"autocomplete","off"},
+                                                                   {"required","required"},
+                                                                   {"placeholder","Enter Amount"}
+                                                                   })
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-sm-3">
+                                <label for="exampleInputPassword2" class="col-form-label">IsActive</label>
+                                <div class="input-group input-group-outline mb-3">
+                                    @Html.DropDownListFor(x => x.IsActive, new List<SelectListItem>
+                                           {
+                                               new SelectListItem{ Text="Enable", Value = "true",Selected=true },
+                                               new SelectListItem{ Text="Disable", Value = "false" }
+                                            }, new { @class = "js-example-basic-single  w-100", @id = "IsActive" })
+                                </div>
+                            </div>
+                        </div>
+                        //if (Convert.ToInt32(TempData["InsertRight"]) == 1)
+                        //{
+                            <button type="submit" class="btn btn-primary mr-2 mt-3" value="@ViewBag.action" onclick="return formSubmit('Are You sure you want to save data?')">Submit</button>
+                            @*<button class="btn btn-light">Cancel</button>*@
+                        @*}
+                        else
+                        {
+                            <button type="button" class="btn btn-primary mr-2 mt-3" value="@ViewBag.action" disabled>Submit</button>
+                        }*@
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    // Wait for the document to be ready
+    $(document).ready(function () {
+        // Get the dropdown element
+        var isMultiPersonDropdown = $("#IsMultiPerson");
+
+        // Get the textbox element
+        var numberOfPersonTextbox = $("#txtNumberOfPerson");
+
+        // Bind a change event to the dropdown to toggle the textbox read-only state
+        isMultiPersonDropdown.on("change", function () {
+            if ($(this).val() === "true") { // Check if the selected value is "true" (Enable)
+                numberOfPersonTextbox.prop("readonly", false);
+            } else {
+                numberOfPersonTextbox.prop("readonly", true);
+            }
+        });
+    });
+</script>

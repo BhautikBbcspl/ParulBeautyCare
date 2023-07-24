@@ -1,0 +1,117 @@
+﻿@model ParulBeautyCareViewModel.ViewModel.Master.CategoryMasterViewModel
+@{
+    ViewBag.Title = "Category Master";
+    ViewBag.Module = "Master";
+    var action = ViewBag.action;
+}
+
+<div class="content-wrapper">
+    <div class="row">
+        <div class="col-12 grid-margin">
+            <div class="card">
+                <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+                    <div class="bg-gradient-pinkHeader shadow-primary border-radius-lg pt-4 d-flex justify-content-between">
+                        <h2 class="text-white text-capitalize ps-3 title_margin"><b>Category Master</b></h2>
+                        @*@if (Convert.ToInt32(TempData["ViewRight"]) == 1)
+                        {*@
+                            <a class="btn btn-light btn-rounded btn-icon mb-2 mx-2 title_a" href="@Url.Action("ViewCategoryMaster", "Master")">
+                                <i class="fa-solid fa-list-check mx-2 text-black"></i>
+                            </a>
+                        @*}*@
+                    </div>
+                </div>
+                <div class="card-body">
+                    @*<div class="row">
+            <div class="d-xl-flex justify-content-between align-items-center">
+                <h1 class="pink"><b>@ViewBag.action Category Master </b></h1>
+                <a class="btn btn-outline-primary btn-round" href="@Url.Action("ViewCategoryMaster","Master")">
+                    <i class="fa fa-eye mx-2"></i>View Category
+                </a>
+            </div>
+        </div>*@
+                    @using (Html.BeginForm("AddCategoryMaster", "Master", FormMethod.Post, new { @class = "forms-sample" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.HiddenFor(x => x.Action)
+                        @Html.HiddenFor(x => x.CategoryId)
+                        @Html.HiddenFor(m => m.CreateUser)
+                        @Html.HiddenFor(m => m.CreateDate)
+                        <div class="row form-group">
+                            <div class="col-sm-3">
+                                <label for="exampleInputUsername2" class="col-form-label">
+                                    Category Name
+                                    @Html.ValidationMessageFor(m => m.CategoryName, "", new { @class = "text-danger h3" })
+                                </label>
+
+                                @if (Model.Action == "Update")
+                                {
+                                    @Html.TextBoxFor(m => m.CategoryName, new Dictionary<string, object>() {
+                                                                                                               {"id","txtCategoryName"},
+                                                                                                               {"class","form-control"},
+                                                                                                                  {"autocomplete","off"},
+                                                                                                               {"required","required"},
+                                                                                                               {"placeholder","Enter Category Name"},
+                                                                                                               { action == "Update" ? "readonly" : null, "readonly" }
+                                                                                                               })
+                                }
+                                else
+                                {
+                                    @Html.TextBoxFor(m => m.CategoryName, new Dictionary<string, object>() {
+                                                                           {"id","txtCategoryName"},
+                                                                           {"class","form-control"},
+                                                                              {"autocomplete","off"},
+                                                                           {"required","required"},
+                                                                           {"placeholder","Enter Category Name"}
+                                                                           })
+                                }
+
+
+                            </div>
+                            <div class="col-sm-3">
+                                <label for="exampleInputUsername2" class="col-form-label">Description</label>
+                                @Html.TextBoxFor(m => m.Description, new Dictionary<string, object>() {
+                                                                            {"id","txtDescription"},
+                                                                            {"class","form-control"},
+                                                                               {"autocomplete","off"},
+                                                                            {"placeholder","Enter Description"}
+                                                                            })
+                            </div>
+                            <div class="col-sm-3">
+                                <label for="exampleInputPassword2" class="col-form-label">IsActive</label>
+                                <div class="input-group input-group-outline mb-3">
+                                    @Html.DropDownListFor(x => x.IsActive, new List<SelectListItem>
+                                           {
+                                               new SelectListItem{ Text="Enable", Value = "true",Selected=true },
+                                               new SelectListItem{ Text="Disable", Value = "false" }
+                                            }, new { @class = "js-example-basic-single  w-100", @id = "IsActive" })
+                                </div>
+                            </div>
+                        </div>
+                        //if (Convert.ToInt32(TempData["InsertRight"]) == 1)
+                        //{
+                            <button type="submit" class="btn btn-primary mr-2 mt-3" value="@ViewBag.action" onclick="return formSubmit('Are You sure you want to save data?')">Submit</button>
+                            @*<button class="btn btn-light">Cancel</button>*@
+                        @*}
+                        else
+                        {
+                            <button type="button" class="btn btn-primary mr-2 mt-3" value="@ViewBag.action" disabled>Submit</button>
+                        }*@
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@*<script>
+    $(document).ready(function() {
+        var action = '@ViewBag.action';
+
+        // Check if the action is "Update"
+        if (action === 'Update') {
+            // Set the "Category Name" input field as read-only
+            $('#txtCategoryName').prop('readonly', true);
+        }
+    });
+</script>*@
+
+

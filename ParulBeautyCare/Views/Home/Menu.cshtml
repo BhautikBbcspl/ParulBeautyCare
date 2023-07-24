@@ -1,0 +1,162 @@
+﻿@model IEnumerable<ParulBeautyCareDbClasses.DataModels.PBMenuRtr_Result>
+@{
+    Layout = null;
+}
+@*<nav class="sidebar sidebar-offcanvas" id="sidebar">
+        <ul class="nav">
+            <li class="nav-item">
+                <div class="d-flex sidebar-profile">
+                    <div class="sidebar-profile-image">
+                        <img src="~/Images/Asset1.png" class="bg-white" alt="image" />
+                        <span class="sidebar-status-indicator"></span>
+                    </div>
+                    <div class="sidebar-profile-name">
+                        <p class="sidebar-name">
+                            @User.Identity.Name
+                        </p>
+                        <p class="sidebar-designation">
+                            Welcome
+                        </p>
+                    </div>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="@Url.Action("Dashboard","Home")">
+                    <i class="typcn typcn-device-desktop menu-icon"></i>
+                    <span class="menu-title">Dashboard</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="@Url.Action("Index","Appointment")">
+
+                    <i class="fa fa-check"></i>
+
+                    <span class="menu-title  mx-4">Book Appointment</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="@Url.Action("ViewStaffMgmt","StaffManagement")">
+                    <i class="fa fa-users"></i>
+                    <span class="menu-title mx-4">Staff Management </span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="@Url.Action("Stockmgmt","Home")">
+                    <i class="fa fa-th"></i>
+                    <span class="menu-title mx-4">Stock Management</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="@Url.Action("Invoice","Home")">
+                    <i class="fa fa-file"></i>
+                    <span class="menu-title mx-4">Invoice</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="@Url.Action("Profile","Home")">
+                    <i class="fa fa-user"></i>
+                    <span class="menu-title mx-4">Profile</span>
+                </a>
+            </li>
+
+        </ul>
+
+    </nav>*@
+<nav class="sidebar sidebar-offcanvas" id="sidebar">
+    <ul class="nav">
+        <li class="nav-item">
+            <div class="d-flex sidebar-profile">
+                <div class="sidebar-profile-image">
+                    <img src="~/Images/Asset1.png" class="bg-white" alt="image" />
+                    <span class="sidebar-status-indicator"></span>
+                </div>
+                <div class="sidebar-profile-name">
+                    <p class="sidebar-name">
+                        @User.Identity.Name
+                    </p>
+                    <p class="sidebar-designation">
+                        Welcome
+                    </p>
+                </div>
+            </div>
+        </li>
+        @{
+            string User_Rolename = string.Empty;
+            HttpCookie reqCookies = Request.Cookies["LoginMaster"];
+            if (reqCookies != null)
+            {
+
+                foreach (var item in Model.GroupBy(Obj => new { Obj.ModuleName }).OrderBy(group => group.FirstOrDefault().ModulePriority).Distinct().ToList())
+                {
+                    if (@item.FirstOrDefault().IsSelfURL != true)
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" data-bs-toggle="collapse" href="#@item.FirstOrDefault().ModuleName" aria-expanded="false" aria-controls="ui-advanced">
+                                <i class="fas @item.FirstOrDefault().FaIcon menu-icon"></i>
+                                <span class="menu-title">
+                                    @item.FirstOrDefault().ModuleName
+                                </span>
+                                <i class="typcn-chevron-right menu-arrow"></i>
+                            </a>
+
+                            <div class="collapse" id="@item.FirstOrDefault().ModuleName">
+                                <ul class="nav flex-column sub-menu">
+                                    @{
+                                        foreach (var secondItem in (Model.Where(s => s.ModuleId == item.FirstOrDefault().ModuleId).ToList()))
+                                        {
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="~/@secondItem.PageUrl">
+                                                    @secondItem.PageName
+                                                </a>
+                                            </li>
+                                        }
+                                    }
+                                </ul>
+                            </div>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" href="~/@item.FirstOrDefault().PageUrl">
+                                <i class="fas @item.FirstOrDefault().FaIcon menu-icon"></i>
+                                <span class="menu-title">
+                                    @item.FirstOrDefault().PageName
+                                </span>
+                            </a>
+                        </li>
+                    }
+                }
+
+
+            }
+
+
+            <!--DEMO-->
+            @*<li class="nav-item">
+                <a class="nav-link" data-bs-toggle="collapse" href="#ui-advanced" aria-expanded="false" aria-controls="ui-advanced">
+                    <i class="typcn typcn-cog-outline menu-icon"></i>
+                    <span class="menu-title">Advanced UI</span>
+                    <i class="menu-arrow"></i>
+                </a>
+                <div class="collapse" id="ui-advanced">
+                    <ul class="nav flex-column sub-menu">
+                        <li class="nav-item"> <a class="nav-link" href="pages/ui-features/dragula.html">Dragula</a></li>
+                        <li class="nav-item"> <a class="nav-link" href="pages/ui-features/clipboard.html">Clipboard</a></li>
+                        <li class="nav-item"> <a class="nav-link" href="pages/ui-features/context-menu.html">Context menu</a></li>
+                        <li class="nav-item"> <a class="nav-link" href="pages/ui-features/slider.html">Sliders</a></li>
+                        <li class="nav-item"> <a class="nav-link" href="pages/ui-features/carousel.html">Carousel</a></li>
+                        <li class="nav-item"> <a class="nav-link" href="pages/ui-features/colcade.html">Colcade</a></li>
+                        <li class="nav-item"> <a class="nav-link" href="pages/ui-features/loaders.html">Loaders</a></li>
+                        <li class="nav-item"> <a class="nav-link" href="pages/ui-features/treeview.html">Tree View</a></li>
+                    </ul>
+                </div>
+            </li>*@
+            <!---->
+
+        }
+    </ul>
+</nav>
+
+
+

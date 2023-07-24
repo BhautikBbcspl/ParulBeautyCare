@@ -1,0 +1,112 @@
+﻿@model ParulBeautyCareViewModel.ViewModel.Master.YearMasterViewModel
+@{
+    ViewBag.Title = "AddYearMaster";
+}
+
+<div class="content-wrapper">
+    <div class="row">
+        <div class="col-12 grid-margin">
+            <div class="card">
+                @*<div class="row">
+            <div class="d-xl-flex justify-content-between align-items-center">
+                <h1 class="pink"><b>@ViewBag.action Year Master </b></h1>
+                <a class="btn btn-outline-primary btn-round" href="@Url.Action("ViewYearMaster","Master")">
+                    <i class="fa fa-eye mx-2"></i>View Slot
+                </a>
+            </div>
+        </div>*@
+                <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+                    <div class="bg-gradient-pinkHeader shadow-primary border-radius-lg pt-4 d-flex justify-content-between">
+                        <h2 class="text-white text-capitalize ps-3 title_margin"><b>Year Master</b></h2>
+                        @*@if (Convert.ToInt32(TempData["ViewRight"]) == 1)
+                        {*@
+                            <a class="btn btn-light btn-rounded btn-icon mb-2 mx-2 title_a" href="@Url.Action("ViewYearMaster", "Master")">
+                                <i class="fa-solid fa-list-check mx-2 text-black"></i>
+                            </a>
+                        @*}*@
+                    </div>
+                </div>
+                <div class="card-body">
+                    @*<div class="row">
+            <div class="d-xl-flex justify-content-between align-items-center">
+                <h1 class="pink"><b>@ViewBag.action Year Master </b></h1>
+                <a class="btn btn-outline-primary btn-round" href="@Url.Action("ViewYearMaster","Master")">
+                    <i class="fa fa-eye mx-2"></i>View
+                </a>
+            </div>
+        </div>*@
+                    @using (Html.BeginForm("AddYearMaster", "Master", FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.HiddenFor(x => x.Action)
+                        @Html.HiddenFor(x => x.YearId)
+                        @Html.HiddenFor(x => x.CreateUser)
+                        @Html.HiddenFor(x => x.CreateDate)
+                        <div class="row form-group">
+                            <div class="col-sm-3">
+                                <label for="exampleInputUsername2" class="col-form-label">
+                                    FromDate
+                                    @Html.ValidationMessageFor(m => m.FromDate, "", new { @class = "text-danger" })
+                                </label>
+
+                                @Html.TextBoxFor(m => m.FromDate, new Dictionary<string, object>() {
+                                                                            {"id","Date2"},
+                                                                            {"class","form-control rangeDates"},
+                                                                               {"autocomplete","off"},
+                                                                            {"required","required"},
+                                                                            {"placeholder","dd/MM/yyyy"}
+                                                                            })
+                            </div>
+                            <div class="col-sm-3">
+                                <label for="exampleInputUsername2" class="col-form-label">
+                                    ToDate
+                                    @Html.ValidationMessageFor(m => m.ToDate, "", new { @class = "text-danger" })
+                                </label>
+                                @Html.TextBoxFor(m => m.ToDate, new Dictionary<string, object>() {
+                                                                            {"id","Date2"},
+                                                                            {"class","form-control rangeDates"},
+                                                                               {"autocomplete","off"},
+                                                                            {"required","required"},
+                                                                            {"placeholder","Enter dd/MM/yyyy"}
+                                                                            })
+                            </div>
+                            <div class="col-sm-3">
+                                <label for="exampleInputUsername2" class="col-form-label">
+                                    Yearperiod
+                                    @Html.ValidationMessageFor(m => m.Yearperiod, "", new { @class = "text-danger" })
+                                </label>
+                                @Html.TextBoxFor(m => m.Yearperiod, new Dictionary<string, object>() {
+                                                                            {"id","txtYearperiod"},
+                                                                            {"class","form-control"},
+                                                                               {"autocomplete","off"},
+                                                                            {"required","required"},
+                                                                            {"placeholder","Enter Yearperiod"}
+                                                                            })
+                            </div>
+                            <div class="col-sm-3">
+                                <label for="exampleInputPassword2" class="col-form-label">IsActive</label>
+                                <div class="input-group input-group-outline mb-3">
+                                    @Html.DropDownListFor(x => x.IsActive, new List<SelectListItem>
+                                           {
+                                               new SelectListItem{ Text="Enable", Value = "true",Selected=true },
+                                               new SelectListItem{ Text="Disable", Value = "false" }
+                                            }, new { @class = "js-example-basic-single  w-100", @id = "IsActive" })
+                                </div>
+                            </div>
+                        </div>
+                        //if (Convert.ToInt32(TempData["InsertRight"]) == 1)
+                        //{
+                            <button type="submit" class="btn btn-primary mr-2 mt-3" value="@ViewBag.action" onclick="return formSubmit('Are You sure you want to save data?')">Submit</button>
+                            @*<button class="btn btn-light">Cancel</button>*@
+                        @*}
+                        else
+                        {
+                            <button type="button" class="btn btn-primary mr-2 mt-3" value="@ViewBag.action" disabled>Submit</button>
+                        }*@
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
