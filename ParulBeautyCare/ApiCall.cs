@@ -55,7 +55,7 @@ namespace ParulBeautyCare
                     }
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 HttpContext.Current.Response.Redirect("~/Home/Error500");
                 return null;

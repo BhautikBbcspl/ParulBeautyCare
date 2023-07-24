@@ -126,7 +126,7 @@ namespace ParulBeautyCare.Controllers
                 }
                
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 //Danger(ex.Message.ToString(), true);
                 TempData["SweetAlert"] = new { Message = "An error occurred while updating the status.", Type = "error" };

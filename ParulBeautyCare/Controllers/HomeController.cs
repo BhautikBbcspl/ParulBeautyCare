@@ -86,7 +86,7 @@ namespace ParulBeautyCare.Controllers
                     return View("Login");
                 }
             }
-            catch (Exception ex)
+            catch (Exception )
             {
                 //Danger(ex.Message.ToString(), true);
                 return RedirectToAction("login", "Home");
@@ -114,7 +114,7 @@ namespace ParulBeautyCare.Controllers
                    return RedirectToAction("Login","Home");
                 }
             }
-            catch(Exception ex)
+            catch(Exception)
             {
                 if (Request.Cookies["LoginMaster"] != null)
                 {
