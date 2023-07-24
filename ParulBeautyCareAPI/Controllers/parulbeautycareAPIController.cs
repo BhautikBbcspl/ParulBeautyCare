@@ -774,6 +774,7 @@ namespace ParulBeautyCareAPI.Controllers
 
         #region =====> Stock Management API
 
+
         #region ==> Stock Purchase
         [HttpPost]
         [Route("api/parulbeautycareAPI/StockPurchaseRetrieve")]
@@ -888,6 +889,7 @@ namespace ParulBeautyCareAPI.Controllers
 
         #endregion
 
+        //test
     }
 
 }
