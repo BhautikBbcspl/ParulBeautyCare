@@ -1,4 +1,4 @@
-﻿using ParulBeautyCare.ViewModel;
+﻿using ParulBeautyCareViewModel.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
