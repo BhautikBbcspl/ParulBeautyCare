@@ -368,13 +368,13 @@ namespace ParulBeautyCare.Controllers
         {
             try
             {
-                
+
                 if (savm.StockAllocationId == null)
                 {
                     savm.CompanyCode = LoggedUserDetails.CompanyCode;
                     savm.Action = "insert";
                     savm.AllocateUser = LoggedUserDetails.UserName;
-                    savm.AllocationDate =generalFunctions.getDate();
+                    savm.AllocationDate = generalFunctions.getDate();
                     if (!User.Identity.IsAuthenticated)
                     {
                         FormsAuthentication.RedirectToLoginPage();
@@ -382,7 +382,7 @@ namespace ParulBeautyCare.Controllers
                     string url = generalFunctions.getCommon(Request.Url.AbsoluteUri);
 
                     savm.Action = "insert";
-                   
+
                     var apiResponse = ApiCall.PostApi("StockAllocationInsUpd", Newtonsoft.Json.JsonConvert.SerializeObject(savm));
                     savm = JsonConvert.DeserializeObject<StockAllocationMasterViewModel>(apiResponse);
                     string msg = savm.result;
@@ -391,46 +391,43 @@ namespace ParulBeautyCare.Controllers
                     {
                         var data = new { Message = msg, Type = "success" };
                         TempData["SweetAlert"] = data;
-                       // return RedirectToAction("AddStockAllocation", "StockManagement");
+                        // return RedirectToAction("AddStockAllocation", "StockManagement");
                     }
                     else
                     {
                         var data = new { Message = msg, Type = "error" };
                         TempData["SweetAlert"] = data;
-                       // return RedirectToAction("AddStockAllocation", "StockManagement");
+                        // return RedirectToAction("AddStockAllocation", "StockManagement");
                     }
 
                 }
+                else
+                {
+                    savm.Action = "update";
+                    savm.UpdateDate = generalFunctions.getTimeZoneDatetimedb();
+                    savm.UpdateUser = User.Identity.Name;
+
+                    savm.AllocationDate = generalFunctions.DateTimeConvert(savm.AllocationDate);
+                    var apiResponse = ApiCall.PostApi("StockAllocationInsUpd", Newtonsoft.Json.JsonConvert.SerializeObject(savm));
+                    savm = JsonConvert.DeserializeObject<StockAllocationMasterViewModel>(apiResponse);
+                    string msg = savm.result;
+                    if (msg.Contains("Updated Successfully"))
+                    {
+                        var data = new { Message = msg, Type = "success" };
+                        TempData["SweetAlert"] = data;
+                        return RedirectToAction("ViewStockAllocation", "StockManagement");
+                    }
+                    else
+                    {
+                        //ViewBag.Message = msg.ToUpper();
+                        //Danger(msg, true);
+                        //return View(sm);
+                        var data = new { Message = msg, Type = "error" };
+                        TempData["SweetAlert"] = data;
+                        return RedirectToAction("ViewStockAllocation", "StockManagement");
+                    }
+                }
                 return RedirectToAction("AddStockAllocation", "StockManagement");
-                //else
-                //{
-                //    spvm.Action = "update";
-                //    spvm.UpdateDate = generalFunctions.getTimeZoneDatetimedb();
-                //    spvm.CompanyCode = LoggedUserDetails.CompanyCode;
-                //    spvm.UpdateUser = User.Identity.Name;
-                //    spvm.CreateDate = generalFunctions.DateTimeConvert(spvm.CreateDate);
-                //    spvm.MfgDate = generalFunctions.dateconvert(spvm.MfgDate);
-                //    spvm.ExpDate = generalFunctions.dateconvert(spvm.ExpDate);
-                //    spvm.PurchaseDate = generalFunctions.dateconvert(spvm.PurchaseDate);
-                //    var apiResponse = ApiCall.PostApi("StockPurchaseInsUpd", Newtonsoft.Json.JsonConvert.SerializeObject(spvm));
-                //    spvm = JsonConvert.DeserializeObject<StockPurchaseViewModel>(apiResponse);
-                //    string msg = spvm.result;
-                //    if (msg.Contains("Updated Successfully"))
-                //    {
-                //        var data = new { Message = msg, Type = "success" };
-                //        TempData["SweetAlert"] = data;
-                //        return RedirectToAction("ViewStockPurchase", "StockManagement");
-                //    }
-                //    else
-                //    {
-                //        //ViewBag.Message = msg.ToUpper();
-                //        //Danger(msg, true);
-                //        //return View(sm);
-                //        var data = new { Message = msg, Type = "error" };
-                //        TempData["SweetAlert"] = data;
-                //        return RedirectToAction("ViewStockPurchase", "StockManagement");
-                //    }
-                //}
             }
             catch (Exception ex)
             {
@@ -441,9 +438,59 @@ namespace ParulBeautyCare.Controllers
                 return RedirectToAction("AddStockAllocation", "StockManagement");
             }
         }
+        public ActionResult EditStockAllocation(int id)
+        {
 
+            try
+            {
+                if (!User.Identity.IsAuthenticated)
+                {
+                    FormsAuthentication.RedirectToLoginPage();
+                }
+                StockAllocationMasterViewModel samv = new StockAllocationMasterViewModel();
+                samv.Action = "detail";
+                samv.StockAllocationId = id.ToString();
+                samv.CompanyCode = LoggedUserDetails.CompanyCode;
+
+                var StockAllocationList = ApiCall.PostApi("StockAllocationRetrieve", Newtonsoft.Json.JsonConvert.SerializeObject(samv));
+                samv = JsonConvert.DeserializeObject<StockAllocationMasterViewModel>(StockAllocationList);
+
+                //Staff List Bind
+                samv.Action = "Active";
+                StaffMasterViewModel sm = new StaffMasterViewModel();
+                var StaffList = ApiCall.PostApi("StaffMasterRetrieve", Newtonsoft.Json.JsonConvert.SerializeObject(samv));
+                sm = JsonConvert.DeserializeObject<StaffMasterViewModel>(StaffList);
+                samv.StaffList = sm.StaffMasterList;
+                //
+
+                //Product List Bind
+                samv.Action = "Active";
+                ProductMasterViewModel pm = new ProductMasterViewModel();
+                var ProdList = ApiCall.PostApi("ProductMasterRetrieve", Newtonsoft.Json.JsonConvert.SerializeObject(samv));
+                pm = JsonConvert.DeserializeObject<ProductMasterViewModel>(ProdList);
+                samv.ProductList = pm.ProductMasterList;
+                //
+
+                samv.StockAllocationId = samv.StockAllocationList.FirstOrDefault().StockAllocationId.ToString();
+                samv.ProductId = samv.StockAllocationList.FirstOrDefault().ProductId.ToString();
+                samv.AllocationDate = generalFunctions.ShortDateConvert(samv.StockAllocationList.FirstOrDefault().AllocationDate.ToString());
+                samv.AllocateUser = generalFunctions.ShortDateConvert(samv.StockAllocationList.FirstOrDefault().AllocateUser.ToString());
+                samv.StaffId = samv.StockAllocationList.FirstOrDefault().StaffId.ToString();
+                samv.Qty = Convert.ToInt32(samv.StockAllocationList.FirstOrDefault().Qty);
+                samv.Action = "update";
+
+                return View("AddStockAllocation", samv);
+            }
+            catch (Exception ex)
+            {
+                //Danger(ex.Message.ToString(), true);
+                //return RedirectToAction("Dashboard", "Home");
+                var data = new { Message = ex.Message.ToString(), Type = "error" };
+                TempData["SweetAlert"] = data;
+                return RedirectToAction("ViewStockAllocation", "StockManagement");
+            }
+
+        }
         #endregion
-
-        //tested
     }
 }

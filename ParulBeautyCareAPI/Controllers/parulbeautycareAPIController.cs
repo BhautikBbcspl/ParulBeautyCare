@@ -774,7 +774,6 @@ namespace ParulBeautyCareAPI.Controllers
 
         #region =====> Stock Management API
 
-
         #region ==> Stock Purchase
         [HttpPost]
         [Route("api/parulbeautycareAPI/StockPurchaseRetrieve")]
@@ -871,7 +870,7 @@ namespace ParulBeautyCareAPI.Controllers
                     sdmv.CreateDate = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
                     sdmv.CreateUser = spvm.AllocateUser;
 
-                    spvm.result = db.PBStockAllocationMasterInsUpd(spvm.ProductId, spvm.Qty.ToString(), spvm.AllocationDate, spvm.AllocateUser, spvm.StaffId, spvm.UpdateDate, spvm.UpdateUser, sdmv.StockUsed, sdmv.CreateDate, sdmv.CreateUser, sdmv.NoOfPerson, sdmv.PersonUsed, spvm.Action).FirstOrDefault();
+                    spvm.result = db.PBStockAllocationMasterInsUpd(spvm.StockAllocationId, spvm.ProductId, spvm.Qty.ToString(), spvm.AllocationDate, spvm.AllocateUser, spvm.StaffId, spvm.UpdateDate, spvm.UpdateUser, sdmv.StockUsed, sdmv.CreateDate, sdmv.CreateUser, sdmv.NoOfPerson, sdmv.PersonUsed, spvm.Action).FirstOrDefault();
                     var response = Request.CreateResponse(HttpStatusCode.OK, spvm);
                     spvm.success = "true";
                 }
@@ -889,7 +888,6 @@ namespace ParulBeautyCareAPI.Controllers
 
         #endregion
 
-        //test
     }
 
 }

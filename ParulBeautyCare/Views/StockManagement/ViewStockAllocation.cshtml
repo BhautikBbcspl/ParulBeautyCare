@@ -54,7 +54,7 @@
                                         <td>
                                             @if (ViewBag.UpdateRight == 1)
                                             {
-                                                <a href="@Url.Action("EditStockPurchase","StockManagement",new { allocationid = item.StockAllocationId })" class="mx-3"><i class="fa fa-pencil"></i></a>
+                                                <a href="@Url.Action("EditStockAllocation","StockManagement",new { id = item.StockAllocationId })" class="mx-3"><i class="fa fa-pencil"></i></a>
                                             }
                                             else
                                             {

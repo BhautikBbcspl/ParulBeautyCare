@@ -161,7 +161,7 @@
         </Function>
         <Function Name="PBProductTypeMasterInsUpd" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ProductTypeId" Type="nvarchar" Mode="In" />
-          <Parameter Name="ProductTName" Type="nvarchar" Mode="In" />
+          <Parameter Name="ProductName" Type="nvarchar" Mode="In" />
           <Parameter Name="CompanyCode" Type="nvarchar" Mode="In" />
           <Parameter Name="activestatus" Type="nvarchar" Mode="In" />
           <Parameter Name="createdate" Type="nvarchar" Mode="In" />
@@ -226,6 +226,7 @@
           <Parameter Name="StatusId" Type="nvarchar" Mode="In" />
         </Function>
         <Function Name="PBStockAllocationMasterInsUpd" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="StockAllocationId" Type="nvarchar" Mode="In" />
           <Parameter Name="ProductId" Type="nvarchar" Mode="In" />
           <Parameter Name="Qty" Type="nvarchar" Mode="In" />
           <Parameter Name="AllocationDate" Type="nvarchar" Mode="In" />
@@ -326,30 +327,6 @@
     <edmx:ConceptualModels>
       <Schema Namespace="parulbeautycareModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="parulbeautycareEntities" annotation:LazyLoadingEnabled="true" >
-          <FunctionImport Name="PBBookingInsert">
-            <Parameter Name="BookingId" Mode="In" Type="String" />
-            <Parameter Name="CustomerId" Mode="In" Type="String" />
-            <Parameter Name="ContactNo" Mode="In" Type="String" />
-            <Parameter Name="CustomerName" Mode="In" Type="String" />
-            <Parameter Name="Address" Mode="In" Type="String" />
-            <Parameter Name="BookDate" Mode="In" Type="String" />
-            <Parameter Name="CreateDate" Mode="In" Type="String" />
-            <Parameter Name="CreateUser" Mode="In" Type="String" />
-            <Parameter Name="UpdateDate" Mode="In" Type="String" />
-            <Parameter Name="UpdateUser" Mode="In" Type="String" />
-            <Parameter Name="NoOfPerson" Mode="In" Type="String" />
-            <Parameter Name="TotalAmount" Mode="In" Type="String" />
-            <Parameter Name="DiscountPerc" Mode="In" Type="String" />
-            <Parameter Name="Discount" Mode="In" Type="String" />
-            <Parameter Name="FinalAmount" Mode="In" Type="String" />
-            <Parameter Name="AdvanceBookingCharge" Mode="In" Type="String" />
-            <Parameter Name="PaidAmount" Mode="In" Type="String" />
-            <Parameter Name="CompanyCode" Mode="In" Type="String" />
-            <Parameter Name="FunctionDate" Mode="In" Type="String" />
-            <Parameter Name="ReadyTime" Mode="In" Type="String" />
-            <Parameter Name="Status" Mode="In" Type="String" />
-            <Parameter Name="action" Mode="In" Type="String" />
-          </FunctionImport>
           <FunctionImport Name="PBCategoryMasterInsUpd" ReturnType="Collection(String)">
             <Parameter Name="CategoryId" Mode="In" Type="String" />
             <Parameter Name="Categoryname" Mode="In" Type="String" />
@@ -467,7 +444,7 @@
           </FunctionImport>
           <FunctionImport Name="PBProductTypeMasterInsUpd" ReturnType="Collection(String)">
             <Parameter Name="ProductTypeId" Mode="In" Type="String" />
-            <Parameter Name="ProductTName" Mode="In" Type="String" />
+            <Parameter Name="ProductName" Mode="In" Type="String" />
             <Parameter Name="CompanyCode" Mode="In" Type="String" />
             <Parameter Name="activestatus" Mode="In" Type="String" />
             <Parameter Name="createdate" Mode="In" Type="String" />
@@ -622,7 +599,12 @@
             <Parameter Name="createuser" Mode="In" Type="String" />
             <Parameter Name="action" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="PBStockAllocationRetrieve" ReturnType="Collection(parulbeautycareModel.PBStockAllocationRetrieve_Result)">
+            <Parameter Name="action" Mode="In" Type="String" />
+            <Parameter Name="StockAllocationId" Mode="In" Type="String" />
+          </FunctionImport>
           <FunctionImport Name="PBStockAllocationMasterInsUpd" ReturnType="Collection(String)">
+            <Parameter Name="StockAllocationId" Mode="In" Type="String" />
             <Parameter Name="ProductId" Mode="In" Type="String" />
             <Parameter Name="Qty" Mode="In" Type="String" />
             <Parameter Name="AllocationDate" Mode="In" Type="String" />
@@ -637,9 +619,29 @@
             <Parameter Name="PersonUsed" Mode="In" Type="String" />
             <Parameter Name="action" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="PBStockAllocationRetrieve" ReturnType="Collection(parulbeautycareModel.PBStockAllocationRetrieve_Result)">
+          <FunctionImport Name="PBBookingInsert">
+            <Parameter Name="BookingId" Mode="In" Type="String" />
+            <Parameter Name="CustomerId" Mode="In" Type="String" />
+            <Parameter Name="ContactNo" Mode="In" Type="String" />
+            <Parameter Name="CustomerName" Mode="In" Type="String" />
+            <Parameter Name="Address" Mode="In" Type="String" />
+            <Parameter Name="BookDate" Mode="In" Type="String" />
+            <Parameter Name="CreateDate" Mode="In" Type="String" />
+            <Parameter Name="CreateUser" Mode="In" Type="String" />
+            <Parameter Name="UpdateDate" Mode="In" Type="String" />
+            <Parameter Name="UpdateUser" Mode="In" Type="String" />
+            <Parameter Name="NoOfPerson" Mode="In" Type="String" />
+            <Parameter Name="TotalAmount" Mode="In" Type="String" />
+            <Parameter Name="DiscountPerc" Mode="In" Type="String" />
+            <Parameter Name="Discount" Mode="In" Type="String" />
+            <Parameter Name="FinalAmount" Mode="In" Type="String" />
+            <Parameter Name="AdvanceBookingCharge" Mode="In" Type="String" />
+            <Parameter Name="PaidAmount" Mode="In" Type="String" />
+            <Parameter Name="CompanyCode" Mode="In" Type="String" />
+            <Parameter Name="FunctionDate" Mode="In" Type="String" />
+            <Parameter Name="ReadyTime" Mode="In" Type="String" />
+            <Parameter Name="Status" Mode="In" Type="String" />
             <Parameter Name="action" Mode="In" Type="String" />
-            <Parameter Name="StockAllocationId" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="PBCategoryMasterRetrieve_Result">
@@ -868,10 +870,12 @@
         </ComplexType>
         <ComplexType Name="PBStockAllocationRetrieve_Result">
           <Property Type="Int32" Name="StockAllocationId" Nullable="false" />
+          <Property Type="Int32" Name="ProductId" Nullable="true" />
+          <Property Type="Int32" Name="StaffId" Nullable="true" />
+          <Property Type="String" Name="AllocateUser" Nullable="true" MaxLength="50" />
           <Property Type="String" Name="ProductName" Nullable="true" MaxLength="50" />
           <Property Type="Decimal" Name="Qty" Nullable="true" Precision="18" Scale="2" />
           <Property Type="String" Name="AllocationDate" Nullable="true" MaxLength="10" />
-          <Property Type="String" Name="AllocateUser" Nullable="true" MaxLength="50" />
           <Property Type="String" Name="StaffName" Nullable="true" MaxLength="50" />
         </ComplexType>
       </Schema>
@@ -880,7 +884,6 @@
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="parulbeautycareModelStoreContainer" CdmEntityContainer="parulbeautycareEntities" >
-          <FunctionImportMapping FunctionImportName="PBBookingInsert" FunctionName="parulbeautycareModel.Store.PBBookingInsert" />
           <FunctionImportMapping FunctionImportName="PBCategoryMasterInsUpd" FunctionName="parulbeautycareModel.Store.PBCategoryMasterInsUpd" />
           <FunctionImportMapping FunctionImportName="PBCategoryMasterRetrieve" FunctionName="parulbeautycareModel.Store.PBCategoryMasterRetrieve">
             <ResultMapping>
@@ -1193,19 +1196,22 @@
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="PBDepartmentMasterInsUpd" FunctionName="parulbeautycareModel.Store.PBDepartmentMasterInsUpd" />
-          <FunctionImportMapping FunctionImportName="PBStockAllocationMasterInsUpd" FunctionName="parulbeautycareModel.Store.PBStockAllocationMasterInsUpd" />
           <FunctionImportMapping FunctionImportName="PBStockAllocationRetrieve" FunctionName="parulbeautycareModel.Store.PBStockAllocationRetrieve">
             <ResultMapping>
               <ComplexTypeMapping TypeName="parulbeautycareModel.PBStockAllocationRetrieve_Result">
                 <ScalarProperty Name="StockAllocationId" ColumnName="StockAllocationId" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="StaffId" ColumnName="StaffId" />
+                <ScalarProperty Name="AllocateUser" ColumnName="AllocateUser" />
                 <ScalarProperty Name="ProductName" ColumnName="ProductName" />
                 <ScalarProperty Name="Qty" ColumnName="Qty" />
                 <ScalarProperty Name="AllocationDate" ColumnName="AllocationDate" />
-                <ScalarProperty Name="AllocateUser" ColumnName="AllocateUser" />
                 <ScalarProperty Name="StaffName" ColumnName="StaffName" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="PBStockAllocationMasterInsUpd" FunctionName="parulbeautycareModel.Store.PBStockAllocationMasterInsUpd" />
+          <FunctionImportMapping FunctionImportName="PBBookingInsert" FunctionName="parulbeautycareModel.Store.PBBookingInsert" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

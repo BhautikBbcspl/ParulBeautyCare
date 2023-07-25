@@ -282,14 +282,14 @@
 
             SweetAlert(data.Message, data.Type);
             function SweetAlert(Message, Type) {
-                debugger
+                
                 if (Type == 'success') {
                     Swal.fire({
                         position: 'top-end',
                         icon: 'success',
                         title: Message,
                         showConfirmButton: false,
-                        timer: 3000
+                       timer: 3000
                     })
                 }
                 else if (Type == 'error') {
@@ -338,7 +338,7 @@
         function formSubmit(confirmMessage) {
             Swal.fire({
                 title: confirmMessage,
-                showDenyButton: true,
+                showDenyButton: false,
                 showCancelButton: true,
                 confirmButtonText: 'Save',
                 denyButtonText: `Don't save`,
