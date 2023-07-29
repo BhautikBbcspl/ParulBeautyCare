@@ -32,12 +32,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+      <HintPath>..\Parul_Beauty_Care\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <HintPath>..\Parul_Beauty_Care\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -67,12 +65,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ParulBeautyCaredb.edmx</DependentUpon>
     </Compile>
-    <Compile Include="DataModels\PBCategoryMasterRetrieve_Result.cs">
-      <DependentUpon>ParulBeautyCaredb.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataModels\PBDepartmentMasterRetrieve_Result.cs">
-      <DependentUpon>ParulBeautyCaredb.tt</DependentUpon>
-    </Compile>
     <Compile Include="DataModels\PBIntePageModuleRtr_Result.cs">
       <DependentUpon>ParulBeautyCaredb.tt</DependentUpon>
     </Compile>
@@ -82,22 +74,10 @@
     <Compile Include="DataModels\PBLoginRtr_Result.cs">
       <DependentUpon>ParulBeautyCaredb.tt</DependentUpon>
     </Compile>
-    <Compile Include="DataModels\PBMenuRightsRtr_Result.cs">
-      <DependentUpon>ParulBeautyCaredb.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataModels\PBMenuRtr_Result.cs">
-      <DependentUpon>ParulBeautyCaredb.tt</DependentUpon>
-    </Compile>
     <Compile Include="DataModels\PBModuleMasterRtr_Result.cs">
       <DependentUpon>ParulBeautyCaredb.tt</DependentUpon>
     </Compile>
     <Compile Include="DataModels\PBPageMasterRtr_Result.cs">
-      <DependentUpon>ParulBeautyCaredb.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataModels\PBProductMasterRtr_Result.cs">
-      <DependentUpon>ParulBeautyCaredb.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataModels\PBProductTypeMasterRetrieve_Result.cs">
       <DependentUpon>ParulBeautyCaredb.tt</DependentUpon>
     </Compile>
     <Compile Include="DataModels\PBRoleMasterRetrieve_Result.cs">
@@ -106,52 +86,35 @@
     <Compile Include="DataModels\PBStaffMasterRtr_Result.cs">
       <DependentUpon>ParulBeautyCaredb.tt</DependentUpon>
     </Compile>
-    <Compile Include="DataModels\PBStatusMasterRetrieve_Result.cs">
-      <DependentUpon>ParulBeautyCaredb.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataModels\PBStockAllocationRetrieve_Result.cs">
-      <DependentUpon>ParulBeautyCaredb.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataModels\PBStockPurchaseRetrieve_Result.cs">
-      <DependentUpon>ParulBeautyCaredb.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataModels\PBSubCategoryMasterRetrieve_Result.cs">
-      <DependentUpon>ParulBeautyCaredb.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataModels\PBTimeSlotMasterRetrieve_Result.cs">
-      <DependentUpon>ParulBeautyCaredb.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataModels\PBYearMasterRetrieve_Result.cs">
-      <DependentUpon>ParulBeautyCaredb.tt</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.Config" />
     <EntityDeploy Include="DataModels\ParulBeautyCaredb.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>ParulBeautyCaredb.Designer.cs</LastGenOutput>
     </EntityDeploy>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.Config" />
     <None Include="DataModels\ParulBeautyCaredb.edmx.diagram">
       <DependentUpon>ParulBeautyCaredb.edmx</DependentUpon>
     </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
-  </ItemGroup>
-  <ItemGroup />
-  <ItemGroup>
     <Content Include="DataModels\ParulBeautyCaredb.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>ParulBeautyCaredb.edmx</DependentUpon>
       <LastGenOutput>ParulBeautyCaredb.Context.cs</LastGenOutput>
+      <DependentUpon>ParulBeautyCaredb.edmx</DependentUpon>
     </Content>
     <Content Include="DataModels\ParulBeautyCaredb.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>ParulBeautyCaredb.edmx</DependentUpon>
       <LastGenOutput>ParulBeautyCaredb.cs</LastGenOutput>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

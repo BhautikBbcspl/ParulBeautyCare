@@ -43,27 +43,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ViewModel\BookAppointmentViewModel.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
-    <Compile Include="ViewModel\Master\DepartmentMasterViewModel.cs" />
-    <Compile Include="ViewModel\Master\CategoryMasterViewModel.cs" />
-    <Compile Include="ViewModel\Master\SubCategoryMasterViewModel.cs" />
-    <Compile Include="ViewModel\Master\YearMasterViewModel.cs" />
-    <Compile Include="ViewModel\StockMgmtViewModel\ProductTypeMasterViewModel.cs" />
-    <Compile Include="ViewModel\Master\RoleMasterViewModel.cs" />
-    <Compile Include="ViewModel\Master\StaffMasterViewModel.cs" />
-    <Compile Include="ViewModel\Master\StatusMasterViewModel.cs" />
-    <Compile Include="ViewModel\Master\TimeSlotMasterViewModel.cs" />
-    <Compile Include="ViewModel\MenuRightsViewModel.cs" />
-    <Compile Include="ViewModel\MenuViewModel.cs" />
+    <Compile Include="ViewModel\RoleViewModel.cs" />
     <Compile Include="ViewModel\ModuleViewModel.cs" />
     <Compile Include="ViewModel\PageModuleViewModel.cs" />
     <Compile Include="ViewModel\PageViewModel.cs" />
     <Compile Include="ViewModel\RoleModuleViewModel.cs" />
-    <Compile Include="ViewModel\StockMgmtViewModel\ProductMasterViewModel.cs" />
-    <Compile Include="ViewModel\StockMgmtViewModel\StockDetailMasterViewModel.cs" />
-    <Compile Include="ViewModel\StockMgmtViewModel\StockAllocationMasterViewModel.cs" />
-    <Compile Include="ViewModel\StockMgmtViewModel\StockPurchaseViewModel.cs" />
     <Compile Include="ViewModel\UserModel.cs" />
   </ItemGroup>
   <ItemGroup>

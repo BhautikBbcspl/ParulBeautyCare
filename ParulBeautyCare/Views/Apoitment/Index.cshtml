@@ -1,0 +1,479 @@
+﻿@model ParulBeutyCare22.ViewModel.ApoitmentViewModel
+@{
+    ViewBag.Title = "Index";
+}
+<style>
+    .multiselect {
+        width: 100%;
+    }
+
+    .selectBox {
+        position: relative;
+    }
+
+        .selectBox select {
+            width: 100%;
+            font-weight: normal;
+            border: none;
+        }
+
+    .overSelect {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+    }
+
+    #checkboxes {
+        display: none;
+        width: 750px;
+        border: 1px #dadada solid;
+        position: absolute;
+        z-index: 1;
+        background-color: white !important;
+    }
+
+        #checkboxes label {
+            display: block;
+        }
+
+            #checkboxes label:hover {
+                color: white;
+                background-color: #ec407a;
+            }
+
+    #sidebar {
+        display: none;
+        position: fixed;
+        top: 0;
+        right: 0;
+        width: 590px;
+        height: 80%;
+        background-color: #f5f4f4;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        z-index: 9999;
+        border: solid #ec407a;
+        margin-top: 193px;
+        margin-right: 90px;
+    }
+
+    #closeButton {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        cursor: pointer;
+    }
+
+    #sidebar2 {
+        display: none;
+        position: fixed;
+        top: 0;
+        right: 0;
+        width: 590px;
+        height: 80%;
+        background-color: #f5f4f4;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        z-index: 9999;
+        border: solid #ec407a;
+        margin-top: 193px;
+        margin-right: 90px;
+    }
+
+    #closeButton2 {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        cursor: pointer;
+    }
+
+    td {
+        text-wrap: initial !important;
+    }
+
+    .form-label {
+        margin-bottom: 0.5rem;
+        font-size: initial;
+        width: 1000%,
+    }
+
+    .ui-datepicker {
+        margin-left: auto;
+        margin-right: 0;
+    }
+</style>
+<div>
+    <div class="col-12">
+        <div class="card my-4">
+            <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+                <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
+                    <h6 class="text-white text-capitalize ps-4" style="font-size: x-large">BOOK APPOINTMENT</h6>
+                </div>
+            </div>
+            <div class="card-body px-0 pb-2">
+                <div>
+                    <div class="row">
+                        <div class="col-md-1">
+
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card-body">
+                                @using (Html.BeginForm())
+                                {
+                                    @Html.AntiForgeryToken();
+
+                                    <div class="mb-4">
+                                        <label class="form-label">Function Date</label>
+                                        <div class="input-group input-group-outline mb-3">
+                                            <span class="input-group-text">
+                                                <img src="~/Content/Images/55281.png" style="width: 24px; position: relative; left: -10px; top: -3px;" alt="Icon" />
+                                            </span>
+                                            @Html.EditorFor(model => model.FunctionDate, new { htmlAttributes = new { @class = "form-control", id = "Date2", autocomplete = "off" } })
+                                            @Html.ValidationMessageFor(model => model.FunctionDate, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-4">
+                                        <label class="form-label">Function Time</label>
+                                        <div class="input-group input-group-outline mb-3">
+                                            <span class="input-group-text">
+                                                <img src="~/Content/Images/download.png" style="width: 24px; position: relative; left: -10px; top: -3px;" alt="Icon" />
+                                            </span>
+                                            @Html.DropDownListFor(model => model.Time, new SelectList(ViewBag.list), "Select Time", htmlAttributes: new { @class = "form-control select-color", id = "datetimepicker3" })
+                                            @Html.ValidationMessageFor(model => model.Time, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                    <div class="mb-4">
+                                        <label class="form-label">Services</label>
+                                        <div class="input-group input-group-outline mb-3">
+                                            <div class="multiselect" id="dropdown">
+                                                <div class="selectBox form-control" onclick="showCheckboxes()">
+                                                    <select>
+                                                        <option>Select Services</option>
+                                                    </select>
+                                                    <div class="overSelect"></div>
+                                                </div>
+                                                <div id="checkboxes">
+                                                    <label style="font-weight:bold">Nails</label>
+                                                    <label for="one">
+                                                        <input type="checkbox" id="one" class="mx-1" />Manicure
+                                                    </label>
+                                                    <label for="two">
+                                                        <input type="checkbox" id="two" class="mx-1" />Pedicure
+                                                    </label>
+                                                    <label style="font-weight:bold">Services</label>
+                                                    <label for="three">
+                                                        <input type="checkbox" id="three" class="mx-1" />Makeup
+                                                    </label>
+                                                    <label for="four">
+                                                        <input type="checkbox" id="four" class="mx-1" />Bridal Package
+                                                    </label>
+                                                    <label for="five">
+                                                        <input type="checkbox" id="five" class="mx-1" />Hair Rebonding
+                                                    </label>
+                                                    <label for="six">
+                                                        <input type="checkbox" id="six" class="mx-1" />Hair Straightening
+                                                    </label>
+                                                    <label style="font-weight:bold">Skeen Care</label>
+                                                    <label for="seven">
+                                                        <input type="checkbox" id="seven" class="mx-1" />Facial
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    @*<div class="mb-4">
+                    <label class="form-label">Date</label>
+                    <div>
+                        <div class="input-group input-group-outline mb-3">
+
+                            @Html.EditorFor(model => model.Date, new { htmlAttributes = new { @class = "form-control", id = "Date",  autocomplete = "off" } })
+                            @Html.ValidationMessageFor(model => model.Date, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>*@
+                                    <div class="mb-4">
+                                        <label class="form-label">Name</label>
+                                        <div>
+                                            <div class="input-group input-group-outline mb-3">
+
+                                                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
+                                                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-4">
+                                        <label class="form-label">Contact No</label>
+                                        <div class="input-group input-group-outline mb-3">
+
+                                            @Html.EditorFor(model => model.ContactNo, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
+                                            @Html.ValidationMessageFor(model => model.ContactNo, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Address</label>
+                                        <div class="input-group input-group-outline mb-3">
+
+                                            @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
+                                            @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-4">
+                                        <label class="form-label">Booking Amount</label>
+                                        <div class="input-group input-group-outline mb-3">
+
+                                            @Html.EditorFor(model => model.BookingAmount, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
+                                            @Html.ValidationMessageFor(model => model.BookingAmount, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                    <div class="mb-4">
+                                        <label class="form-label">Note(Optional)</label>
+                                        <div class="input-group input-group-outline mb-3">
+
+                                            @Html.TextAreaFor(model => model.BookingAmount, new { @class = "form-control", autocomplete = "off" })
+
+                                            @Html.ValidationMessageFor(model => model.BookingAmount, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="text-center">
+                                            <button type="submit" class="btn btn-lg bg-gradient-primary">Book</button>
+
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card-body">
+                                    <div id="sidebar">
+                                        <!-- Close button for the sidebar -->
+                                        <span id="closeButton">&times;</span>
+                                        <!-- Sidebar content here -->
+                                        <h2>Today's Appointments</h2>
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Customer Name</th>
+                                                    <th>Service</th>
+                                                    <th>Date</th>
+                                                    <th>Time</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>Roma</td>
+                                                    <td>Facial</td>
+                                                    <td>05/07/2023</td>
+                                                    <td>10:00 AM</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Giya</td>
+                                                    <td>Hair Styling</td>
+                                                    <td>05/07/2023</td>
+                                                    <td>11:30 AM</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Diya</td>
+                                                    <td>Manicure</td>
+                                                    <td>05/07/2023</td>
+                                                    <td>2:00 PM</td>
+                                                </tr>
+                                                <!-- Add more rows for additional services and time slots -->
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                    <div id="sidebar2">
+                                        <!-- Close button for the sidebar -->
+                                        <span id="closeButton2">&times;</span>
+                                        <!-- Sidebar content here -->
+                                        <h2>Appointments of 07/07/2023</h2>
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Customer Name</th>
+                                                    <th>Service</th>
+                                                    <th>Date</th>
+                                                    <th>Time</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>Anjali</td>
+                                                    <td>Facial</td>
+                                                    <td>07/07/2023</td>
+                                                    <td>11:00 AM</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Supriya</td>
+                                                    <td>Hair Straighting</td>
+                                                    <td>07/07/2023</td>
+                                                    <td>1:30 PM</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Vidhya</td>
+                                                    <td>Makeup</td>
+                                                    <td>07/07/2023</td>
+                                                    <td>4:30 PM</td>
+                                                </tr>
+                                                <!-- Add more rows for additional services and time slots -->
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-md-4">
+                            @*style="background-image: url(../../Content/template4/demos.creative-tim.com/material-dashboard/assets/img/12345.jpg); width: 600px; height: 800px; border-radius: 10px; "*@
+                        </div>
+
+                      
+
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    $(function () {
+        $("#Date").datepicker({
+            dateFormat: 'dd/mm/yy'
+        });
+    });
+
+    $(function () {
+        $("#Date2").datepicker({
+            dateFormat: 'dd/mm/yy', // Set the desired date format
+            showOn: "focus", // Show the calendar when the input field is focused
+            // buttonImage: "https://cdn.pixabay.com/photo/2017/08/30/01/05/milky-way-2695569_960_720.jpg",
+            // buttonImageOnly: true,
+            buttonText: "Select Date",
+            changeMonth: true,
+            changeYear: true,
+            // showButtonPanel: true,
+            yearRange: "1900:2030"
+        });
+    });
+
+</script>
+<script>
+    $(function () {
+
+        var names = [];
+
+
+        $("#Name").autocomplete({
+            source: names,
+            minLength: 1,
+            select: function (event, ui) {
+
+            }
+        });
+    });
+</script>
+
+<script>
+    var expanded = false;
+    var dropdown = document.getElementById("dropdown");
+
+    function showCheckboxes() {
+        var checkboxes = document.getElementById("checkboxes");
+        if (!expanded) {
+            checkboxes.style.display = "block";
+            expanded = true;
+        } else {
+            checkboxes.style.display = "none";
+            expanded = false;
+        }
+    }
+
+    // Close dropdown when clicking anywhere on the page
+    document.addEventListener("click", function (event) {
+        var checkboxes = document.getElementById("checkboxes");
+        var targetElement = event.target;
+
+        // Check if the clicked element is not the dropdown or its descendant
+        if (expanded && !dropdown.contains(targetElement)) {
+            checkboxes.style.display = "none";
+            expanded = false;
+        }
+    });
+</script>
+<script>
+    $(document).ready(function () {
+
+        //// Add the 'sidebar-scroll' class to the sidebars
+        //$('#sidebar, #sidebar2').addClass('sidebar-scroll');
+
+        //// Scroll the sidebars along with the page
+        //$(window).scroll(function () {
+        //    $('.sidebar-scroll').css('top', $(this).scrollTop());
+        //});
+
+        $('#Date2').datepicker({
+            dateFormat: 'dd/mm/yy' // Set the desired date format
+        });
+
+        $('#Date2').on('change', function () {
+            var selectedDate = $(this).val();
+
+            // Close the first sidebar if open
+            if ($('#sidebar').is(':visible')) {
+                closeSidebar1();
+            }
+
+            // Close the second sidebar if open
+            if ($('#sidebar2').is(':visible')) {
+                closeSidebar2();
+            }
+
+            if (selectedDate === '05/07/2023') { // Update the static date format if needed
+                openSidebar1();
+            } else if (selectedDate === '07/07/2023') { // Update the static date format if needed
+                openSidebar2();
+            }
+        });
+
+        function openSidebar1() {
+            $('#sidebar').show();
+        }
+
+        function openSidebar2() {
+            $('#sidebar2').show();
+        }
+
+        // Close the first sidebar when the close button is clicked
+        $('#closeButton').on('click', function () {
+            closeSidebar1();
+        });
+
+        function closeSidebar1() {
+            $('#sidebar').hide();
+        }
+
+        // Close the second sidebar when the close button is clicked
+        $('#closeButton2').on('click', function () {
+            closeSidebar2();
+        });
+
+        function closeSidebar2() {
+            $('#sidebar2').hide();
+        }
+    });
+
+</script>
+

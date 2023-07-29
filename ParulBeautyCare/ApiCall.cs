@@ -29,38 +29,29 @@ namespace ParulBeautyCare
         }
 
         public static string PostApi(string ApiUrl, string model)
-         {
-            try
+        {
+            WebRequest tRequest = WebRequest.Create(ConfigurationManager.AppSettings["BaseUrl"] + ApiUrl);
+            tRequest.UseDefaultCredentials = true;
+            tRequest.Method = "Post";
+            tRequest.ContentType = "application/json";
+            Byte[] byteArray = Encoding.UTF8.GetBytes(model);
+            tRequest.ContentLength = byteArray.Length;
+            using (Stream dataStream = tRequest.GetRequestStream())
             {
-                WebRequest tRequest = WebRequest.Create(ConfigurationManager.AppSettings["BaseUrl"] + ApiUrl);
-                tRequest.UseDefaultCredentials = true;
-                tRequest.Method = "Post";
-                tRequest.ContentType = "application/json";
-                Byte[] byteArray = Encoding.UTF8.GetBytes(model);
-                tRequest.ContentLength = byteArray.Length;
-                using (Stream dataStream = tRequest.GetRequestStream())
+                dataStream.Write(byteArray, 0, byteArray.Length);
+                using (WebResponse tResponse = tRequest.GetResponse())
                 {
-                    dataStream.Write(byteArray, 0, byteArray.Length);
-                    using (WebResponse tResponse = tRequest.GetResponse())
+                    using (Stream dataStreamResponse = tResponse.GetResponseStream())
                     {
-                        using (Stream dataStreamResponse = tResponse.GetResponseStream())
+                        using (StreamReader tReader = new StreamReader(dataStreamResponse))
                         {
-                            using (StreamReader tReader = new StreamReader(dataStreamResponse))
-                            {
-                                var response1 = (HttpWebResponse)tRequest.GetResponse();
-                                var responseString1 = new StreamReader(response1.GetResponseStream()).ReadToEnd();
-                                return responseString1;
-                            }
+                            var response1 = (HttpWebResponse)tRequest.GetResponse();
+                            var responseString1 = new StreamReader(response1.GetResponseStream()).ReadToEnd();
+                            return responseString1;
                         }
                     }
                 }
             }
-            catch (Exception)
-            {
-                HttpContext.Current.Response.Redirect("~/Home/Error500");
-                return null;
-            }
-
         }
     }
 

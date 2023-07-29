@@ -1,7 +1,5 @@
-﻿using ParulBeautyCareViewModel.ViewModel;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -12,7 +10,7 @@ namespace ParulBeautyCare.GeneralClasses
 {
     public abstract class GeneralClass : Controller
     {
-
+        
         public void Success(string message, bool dismissable = false)
         {
             AddAlert(AlertStyles.Success, message, dismissable);
@@ -49,31 +47,9 @@ namespace ParulBeautyCare.GeneralClasses
             TempData[Alert.TempDataKey] = alerts;
         }
 
-        public LoginViewModel LoggedUserDetails
-        {
-            get
-            {
-                LoginViewModel lm = new LoginViewModel();
-                HttpCookie reqCookies = Request.Cookies["LoginMaster"];
-                if (reqCookies != null)
-                {
-                    lm.CompanyCode = reqCookies["CompanyCode"].ToString();
-                    lm.RoleId = Convert.ToInt32(reqCookies["RoleId"]);
-                    lm.UserName = reqCookies["UserName"].ToString();
-                    return lm;
-                }
-                else
-                {
-                    return lm;
-                }
-            }
-        }
-
         public class generalFunctions
         {
             #region ==>GeneralFunctions
-
-
             public static string Encrypt(string toEncrypt, bool useHashing)
             {
                 byte[] keyArray;
@@ -151,73 +127,11 @@ namespace ParulBeautyCare.GeneralClasses
                 return gatime.ToString("yyyy-MM-dd");
             }
 
-
             public static string dateconvert(string strdate)
             {
                 string str = "";
                 str = strdate.Split('-').ElementAt(2) + "-" + strdate.Split('-').ElementAt(1) + "-" + strdate.Split('-').ElementAt(0);
                 return str;
-            }
-
-            //public static string DateConvert(string strDate)
-            //{
-            //    string[] dateParts = strDate.Split('/');
-            //    string convertedDate = dateParts[2] + "-" + dateParts[1] + "-" + dateParts[2];
-            //    return convertedDate;
-            //}
-
-            //convert into dd-MM-YYYY
-            public static string ShortDateConvert(string strDate)
-            {
-                string[] parts = strDate.Split(' '); // Split the string at the space
-                if (parts.Length >= 1)
-                {
-                    strDate = parts[0]; // The date part is the first element in the parts array
-                }
-                return strDate;
-            }
-
-            //Convert Date Time into 2023-07-17 16:12:59.000 formate 
-            //public static string DateTimeConvert(string dateString)
-            //{
-
-            //    DateTime parsedDate = DateTime.ParseExact(dateString, "dd-MM-yyyy hh:mm:ss tt", System.Globalization.CultureInfo.InvariantCulture);
-            //    string formattedDate = parsedDate.ToString("yyyy-MM-dd HH:mm:ss.fff");
-            //    return formattedDate;
-            //}
-            public static string DateTimeConvert(string dateString)
-            {
-                string[] formats = new string[]
-                {
-        "dd-MM-yyyy HH:mm:ss",
-        "dd-MM-yyyy hh:mm:ss tt",
-        "MM-dd-yyyy HH:mm:ss",
-        "MM-dd-yyyy hh:mm:ss tt",
-        "yyyy-MM-dd HH:mm:ss",
-        "yyyy-MM-dd hh:mm:ss tt",
-        "MM/dd/yyyy HH:mm:ss",
-        "MM/dd/yyyy hh:mm:ss tt",
-        "yyyy/MM/dd HH:mm:ss",
-        "yyyy/MM/dd hh:mm:ss tt",
-        "dd MMM yyyy HH:mm:ss",
-        "dd MMM yyyy hh:mm:ss tt",
-        "MMM dd, yyyy HH:mm:ss",
-        "MMM dd, yyyy hh:mm:ss tt",
-        "yyyy MMM dd HH:mm:ss",
-        "yyyy MMM dd hh:mm:ss tt",
-                    // Add more formats here if needed.
-                };
-
-                if (DateTime.TryParseExact(dateString, formats, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime parsedDateTime))
-                {
-                    return parsedDateTime.ToString("yyyy-MM-dd HH:mm:ss.fff");
-                }
-                else
-                {
-                    // If the input dateString is not in any of the specified formats, handle the error as needed.
-                    // For simplicity, we can return an empty string or an error message.
-                    return string.Empty; // or throw an exception or return an error message.
-                }
             }
 
 
@@ -263,6 +177,6 @@ namespace ParulBeautyCare.GeneralClasses
 
         }
 
-
+       
     }
 }
