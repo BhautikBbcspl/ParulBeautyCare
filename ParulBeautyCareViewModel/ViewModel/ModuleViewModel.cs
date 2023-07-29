@@ -26,6 +26,8 @@ namespace ParulBeautyCareViewModel.ViewModel
         public bool selfPage { get; set; }
         public string UpdateUser { get; set; }
         public List<PBModuleMasterRtr_Result> ModuleViewList { get; set; }
+        public List<MenuRightsViewModel> MenuRightsList { get; set; }
+
         public string success { get; set; }
         public string message { get; set; }
         public string result { get; set; }

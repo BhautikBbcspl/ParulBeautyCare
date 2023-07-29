@@ -1,0 +1,122 @@
+﻿@model ParulBeautyCareViewModel.ViewModel.StockMgmtViewModel.ProductMasterViewModel
+@{
+    ViewBag.Title = "Product Master"; 
+    ViewBag.Module = "Master";
+}
+
+<div class="content-wrapper">
+    <div class="row">
+        <div class="col-12 grid-margin">
+            <div class="card">
+                <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+                    <div class="bg-gradient-pinkHeader shadow-primary border-radius-lg pt-4 d-flex justify-content-between">
+                        <h2 class="text-white text-capitalize ps-3 title_margin"><b>Product Master</b></h2>
+                        @*@if (Convert.ToInt32(TempData["ViewRight"]) == 1)
+                        {*@
+                            <a class="btn btn-light btn-icon mb-2 mx-2 title_a" href="@Url.Action("ViewProductMaster", "Master")">
+                                <i class="fa-solid fa-list-check mx-2 text-black"></i><b>View</b>
+                            </a>
+                        @*}*@
+                    </div>
+                </div>
+                <div class="card-body">
+                    @*<div class="row">
+            <div class="d-xl-flex justify-content-between align-items-center">
+                <h1 class="pink"><b>@ViewBag.action Product Master </b></h1>
+                <a class="btn btn-outline-primary btn-round" href="@Url.Action("ViewProductMaster","Master")">
+                    <i class="fa fa-eye mx-2"></i>View Product
+                </a>
+            </div>
+        </div>*@
+                    @using (Html.BeginForm("AddProductMaster", "Master", FormMethod.Post, new { @class = "forms-sample" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.HiddenFor(x => x.Action)
+                        @Html.HiddenFor(x => x.ProductId)
+                        @Html.HiddenFor(x => x.CreateUser)
+                        @Html.HiddenFor(x => x.CreateDate)
+                        <div class="row form-group">
+                            <div class="col-sm-3">
+                                <label for="exampleInputUsername2" class="col-form-label">
+                                    ProductCode
+                                    @Html.ValidationMessageFor(m => m.ProductCode, "", new { @class = "text-danger h3" })
+                                </label>
+
+                                @Html.TextBoxFor(m => m.ProductCode, new Dictionary<string, object>() {
+                                                                            {"id","txtProductCode"},
+                                                                            {"class","form-control"},
+                                                                               {"autocomplete","off"},
+                                                                            {"required","required"},
+                                                                            {"placeholder","Enter ProductCode"}
+                                                                            })
+                            </div>
+                            <div class="col-sm-3">
+                                <label for="exampleInputUsername2" class="col-form-label">
+                                    Product Name
+                                    @Html.ValidationMessageFor(m => m.ProductName, "", new { @class = "text-danger h3" })
+                                </label>
+                                @Html.TextBoxFor(m => m.ProductName, new Dictionary<string, object>() {
+                                                                            {"id","txtProductName"},
+                                                                            {"class","form-control"},
+                                                                               {"autocomplete","off"},
+                                                                            {"required","required"},
+                                                                            {"placeholder","Enter Product Name"}
+                                                                            })
+                            </div>
+                            <div class="col-sm-3">
+                                <label for="exampleInputUsername2" class="col-form-label">
+                                    NumberOfPerson
+                                    @Html.ValidationMessageFor(m => m.NumberOfPerson, "", new { @class = "text-danger h3" })
+                                </label>
+                                @Html.TextBoxFor(m => m.NumberOfPerson, new Dictionary<string, object>() {
+                                                                            {"id","txtNumberOfPerson"},
+                                                                            {"class","form-control numberonly"},
+                                                                               {"autocomplete","off"},
+                                                                            {"required","required"},
+                                                                            {"placeholder","Enter Number Of Person"}
+                                                                            })
+                            </div>
+                            <div class="col-sm-3">
+                                <label for="exampleInputUsername2" class="col-form-label">
+                                    ProductType
+                                    @Html.ValidationMessageFor(m => m.ProductTypeId, "", new { @class = "text-danger h3" })
+                                </label>
+                                @Html.DropDownListFor(model => model.ProductTypeId, new SelectList(Model.ProductTypeMasterList, "ProductTypeId", "ProductTName"), "Select ProductType", new Dictionary<string, object>
+                                          () {
+                                          {"id","ddlProductType"},
+                                          { "class","js-example-basic-single  w-100"},
+                                          {"autocomplete","off"},
+                                          {"required","required"},
+                                          {"placeholder","Enter ProductType"}
+                                           })
+                            </div>
+                        </div>
+                        <div class="row form-group">
+
+                            <div class="col-sm-3">
+                                <label for="exampleInputPassword2" class="col-form-label">IsActive</label>
+                                <div class="input-group input-group-outline mb-3">
+                                    @Html.DropDownListFor(x => x.IsActive, new List<SelectListItem>
+                                           {
+                                               new SelectListItem{ Text="Enable", Value = "true",Selected=true },
+                                               new SelectListItem{ Text="Disable", Value = "false" }
+                                            }, new { @class = "js-example-basic-single  w-100", @id = "IsActive" })
+                                </div>
+                            </div>
+                        </div>
+                        //if (Convert.ToInt32(TempData["InsertRight"]) == 1)
+                        //{
+                            <button type="submit" class="btn btn-primary mr-2 mt-3" value="@ViewBag.action" onclick="return formSubmit('Are You sure you want to save data?')">Submit</button>
+                            @*<button class="btn btn-light">Cancel</button>*@
+                        @*}
+                        else
+                        {
+                            <button type="button" class="btn btn-primary mr-2 mt-3" value="@ViewBag.action" disabled>Submit</button>
+                        }*@
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
