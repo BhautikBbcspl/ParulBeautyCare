@@ -106,10 +106,14 @@ namespace ParulBeautyCare.Controllers
                 mv1 = JsonConvert.DeserializeObject<MenuRightsViewModel>(MenuRtr);
                 if (mv1.MenuRightsList.Count>0)
                 {
-                    ViewBag.ViewRight = mv1.MenuRightsList.FirstOrDefault().ViewRight;
-                    ViewBag.InsertRight = mv1.MenuRightsList.FirstOrDefault().InsertRight;
-                    ViewBag.UpdateRight = mv1.MenuRightsList.FirstOrDefault().UpdateRight;
-                    ViewBag.DeleteRight = mv1.MenuRightsList.FirstOrDefault().DeleteRight;
+                    //ViewBag.ViewRight = mv1.MenuRightsList.FirstOrDefault().ViewRight;
+                    //ViewBag.InsertRight = mv1.MenuRightsList.FirstOrDefault().InsertRight;
+                    //ViewBag.UpdateRight = mv1.MenuRightsList.FirstOrDefault().UpdateRight;
+                    //ViewBag.DeleteRight = mv1.MenuRightsList.FirstOrDefault().DeleteRight;
+                    TempData["ViewRight"] = mv1.MenuRightsList.FirstOrDefault().ViewRight;
+                    TempData["InsertRight"] = mv1.MenuRightsList.FirstOrDefault().InsertRight;
+                    TempData["UpdateRight"] = mv1.MenuRightsList.FirstOrDefault().UpdateRight;
+                    TempData["DeleteRight"] = mv1.MenuRightsList.FirstOrDefault().DeleteRight;
                 }
                 else
                 {
@@ -117,7 +121,7 @@ namespace ParulBeautyCare.Controllers
                     TempData["SweetAlert"] = data;
                     return RedirectToAction("Dashboard", "Home");
                 }
-                if (ViewBag.ViewRight == 1)
+                if (Convert.ToInt32(TempData["ViewRight"]) == 1)
                 {
                 var ModelData = ApiCall.PostApi("ModuleMasterRtr", Newtonsoft.Json.JsonConvert.SerializeObject(mv));
                 mv = JsonConvert.DeserializeObject<ModuleViewModel>(ModelData);
@@ -280,10 +284,14 @@ namespace ParulBeautyCare.Controllers
                 mv1 = JsonConvert.DeserializeObject<MenuRightsViewModel>(MenuRtr);
                 if (mv1.MenuRightsList.Count>0)
                 {
-                    ViewBag.ViewRight = mv1.MenuRightsList.FirstOrDefault().ViewRight;
-                    ViewBag.InsertRight = mv1.MenuRightsList.FirstOrDefault().InsertRight;
-                    ViewBag.UpdateRight = mv1.MenuRightsList.FirstOrDefault().UpdateRight;
-                    ViewBag.DeleteRight = mv1.MenuRightsList.FirstOrDefault().DeleteRight;
+                    //ViewBag.ViewRight = mv1.MenuRightsList.FirstOrDefault().ViewRight;
+                    //ViewBag.InsertRight = mv1.MenuRightsList.FirstOrDefault().InsertRight;
+                    //ViewBag.UpdateRight = mv1.MenuRightsList.FirstOrDefault().UpdateRight;
+                    //ViewBag.DeleteRight = mv1.MenuRightsList.FirstOrDefault().DeleteRight;
+                    TempData["ViewRight"] = mv1.MenuRightsList.FirstOrDefault().ViewRight;
+                    TempData["InsertRight"] = mv1.MenuRightsList.FirstOrDefault().InsertRight;
+                    TempData["UpdateRight"] = mv1.MenuRightsList.FirstOrDefault().UpdateRight;
+                    TempData["DeleteRight"] = mv1.MenuRightsList.FirstOrDefault().DeleteRight;
                 }
                 else
                 {
@@ -454,10 +462,14 @@ namespace ParulBeautyCare.Controllers
                 mv1 = JsonConvert.DeserializeObject<MenuRightsViewModel>(MenuRtr);
                 if (mv1.MenuRightsList.Count>0)
                 {
-                    ViewBag.ViewRight = mv1.MenuRightsList.FirstOrDefault().ViewRight;
-                    ViewBag.InsertRight = mv1.MenuRightsList.FirstOrDefault().InsertRight;
-                    ViewBag.UpdateRight = mv1.MenuRightsList.FirstOrDefault().UpdateRight;
-                    ViewBag.DeleteRight = mv1.MenuRightsList.FirstOrDefault().DeleteRight;
+                    //ViewBag.ViewRight = mv1.MenuRightsList.FirstOrDefault().ViewRight;
+                    //ViewBag.InsertRight = mv1.MenuRightsList.FirstOrDefault().InsertRight;
+                    //ViewBag.UpdateRight = mv1.MenuRightsList.FirstOrDefault().UpdateRight;
+                    //ViewBag.DeleteRight = mv1.MenuRightsList.FirstOrDefault().DeleteRight;
+                    TempData["ViewRight"] = mv1.MenuRightsList.FirstOrDefault().ViewRight;
+                    TempData["InsertRight"] = mv1.MenuRightsList.FirstOrDefault().InsertRight;
+                    TempData["UpdateRight"] = mv1.MenuRightsList.FirstOrDefault().UpdateRight;
+                    TempData["DeleteRight"] = mv1.MenuRightsList.FirstOrDefault().DeleteRight;
                 }
                 else
                 {
@@ -567,10 +579,14 @@ namespace ParulBeautyCare.Controllers
                 mv1 = JsonConvert.DeserializeObject<MenuRightsViewModel>(MenuRtr);
                 if (mv1.MenuRightsList.Count>0)
                 {
-                    ViewBag.ViewRight = mv1.MenuRightsList.FirstOrDefault().ViewRight;
-                    ViewBag.InsertRight = mv1.MenuRightsList.FirstOrDefault().InsertRight;
-                    ViewBag.UpdateRight = mv1.MenuRightsList.FirstOrDefault().UpdateRight;
-                    ViewBag.DeleteRight = mv1.MenuRightsList.FirstOrDefault().DeleteRight;
+                    //ViewBag.ViewRight = mv1.MenuRightsList.FirstOrDefault().ViewRight;
+                    //ViewBag.InsertRight = mv1.MenuRightsList.FirstOrDefault().InsertRight;
+                    //ViewBag.UpdateRight = mv1.MenuRightsList.FirstOrDefault().UpdateRight;
+                    //ViewBag.DeleteRight = mv1.MenuRightsList.FirstOrDefault().DeleteRight;
+                    TempData["ViewRight"] = mv1.MenuRightsList.FirstOrDefault().ViewRight;
+                    TempData["InsertRight"] = mv1.MenuRightsList.FirstOrDefault().InsertRight;
+                    TempData["UpdateRight"] = mv1.MenuRightsList.FirstOrDefault().UpdateRight;
+                    TempData["DeleteRight"] = mv1.MenuRightsList.FirstOrDefault().DeleteRight;
                 }
                 else
                 {

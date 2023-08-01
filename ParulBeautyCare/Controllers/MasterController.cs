@@ -120,16 +120,16 @@ namespace ParulBeautyCare.Controllers
                     sm = JsonConvert.DeserializeObject<DepartmentMasterViewModel>(emplog);
                     msg = sm.result;
                 }
-                if (Type == "YearMaster")
+                if (Type == "SubCategoryMaster")
                 {
-                    YearMasterViewModel sm = new YearMasterViewModel();
-                    sm.Action = "active";
+                    SubCategoryMasterViewModel sm = new SubCategoryMasterViewModel();
+                    sm.Action = "Active";
                     sm.UpdateDate = generalFunctions.getTimeZoneDatetimedb();
                     sm.UpdateUser = User.Identity.Name;
-                    sm.YearId = Code;
+                    sm.SubCategoryId = Code;
                     sm.IsActive = status.Equals("true") ? "1" : "0";
-                    var emplog = ApiCall.PostApi("YearMasterInsUpd", Newtonsoft.Json.JsonConvert.SerializeObject(sm));
-                    sm = JsonConvert.DeserializeObject<YearMasterViewModel>(emplog);
+                    var emplog = ApiCall.PostApi("SubCategoryMasterInsUpd", Newtonsoft.Json.JsonConvert.SerializeObject(sm));
+                    sm = JsonConvert.DeserializeObject<SubCategoryMasterViewModel>(emplog);
                     msg = sm.result;
                 }
                 else
@@ -138,7 +138,7 @@ namespace ParulBeautyCare.Controllers
                 }
                
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 //Danger(ex.Message.ToString(), true);
                 TempData["SweetAlert"] = new { Message = "An error occurred while updating the status.", Type = "error" };
@@ -164,23 +164,23 @@ namespace ParulBeautyCare.Controllers
                 mv1.PageName = url;
                 var MenuRtr = ApiCall.PostApi("MenuRightsRtr", Newtonsoft.Json.JsonConvert.SerializeObject(mv1));
                 mv1 = JsonConvert.DeserializeObject<MenuRightsViewModel>(MenuRtr);
-                //if (mv1.MenuRightsList.Count>0)
-                //{
-                //    //ViewBag.ViewRight = mv1.MenuRightsList.FirstOrDefault().ViewRight;
-                //    //ViewBag.InsertRight = mv1.MenuRightsList.FirstOrDefault().InsertRight;
-                //    //ViewBag.UpdateRight = mv1.MenuRightsList.FirstOrDefault().UpdateRight;
-                //    //ViewBag.DeleteRight = mv1.MenuRightsList.FirstOrDefault().DeleteRight;
-                //    TempData["ViewRight"] = mv1.MenuRightsList.FirstOrDefault().ViewRight;
-                //    TempData["InsertRight"] = mv1.MenuRightsList.FirstOrDefault().InsertRight;
-                //    TempData["UpdateRight"] = mv1.MenuRightsList.FirstOrDefault().UpdateRight;
-                //    TempData["DeleteRight"] = mv1.MenuRightsList.FirstOrDefault().DeleteRight;
-                //}
-                //else
-                //{
-                //    var data = new { Message = "Sorry,You have no rights to access this page", Type = "error" };
-                //    TempData["SweetAlert"] = data;
-                //    return RedirectToAction("Dashboard", "Home");
-                //}
+                if (mv1.MenuRightsList.Count>0)
+                {
+                    //ViewBag.ViewRight = mv1.MenuRightsList.FirstOrDefault().ViewRight;
+                    //ViewBag.InsertRight = mv1.MenuRightsList.FirstOrDefault().InsertRight;
+                    //ViewBag.UpdateRight = mv1.MenuRightsList.FirstOrDefault().UpdateRight;
+                    //ViewBag.DeleteRight = mv1.MenuRightsList.FirstOrDefault().DeleteRight;
+                    TempData["ViewRight"] = mv1.MenuRightsList.FirstOrDefault().ViewRight;
+                    TempData["InsertRight"] = mv1.MenuRightsList.FirstOrDefault().InsertRight;
+                    TempData["UpdateRight"] = mv1.MenuRightsList.FirstOrDefault().UpdateRight;
+                    TempData["DeleteRight"] = mv1.MenuRightsList.FirstOrDefault().DeleteRight;
+                }
+                else
+                {
+                    var data = new { Message = "Sorry,You have no rights to access this page", Type = "error" };
+                    TempData["SweetAlert"] = data;
+                    return RedirectToAction("Dashboard", "Home");
+                }
                 //
                 RoleMasterViewModel mv = new RoleMasterViewModel();
                 mv.Action = "All";
@@ -230,7 +230,6 @@ namespace ParulBeautyCare.Controllers
                     sm.CreateUser = User.Identity.Name;
                     sm.UpdateUser = User.Identity.Name;
                     sm.CompanyCode = LoggedUserDetails.CompanyCode;
-                    sm.RoleName = sm.RoleName.Trim();
                     var emplog = ApiCall.PostApi("RoleMasterInsUpd", Newtonsoft.Json.JsonConvert.SerializeObject(sm));
                     sm = JsonConvert.DeserializeObject<RoleMasterViewModel>(emplog);
                     string msg = sm.result;
@@ -255,7 +254,6 @@ namespace ParulBeautyCare.Controllers
                     sm.UpdateDate = generalFunctions.getTimeZoneDatetimedb();
                     sm.UpdateUser = User.Identity.Name;
                     sm.CompanyCode = LoggedUserDetails.CompanyCode;
-                    sm.RoleName = sm.RoleName.Trim();
                     var emplog = ApiCall.PostApi("RoleMasterInsUpd", Newtonsoft.Json.JsonConvert.SerializeObject(sm));
                     sm = JsonConvert.DeserializeObject<RoleMasterViewModel>(emplog);
                     string msg = sm.result;
@@ -328,23 +326,23 @@ namespace ParulBeautyCare.Controllers
                 mv1.PageName = url;
                 var MenuRtr = ApiCall.PostApi("MenuRightsRtr", Newtonsoft.Json.JsonConvert.SerializeObject(mv1));
                 mv1 = JsonConvert.DeserializeObject<MenuRightsViewModel>(MenuRtr);
-                //if (mv1.MenuRightsList.Count>0)
-                //{
-                //    //ViewBag.ViewRight = mv1.MenuRightsList.FirstOrDefault().ViewRight;
-                //    //ViewBag.InsertRight = mv1.MenuRightsList.FirstOrDefault().InsertRight;
-                //    //ViewBag.UpdateRight = mv1.MenuRightsList.FirstOrDefault().UpdateRight;
-                //    //ViewBag.DeleteRight = mv1.MenuRightsList.FirstOrDefault().DeleteRight;
-                //    TempData["ViewRight"] = mv1.MenuRightsList.FirstOrDefault().ViewRight;
-                //    TempData["InsertRight"] = mv1.MenuRightsList.FirstOrDefault().InsertRight;
-                //    TempData["UpdateRight"] = mv1.MenuRightsList.FirstOrDefault().UpdateRight;
-                //    TempData["DeleteRight"] = mv1.MenuRightsList.FirstOrDefault().DeleteRight;
-                //} 
-                //else
-                //{
-                //    var data = new { Message = "Sorry,You have no rights to access this page", Type = "error" };
-                //    TempData["SweetAlert"] = data;
-                //    return RedirectToAction("Dashboard", "Home");
-                //}
+                if (mv1.MenuRightsList.Count>0)
+                {
+                    //ViewBag.ViewRight = mv1.MenuRightsList.FirstOrDefault().ViewRight;
+                    //ViewBag.InsertRight = mv1.MenuRightsList.FirstOrDefault().InsertRight;
+                    //ViewBag.UpdateRight = mv1.MenuRightsList.FirstOrDefault().UpdateRight;
+                    //ViewBag.DeleteRight = mv1.MenuRightsList.FirstOrDefault().DeleteRight;
+                    TempData["ViewRight"] = mv1.MenuRightsList.FirstOrDefault().ViewRight;
+                    TempData["InsertRight"] = mv1.MenuRightsList.FirstOrDefault().InsertRight;
+                    TempData["UpdateRight"] = mv1.MenuRightsList.FirstOrDefault().UpdateRight;
+                    TempData["DeleteRight"] = mv1.MenuRightsList.FirstOrDefault().DeleteRight;
+                } 
+                else
+                {
+                    var data = new { Message = "Sorry,You have no rights to access this page", Type = "error" };
+                    TempData["SweetAlert"] = data;
+                    return RedirectToAction("Dashboard", "Home");
+                }
                 //
                 StatusMasterViewModel mv = new StatusMasterViewModel();
                 mv.Action = "All";
@@ -394,7 +392,6 @@ namespace ParulBeautyCare.Controllers
                     sm.CreateUser = User.Identity.Name;
                     sm.UpdateUser = User.Identity.Name;
                     sm.CompanyCode = LoggedUserDetails.CompanyCode;
-                    sm.StatusName = sm.StatusName.Trim();
                     var emplog = ApiCall.PostApi("StatusMasterInsUpd", Newtonsoft.Json.JsonConvert.SerializeObject(sm));
                     sm = JsonConvert.DeserializeObject<StatusMasterViewModel>(emplog);
                     string msg = sm.result;
@@ -422,7 +419,6 @@ namespace ParulBeautyCare.Controllers
                     sm.UpdateDate = generalFunctions.getTimeZoneDatetimedb();
                     sm.UpdateUser = User.Identity.Name;
                     sm.CompanyCode = LoggedUserDetails.CompanyCode;
-                    sm.StatusName = sm.StatusName.Trim();
                     var emplog = ApiCall.PostApi("StatusMasterInsUpd", Newtonsoft.Json.JsonConvert.SerializeObject(sm));
                     sm = JsonConvert.DeserializeObject<StatusMasterViewModel>(emplog);
                     string msg = sm.result;
@@ -494,23 +490,23 @@ namespace ParulBeautyCare.Controllers
                 mv1.PageName = url;
                 var MenuRtr = ApiCall.PostApi("MenuRightsRtr", Newtonsoft.Json.JsonConvert.SerializeObject(mv1));
                 mv1 = JsonConvert.DeserializeObject<MenuRightsViewModel>(MenuRtr);
-                //if (mv1.MenuRightsList.Count>0)
-                //{
-                //   // ViewBag.ViewRight = mv1.MenuRightsList.FirstOrDefault().ViewRight;
-                //   // ViewBag.InsertRight = mv1.MenuRightsList.FirstOrDefault().InsertRight;
-                //   // ViewBag.UpdateRight = mv1.MenuRightsList.FirstOrDefault().UpdateRight;
-                //  //  ViewBag.DeleteRight = mv1.MenuRightsList.FirstOrDefault().DeleteRight;
-                //    TempData["ViewRight"] = mv1.MenuRightsList.FirstOrDefault().ViewRight;
-                //    TempData["InsertRight"] = mv1.MenuRightsList.FirstOrDefault().InsertRight;
-                //    TempData["UpdateRight"] = mv1.MenuRightsList.FirstOrDefault().UpdateRight;
-                //    TempData["DeleteRight"] = mv1.MenuRightsList.FirstOrDefault().DeleteRight;
-                //}
-                //else
-                //{
-                //    var data = new { Message = "Sorry,You have no rights to access this page", Type = "error" };
-                //    TempData["SweetAlert"] = data;
-                //    return RedirectToAction("Dashboard", "Home");
-                //}
+                if (mv1.MenuRightsList.Count>0)
+                {
+                   // ViewBag.ViewRight = mv1.MenuRightsList.FirstOrDefault().ViewRight;
+                   // ViewBag.InsertRight = mv1.MenuRightsList.FirstOrDefault().InsertRight;
+                   // ViewBag.UpdateRight = mv1.MenuRightsList.FirstOrDefault().UpdateRight;
+                  //  ViewBag.DeleteRight = mv1.MenuRightsList.FirstOrDefault().DeleteRight;
+                    TempData["ViewRight"] = mv1.MenuRightsList.FirstOrDefault().ViewRight;
+                    TempData["InsertRight"] = mv1.MenuRightsList.FirstOrDefault().InsertRight;
+                    TempData["UpdateRight"] = mv1.MenuRightsList.FirstOrDefault().UpdateRight;
+                    TempData["DeleteRight"] = mv1.MenuRightsList.FirstOrDefault().DeleteRight;
+                }
+                else
+                {
+                    var data = new { Message = "Sorry,You have no rights to access this page", Type = "error" };
+                    TempData["SweetAlert"] = data;
+                    return RedirectToAction("Dashboard", "Home");
+                }
                 //
                 TimeSlotMasterViewModel mv = new TimeSlotMasterViewModel();
                 mv.Action = "All";
@@ -559,7 +555,6 @@ namespace ParulBeautyCare.Controllers
                     sm.CreateUser = User.Identity.Name;
                     sm.UpdateUser = User.Identity.Name;
                     sm.CompanyCode = LoggedUserDetails.CompanyCode;
-                    sm.SlotName = sm.SlotName.Trim();
                     var emplog = ApiCall.PostApi("TimeSlotMasterInsUpd", Newtonsoft.Json.JsonConvert.SerializeObject(sm));
                     sm = JsonConvert.DeserializeObject<TimeSlotMasterViewModel>(emplog);
                     string msg = sm.result;
@@ -584,7 +579,6 @@ namespace ParulBeautyCare.Controllers
                     sm.UpdateDate = generalFunctions.getTimeZoneDatetimedb();
                     sm.UpdateUser = User.Identity.Name;
                     sm.CompanyCode = LoggedUserDetails.CompanyCode;
-                    sm.SlotName = sm.SlotName.Trim();
                     var emplog = ApiCall.PostApi("TimeSlotMasterInsUpd", Newtonsoft.Json.JsonConvert.SerializeObject(sm));
                     sm = JsonConvert.DeserializeObject<TimeSlotMasterViewModel>(emplog);
                     string msg = sm.result;
@@ -655,23 +649,23 @@ namespace ParulBeautyCare.Controllers
                 mv1.PageName = url;
                 var MenuRtr = ApiCall.PostApi("MenuRightsRtr", Newtonsoft.Json.JsonConvert.SerializeObject(mv1));
                 mv1 = JsonConvert.DeserializeObject<MenuRightsViewModel>(MenuRtr);
-                //if (mv1.MenuRightsList.Count>0)
-                //{
-                //    //ViewBag.ViewRight = mv1.MenuRightsList.FirstOrDefault().ViewRight;
-                //    //ViewBag.InsertRight = mv1.MenuRightsList.FirstOrDefault().InsertRight;
-                //    //ViewBag.UpdateRight = mv1.MenuRightsList.FirstOrDefault().UpdateRight;
-                //    //ViewBag.DeleteRight = mv1.MenuRightsList.FirstOrDefault().DeleteRight;
-                //    TempData["ViewRight"] = mv1.MenuRightsList.FirstOrDefault().ViewRight;
-                //    TempData["InsertRight"] = mv1.MenuRightsList.FirstOrDefault().InsertRight;
-                //    TempData["UpdateRight"] = mv1.MenuRightsList.FirstOrDefault().UpdateRight;
-                //    TempData["DeleteRight"] = mv1.MenuRightsList.FirstOrDefault().DeleteRight;
-                //}
-                //else
-                //{
-                //    var data = new { Message = "Sorry,You have no rights to access this page", Type = "error" };
-                //    TempData["SweetAlert"] = data;
-                //    return RedirectToAction("Dashboard", "Home");
-                //}
+                if (mv1.MenuRightsList.Count>0)
+                {
+                    //ViewBag.ViewRight = mv1.MenuRightsList.FirstOrDefault().ViewRight;
+                    //ViewBag.InsertRight = mv1.MenuRightsList.FirstOrDefault().InsertRight;
+                    //ViewBag.UpdateRight = mv1.MenuRightsList.FirstOrDefault().UpdateRight;
+                    //ViewBag.DeleteRight = mv1.MenuRightsList.FirstOrDefault().DeleteRight;
+                    TempData["ViewRight"] = mv1.MenuRightsList.FirstOrDefault().ViewRight;
+                    TempData["InsertRight"] = mv1.MenuRightsList.FirstOrDefault().InsertRight;
+                    TempData["UpdateRight"] = mv1.MenuRightsList.FirstOrDefault().UpdateRight;
+                    TempData["DeleteRight"] = mv1.MenuRightsList.FirstOrDefault().DeleteRight;
+                }
+                else
+                {
+                    var data = new { Message = "Sorry,You have no rights to access this page", Type = "error" };
+                    TempData["SweetAlert"] = data;
+                    return RedirectToAction("Dashboard", "Home");
+                }
                 //
                 CategoryMasterViewModel mv = new CategoryMasterViewModel();
                 mv.Action = "All";
@@ -720,7 +714,6 @@ namespace ParulBeautyCare.Controllers
                     sm.CreateUser = User.Identity.Name;
                     sm.UpdateUser = User.Identity.Name;
                     sm.CompanyCode = LoggedUserDetails.CompanyCode;
-                    sm.CategoryName = sm.CategoryName.Trim();
                     var emplog = ApiCall.PostApi("CategoryMasterInsUpd", Newtonsoft.Json.JsonConvert.SerializeObject(sm));
                     sm = JsonConvert.DeserializeObject<CategoryMasterViewModel>(emplog);
                     string msg = sm.result;
@@ -745,7 +738,6 @@ namespace ParulBeautyCare.Controllers
                     sm.UpdateDate = generalFunctions.getTimeZoneDatetimedb();
                     sm.UpdateUser = User.Identity.Name;
                     sm.CompanyCode = LoggedUserDetails.CompanyCode;
-                    sm.CategoryName = sm.CategoryName.Trim();
                     var emplog = ApiCall.PostApi("CategoryMasterInsUpd", Newtonsoft.Json.JsonConvert.SerializeObject(sm));
                     sm = JsonConvert.DeserializeObject<CategoryMasterViewModel>(emplog);
                     string msg = sm.result;
@@ -819,23 +811,23 @@ namespace ParulBeautyCare.Controllers
                 mv1.PageName = url;
                 var MenuRtr = ApiCall.PostApi("MenuRightsRtr", Newtonsoft.Json.JsonConvert.SerializeObject(mv1));
                 mv1 = JsonConvert.DeserializeObject<MenuRightsViewModel>(MenuRtr);
-                //if (mv1.MenuRightsList.Count>0)
-                //{
-                //    //ViewBag.ViewRight = mv1.MenuRightsList.FirstOrDefault().ViewRight;
-                //    //ViewBag.InsertRight = mv1.MenuRightsList.FirstOrDefault().InsertRight;
-                //    //ViewBag.UpdateRight = mv1.MenuRightsList.FirstOrDefault().UpdateRight;
-                //    //ViewBag.DeleteRight = mv1.MenuRightsList.FirstOrDefault().DeleteRight;
-                //    TempData["ViewRight"] = mv1.MenuRightsList.FirstOrDefault().ViewRight;
-                //    TempData["InsertRight"] = mv1.MenuRightsList.FirstOrDefault().InsertRight;
-                //    TempData["UpdateRight"] = mv1.MenuRightsList.FirstOrDefault().UpdateRight;
-                //    TempData["DeleteRight"] = mv1.MenuRightsList.FirstOrDefault().DeleteRight;
-                //}
-                //else
-                //{
-                //    var data = new { Message = "Sorry,You have no rights to access this page", Type = "error" };
-                //    TempData["SweetAlert"] = data;
-                //    return RedirectToAction("Dashboard", "Home");
-                //}
+                if (mv1.MenuRightsList.Count>0)
+                {
+                    //ViewBag.ViewRight = mv1.MenuRightsList.FirstOrDefault().ViewRight;
+                    //ViewBag.InsertRight = mv1.MenuRightsList.FirstOrDefault().InsertRight;
+                    //ViewBag.UpdateRight = mv1.MenuRightsList.FirstOrDefault().UpdateRight;
+                    //ViewBag.DeleteRight = mv1.MenuRightsList.FirstOrDefault().DeleteRight;
+                    TempData["ViewRight"] = mv1.MenuRightsList.FirstOrDefault().ViewRight;
+                    TempData["InsertRight"] = mv1.MenuRightsList.FirstOrDefault().InsertRight;
+                    TempData["UpdateRight"] = mv1.MenuRightsList.FirstOrDefault().UpdateRight;
+                    TempData["DeleteRight"] = mv1.MenuRightsList.FirstOrDefault().DeleteRight;
+                }
+                else
+                {
+                    var data = new { Message = "Sorry,You have no rights to access this page", Type = "error" };
+                    TempData["SweetAlert"] = data;
+                    return RedirectToAction("Dashboard", "Home");
+                }
                 //
                 StaffMasterViewModel mv = new StaffMasterViewModel();
                 mv.Action = "All";
@@ -1008,23 +1000,23 @@ namespace ParulBeautyCare.Controllers
                 mv1.PageName = url;
                 var MenuRtr = ApiCall.PostApi("MenuRightsRtr", Newtonsoft.Json.JsonConvert.SerializeObject(mv1));
                 mv1 = JsonConvert.DeserializeObject<MenuRightsViewModel>(MenuRtr);
-                //if (mv1.MenuRightsList.Count>0)
-                //{
-                //    //ViewBag.ViewRight = mv1.MenuRightsList.FirstOrDefault().ViewRight;
-                //    //ViewBag.InsertRight = mv1.MenuRightsList.FirstOrDefault().InsertRight;
-                //    //ViewBag.UpdateRight = mv1.MenuRightsList.FirstOrDefault().UpdateRight;
-                //    //ViewBag.DeleteRight = mv1.MenuRightsList.FirstOrDefault().DeleteRight;
-                //    TempData["ViewRight"] = mv1.MenuRightsList.FirstOrDefault().ViewRight;
-                //    TempData["InsertRight"] = mv1.MenuRightsList.FirstOrDefault().InsertRight;
-                //    TempData["UpdateRight"] = mv1.MenuRightsList.FirstOrDefault().UpdateRight;
-                //    TempData["DeleteRight"] = mv1.MenuRightsList.FirstOrDefault().DeleteRight;
-                //}
-                //else
-                //{
-                //    var data = new { Message = "Sorry,You have no rights to access this page", Type = "error" };
-                //    TempData["SweetAlert"] = data;
-                //    return RedirectToAction("Dashboard", "Home");
-                //}
+                if (mv1.MenuRightsList.Count>0)
+                {
+                    //ViewBag.ViewRight = mv1.MenuRightsList.FirstOrDefault().ViewRight;
+                    //ViewBag.InsertRight = mv1.MenuRightsList.FirstOrDefault().InsertRight;
+                    //ViewBag.UpdateRight = mv1.MenuRightsList.FirstOrDefault().UpdateRight;
+                    //ViewBag.DeleteRight = mv1.MenuRightsList.FirstOrDefault().DeleteRight;
+                    TempData["ViewRight"] = mv1.MenuRightsList.FirstOrDefault().ViewRight;
+                    TempData["InsertRight"] = mv1.MenuRightsList.FirstOrDefault().InsertRight;
+                    TempData["UpdateRight"] = mv1.MenuRightsList.FirstOrDefault().UpdateRight;
+                    TempData["DeleteRight"] = mv1.MenuRightsList.FirstOrDefault().DeleteRight;
+                }
+                else
+                {
+                    var data = new { Message = "Sorry,You have no rights to access this page", Type = "error" };
+                    TempData["SweetAlert"] = data;
+                    return RedirectToAction("Dashboard", "Home");
+                }
                 //
                 ProductTypeMasterViewModel mv = new ProductTypeMasterViewModel();
                 mv.Action = "All";
@@ -1073,7 +1065,6 @@ namespace ParulBeautyCare.Controllers
                     sm.CreateUser = User.Identity.Name;
                     sm.UpdateUser = User.Identity.Name;
                     sm.CompanyCode = LoggedUserDetails.CompanyCode;
-                    sm.ProductTName = sm.ProductTName.Trim();
                     var emplog = ApiCall.PostApi("ProductTypeMasterInsUpd", Newtonsoft.Json.JsonConvert.SerializeObject(sm));
                     sm = JsonConvert.DeserializeObject<ProductTypeMasterViewModel>(emplog);
                     string msg = sm.result;
@@ -1098,7 +1089,6 @@ namespace ParulBeautyCare.Controllers
                     sm.UpdateDate = generalFunctions.getTimeZoneDatetimedb();
                     sm.UpdateUser = User.Identity.Name;
                     sm.CompanyCode = LoggedUserDetails.CompanyCode;
-                    sm.ProductTName = sm.ProductTName.Trim();
                     var emplog = ApiCall.PostApi("ProductTypeMasterInsUpd", Newtonsoft.Json.JsonConvert.SerializeObject(sm));
                     sm = JsonConvert.DeserializeObject<ProductTypeMasterViewModel>(emplog);
                     string msg = sm.result;
@@ -1171,23 +1161,23 @@ namespace ParulBeautyCare.Controllers
                 mv1.PageName = url;
                 var MenuRtr = ApiCall.PostApi("MenuRightsRtr", Newtonsoft.Json.JsonConvert.SerializeObject(mv1));
                 mv1 = JsonConvert.DeserializeObject<MenuRightsViewModel>(MenuRtr);
-                //if (mv1.MenuRightsList.Count>0)
-                //{
+                if (mv1.MenuRightsList.Count>0)
+                {
                     //ViewBag.ViewRight = mv1.MenuRightsList.FirstOrDefault().ViewRight;
                     //ViewBag.InsertRight = mv1.MenuRightsList.FirstOrDefault().InsertRight;
                     //ViewBag.UpdateRight = mv1.MenuRightsList.FirstOrDefault().UpdateRight;
                     //ViewBag.DeleteRight = mv1.MenuRightsList.FirstOrDefault().DeleteRight;
-                    //TempData["ViewRight"] = mv1.MenuRightsList.FirstOrDefault().ViewRight;
-                    //TempData["InsertRight"] = mv1.MenuRightsList.FirstOrDefault().InsertRight;
-                    //TempData["UpdateRight"] = mv1.MenuRightsList.FirstOrDefault().UpdateRight;
-                    //TempData["DeleteRight"] = mv1.MenuRightsList.FirstOrDefault().DeleteRight;
-                //}
-                //else
-                //{
-                //    var data = new { Message = "Sorry,You have no rights to access this page", Type = "error" };
-                //    TempData["SweetAlert"] = data;
-                //    return RedirectToAction("Dashboard", "Home");
-                //}
+                    TempData["ViewRight"] = mv1.MenuRightsList.FirstOrDefault().ViewRight;
+                    TempData["InsertRight"] = mv1.MenuRightsList.FirstOrDefault().InsertRight;
+                    TempData["UpdateRight"] = mv1.MenuRightsList.FirstOrDefault().UpdateRight;
+                    TempData["DeleteRight"] = mv1.MenuRightsList.FirstOrDefault().DeleteRight;
+                }
+                else
+                {
+                    var data = new { Message = "Sorry,You have no rights to access this page", Type = "error" };
+                    TempData["SweetAlert"] = data;
+                    return RedirectToAction("Dashboard", "Home");
+                }
                 //
                 ProductMasterViewModel mv = new ProductMasterViewModel();
                 mv.Action = "All";
@@ -1254,7 +1244,6 @@ namespace ParulBeautyCare.Controllers
                     sm.CreateUser = User.Identity.Name;
                     sm.UpdateUser = User.Identity.Name;
                     sm.CompanyCode = LoggedUserDetails.CompanyCode;
-                    sm.ProductName = sm.ProductName.Trim();
                     var emplog = ApiCall.PostApi("ProductMasterInsUpd", Newtonsoft.Json.JsonConvert.SerializeObject(sm));
                     sm = JsonConvert.DeserializeObject<ProductMasterViewModel>(emplog);
                     string msg = sm.result;
@@ -1279,7 +1268,6 @@ namespace ParulBeautyCare.Controllers
                     sm.UpdateDate = generalFunctions.getTimeZoneDatetimedb();
                     sm.UpdateUser = User.Identity.Name;
                     sm.CompanyCode = LoggedUserDetails.CompanyCode;
-                    sm.ProductName = sm.ProductName.Trim();
                     var emplog = ApiCall.PostApi("ProductMasterInsUpd", Newtonsoft.Json.JsonConvert.SerializeObject(sm));
                     sm = JsonConvert.DeserializeObject<ProductMasterViewModel>(emplog);
                     string msg = sm.result;
@@ -1362,23 +1350,23 @@ namespace ParulBeautyCare.Controllers
                 mv1.PageName = url;
                 var MenuRtr = ApiCall.PostApi("MenuRightsRtr", Newtonsoft.Json.JsonConvert.SerializeObject(mv1));
                 mv1 = JsonConvert.DeserializeObject<MenuRightsViewModel>(MenuRtr);
-                //if (mv1.MenuRightsList.Count>0)
-                //{
-                //    //ViewBag.ViewRight = mv1.MenuRightsList.FirstOrDefault().ViewRight;
-                //    //ViewBag.InsertRight = mv1.MenuRightsList.FirstOrDefault().InsertRight;
-                //    //ViewBag.UpdateRight = mv1.MenuRightsList.FirstOrDefault().UpdateRight;
-                //    //ViewBag.DeleteRight = mv1.MenuRightsList.FirstOrDefault().DeleteRight;
-                //    TempData["ViewRight"] = mv1.MenuRightsList.FirstOrDefault().ViewRight;
-                //    TempData["InsertRight"] = mv1.MenuRightsList.FirstOrDefault().InsertRight;
-                //    TempData["UpdateRight"] = mv1.MenuRightsList.FirstOrDefault().UpdateRight;
-                //    TempData["DeleteRight"] = mv1.MenuRightsList.FirstOrDefault().DeleteRight;
-                //}
-                //else
-                //{
-                //    var data = new { Message = "Sorry,You have no rights to access this page", Type = "error" };
-                //    TempData["SweetAlert"] = data;
-                //    return RedirectToAction("Dashboard", "Home");
-                //}
+                if (mv1.MenuRightsList.Count>0)
+                {
+                    //ViewBag.ViewRight = mv1.MenuRightsList.FirstOrDefault().ViewRight;
+                    //ViewBag.InsertRight = mv1.MenuRightsList.FirstOrDefault().InsertRight;
+                    //ViewBag.UpdateRight = mv1.MenuRightsList.FirstOrDefault().UpdateRight;
+                    //ViewBag.DeleteRight = mv1.MenuRightsList.FirstOrDefault().DeleteRight;
+                    TempData["ViewRight"] = mv1.MenuRightsList.FirstOrDefault().ViewRight;
+                    TempData["InsertRight"] = mv1.MenuRightsList.FirstOrDefault().InsertRight;
+                    TempData["UpdateRight"] = mv1.MenuRightsList.FirstOrDefault().UpdateRight;
+                    TempData["DeleteRight"] = mv1.MenuRightsList.FirstOrDefault().DeleteRight;
+                }
+                else
+                {
+                    var data = new { Message = "Sorry,You have no rights to access this page", Type = "error" };
+                    TempData["SweetAlert"] = data;
+                    return RedirectToAction("Dashboard", "Home");
+                }
                 //
                 SubCategoryMasterViewModel mv = new SubCategoryMasterViewModel();
                 mv.Action = "All";
@@ -1446,7 +1434,6 @@ namespace ParulBeautyCare.Controllers
                     sm.CreateUser = User.Identity.Name;
                     sm.UpdateUser = User.Identity.Name;
                     sm.CompanyCode = LoggedUserDetails.CompanyCode;
-                    sm.SubCategoryName = sm.SubCategoryName.Trim();
                     var emplog = ApiCall.PostApi("SubCategoryMasterInsUpd", Newtonsoft.Json.JsonConvert.SerializeObject(sm));
                     sm = JsonConvert.DeserializeObject<SubCategoryMasterViewModel>(emplog);
                     string msg = sm.result;
@@ -1471,7 +1458,6 @@ namespace ParulBeautyCare.Controllers
                     sm.UpdateDate = generalFunctions.getTimeZoneDatetimedb();
                     sm.UpdateUser = User.Identity.Name;
                     sm.CompanyCode = LoggedUserDetails.CompanyCode;
-                    sm.SubCategoryName = sm.SubCategoryName.Trim();
                     var emplog = ApiCall.PostApi("SubCategoryMasterInsUpd", Newtonsoft.Json.JsonConvert.SerializeObject(sm));
                     sm = JsonConvert.DeserializeObject<SubCategoryMasterViewModel>(emplog);
                     string msg = sm.result;
@@ -1566,23 +1552,23 @@ namespace ParulBeautyCare.Controllers
                 mv1.PageName = url;
                 var MenuRtr = ApiCall.PostApi("MenuRightsRtr", Newtonsoft.Json.JsonConvert.SerializeObject(mv1));
                 mv1 = JsonConvert.DeserializeObject<MenuRightsViewModel>(MenuRtr);
-                //if (mv1.MenuRightsList.Count>0)
-                //{
-                //    //ViewBag.ViewRight = mv1.MenuRightsList.FirstOrDefault().ViewRight;
-                //    //ViewBag.InsertRight = mv1.MenuRightsList.FirstOrDefault().InsertRight;
-                //    //ViewBag.UpdateRight = mv1.MenuRightsList.FirstOrDefault().UpdateRight;
-                //    //ViewBag.DeleteRight = mv1.MenuRightsList.FirstOrDefault().DeleteRight;
-                //    TempData["ViewRight"] = mv1.MenuRightsList.FirstOrDefault().ViewRight;
-                //    TempData["InsertRight"] = mv1.MenuRightsList.FirstOrDefault().InsertRight;
-                //    TempData["UpdateRight"] = mv1.MenuRightsList.FirstOrDefault().UpdateRight;
-                //    TempData["DeleteRight"] = mv1.MenuRightsList.FirstOrDefault().DeleteRight;
-                //}
-                //else
-                //{
-                //    var data = new { Message = "Sorry,You have no rights to access this page", Type = "error" };
-                //    TempData["SweetAlert"] = data;
-                //    return RedirectToAction("Dashboard", "Home");
-                //}
+                if (mv1.MenuRightsList.Count>0)
+                {
+                    //ViewBag.ViewRight = mv1.MenuRightsList.FirstOrDefault().ViewRight;
+                    //ViewBag.InsertRight = mv1.MenuRightsList.FirstOrDefault().InsertRight;
+                    //ViewBag.UpdateRight = mv1.MenuRightsList.FirstOrDefault().UpdateRight;
+                    //ViewBag.DeleteRight = mv1.MenuRightsList.FirstOrDefault().DeleteRight;
+                    TempData["ViewRight"] = mv1.MenuRightsList.FirstOrDefault().ViewRight;
+                    TempData["InsertRight"] = mv1.MenuRightsList.FirstOrDefault().InsertRight;
+                    TempData["UpdateRight"] = mv1.MenuRightsList.FirstOrDefault().UpdateRight;
+                    TempData["DeleteRight"] = mv1.MenuRightsList.FirstOrDefault().DeleteRight;
+                }
+                else
+                {
+                    var data = new { Message = "Sorry,You have no rights to access this page", Type = "error" };
+                    TempData["SweetAlert"] = data;
+                    return RedirectToAction("Dashboard", "Home");
+                }
                 //
                 YearMasterViewModel mv = new YearMasterViewModel();
                 mv.Action = "All";
@@ -1635,7 +1621,6 @@ namespace ParulBeautyCare.Controllers
                     sm.CompanyCode = LoggedUserDetails.CompanyCode;
                     sm.ToDate = generalFunctions.dateconvert(sm.ToDate);
                     sm.FromDate = generalFunctions.dateconvert(sm.FromDate);
-                    sm.Yearperiod = sm.Yearperiod.Trim();
                     var emplog = ApiCall.PostApi("YearMasterInsUpd", Newtonsoft.Json.JsonConvert.SerializeObject(sm));
                     sm = JsonConvert.DeserializeObject<YearMasterViewModel>(emplog);
                     string msg = sm.result;
@@ -1662,7 +1647,6 @@ namespace ParulBeautyCare.Controllers
                     sm.CompanyCode = LoggedUserDetails.CompanyCode;
                     sm.ToDate = generalFunctions.dateconvert(sm.ToDate);
                     sm.FromDate = generalFunctions.dateconvert(sm.FromDate);
-                    sm.Yearperiod = sm.Yearperiod.Trim();
                     var emplog = ApiCall.PostApi("YearMasterInsUpd", Newtonsoft.Json.JsonConvert.SerializeObject(sm));
                     sm = JsonConvert.DeserializeObject<YearMasterViewModel>(emplog);
                     string msg = sm.result;
@@ -1737,23 +1721,23 @@ namespace ParulBeautyCare.Controllers
                 mv1.PageName = url;
                 var MenuRtr = ApiCall.PostApi("MenuRightsRtr", Newtonsoft.Json.JsonConvert.SerializeObject(mv1));
                 mv1 = JsonConvert.DeserializeObject<MenuRightsViewModel>(MenuRtr);
-                //if (mv1.MenuRightsList.Count>0)
-                //{
-                //    //ViewBag.ViewRight = mv1.MenuRightsList.FirstOrDefault().ViewRight;
-                //    //ViewBag.InsertRight = mv1.MenuRightsList.FirstOrDefault().InsertRight;
-                //    //ViewBag.UpdateRight = mv1.MenuRightsList.FirstOrDefault().UpdateRight;
-                //    //ViewBag.DeleteRight = mv1.MenuRightsList.FirstOrDefault().DeleteRight;
-                //    TempData["ViewRight"] = mv1.MenuRightsList.FirstOrDefault().ViewRight;
-                //    TempData["InsertRight"] = mv1.MenuRightsList.FirstOrDefault().InsertRight;
-                //    TempData["UpdateRight"] = mv1.MenuRightsList.FirstOrDefault().UpdateRight;
-                //    TempData["DeleteRight"] = mv1.MenuRightsList.FirstOrDefault().DeleteRight;
-                //}
-                //else
-                //{
-                //    var data = new { Message = "Sorry,You have no rights to access this page", Type = "error" };
-                //    TempData["SweetAlert"] = data;
-                //    return RedirectToAction("Dashboard", "Home");
-                //}
+                if (mv1.MenuRightsList.Count>0)
+                {
+                    //ViewBag.ViewRight = mv1.MenuRightsList.FirstOrDefault().ViewRight;
+                    //ViewBag.InsertRight = mv1.MenuRightsList.FirstOrDefault().InsertRight;
+                    //ViewBag.UpdateRight = mv1.MenuRightsList.FirstOrDefault().UpdateRight;
+                    //ViewBag.DeleteRight = mv1.MenuRightsList.FirstOrDefault().DeleteRight;
+                    TempData["ViewRight"] = mv1.MenuRightsList.FirstOrDefault().ViewRight;
+                    TempData["InsertRight"] = mv1.MenuRightsList.FirstOrDefault().InsertRight;
+                    TempData["UpdateRight"] = mv1.MenuRightsList.FirstOrDefault().UpdateRight;
+                    TempData["DeleteRight"] = mv1.MenuRightsList.FirstOrDefault().DeleteRight;
+                }
+                else
+                {
+                    var data = new { Message = "Sorry,You have no rights to access this page", Type = "error" };
+                    TempData["SweetAlert"] = data;
+                    return RedirectToAction("Dashboard", "Home");
+                }
                 //
                 DepartmentMasterViewModel mv = new DepartmentMasterViewModel();
                 mv.Action = "All";
@@ -1803,7 +1787,6 @@ namespace ParulBeautyCare.Controllers
                     sm.CreateUser = User.Identity.Name;
                     sm.UpdateUser = User.Identity.Name;
                     sm.CompanyCode = LoggedUserDetails.CompanyCode;
-                    sm.DepartmentName = sm.DepartmentName.Trim();
                     var emplog = ApiCall.PostApi("DepartmentMasterInsUpd", Newtonsoft.Json.JsonConvert.SerializeObject(sm));
                     sm = JsonConvert.DeserializeObject<DepartmentMasterViewModel>(emplog);
                     string msg = sm.result;
@@ -1828,7 +1811,6 @@ namespace ParulBeautyCare.Controllers
                     sm.UpdateDate = generalFunctions.getTimeZoneDatetimedb();
                     sm.UpdateUser = User.Identity.Name;
                     sm.CompanyCode = LoggedUserDetails.CompanyCode;
-                    sm.DepartmentName = sm.DepartmentName.Trim();
                     var emplog = ApiCall.PostApi("DepartmentMasterInsUpd", Newtonsoft.Json.JsonConvert.SerializeObject(sm));
                     sm = JsonConvert.DeserializeObject<DepartmentMasterViewModel>(emplog);
                     string msg = sm.result;

@@ -5,6 +5,9 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="parulbeautycareModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <Function Name="PBAvailableStockRtr" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="staffid" Type="nvarchar" Mode="In" />
+        </Function>
         <Function Name="PBBookingInsert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="BookingId" Type="nvarchar" Mode="In" />
           <Parameter Name="CustomerId" Type="nvarchar" Mode="In" />
@@ -266,6 +269,17 @@
           <Parameter Name="action" Type="nvarchar" Mode="In" />
           <Parameter Name="companycode" Type="nvarchar" Mode="In" />
           <Parameter Name="purchaseid" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="PBStockTransferInsert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="StockHeaderId" Type="nvarchar" Mode="In" />
+          <Parameter Name="TransferDate" Type="nvarchar" Mode="In" />
+          <Parameter Name="FromStaffId" Type="nvarchar" Mode="In" />
+          <Parameter Name="ToStaffId" Type="nvarchar" Mode="In" />
+          <Parameter Name="CreateDate" Type="nvarchar" Mode="In" />
+          <Parameter Name="CreateUser" Type="nvarchar" Mode="In" />
+          <Parameter Name="UpdateDate" Type="nvarchar" Mode="In" />
+          <Parameter Name="UpdateUser" Type="nvarchar" Mode="In" />
+          <Parameter Name="action" Type="nvarchar" Mode="In" />
         </Function>
         <Function Name="PBSubCategoryMasterInsUpd" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="SubCategoryId" Type="nvarchar" Mode="In" />
@@ -643,6 +657,20 @@
             <Parameter Name="Status" Mode="In" Type="String" />
             <Parameter Name="action" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="PBAvailableStockRtr" ReturnType="Collection(parulbeautycareModel.PBAvailableStockRtr_Result)">
+          <Parameter Name="staffid" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="PBStockTransferInsert">
+            <Parameter Name="StockHeaderId" Mode="In" Type="String" />
+            <Parameter Name="TransferDate" Mode="In" Type="String" />
+            <Parameter Name="FromStaffId" Mode="In" Type="String" />
+            <Parameter Name="ToStaffId" Mode="In" Type="String" />
+            <Parameter Name="CreateDate" Mode="In" Type="String" />
+            <Parameter Name="CreateUser" Mode="In" Type="String" />
+            <Parameter Name="UpdateDate" Mode="In" Type="String" />
+            <Parameter Name="UpdateUser" Mode="In" Type="String" />
+            <Parameter Name="action" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="PBCategoryMasterRetrieve_Result">
           <Property Type="Int32" Name="CategoryId" Nullable="false" />
@@ -877,6 +905,17 @@
           <Property Type="Decimal" Name="Qty" Nullable="true" Precision="18" Scale="2" />
           <Property Type="String" Name="AllocationDate" Nullable="true" MaxLength="10" />
           <Property Type="String" Name="StaffName" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="PBAvailableStockRtr_Result">
+          <Property Type="Int32" Name="StockDetailId" Nullable="false" />
+          <Property Type="Int32" Name="ProductId" Nullable="true" />
+          <Property Type="String" Name="ProductName" Nullable="true" MaxLength="50" />
+          <Property Type="Decimal" Name="availstock" Nullable="false" Precision="19" Scale="2" />
+          <Property Type="String" Name="AutoSrNo" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Barcode" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="NoOfPerson" Nullable="false" />
+          <Property Type="Int32" Name="availperson" Nullable="false" />
+          <Property Type="Int32" Name="StockAllocationId" Nullable="true" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1212,6 +1251,22 @@
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="PBStockAllocationMasterInsUpd" FunctionName="parulbeautycareModel.Store.PBStockAllocationMasterInsUpd" />
           <FunctionImportMapping FunctionImportName="PBBookingInsert" FunctionName="parulbeautycareModel.Store.PBBookingInsert" />
+          <FunctionImportMapping FunctionImportName="PBAvailableStockRtr" FunctionName="parulbeautycareModel.Store.PBAvailableStockRtr">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="parulbeautycareModel.PBAvailableStockRtr_Result">
+                <ScalarProperty Name="StockDetailId" ColumnName="StockDetailId" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+                <ScalarProperty Name="availstock" ColumnName="availstock" />
+                <ScalarProperty Name="AutoSrNo" ColumnName="AutoSrNo" />
+                <ScalarProperty Name="Barcode" ColumnName="Barcode" />
+                <ScalarProperty Name="NoOfPerson" ColumnName="NoOfPerson" />
+                <ScalarProperty Name="availperson" ColumnName="availperson" />
+                <ScalarProperty Name="StockAllocationId" ColumnName="StockAllocationId" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="PBStockTransferInsert" FunctionName="parulbeautycareModel.Store.PBStockTransferInsert" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

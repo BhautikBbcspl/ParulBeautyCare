@@ -1,10 +1,12 @@
 ﻿using ParulBeautyCareAPI.Models.Logs;
 using ParulBeautyCareDbClasses.DataModels;
+using ParulBeautyCareDbClasses.DataModels.ParulBeautyCareDatasetTableAdapters;
 using ParulBeautyCareViewModel.ViewModel;
 using ParulBeautyCareViewModel.ViewModel.Master;
 using ParulBeautyCareViewModel.ViewModel.StockMgmtViewModel;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -95,7 +97,7 @@ namespace ParulBeautyCareAPI.Controllers
             {
                 using (parulbeautycareEntities db = new parulbeautycareEntities())
                 {
-                    sm.result = db.PBModuleMasterInsUpd(sm.ModuleId, sm.ModuleName == null ? "" : sm.ModuleName, sm.selfPage.ToString() == null ? "" : sm.selfPage.ToString(), sm.ModulePriority, sm.FaIcon, sm.IsActive, sm.CreateDate, sm.UpdateDate, sm.CreateUser, sm.UpdateUser, sm.Action).FirstOrDefault();
+                    sm.result = db.PBModuleMasterInsUpd(sm.ModuleId, sm.ModuleName == null ? "" : sm.ModuleName.Trim(), sm.selfPage.ToString() == null ? "" : sm.selfPage.ToString(), sm.ModulePriority, sm.FaIcon, sm.IsActive, sm.CreateDate, sm.UpdateDate, sm.CreateUser, sm.UpdateUser, sm.Action).FirstOrDefault();
                     var response = Request.CreateResponse(HttpStatusCode.OK, sm);
                     sm.success = "true";
                 }
@@ -139,7 +141,7 @@ namespace ParulBeautyCareAPI.Controllers
             {
                 using (parulbeautycareEntities db = new parulbeautycareEntities())
                 {
-                    sm.result = db.PBPageMasterInsUpd(sm.PageId, sm.PageName, sm.PageUrl.ToString(), sm.CreateDate, sm.CreateUser, sm.IsActive, sm.PagePriority, sm.UpdateDate, sm.UpdateUser, sm.Action).FirstOrDefault();
+                    sm.result = db.PBPageMasterInsUpd(sm.PageId, sm.PageName.Trim(), sm.PageUrl.ToString(), sm.CreateDate, sm.CreateUser, sm.IsActive, sm.PagePriority, sm.UpdateDate, sm.UpdateUser, sm.Action).FirstOrDefault();
                     var response = Request.CreateResponse(HttpStatusCode.OK, sm);
                     sm.success = "true";
                 }
@@ -323,7 +325,7 @@ namespace ParulBeautyCareAPI.Controllers
             {
                 using (parulbeautycareEntities db = new parulbeautycareEntities())
                 {
-                    sm.result = db.PBRoleMasterInsUpd(sm.RoleId, sm.RoleName, sm.CompanyCode, sm.IsActive, sm.CreateDate, sm.UpdateDate, sm.CreateUser, sm.Action).FirstOrDefault();
+                    sm.result = db.PBRoleMasterInsUpd(sm.RoleId, sm.RoleName.Trim(), sm.CompanyCode, sm.IsActive, sm.CreateDate, sm.UpdateDate, sm.CreateUser, sm.Action).FirstOrDefault();
                     var response = Request.CreateResponse(HttpStatusCode.OK, sm);
                     sm.success = "true";
                 }
@@ -826,7 +828,6 @@ namespace ParulBeautyCareAPI.Controllers
         }
         #endregion
 
-
         #region ==> Stock Allocation
 
         [HttpPost]
@@ -885,6 +886,111 @@ namespace ParulBeautyCareAPI.Controllers
         }
         #endregion
 
+        #region ==> Stock Transfer
+        [HttpPost]
+        [Route("api/parulbeautycareAPI/AvailableStockRetrieve")]
+        public IHttpActionResult AvailableStockRetrieve([FromBody] StockTransferHeaderViewModel savm)
+        {
+            iNotifyLogger obj = new iNotifyLogger();
+            try
+            {
+
+                using (parulbeautycareEntities db = new parulbeautycareEntities())
+                {
+                    savm.AvailableStockList = db.PBAvailableStockRtr(savm.FromStaffId).ToList();
+                    var response = Request.CreateResponse(HttpStatusCode.OK, savm);
+                    savm.success = "true";
+                }
+            }
+            catch (Exception e)
+            {
+                savm.success = "false";
+                savm.message = e.Message;
+                obj.LogMessage("APIController", "StockPurchaseRetrieve", e.Message, iNotifyLogger.LogType.Exception);
+            }
+            return Json(savm);
+        }
+
+        [HttpPost]
+        [Route("api/parulbeautycareAPI/StockTransferIns")]
+        public IHttpActionResult StockTransferIns([FromBody] StockTransferHeaderViewModel sthvm)
+        {
+            iNotifyLogger obj = new iNotifyLogger();
+
+            try
+            {
+                //        DataTable dt = new DataTable();
+                //        dt.Columns.AddRange(
+                //            new DataColumn[8] {
+                //new DataColumn("StockDetailId", typeof(string)),
+                //new DataColumn("StockHeaderId", typeof(string)),
+                //new DataColumn("ProductId", typeof(string)),
+                //new DataColumn("Qty", typeof(string)),
+                //new DataColumn("TotalPerson", typeof(string)),
+                //new DataColumn("PersonAvailable", typeof(string)),
+                //new DataColumn("AutoSrNo", typeof(string)),
+                //new DataColumn("Barcode", typeof(string))
+                //            });
+
+                //        if (sthvm.StockTransferTypeTable != null && sthvm.StockTransferTypeTable.Any())
+                //        {
+                //            foreach (var item in sthvm.StockTransferTypeTable)
+                //            {
+                //                dt.Rows.Add(
+                //                    item.StockDetailId,
+                //                    item.StockHeaderId,
+                //                    item.ProductId,
+                //                    item.Qty,
+                //                    item.TotalPerson,
+                //                    item.PersonAvailable,
+                //                    item.AutoSrNo,
+                //                    item.Barcode
+                //                );
+                //            }
+                //        }
+                DataTable dt = new DataTable();
+                dt.Columns.AddRange(
+                       new DataColumn[8] {
+                new DataColumn("StockDetailId", typeof(string)),
+                new DataColumn("StockHeaderId", typeof(string)),
+                new DataColumn("ProductId", typeof(string)),
+                new DataColumn("Qty", typeof(string)),
+                new DataColumn("TotalPerson", typeof(string)),
+                new DataColumn("PersonAvailable", typeof(string)),
+                new DataColumn("AutoSrNo", typeof(string)),
+                new DataColumn("Barcode", typeof(string))
+                       });
+                if (sthvm.StockTransferTypeTable != null)
+                {
+                    foreach (StockTransferTypeViewModel item in sthvm.StockTransferTypeTable)
+                    {
+                        string StockDetailId = item.StockDetailId;
+                        string StockHeaderId = item.StockHeaderId;
+                        string ProductId = item.ProductId;
+                        string Qty = item.Qty;
+                        string TotalPerson = item.TotalPerson;
+                        string PersonAvailable = item.PersonAvailable;
+                        string AutoSrNo = item.AutoSrNo;
+                        string Barcode = item.Barcode;
+                        dt.Rows.Add(StockDetailId, StockHeaderId, ProductId, Qty, TotalPerson, PersonAvailable, AutoSrNo, Barcode);
+                    }
+                }
+
+                QueriesTableAdapter re = new QueriesTableAdapter();
+                sthvm.result = re.PBStockTransferInsert(sthvm.StockHeaderId, sthvm.TransferDate, sthvm.FromStaffId, sthvm.ToStaffId, sthvm.CreateDate, sthvm.CreateUser, sthvm.UpdateDate, sthvm.UpdateUser, sthvm.Action, dt).ToString();
+                var response = Request.CreateResponse(HttpStatusCode.OK, sthvm);
+                sthvm.success = "true";
+
+            }/*{ "Error converting data type nvarchar to numeric.\r\nThe data for table-valued parameter \"@type\" doesn't conform to the table type of the parameter. SQL Server error is: 8114, state: 5\r\nThe statement has been terminated."}*/
+            catch (Exception e)
+            {
+                sthvm.success = "false";
+                sthvm.message = e.Message;
+                obj.LogMessage("APIController", "StockPurchaseInsUpd", e.Message, iNotifyLogger.LogType.Exception);
+            }
+            return Json(sthvm);
+        }
+        #endregion
 
         #endregion
 

@@ -52,7 +52,7 @@ div.dataTables_wrapper div.dataTables_filter {
   margin-right:50px;
 }
 .dataTables_wrapper .dataTables_length, .dataTables_wrapper .dataTables_filter, .dataTables_wrapper .dataTables_processing, .dataTables_wrapper .dataTables_paginate {
-    color: #888888 !important;
+    color: #001737 !important;
     border-radius: 1rem !important;
     padding: 0.125rem 0 !important;
     margin-bottom: 0.35rem !important;

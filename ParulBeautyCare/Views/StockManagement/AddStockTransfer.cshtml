@@ -1,0 +1,299 @@
+﻿@model ParulBeautyCareViewModel.ViewModel.StockMgmtViewModel.StockTransferHeaderViewModel
+@{
+    ViewBag.Title = "Stock Transfer";
+    ViewBag.Module = "Stock Management";
+}
+<div class="content-wrapper">
+    <div class="row">
+        <div class="col-12 grid-margin">
+            <div class="card">
+                <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+                    <div class="bg-gradient-pinkHeader shadow-primary border-radius-lg pt-3 d-flex justify-content-between">
+                        <h2 class="text-white text-capitalize ps-3 title_margin"><b>STOCK TRANSFER</b></h2>
+
+
+                        @*@if (Convert.ToInt32(TempData["ViewRight"]) == 1)
+                            {*@
+                        @*<a class="btn btn-light btn-icon mb-2 mx-2 title_a" href="@Url.Action("ViewStockTransfer","StockManagement")">
+                                <i class="fa-solid fa-list-check mx-2 text-black"></i><b>View</b>
+                            </a>*@
+                        @*<a class="dedcription-btn anc" href="@Url.Action("ViewStockTransfer","StockManagement")">
+                                <span class="name-descripeion"> <b> VIEW RECORDS</b> </span>
+                                <div class="btn-icon brain">
+                                    <i class="fa-solid fa-list-check"> </i>
+                                </div>
+                            </a>*@
+                        @*}*@
+                    </div>
+                </div>
+                <div class="card-body">
+
+                    @using (Html.BeginForm("AddStockTransfer", "StockManagement", FormMethod.Post, new { @class = "forms-sample", id = "myForm" }))
+                    {
+                        @Html.AntiForgeryToken();
+                        @*@Html.HiddenFor(m => m.StockAllocationId)*@
+
+                        <div class="row form-group">
+                            <div class="col-sm-3">
+                                <label class="col-form-label">
+                                    From Staff Member
+                                    @Html.ValidationMessageFor(m => m.FromStaffId, "", new { @class = "text-danger h3" })
+                                </label>
+
+                                <div class="input-group input-group-outline mb-3">
+                                    @Html.DropDownListFor(m => m.FromStaffId, new SelectList(Model.StaffList, "StaffId", "StaffName"), "Select Staff Member",
+                                 new Dictionary<string, object>() {
+                                                   {"id","ddlStaffId"},
+                                                   { "class","form-control form-select js-example-basic-single w-100"}
+                                     })
+                                </div>
+                            </div>
+
+                            <div class="col-sm-3">
+                                <label class="col-form-label">
+                                    To Staff Member
+                                    @Html.ValidationMessageFor(m => m.ToStaffId, "", new { @class = "text-danger h3" })
+                                </label>
+
+                                <div class="input-group input-group-outline mb-3">
+                                    @Html.DropDownListFor(m => m.ToStaffId, new SelectList(Model.StaffList, "StaffId", "StaffName"), "Select Staff Member",
+                                new Dictionary<string, object>() {
+                                                  {"id","ddlStaff2Id"},
+                                                  { "class","form-control form-select js-example-basic-single w-100"}
+                                    })
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                        <button type="submit" class="btn btn-primary mr-2 mt-3" onclick="return formSubmit('Are You sure you want to save data?')">Submit</button>
+                      
+                        <!--Available Stock List-->
+                        <div class="row mt-5">
+                            <div class="col-12">
+                                <div class="table-responsive">
+                                    <table id="base-style" class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    @Html.DisplayName("Action")
+                                                </th>
+                                                <th>
+                                                    @Html.DisplayName("Product Name")
+                                                </th>
+                                                <th>
+                                                    @Html.DisplayName("Available Stock")
+                                                </th>
+                                                <th>
+                                                    @Html.DisplayName("Barcode")
+                                                </th>
+                                                <th>
+                                                    @Html.DisplayName("No of Person")
+                                                </th>
+                                                <th>
+                                                    @Html.DisplayName("Available Person")
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var item in Model.AvailableStockList)
+                                            {
+                                                <tr>
+                                                    <td>
+                                                        <div class="form-check">
+                                                            <label class="form-check-label">
+                                                                <input type="checkbox" class="form-check-input" name="selectedIds" value="@item.StockDetailId" />
+                                                            </label>
+                                                        </div>
+                                                    </td>
+
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.ProductName)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.availstock)
+                                                    </td>
+                                                    <td>
+                                                        <img src="data:image/png;base64,@item.Barcode" alt="Barcode Image" />
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.NoOfPerson)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.availperson)
+                                                    </td>
+                                                </tr>
+                                            }
+
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <!---->
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Without Ajax-->
+<script>
+        $(document).ready(function () {
+            debugger
+            var originalToStaffOptions = $('#ddlStaff2Id').html();
+            var selectedStaffId = $('#ddlStaffId').val()
+            if (selectedStaffId != "")
+            {
+                updateToStaffDropdown(selectedStaffId);
+            }
+
+
+            $('#ddlStaffId').change(function () {
+                debugger
+                var selectedStaffId = $(this).val();
+                updateToStaffDropdown(selectedStaffId);
+
+                if (selectedStaffId != "") {
+                    var form = $('#myForm');
+                    var currentAction = form.attr('action');
+                    var newAction = currentAction.replace('/StockManagement/AddStockTransfer', '/StockManagement/StockAvailable?id=' + selectedStaffId);
+                    form.attr('action', newAction);
+                    form.submit();
+                }
+            });
+
+            function updateToStaffDropdown(selectedStaffId) {
+                debugger
+                if ($('#ddlStaff2Id').val() === selectedStaffId) {
+                    debugger
+                    $('#ddlStaff2Id option[value="' + selectedStaffId + '"]').remove();
+                }
+                $('#ddlStaff2Id').html(originalToStaffOptions); // Restore original options
+                $('#ddlStaff2Id option[value="' + selectedStaffId + '"]').remove(); // Remove selected option
+            }
+
+        });
+    </script>
+@*<script>
+    $(document).ready(function () {
+        debugger
+        var originalToStaffOptions = $('#ddlStaff2Id').html();
+        var selectedStaffId = $('#ddlStaffId').val()
+        if (selectedStaffId != "") {
+            updateToStaffDropdown(selectedStaffId);
+        }
+
+        $('#ddlStaffId').change(function () {
+            debugger
+            var selectedStaffId = $(this).val();
+            updateToStaffDropdown(selectedStaffId);
+
+            if (selectedStaffId != "") {
+                var form = $('#myForm');
+                var currentAction = form.attr('action');
+                var newAction = currentAction.replace('/StockManagement/AddStockTransfer', '/StockManagement/StockAvailable?id=' + selectedStaffId);
+                form.attr('action', newAction);
+                // form.submit(); // Removed this form submission here
+            }
+        });
+
+        $('#myForm').submit(function (e) {
+            debugger
+            var toStaffId = $('#ddlStaff2Id').val();
+            if (toStaffId === null) {
+                debugger
+                e.preventDefault(); // Prevent form submission
+                alert('Please select the "To Staff Member"');
+                return false; // Prevent form submission entirely
+            }
+            return true; // Allow form submission if everything is valid
+        });
+
+        function updateToStaffDropdown(selectedStaffId) {
+            debugger
+            if ($('#ddlStaff2Id').val() === selectedStaffId) {
+                debugger
+                $('#ddlStaff2Id option[value="' + selectedStaffId + '"]').remove();
+            }
+            $('#ddlStaff2Id').html(originalToStaffOptions); // Restore original options
+            $('#ddlStaff2Id option[value="' + selectedStaffId + '"]').remove(); // Remove selected option
+        }
+    });
+</script>*@
+<!--Using Ajax with table design-->
+@*<script>
+    $(document).ready(function () {
+        var originalToStaffOptions = $('#ddlStaff2Id').html();
+        var selectedStaffId = $('#ddlStaffId').val();
+        if (selectedStaffId != "") {
+            updateToStaffDropdown(selectedStaffId);
+        }
+         $('#ddlStaffId').change(function () {
+                var selectedStaffId = $(this).val();
+                updateToStaffDropdown(selectedStaffId);
+
+                // Make an AJAX call to the StockAvailable action
+                $.ajax({
+                    url: '@Url.Action("StockAvailable", "StockManagement")',
+                    data: { id: selectedStaffId },
+                    type: 'GET',
+                    success: function (data) {
+                        // Update "To Staff Member" dropdown options
+                        $('#ddlStaff2Id').html(originalToStaffOptions);
+                        $('#ddlStaff2Id option[value="' + selectedStaffId + '"]').remove();
+
+                        // Clear the existing table body
+                        $('#base-style tbody').empty();
+
+                        // Iterate through the received data and update the table
+                        $.each(data, function (index, item) {
+                            var row = '<tr>' +
+                                '<td>' +
+                                '<div class="form-check">' +
+                                '<label class="form-check-label">' +
+                                '<input type="checkbox" class="form-check-input" name="selectedIds" value="' + item.StockDetailId + '" />' +
+                                '</label>' +
+                                '</div>' +
+                                '</td>' +
+                                '<td>' + item.ProductName + '</td>' +
+                                '<td>' + item.availstock + '</td>' +
+                                '<td><img src="data:image/png;base64,' + item.Barcode + '" alt="Barcode Image" /></td>' +
+                                '<td>' + item.NoOfPerson + '</td>' +
+                                '<td>' + item.availperson + '</td>' +
+                                '</tr>';
+
+                            $('#base-style tbody').append(row);
+                        });
+                    },
+                    error: function (xhr, status, error) {
+                        // Handle error if needed
+                    }
+                });
+            });
+        
+        function updateToStaffDropdown(selectedStaffId) {
+            if ($('#ddlStaff2Id').val() === selectedStaffId) {
+                $('#ddlStaff2Id option[value="' + selectedStaffId + '"]').remove();
+            }
+            $('#ddlStaff2Id').html(originalToStaffOptions); // Restore original options
+            $('#ddlStaff2Id option[value="' + selectedStaffId + '"]').remove(); // Remove selected option
+        }
+
+        // Button click event handler NOt Included
+        //$('#submitBtn').click(function (event) {
+        //    event.preventDefault(); // Prevent the default form submission
+
+        //    var form = $('#myForm');
+        //    if (form[0].checkValidity()) {
+        //        // If the form is valid, submit the form
+        //        form.submit();
+        //    } else {
+        //        // If the form is invalid, show validation errors
+        //        form.addClass('was-validated');
+        //    }
+        //});
+    });
+</script>*@

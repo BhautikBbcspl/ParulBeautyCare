@@ -3,19 +3,24 @@
     ViewBag.Title = "Staff Master";
     ViewBag.Module = "Master";
 }
-
 <div class="content-wrapper">
     <div class="row">
         <div class="col-12 grid-margin">
             <div class="card">
                 <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
-                    <div class="bg-gradient-pinkHeader shadow-primary border-radius-lg pt-4 d-flex justify-content-between">
-                        <h2 class="text-white text-capitalize ps-3 title_margin"><b>Staff Master</b></h2>
+                    <div class="bg-gradient-pinkHeader shadow-primary border-radius-lg pt-3 d-flex justify-content-between row">
+                        <h2 class="text-white text-capitalize ps-3 title_margin col-md-6"><b>Staff Master</b></h2>
                         @*@if (Convert.ToInt32(TempData["ViewRight"]) == 1)
-                        {*@
-                            <a class="btn btn-light btn-icon mb-2 mx-2 title_a" href="@Url.Action("ViewStaffMaster", "Master")">
-                                <i class="fa-solid fa-list-check mx-2 text-black"></i><b>View</b>
-                            </a>
+        {*@
+                        @*<a class="btn btn-light btn-icon mb-2 mx-2 title_a" href="@Url.Action("ViewStaffMaster", "Master")">
+                            <i class="fa-solid fa-list-check mx-2 text-black"></i><b>View</b>
+                        </a>*@
+                        <a class="dedcription-btn anc col-md-6" href="@Url.Action("ViewStaffMaster","Master")">
+                            <span class="name-descripeion"> <b> VIEW RECORDS</b> </span>
+                            <div class="btn-icon brain">
+                                <i class="fa-solid fa-list-check"> </i>
+                            </div>
+                        </a>
                         @*}*@
                     </div>
                 </div>
@@ -38,13 +43,13 @@
                         <div class="row form-group">
                             <div class="col-sm-3">
                                 <label for="exampleInputUsername2" class="col-form-label">
-                                    StaffCode
-                                    @Html.ValidationMessageFor(m => m.StaffCode, "", new { @class = "text-danger h3" })
+                                    Staff Code
+                                    @Html.ValidationMessageFor(m => m.StaffCode, "", new { @class = "text-danger" })
                                 </label>
 
                                 @Html.TextBoxFor(m => m.StaffCode, new Dictionary<string, object>() {
                                                                             {"id","txtstaffcode"},
-                                                                            {"class","form-control"},
+                                                                            {"class","form-control text-capitalize"},
                                                                                {"autocomplete","off"},
                                                                             {"required","required"},
                                                                             {"placeholder","Enter Staffcode"}
@@ -53,12 +58,12 @@
                             <div class="col-sm-3">
                                 <label for="exampleInputUsername2" class="col-form-label">
                                     Staff Name
-                                    @Html.ValidationMessageFor(m => m.StaffName, "", new { @class = "text-danger h3" })
+                                    @Html.ValidationMessageFor(m => m.StaffName, "", new { @class = "text-danger" })
                                 </label>
 
                                 @Html.TextBoxFor(m => m.StaffName, new Dictionary<string, object>() {
                                                                             {"id","txtstaffname"},
-                                                                            {"class","form-control"},
+                                                                            {"class","form-control text-capitalize"},
                                                                                {"autocomplete","off"},
                                                                             {"required","required"},
                                                                             {"placeholder","Enter Staff Name"}
@@ -67,11 +72,11 @@
                             <div class="col-sm-3">
                                 <label for="exampleInputUsername2" class="col-form-label">
                                     Contact No
-                                    @Html.ValidationMessageFor(m => m.Contact, "", new { @class = "text-danger h3" })
+                                    @Html.ValidationMessageFor(m => m.Contact, "", new { @class = "text-danger" })
                                 </label>
                                 @Html.TextBoxFor(m => m.Contact, new Dictionary<string, object>() {
                                                                             {"id","txtcontact"},
-                                                                            {"class","form-control numberonly"},
+                                                                            {"class","form-control contacterror"},
                                                                                {"autocomplete","off"},
                                                                             {"required","required"},
                                                                             {"placeholder","Enter Contact Number"}
@@ -80,7 +85,7 @@
                             <div class="col-sm-3">
                                 <label for="exampleInputPassword2" class="col-form-label">
                                     Gender
-                                    @Html.ValidationMessageFor(m => m.Gender, "", new { @class = "text-danger h3" })
+                                    @Html.ValidationMessageFor(m => m.Gender, "", new { @class = "text-danger" })
                                 </label>
                                 <div class="input-group input-group-outline mb-3">
                                     @Html.DropDownListFor(model => model.Gender, new SelectList(ViewBag.list), "Select Gender", htmlAttributes: new { @class = "js-example-basic-single  w-100" })
@@ -92,20 +97,22 @@
                             <div class="col-sm-3">
                                 <label for="exampleInputUsername2" class="col-form-label">
                                     Password
-                                    @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger h3" })
+                                    @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
                                 </label>
                                 @Html.TextBoxFor(m => m.Password, new Dictionary<string, object>() {
                                                                             {"id","txtpassword"},
                                                                             {"class","form-control"},
                                                                                {"autocomplete","off"},
                                                                             {"required","required"},
+                                                                                {"type","password"},
                                                                             {"placeholder","Enter Password"}
                                                                             })
+                                <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
                             </div>
                             <div class="col-sm-3">
                                 <label for="exampleInputUsername2" class="col-form-label">
                                     Role
-                                    @Html.ValidationMessageFor(m => m.RoleId, "", new { @class = "text-danger h3" })
+                                    @Html.ValidationMessageFor(m => m.RoleId, "", new { @class = "text-danger" })
                                 </label>
                                 @Html.DropDownListFor(model => model.RoleId, new SelectList(Model.RoleMasterList, "RoleId", "RoleName"), "Select Role", new Dictionary<string, object>
                                           () {

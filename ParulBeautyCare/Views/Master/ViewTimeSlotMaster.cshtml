@@ -7,15 +7,21 @@
 <div class="content-wrapper">
     <div class="card">
         <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
-            <div class="bg-gradient-pinkHeader shadow-primary border-radius-lg pt-4 d-flex justify-content-between">
-                <h2 class="text-white text-capitalize ps-3 title_margin"><b>Time Slot Master</b></h2>
-                @*@if (Convert.ToInt32(TempData["InsertRight"]) == 1)
-                {*@
-                    <a class="btn btn-light btn-icon mb-2 mx-2 title_a" href="@Url.Action("AddTimeSlotMaster", "Master")">
+            <div class="bg-gradient-pinkHeader shadow-primary border-radius-lg pt-3 d-flex justify-content-between row">
+                <h2 class="text-white text-capitalize ps-3 title_margin col-md-6"><b>Time Slot Master</b></h2>
+                @if (Convert.ToInt32(TempData["InsertRight"]) == 1)
+                {
+                    @*<a class="btn btn-light btn-icon mb-2 mx-2 title_a" href="@Url.Action("AddTimeSlotMaster", "Master")">
                         <i class="fa fa-plus mx-2 text-black"></i><b>Add</b>
+                    </a>*@
+                    <a class="dedcription-btn anc col-md-6" href="@Url.Action("AddTimeSlotMaster","Master")">
+                        <span class="name-descripeion"> <b> ADD RECORDS</b> </span>
+                        <div class="btn-icon brain">
+                            <i class="fas fa-plus"> </i>
+                        </div>
                     </a>
-                @*}*@
-                </div>
+                }
+            </div>
         </div>
         <div class="card-body">
             @*<h1 class="pink"><b>STAFF MANAGEMENT </b></h1>*@
@@ -29,8 +35,7 @@
             </div>*@
             <div class="row">
                 <div class="col-12">
-                    <div class="table-responsive">
-                        <table id="base-style" class="table table-striped">
+                        <table id="Mybase-style" class="table table-striped">
                             <thead>
                                 <tr>
                                     @*<th>
@@ -51,9 +56,9 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @*@if (Convert.ToInt32(TempData["ViewRight"]) == 1)
-                                {*@
-                                    @foreach (var item in Model)
+                                @if (Convert.ToInt32(TempData["ViewRight"]) == 1)
+                                {
+                                    foreach (var item in Model)
                                     {
                                         <tr>
                                             @*<td>
@@ -80,7 +85,7 @@
                                             <td> @Html.DisplayFor(modelItem => item.CreateUser)</td>
                                         </tr>
                                     }
-                                @*}
+                                }
                                 else
                                 {
                                     <tr>
@@ -89,11 +94,10 @@
                                         <td></td>
                                         <td></td>
                                     </tr>
-                                }*@
+                                }
                             </tbody>
                         </table>
                     </div>
-                </div>
             </div>
         </div>
     </div>

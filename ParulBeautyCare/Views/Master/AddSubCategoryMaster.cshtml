@@ -1,6 +1,7 @@
 ﻿@model ParulBeautyCareViewModel.ViewModel.Master.SubCategoryMasterViewModel
 @{
-    ViewBag.Title = "AddSubCategoryMaster";
+    ViewBag.Title = "Sub-Category Master";
+    ViewBag.Module = "Master";
 }
 
 <div class="content-wrapper">
@@ -8,13 +9,19 @@
         <div class="col-12 grid-margin">
             <div class="card">
                 <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
-                    <div class="bg-gradient-pinkHeader shadow-primary border-radius-lg pt-4 d-flex justify-content-between">
-                        <h2 class="text-white text-capitalize ps-3 title_margin"><b>Sub Category Master</b></h2>
+                    <div class="bg-gradient-pinkHeader shadow-primary border-radius-lg pt-3 d-flex justify-content-between row">
+                        <h2 class="text-white text-capitalize ps-3 title_margin col-md-6"><b>Sub Category Master</b></h2>
                         @*@if (Convert.ToInt32(TempData["ViewRight"]) == 1)
-                        {*@
-                            <a class="btn btn-light btn-icon mb-2 mx-2 title_a" href="@Url.Action("ViewSubCategoryMaster", "Master")">
-                                <i class="fa-solid fa-list-check mx-2 text-black"></i><b>View</b>
-                            </a>
+        {*@
+                        @*<a class="btn btn-light btn-icon mb-2 mx-2 title_a" href="@Url.Action("ViewSubCategoryMaster", "Master")">
+            <i class="fa-solid fa-list-check mx-2 text-black"></i><b>View</b>
+        </a>*@
+                        <a class="dedcription-btn anc col-md-6" href="@Url.Action("ViewSubCategoryMaster","Master")">
+                            <span class="name-descripeion"> <b> VIEW RECORDS</b> </span>
+                            <div class="btn-icon brain">
+                                <i class="fa-solid fa-list-check"> </i>
+                            </div>
+                        </a>
                         @*}*@
                     </div>
                 </div>
@@ -27,7 +34,7 @@
                 </a>
             </div>
         </div>*@
-                    @using (Html.BeginForm("AddSubCategoryMaster", "Master", FormMethod.Post))
+                    @using (Html.BeginForm("AddSubCategoryMaster", "Master", FormMethod.Post, new { @class = "forms-sample" }))
                     {
                         @Html.AntiForgeryToken()
                         @Html.HiddenFor(x => x.Action)
@@ -57,30 +64,34 @@
 
                                 @Html.TextBoxFor(m => m.SubCategoryName, new Dictionary<string, object>() {
                                                                             {"id","txtSubCategoryName"},
-                                                                            {"class","form-control"},
+                                                                            {"class","form-control text-capitalize"},
                                                                                {"autocomplete","off"},
                                                                             {"required","required"},
                                                                             {"placeholder","Enter SubCategory Name"}
                                                                             })
                             </div>
                             <div class="col-sm-3">
-                                <label for="exampleInputPassword2" class="col-form-label">IsMultiPerson</label>
+                                <label for="exampleInputPassword2" class="col-form-label">
+                                    Is Multiple Person Can Use ?
+                                </label>
                                 <div class="input-group input-group-outline mb-3">
                                     @Html.DropDownListFor(x => x.IsMultiPerson, new List<SelectListItem>
                                          {
-                                               new SelectListItem{ Text="Enable", Value = "true",Selected=true },
-                                               new SelectListItem{ Text="Disable", Value = "false" }
+                                               new SelectListItem{ Text="Yes", Value = "true",Selected=true },
+                                               new SelectListItem{ Text="No", Value = "false" }
                                             }, new { @class = "js-example-basic-single  w-100", @id = "IsMultiPerson" })
                                 </div>
                             </div>
                             <div class="col-sm-3" id="divtxtNumberOfPerson">
-                                <label for="exampleInputUsername2" class="col-form-label">Number Of Person</label>
+                                <label for="exampleInputUsername2" class="col-form-label">
+                                    Number Of Person
+                                    @Html.ValidationMessageFor(m => m.NumberOfPerson, "", new { @class = "text-danger" })
+                                </label>
                                 @Html.TextBoxFor(m => m.NumberOfPerson, new Dictionary<string, object>() {
                                                                             {"id","txtNumberOfPerson"},
-                                                                            {"class","form-control"},
+                                                                            {"class","form-control text-capitalize"},
                                                                                {"autocomplete","off"},
-                                                                            {"required","required"},
-                                                                            {"placeholder","Enter Person Number"}
+                                                                            {"placeholder","Enter How Many NUmber Of Person Can Use"}
                                                                             })
                             </div>
                         </div>
@@ -106,7 +117,7 @@
                                 </label>
                                 @Html.TextBoxFor(m => m.NoOfSitting, new Dictionary<string, object>() {
                                                                    {"id","txtNumberOfSitting"},
-                                                                   {"class","form-control"},
+                                                                   {"class","form-control text-capitalize"},
                                                                       {"autocomplete","off"},
                                                                    {"required","required"},
                                                                    {"placeholder","Enter Sitting Number"}
@@ -119,7 +130,7 @@
                                 </label>
                                 @Html.TextBoxFor(m => m.TimeDuraion, new Dictionary<string, object>() {
                                                                    {"id","txtTimeDuraion"},
-                                                                   {"class","form-control"},
+                                                                   {"class","form-control text-capitalize"},
                                                                       {"autocomplete","off"},
                                                                    {"required","required"},
                                                                    {"placeholder","Enter Time Duraion"}
@@ -132,7 +143,7 @@
                                 </label>
                                 @Html.TextBoxFor(m => m.Amount, new Dictionary<string, object>() {
                                                                    {"id","txtAmount"},
-                                                                   {"class","form-control"},
+                                                                   {"class","form-control numberonly"},
                                                                       {"autocomplete","off"},
                                                                    {"required","required"},
                                                                    {"placeholder","Enter Amount"}
@@ -151,15 +162,9 @@
                                 </div>
                             </div>
                         </div>
-                        //if (Convert.ToInt32(TempData["InsertRight"]) == 1)
-                        //{
-                            <button type="submit" class="btn btn-primary mr-2 mt-3" value="@ViewBag.action" onclick="return formSubmit('Are You sure you want to save data?')">Submit</button>
-                            @*<button class="btn btn-light">Cancel</button>*@
-                        @*}
-                        else
-                        {
-                            <button type="button" class="btn btn-primary mr-2 mt-3" value="@ViewBag.action" disabled>Submit</button>
-                        }*@
+                        @*<button type="submit" class="btn btn-primary mr-2 mt-3" value="@ViewBag.action">Submit</button>*@
+
+                        <button type="submit" class="btn btn-primary mr-2 mt-3" onclick="return formSubmit('Are You sure you want to save data?')">Submit</button>
                     }
                 </div>
             </div>

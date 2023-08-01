@@ -1184,5 +1184,55 @@ namespace ParulBeautyCareDbClasses.DataModels
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PBBookingInsert", bookingIdParameter, customerIdParameter, contactNoParameter, customerNameParameter, addressParameter, bookDateParameter, createDateParameter, createUserParameter, updateDateParameter, updateUserParameter, noOfPersonParameter, totalAmountParameter, discountPercParameter, discountParameter, finalAmountParameter, advanceBookingChargeParameter, paidAmountParameter, companyCodeParameter, functionDateParameter, readyTimeParameter, statusParameter, actionParameter);
         }
+    
+        public virtual ObjectResult<PBAvailableStockRtr_Result> PBAvailableStockRtr(string staffid)
+        {
+            var staffidParameter = staffid != null ?
+                new ObjectParameter("staffid", staffid) :
+                new ObjectParameter("staffid", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PBAvailableStockRtr_Result>("PBAvailableStockRtr", staffidParameter);
+        }
+    
+        public virtual int PBStockTransferInsert(string stockHeaderId, string transferDate, string fromStaffId, string toStaffId, string createDate, string createUser, string updateDate, string updateUser, string action)
+        {
+            var stockHeaderIdParameter = stockHeaderId != null ?
+                new ObjectParameter("StockHeaderId", stockHeaderId) :
+                new ObjectParameter("StockHeaderId", typeof(string));
+    
+            var transferDateParameter = transferDate != null ?
+                new ObjectParameter("TransferDate", transferDate) :
+                new ObjectParameter("TransferDate", typeof(string));
+    
+            var fromStaffIdParameter = fromStaffId != null ?
+                new ObjectParameter("FromStaffId", fromStaffId) :
+                new ObjectParameter("FromStaffId", typeof(string));
+    
+            var toStaffIdParameter = toStaffId != null ?
+                new ObjectParameter("ToStaffId", toStaffId) :
+                new ObjectParameter("ToStaffId", typeof(string));
+    
+            var createDateParameter = createDate != null ?
+                new ObjectParameter("CreateDate", createDate) :
+                new ObjectParameter("CreateDate", typeof(string));
+    
+            var createUserParameter = createUser != null ?
+                new ObjectParameter("CreateUser", createUser) :
+                new ObjectParameter("CreateUser", typeof(string));
+    
+            var updateDateParameter = updateDate != null ?
+                new ObjectParameter("UpdateDate", updateDate) :
+                new ObjectParameter("UpdateDate", typeof(string));
+    
+            var updateUserParameter = updateUser != null ?
+                new ObjectParameter("UpdateUser", updateUser) :
+                new ObjectParameter("UpdateUser", typeof(string));
+    
+            var actionParameter = action != null ?
+                new ObjectParameter("action", action) :
+                new ObjectParameter("action", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PBStockTransferInsert", stockHeaderIdParameter, transferDateParameter, fromStaffIdParameter, toStaffIdParameter, createDateParameter, createUserParameter, updateDateParameter, updateUserParameter, actionParameter);
+        }
     }
 }

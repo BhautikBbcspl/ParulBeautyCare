@@ -16,13 +16,19 @@
             </div>
         </div>*@
                 <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
-                    <div class="bg-gradient-pinkHeader shadow-primary border-radius-lg pt-4 d-flex justify-content-between">
-                        <h2 class="text-white text-capitalize ps-3 title_margin"><b>Year Master</b></h2>
+                    <div class="bg-gradient-pinkHeader shadow-primary border-radius-lg pt-3 d-flex justify-content-between row">
+                        <h2 class="text-white text-capitalize ps-3 title_margin col-md-6"><b>Year Master</b></h2>
                         @*@if (Convert.ToInt32(TempData["ViewRight"]) == 1)
-                        {*@
-                            <a class="btn btn-light btn-icon mb-2 mx-2 title_a" href="@Url.Action("ViewYearMaster", "Master")">
-                                <i class="fa-solid fa-list-check mx-2 text-black"></i><b>View</b>
-                            </a>
+        {*@
+                        @*<a class="btn btn-light btn-icon mb-2 mx-2 title_a" href="@Url.Action("ViewYearMaster", "Master")">
+            <i class="fa-solid fa-list-check mx-2 text-black"></i><b>View</b>
+        </a>*@
+                        <a class="dedcription-btn anc col-md-6" href="@Url.Action("ViewYearMaster","Master")">
+                            <span class="name-descripeion"> <b> VIEW RECORDS</b> </span>
+                            <div class="btn-icon brain">
+                                <i class="fa-solid fa-list-check"> </i>
+                            </div>
+                        </a>
                         @*}*@
                     </div>
                 </div>
@@ -35,7 +41,7 @@
                 </a>
             </div>
         </div>*@
-                    @using (Html.BeginForm("AddYearMaster", "Master", FormMethod.Post))
+                    @using (Html.BeginForm("AddYearMaster", "Master", FormMethod.Post, new { @class = "forms-sample" }))
                     {
                         @Html.AntiForgeryToken()
                         @Html.HiddenFor(x => x.Action)

@@ -11,15 +11,22 @@ namespace ParulBeautyCareViewModel.ViewModel.Master
     public class SubCategoryMasterViewModel
     {
         public string SubCategoryId { get; set; }
+
+        [Required(ErrorMessage = "*")]
         public string CategoryId { get; set; }
+
         [Required(ErrorMessage = "*")]
         public string SubCategoryName { get; set; }
+
         [Required(ErrorMessage = "*")]
         public string IsMultiPerson { get; set; }
-        [Required(ErrorMessage = "*")]
+
+     
         public string NumberOfPerson { get; set; }
+
         [Required(ErrorMessage = "*")]
         public string YearId { get; set; }
+
         [Required(ErrorMessage = "*")]
         public string NoOfSitting { get; set; }
         public string IsActive { get; set; }
@@ -28,8 +35,10 @@ namespace ParulBeautyCareViewModel.ViewModel.Master
         public string CreateUser { get; set; }
         public string UpdateDate { get; set; }
         public string UpdateUser { get; set; }
+
         [Required(ErrorMessage = "*")]
         public string TimeDuraion { get; set; }
+
         [Required(ErrorMessage = "*")]
         public string Amount { get; set; }
         public List<PBSubCategoryMasterRetrieve_Result> SubCategoryMasterList { get; set; }

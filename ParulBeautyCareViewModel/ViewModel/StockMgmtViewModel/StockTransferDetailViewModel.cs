@@ -8,34 +8,26 @@ using ParulBeautyCareDbClasses.DataModels;
 
 namespace ParulBeautyCareViewModel.ViewModel.StockMgmtViewModel
 {
-    public class StockDetailMasterViewModel
+    public class StockTransferDetalViewModel
     {
         public string StockDetailId { get; set; }
 
-        [Required(ErrorMessage = "*")]
+        public string StockHeaderId { get; set; }
         public string ProductId { get; set; }
-
-        [Required(ErrorMessage = "*")]
-        public string Staffid { get; set; }
-        public string StockAllocated { get; set; }
-        public string StockUsed { get; set; }
-
-        [Required(ErrorMessage = "*")]
-        public string Barcode { get; set; }
+        public string Qty { get; set; }
+        public string TotalPerson { get; set; }
+        public string PersonAvailable { get; set; }
         public string CreateDate { get; set; }
         public string CreateUser { get; set; }
         public string UpdateDate { get; set; }
         public string UpdateUser { get; set; }
-        public string NoOfPerson { get; set; }
-        public string PersonUsed { get; set; }
-        public string StockAllocationId { get; set; }
+
+        public string CompanyCode { get; set; }
         public string Action { get; set; }
         public string result { get; set; }
         public string success { get; set; }
         public string message { get; set; }
-        public string CompanyCode { get; set; }
-        public List<PBAvailableStockRtr_Result> AvailableStockList { get; set; }
 
-        public List<PBStaffMasterRtr_Result> StaffList { get; set; }
+
     }
 }

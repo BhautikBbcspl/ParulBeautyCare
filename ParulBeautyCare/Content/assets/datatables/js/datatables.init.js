@@ -495,6 +495,7 @@ let dataSet = [
 						columns: ':not(:first-child)',
 					},
 					customizeData: function (data) {
+						debugger
 						var table = $('#base-style').DataTable();
 						var rows = table.rows({ search: 'applied' }).nodes().to$();
 
@@ -526,11 +527,13 @@ let dataSet = [
 				$('.buttons-container').append($('.dt-buttons'));
 			}
 		});
+
 	}
 	else {
 		$('#base-style').DataTable({
 			"bJQueryUI": true,
 			'dom': '<"top"flB>rtip',
+
 			language: {
 				paginate: {
 					next: '<i class="fa-solid fa-angle-right"></i>',

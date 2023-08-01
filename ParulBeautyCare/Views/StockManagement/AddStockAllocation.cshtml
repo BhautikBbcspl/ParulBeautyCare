@@ -8,67 +8,109 @@
     <div class="row">
         <div class="col-12 grid-margin">
             <div class="card">
-                @*<div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
-                        <div class="bg-gradient-pinkHeader shadow-primary border-radius-lg pt-4 pb-3">
-                            <h2 class="text-white text-capitalize ps-3"><b>STOCK PURCHASE </b></h2>
-                        </div>
-                    </div>*@
                 <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
-                    <div class="bg-gradient-pinkHeader shadow-primary border-radius-lg pt-4 d-flex justify-content-between">
-                        <h2 class="text-white text-capitalize ps-3 title_margin"><b>STOCK ALLOCATION</b></h2>
-                        @*<a class="btn btn-light btn-rounded btn-icon mb-2 mx-2 title_a" href="@Url.Action("ViewStockAllocation","StockManagement")">
-            <i class="fa-solid fa-list-check mx-2 text-black"></i>
-        </a>*@
-                        <a class="btn btn-light btn-icon mb-2 mx-2 title_a" href="@Url.Action("ViewStockAllocation","StockManagement")">
-                            <i class="fa-solid fa-list-check mx-2 text-black"></i><b>View</b>
-                        </a>
+                    <div class="bg-gradient-pinkHeader shadow-primary border-radius-lg pt-3 d-flex justify-content-between row">
+                        <h2 class="text-white text-capitalize ps-3 title_margin col-md-6"><b>STOCK ALLOCATION</b></h2>
 
+
+                        @*@if (Convert.ToInt32(TempData["ViewRight"]) == 1)
+        {*@
+                        @*<a class="btn btn-light btn-icon mb-2 mx-2 title_a" href="@Url.Action("ViewStockAllocation","StockManagement")">
+                            <i class="fa-solid fa-list-check mx-2 text-black"></i><b>View</b>
+                        </a>*@
+
+                        <a class="dedcription-btn anc col-md-6" href="@Url.Action("ViewStockAllocation","StockManagement")">
+                            <span class="name-descripeion"> <b> VIEW RECORDS</b> </span>
+                            <div class="btn-icon brain">
+                                <i class="fa-solid fa-list-check"> </i>
+                            </div>
+                        </a>
+                        @*}*@
                     </div>
                 </div>
                 <div class="card-body">
                     @*<div class="row">
-            <div class="d-xl-flex justify-content-end align-items-end">
-                <a class="btn btn-sm btn-outline-primary btn-round mb-3" href="@Url.Action("ViewStockPurchase","StockManagement")">
-                    <i class="fa fa-eye mx-2"></i>View
-                </a>
-            </div>
-        </div>*@
+                            <div class="d-xl-flex justify-content-end align-items-end">
+                                <a class="btn btn-sm btn-outline-primary btn-round mb-3" href="@Url.Action("ViewStockPurchase","StockManagement")">
+                                    <i class="fa fa-eye mx-2"></i>View
+                                </a>
+                            </div>
+                        </div>*@
                     @using (Html.BeginForm("AddStockAllocation", "StockManagement", FormMethod.Post, new { @class = "forms-sample" }))
                     {
                         @Html.AntiForgeryToken();
                         @Html.HiddenFor(m => m.StockAllocationId)
                         @Html.HiddenFor(m => m.AllocationDate)
                         @Html.HiddenFor(m => m.AllocateUser)
+
                         <div class="row form-group">
-                            <div class="col-sm-3">
-                                <label class="col-form-label">
-                                    Select Staff Member
-                                    @Html.ValidationMessageFor(m => m.StaffId, "", new { @class = "text-danger h3" })
-                                </label>
+                            @if (Model.Action == "Save")
+                            {
+                                <div class="col-sm-3">
+                                    <label class="col-form-label">
+                                        Select Staff Member
+                                        @Html.ValidationMessageFor(m => m.StaffId, "", new { @class = "text-danger h3" })
+                                    </label>
+                                    <div class="input-group input-group-outline mb-3">
+                                        @Html.DropDownListFor(m => m.StaffId, new SelectList(Model.StaffList, "StaffId", "StaffName"), "Select Staff Member",
+                                            new Dictionary<string, object>() {
+                                                       {"id","ddlDeptId"},
+                                                       { "class","form-control form-select js-example-basic-single w-100"}
+                                                })
+                                    </div>
 
-                                <div class="input-group input-group-outline mb-3">
-                                    @Html.DropDownListFor(m => m.StaffId, new SelectList(Model.StaffList, "StaffId", "StaffName"), "Select Staff Member",
-                                        new Dictionary<string, object>() {
-                                                   {"id","ddlDeptId"},
-                                                   { "class","form-control form-select js-example-basic-single w-100"}
-                                            })
                                 </div>
-                            </div>
 
-                            <div class="col-sm-3">
-                                <label class="col-form-label">
-                                    Select Product
-                                    @Html.ValidationMessageFor(m => m.ProductId, "", new { @class = "text-danger h3" })
-                                </label>
+                                <div class="col-sm-3">
+                                    <label class="col-form-label">
+                                        Select Product
+                                        @Html.ValidationMessageFor(m => m.ProductId, "", new { @class = "text-danger h3" })
+                                    </label>
 
-                                <div class="input-group input-group-outline mb-3">
-                                    @Html.DropDownListFor(m => m.ProductId, new SelectList(Model.ProductList, "ProductId", "ProductName"), "Select Product",
-                                        new Dictionary<string, object>() {
-                                                   {"id","ddlProdId"},
-                                                   { "class","form-control form-select js-example-basic-single w-100"}
-                                            })
+                                    <div class="input-group input-group-outline mb-3">
+                                        @Html.DropDownListFor(m => m.ProductId, new SelectList(Model.ProductList, "ProductId", "ProductName"), "Select Product",
+                                            new Dictionary<string, object>() {
+                                                       {"id","ddlProdId"},
+                                                       { "class","form-control form-select js-example-basic-single w-100"}
+                                                })
+                                    </div>
                                 </div>
-                            </div>
+                            }
+                            else
+                            {
+                                <div class="col-sm-3">
+                                    <label class="col-form-label">
+                                        Select Staff Member
+                                        @Html.ValidationMessageFor(m => m.StaffId, "", new { @class = "text-danger h3" })
+                                    </label>
+                                    <div class="input-group input-group-outline mb-3">
+                                        @Html.DropDownListFor(m => m.StaffId, new SelectList(Model.StaffList, "StaffId", "StaffName"), "Select Staff Member",
+                                            new Dictionary<string, object>() {
+                                                       {"id","ddlDeptId"},
+                                                       { "class","form-control form-select js-example-basic-single w-100"},
+                                                        {"disabled","disabled"}
+                                                })
+                                    </div>
+
+                                </div>
+
+                                <div class="col-sm-3">
+                                    <label class="col-form-label">
+                                        Select Product
+                                        @Html.ValidationMessageFor(m => m.ProductId, "", new { @class = "text-danger h3" })
+                                    </label>
+
+                                    <div class="input-group input-group-outline mb-3">
+                                        @Html.DropDownListFor(m => m.ProductId, new SelectList(Model.ProductList, "ProductId", "ProductName"), "Select Product",
+                                            new Dictionary<string, object>() {
+                                                       {"id","ddlProdId"},
+                                                       { "class","form-control form-select js-example-basic-single w-100"},
+                                                        {"disabled","disabled"}
+                                                })
+                                    </div>
+                                </div>
+                            }
+
 
 
                             <div class="col-sm-3">

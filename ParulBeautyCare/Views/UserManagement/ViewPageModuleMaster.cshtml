@@ -6,12 +6,22 @@
 <div class="content-wrapper">
     <div class="card">
         <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
-            <div class="bg-gradient-pinkHeader shadow-primary border-radius-lg pt-4 d-flex justify-content-between">
-                <h2 class="text-white text-capitalize ps-3 title_margin"><b>Page Module Master</b></h2>
-                <a class="btn btn-light btn-icon mb-2 mx-2 title_a" href="@Url.Action("AddPageModuleMaster","UserManagement")">
-                    <i class="fa fa-plus mx-2 text-black"></i><b>Add</b>
-                </a>
+            <div class="bg-gradient-pinkHeader shadow-primary border-radius-lg pt-3 d-flex justify-content-between row">
+                <h2 class="text-white text-capitalize ps-3 title_margin col-md-6"><b>Page Module Master</b></h2>
+             
+                @if (Convert.ToInt32(TempData["InsertRight"]) == 1)
+                {
+                    @*<a class="btn btn-light btn-icon mb-2 mx-2 title_a" href="@Url.Action("AddPageModuleMaster", "UserManagement")">
+                <i class="fa fa-plus mx-2 text-black"></i><b>Add</b>
+            </a>*@
 
+                    <a class="dedcription-btn anc col-md-6" href="@Url.Action("AddPageModuleMaster","UserManagement")">
+                        <span class="name-descripeion"> <b> ADD RECORDS</b> </span>
+                        <div class="btn-icon brain">
+                            <i class="fas fa-plus"> </i>
+                        </div>
+                    </a>
+                }
             </div>
         </div>
         <div class="card-body">
@@ -25,8 +35,7 @@
             </div>*@
             <div class="row">
                 <div class="col-12">
-                    <div class="table-responsive">
-                        <table id="base-style" class="table table-striped">
+                        <table id="Mybase-style" class="table table-striped">
                             <thead>
                                 <tr>
 
@@ -86,7 +95,7 @@
 
                             </tbody>
                         </table>
-                    </div>
+                   
                 </div>
             </div>
         </div>

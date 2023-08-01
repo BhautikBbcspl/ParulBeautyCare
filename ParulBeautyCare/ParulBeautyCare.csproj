@@ -118,6 +118,12 @@
       <Private>True</Private>
       <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
+    <Reference Include="zxing, Version=0.16.9.0, Culture=neutral, PublicKeyToken=4e88037ac681fe60, processorArchitecture=MSIL">
+      <HintPath>..\packages\ZXing.Net.0.16.9\lib\net48\zxing.dll</HintPath>
+    </Reference>
+    <Reference Include="zxing.presentation, Version=0.16.9.0, Culture=neutral, PublicKeyToken=4e88037ac681fe60, processorArchitecture=MSIL">
+      <HintPath>..\packages\ZXing.Net.0.16.9\lib\net48\zxing.presentation.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform">
@@ -2655,7 +2661,10 @@
     <Content Include="Images\beauty-salon-3277314_640.jpg" />
     <Content Include="Images\bg_img.jpg" />
     <Content Include="Images\download.png" />
+    <Content Include="Images\icons8-no-edit-16 %281%29.png" />
     <Content Include="Images\pb_logo.png" />
+    <Content Include="Images\Untitled-1123 %281%29.png" />
+    <Content Include="Images\Untitled-1123.png" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.esm.js" />
@@ -2812,6 +2821,8 @@
     <Content Include="Views\StockManagement\ViewStockAllocation.cshtml" />
     <Content Include="Views\StockManagement\AddStockAllocation.cshtml" />
     <Content Include="Views\Appointment\BookAppointment.cshtml" />
+    <Content Include="Views\StockManagement\ViewStockTransfer.cshtml" />
+    <Content Include="Views\StockManagement\AddStockTransfer.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

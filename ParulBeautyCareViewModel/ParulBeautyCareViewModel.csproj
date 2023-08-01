@@ -61,6 +61,9 @@
     <Compile Include="ViewModel\PageViewModel.cs" />
     <Compile Include="ViewModel\RoleModuleViewModel.cs" />
     <Compile Include="ViewModel\StockMgmtViewModel\ProductMasterViewModel.cs" />
+    <Compile Include="ViewModel\StockMgmtViewModel\AvailableStockViewModel.cs" />
+    <Compile Include="ViewModel\StockMgmtViewModel\StockTransferDetailViewModel.cs" />
+    <Compile Include="ViewModel\StockMgmtViewModel\StockTransferHeaderViewModel.cs" />
     <Compile Include="ViewModel\StockMgmtViewModel\StockDetailMasterViewModel.cs" />
     <Compile Include="ViewModel\StockMgmtViewModel\StockAllocationMasterViewModel.cs" />
     <Compile Include="ViewModel\StockMgmtViewModel\StockPurchaseViewModel.cs" />

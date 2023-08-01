@@ -9,11 +9,22 @@
         <div class="col-12 grid-margin">
             <div class="card">
                 <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
-                    <div class="bg-gradient-pinkHeader shadow-primary border-radius-lg pt-4 d-flex justify-content-between">
-                        <h2 class="text-white text-capitalize ps-3 title_margin"><b>Page Master</b></h2>
-                        <a class="btn btn-light btn-icon mb-2 mx-2 title_a" href="@Url.Action("ViewPageMaster","UserManagement")">
-                            <i class="fa-solid fa-list-check mx-2 text-black"></i><b>View</b>
+                    <div class="bg-gradient-pinkHeader shadow-primary border-radius-lg pt-3 d-flex justify-content-between row">
+                        <h2 class="text-white text-capitalize ps-3 title_margin col-md-6"><b>Page Master</b></h2>
+                     
+                        @*@if (Convert.ToInt32(TempData["ViewRight"]) == 1)
+        {*@
+                        @*<a class="btn btn-light btn-icon mb-2 mx-2 title_a" href="@Url.Action("ViewPageMaster","UserManagement")">
+            <i class="fa-solid fa-list-check mx-2 text-black"></i><b>View</b>
+        </a>*@
+
+                        <a class="dedcription-btn anc col-md-6" href="@Url.Action("ViewPageMaster","UserManagement")">
+                            <span class="name-descripeion"> <b> VIEW RECORDS</b> </span>
+                            <div class="btn-icon brain">
+                                <i class="fa-solid fa-list-check"> </i>
+                            </div>
                         </a>
+                        @*}*@
                     </div>
                 </div>
                 <div class="card-body">
@@ -38,7 +49,7 @@
                                 </label>
                                 @Html.TextBoxFor(m => m.PageName, new Dictionary<string, object>() {
                                                  {"id","txtPageName"},
-                                                 {"class","form-control"},
+                                                 {"class","form-control text-capitalize"},
                                                     {"autocomplete","off"},
                                                  {"required","required"},
                                                  {"placeholder","Enter Page Name"}

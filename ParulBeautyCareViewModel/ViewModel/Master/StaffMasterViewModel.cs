@@ -19,6 +19,7 @@ namespace ParulBeautyCareViewModel.ViewModel.Master
         public string StaffName { get; set; }
 
         [Required(ErrorMessage = "*")]
+       
         public string Contact { get; set; }
 
         [Required(ErrorMessage = "*")]

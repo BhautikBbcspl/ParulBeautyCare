@@ -14,10 +14,13 @@ namespace ParulBeautyCareViewModel.ViewModel.StockMgmtViewModel
 
         [Required(ErrorMessage = "*")]
         public string ProductCode { get; set; }
+
         [Required(ErrorMessage = "*")]
         public string ProductName { get; set; }
-        [Required(ErrorMessage = "*")]
+
+        [Required(ErrorMessage = "*")]  
         public string NumberOfPerson { get; set; }
+
         [Required(ErrorMessage = "*")]
         public string ProductTypeId { get; set; }
         public string IsActive { get; set; }

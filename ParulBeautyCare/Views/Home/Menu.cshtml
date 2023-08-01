@@ -91,7 +91,8 @@
                     if (@item.FirstOrDefault().IsSelfURL != true)
                     {
                         <li class="nav-item">
-                            <a class="nav-link" data-bs-toggle="collapse" href="#@item.FirstOrDefault().ModuleName" aria-expanded="false" aria-controls="ui-advanced">
+
+                            <a class="nav-link" data-bs-toggle="collapse" href='#@item.FirstOrDefault().ModuleName.Replace(" ","")' aria-expanded="false" aria-controls="ui-advanced">
                                 <i class="fas @item.FirstOrDefault().FaIcon menu-icon"></i>
                                 <span class="menu-title">
                                     @item.FirstOrDefault().ModuleName
@@ -99,7 +100,7 @@
                                 <i class="typcn-chevron-right menu-arrow"></i>
                             </a>
 
-                            <div class="collapse" id="@item.FirstOrDefault().ModuleName">
+                            <div class="collapse" id='@item.FirstOrDefault().ModuleName.Replace(" ","")'>
                                 <ul class="nav flex-column sub-menu">
                                     @{
                                         foreach (var secondItem in (Model.Where(s => s.ModuleId == item.FirstOrDefault().ModuleId).ToList()))
@@ -130,8 +131,7 @@
 
 
             }
-
-
+    
             <!--DEMO-->
             @*<li class="nav-item">
                 <a class="nav-link" data-bs-toggle="collapse" href="#ui-advanced" aria-expanded="false" aria-controls="ui-advanced">
