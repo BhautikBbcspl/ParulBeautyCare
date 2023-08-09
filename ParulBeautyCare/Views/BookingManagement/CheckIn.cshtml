@@ -1,0 +1,135 @@
+﻿@model ParulBeautyCareViewModel.ViewModel.BookingMgmtViewModel.CheckInCheckOutViewModel
+@{
+    ViewBag.Title = "Check In/Check Out";
+    ViewBag.Module = "Booking Management";
+}
+<style>
+    .form-check {
+        margin-top: 74px !important;
+    }
+
+    .input-group, .asColorPicker-wrap {
+        display: grid !important;
+    }
+</style>
+<div class="content-wrapper">
+    <div class="row">
+        <div class="col-12 grid-margin">
+            <div class="card">
+                <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+                    <div class="bg-gradient-pinkHeader shadow-primary border-radius-lg pt-3 d-flex justify-content-between row">
+                        <h2 class="text-white text-capitalize ps-3 title_margin col-md-6"><b>Check In</b></h2>
+
+                        @*@if (Convert.ToInt32(TempData["ViewRight"]) == 1)
+                            {*@
+                        @*<a class="btn btn-light btn-icon mb-2 mx-2 title_a" href="@Url.Action("ViewStockPurchase","StockManagement")">
+                                <i class="fa-solid fa-list-check mx-2 text-black"></i><b>View</b>
+                            </a>*@
+                        <a class="dedcription-btn anc col-md-6" href="@Url.Action("CheckOut","BookingManagement")">
+                            <span class="name-descripeion"> <b>Check Out</b> </span>
+                            <div class="btn-icon brain">
+                                <i class="fa-solid fa-right-from-bracket"></i>
+                            </div>
+                        </a>
+                        @*}*@
+                    </div>
+                </div>
+                <div class="card-body">
+                    @*<div class="row">
+                            <div class="d-xl-flex justify-content-end align-items-end">
+                                <a class="btn btn-sm btn-outline-primary btn-round mb-3" href="@Url.Action("ViewStockPurchase","StockManagement")">
+                                    <i class="fa fa-eye mx-2"></i>View
+                                </a>
+                            </div>
+                        </div>*@
+                    @using (Html.BeginForm("CheckIn", "BookingManagement", FormMethod.Post, new { @class = "forms-sample" , autocomplete = "off" }))
+                    {
+                        @Html.AntiForgeryToken();
+                        @*@Html.HiddenFor(m => m.CheckId)*@
+                       
+                    <div class="row form-group">
+                        <div class="col-sm-3">
+                            <label class="col-form-label">Customer Name @Html.ValidationMessageFor(m => m.CustomerName, "", new { @class = "text-danger h3" })</label>
+                            @Html.TextBoxFor(model => model.CustomerName, new { @class = "form-control text-capitalize", id = "CustomerName", placeholder = "Enter Customer Name", required = "required" })
+                        </div>
+
+                        <div class="col-sm-3">
+                            <label class="col-form-label">Contact No @Html.ValidationMessageFor(m => m.ContactNo, "", new { @class = "text-danger h3" })</label>
+                            @Html.TextBoxFor(model => model.ContactNo, new { @class = "form-control contacterror", id = "ContactNo", placeholder = "Enter Contact Number", required = "required" })
+                        </div>
+
+                        <div class="col-sm-3">
+                            <label class="col-form-label">House No / Society Name </label>
+                            @Html.TextBoxFor(model => model.HouseNoSociety, new { @class = "form-control text-capitalize", id = "HouseNoSociety", placeholder = "Enter House Number / Society Name" })
+                        </div>
+
+                        <div class="col-sm-3">
+                            <label class="col-form-label">Landmark </label>
+                            @Html.TextBoxFor(model => model.Landmark, new { @class = "form-control text-capitalize", id = "Landmark", placeholder = "Enter Landmark" })
+                        </div>
+                        <div class="col-sm-3">
+                            <label class="col-form-label">City @Html.ValidationMessageFor(m => m.City, "", new { @class = "text-danger h3" })</label>
+                            @Html.TextBoxFor(model => model.City, new { @class = "form-control text-capitalize", id = "City", placeholder = "Enter City", required = "required" })
+                        </div>
+                        <div class="col-sm-3">
+                            <label class="col-form-label">Pincode @Html.ValidationMessageFor(m => m.Pincode, "", new { @class = "text-danger h3" })</label>
+                            @Html.TextBoxFor(model => model.Pincode, new { @class = "form-control text-capitalize pincodevalidation", id = "Pincode", placeholder = "Enter Pincode", required = "required" })
+                        </div>
+
+                        <div class="col-sm-3">
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input type="checkbox" name="IsBooking" id="IsBooking" value="true" class="form-check-input" @(Model.IsBooking ? "checked" : "")>
+                                    Is Customer has Booking ?
+                                </label>
+                            </div>
+                        </div>
+
+
+                        <div class="col-sm-3" id="ddlDivBooking">
+                            <label class="col-form-label">
+                                Select Booking Id
+                            </label>
+                            <div class="input-group input-group-outline mb-3">
+                                @Html.DropDownListFor(m => m.BookingId, new SelectList(Model.BookingList, "BookingId", "CustomerName"), "Select Booking Id",
+                                    new Dictionary<string, object>() {
+                                               {"id","ddlBooking"},
+                                               { "class","form-control form-select js-example-basic-single w-100"}
+                                        })
+                            </div>
+                        </div>
+
+                        <div class="col-sm-3"><label class="col-form-label">Waiting Time</label>
+                                              <div class="d-inline-flex">
+                                                  @Html.TextBoxFor(model => model.WaitingTime, new { @class = "form-control text-capitalize twonumberonly", id = "WaitingTime", placeholder = "Enter Waiting Time" })
+                                                  @Html.TextBoxFor(model => model.WaitingTime, new { @class = "form-control text-capitalize twonumberonly", id = "WaitingTime", placeholder = "Minutes",disabled= "disabled" })
+                                              </div>
+                           
+                        </div>
+                    </div>
+                        @*<button type="submit" class="btn btn-primary mr-2 mt-3" onclick="return confirm('Are You sure you want to save data?')">Submit</button>*@
+                        <button type="submit" class="btn btn-primary mr-2 mt-3" onclick="return formSubmit('Are You sure you want to save data?')">Check In</button>
+
+                    }
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    // Get a reference to the checkbox element
+        var checkbox = document.getElementById('IsBooking');
+
+        // Get a reference to the ddlDivBooking div
+    var ddlDivBooking = document.getElementById('ddlDivBooking');
+
+        // Initially hide the ddlDivBooking div on page load
+        ddlDivBooking.style.display = 'none';
+
+        // Add an event listener to the checkbox
+        checkbox.addEventListener('change', function () {
+            // Show the ddlDivBooking div when the checkbox is checked, otherwise hide it
+            ddlDivBooking.style.display = this.checked ? 'block' : 'none';
+    });
+</script>

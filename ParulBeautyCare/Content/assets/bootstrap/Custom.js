@@ -36,8 +36,6 @@ $(document).ready(function () {
 
 /*Custome Data Table*/
 $(document).ready(function () {
-/*    $('#example').DataTable();*/
- 
     $('#Mybase-style').DataTable({
         "bJQueryUI": true,
         'dom': '<"top"flB>rtip',

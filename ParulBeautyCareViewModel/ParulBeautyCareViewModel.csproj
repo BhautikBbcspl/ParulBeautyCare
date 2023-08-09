@@ -44,6 +44,10 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModel\BookAppointmentViewModel.cs" />
+    <Compile Include="ViewModel\BookingMgmtViewModel\BookingDetailViewModel.cs" />
+    <Compile Include="ViewModel\BookingMgmtViewModel\BookingHeaderViewModel.cs" />
+    <Compile Include="ViewModel\BookingMgmtViewModel\BookingStaffAllocationViewModel.cs" />
+    <Compile Include="ViewModel\BookingMgmtViewModel\CheckInCheckOutViewModel.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\Master\DepartmentMasterViewModel.cs" />
     <Compile Include="ViewModel\Master\CategoryMasterViewModel.cs" />

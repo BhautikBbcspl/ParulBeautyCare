@@ -1,0 +1,269 @@
+﻿@model ParulBeautyCareViewModel.ViewModel.BookingMgmtViewModel.CheckInCheckOutViewModel
+@{
+    ViewBag.Title = "Check In/Check Out";
+    ViewBag.Module = "Booking Management";
+}
+<style>
+    .bg-gradient-primary {
+        background-image: linear-gradient(195deg, #EC407A 0%, #D81B60 100%);
+        color: white;
+    }
+    /*.bg-gradient-primary {
+        background-image: linear-gradient(195deg, #ffd4e3 0%, #dfa8bc 100%);
+    }*/
+
+    .bg-gradient-dark {
+        background-image: linear-gradient(195deg, #42424a 0%, #191919 100%);
+        color: white;
+    }
+
+
+
+    .btn {
+        border-radius: 4px;
+        text-transform: uppercase;
+        position: relative;
+        text-decoration: none;
+        align-items: center;
+        justify-content: center;
+        border: 1.5px solid black;
+        background-size: 300%;
+        transition: all 0.6s;
+    }
+
+    .black {
+        color: black;
+        background-image: linear-gradient(90deg, white 50%, black 50%);
+    }
+
+
+    .btn:hover {
+        color: #fff;
+        background-position: 100%;
+        transform: translateX(0.5rem);
+    }
+</style>
+<div class="content-wrapper">
+    <div class="row">
+        <div class="col-12 grid-margin">
+            <div class="card">
+                <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+                    <div class="bg-gradient-pinkHeader shadow-primary border-radius-lg pt-3 d-flex justify-content-between row">
+                        <h2 class="text-white text-capitalize ps-3 title_margin col-md-6"><b>Check Out</b></h2>
+
+
+                        <a class="dedcription-btn anc col-md-6" href="@Url.Action("CheckIn","BookingManagement")">
+                            <span class="name-descripeion"> <b>Check In</b> </span>
+                            <div class="btn-icon brain">
+                                <i class="fa-solid fa-right-to-bracket"></i>
+                            </div>
+                        </a>
+                        @*}*@
+                    </div>
+                </div>
+                <div class="card-body">
+                    @*<div class="row">
+                            <div class="d-xl-flex justify-content-end align-items-end">
+                                <a class="btn btn-sm btn-outline-primary btn-round mb-3" href="@Url.Action("ViewStockPurchase","StockManagement")">
+                                    <i class="fa fa-eye mx-2"></i>View
+                                </a>
+                            </div>
+                        </div>*@
+                    @using (Html.BeginForm("CheckOut", "BookingManagement", FormMethod.Post, new { @class = "forms-sample", autocomplete = "off" }))
+                    {
+                        @Html.AntiForgeryToken();
+                    <div class="row mt-4">
+                        <div class="row mb-4">
+                            <div class="col-lg-12">
+                                <input type="text" id="searchInput" placeholder="Search by Customer Name" class="form-control">
+                            </div>
+                        </div>
+                        @if (Model.CheckInCheckOutList.Count > 0)
+                        {
+
+                                foreach (var item in Model.CheckInCheckOutList)
+                                {
+                                    <div class="col-lg-2 col-md-4 col-12 mt-4 mb-2 card-container">
+                                        <div class="card z-index-2">
+                                            <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2 bg-transparent">
+                                                <div class="bg-gradient-primary shadow-primary border-radius-lg py-3 pe-1 ">
+                                                    <div class="text-center">
+                                                        <h3 class="customer-name">@*<i class="fas fa-user"></i>*@ @item.CustomerName</h3>
+                                                   
+                                                    </div>
+                                                    <table>
+                                                        <tr>
+                                                            <td>
+                                                                <h5><i class="fas fa-phone mx-2" alt="Contact No"></i></h5>
+                                                            </td>
+                                                            <td>
+                                                                <h5>@item.ContactNo</h5>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <h5><i class="fa-solid fa-right-to-bracket mx-2" alt="Check In"></i></h5>
+                                                            </td>
+                                                            <td>
+                                                                <h5> @item.CheckinDateTime</h5>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                            <div class="card-body text-center">
+                                                <hr class="dark horizontal">
+                                                @*<input type="submit" class="btn black" value="@item.CheckId" onclick="return formSubmit('Are You sure you want to save data?')" />*@
+                                                @Html.Hidden("CheckId", null, new { id = "CheckIdInput" })
+                                            <button class="btn black checkout-button" data-checkid="@item.CheckId" type="button" onclick="return formSubmitCheckOut('Are You sure you want to save data?')">Check Out</button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                }
+                        }
+                        else
+                        {
+                            <div class="col-lg-12 col-md-12 mt-4 mb-12">
+                                <div class="card z-index-2 ">
+
+                                    <div class="card-body text-center">
+                                        <hr class="dark horizontal">
+                                        <h3>No Records for Check Out</h3>
+
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+                    </div>
+
+                        @*<div class="row mt-4">
+                                                <div class="col-lg-2 col-md-2 mt-4 mb-2">
+                                                    <div class="card z-index-2 ">
+                                                        <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2 bg-transparent">
+                                                            <div class="bg-gradient-primary shadow-primary border-radius-lg py-3 pe-1 ">
+                                                                <div class="text-center text-white">
+                                                                    <h3>Face Wash</h3>
+                                                                    <h5>Available Stock : 1</h5>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="card-body">
+                                                            Quantity
+                                                            @Html.TextBoxFor(model => model.Qty, new { @class = "form-control", id = "Qty", placeholder = "Quantity", required = "required" })
+
+                                                            <hr class="dark horizontal">
+                                                            <button type="submit" class="btn-sm btn-primary" onclick="return formSubmit('Are You sure you want to save data?')">Transfer</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-2 col-md-2 mt-4 mb-2">
+                                                    <div class="card z-index-2 ">
+                                                        <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2 bg-transparent">
+                                                            <div class="bg-gradient-primary shadow-primary border-radius-lg py-3 pe-1 ">
+                                                                <div class="text-center text-white">
+                                                                    <h3>Eye Liner</h3>
+                                                                    <h5>Available Stock : 2</h5>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="card-body">
+                                                            Quantity
+                                                            @Html.TextBoxFor(model => model.Qty, new { @class = "form-control", id = "Qty", placeholder = "Quantity", required = "required" })
+
+                                                            <hr class="dark horizontal">
+                                                            <button type="submit" class="btn-sm btn-primary" onclick="return formSubmit('Are You sure you want to save data?')">Transfer</button>
+                            </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-2 col-md-2 mt-4 mb-2">
+                                                    <div class="card z-index-2 ">
+                                                        <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2 bg-transparent">
+                                                            <div class="bg-gradient-primary shadow-primary border-radius-lg py-3 pe-1 ">
+                                                                <div class="text-center text-white">
+                                                                    <h3>Nail Art Pen</h3>
+                                                                    <h5>Available Stock : 2</h5>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="card-body">
+                                                            Quantity
+                                                            @Html.TextBoxFor(model => model.Qty, new { @class = "form-control", id = "Qty", placeholder = "Quantity", required = "required" })
+
+                                                            <hr class="dark horizontal">
+                                                            <button type="submit" class="btn-sm btn-primary" onclick="return formSubmit('Are You sure you want to save data?')">Transfer</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>*@
+                    }
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+@*<script>
+    $(document).ready(function () {
+        $("#searchInput").on("keyup", function () {
+            var searchText = $(this).val().toLowerCase();
+            $(".card-container").each(function () {
+                var customerName = $(this).find(".customer-name").text().toLowerCase();
+                if (customerName.includes(searchText)) {
+                    $(this).css("display", "block"); // Show the card container
+                } else {
+                    $(this).css("display", "none");  // Hide the card container
+                }
+            });
+        });
+    });
+</script>*@
+<script>
+    $(document).ready(function () {
+        $("#searchInput").on("keyup", function () {
+            var searchText = $(this).val().toLowerCase();
+            var id=
+            $(".card-container").each(function () {
+                var customerName = $(this).find(".customer-name").text().toLowerCase();
+                if (customerName.includes(searchText)) {
+                    $(this).css("display", "block"); // Show the card container
+                } else {
+                    $(this).css("display", "none");  // Hide the card container
+                }
+            });
+        });
+    });
+</script>
+
+<script>
+    $(document).ready(function () {
+        $('.checkout-button').click(function () {
+            var checkId = $(this).data('checkid');
+            formSubmitCheckOut('Are you sure you want to save data?', checkId);
+        });
+    });
+
+    function formSubmitCheckOut(confirmMessage, checkId) {
+        Swal.fire({
+            title: confirmMessage,
+            showDenyButton: false,
+            showCancelButton: true,
+            confirmButtonText: 'Save',
+            denyButtonText: `Don't save`,
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Trigger form submission using jQuery
+                $('#CheckIdInput').val(checkId);
+                $('form').submit();
+            } else if (result.isDenied) {
+                Swal.fire('Changes are not saved', '', 'info');
+            }
+        });
+
+        // Prevent the default button behavior
+        return false;
+    }
+</script>

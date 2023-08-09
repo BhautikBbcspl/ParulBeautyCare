@@ -2,6 +2,7 @@
 using ParulBeautyCareDbClasses.DataModels;
 using ParulBeautyCareDbClasses.DataModels.ParulBeautyCareDatasetTableAdapters;
 using ParulBeautyCareViewModel.ViewModel;
+using ParulBeautyCareViewModel.ViewModel.BookingMgmtViewModel;
 using ParulBeautyCareViewModel.ViewModel.Master;
 using ParulBeautyCareViewModel.ViewModel.StockMgmtViewModel;
 using System;
@@ -993,6 +994,93 @@ namespace ParulBeautyCareAPI.Controllers
         #endregion
 
         #endregion
+
+        #region=====> Booking Management API
+
+        #region ==> Booking Staff Allocation
+        [HttpPost]
+        [Route("api/parulbeautycareAPI/BookingHeaderRetrieve")]
+        public IHttpActionResult BookingHeaderRetrieve([FromBody] BookingStaffAllocationViewModel spvm)
+        {
+            iNotifyLogger obj = new iNotifyLogger();
+            try
+            {
+
+                using (parulbeautycareEntities db = new parulbeautycareEntities())
+                {
+                    spvm.BookingHeaderList = db.PBBookingHeaderRtr(spvm.BookingId, spvm.Action, spvm.CompanyCode).ToList();
+                    var response = Request.CreateResponse(HttpStatusCode.OK, spvm);
+                    spvm.success = "true";
+                }
+            }
+            catch (Exception e)
+            {
+                spvm.success = "false";
+                spvm.message = e.Message;
+                obj.LogMessage("APIController", "BookingHeaderRetrieve", e.Message, iNotifyLogger.LogType.Exception);
+            }
+            return Json(spvm);
+        }
+        #endregion
+
+        #region ==> Check In Out
+
+        [HttpPost]
+        [Route("api/parulbeautycareAPI/CheckInCheckOutRetrieve")]
+        public IHttpActionResult CheckInCheckOutRetrieve([FromBody] CheckInCheckOutViewModel chkinout)
+        {
+            iNotifyLogger obj = new iNotifyLogger();
+            try
+            {
+
+                using (parulbeautycareEntities db = new parulbeautycareEntities())
+                {
+                    chkinout.CheckInCheckOutList = db.PBCheckInCheckOutRetrieve(chkinout.Action, chkinout.CompanyCode).ToList();
+                    var response = Request.CreateResponse(HttpStatusCode.OK, chkinout);
+                    chkinout.success = "true";
+                }
+            }
+            catch (Exception e)
+            {
+                chkinout.success = "false";
+                chkinout.message = e.Message;
+                obj.LogMessage("APIController", "BookingHeaderRetrieve", e.Message, iNotifyLogger.LogType.Exception);
+            }
+            return Json(chkinout);
+        }
+
+        [HttpPost]
+        [Route("api/parulbeautycareAPI/CheckInCheckOutIns")]
+        public IHttpActionResult CheckInCheckOutIns(CheckInCheckOutViewModel chkinout)
+        {
+            iNotifyLogger obj = new iNotifyLogger();
+            try
+            {
+                using (parulbeautycareEntities db = new parulbeautycareEntities())
+                {
+                    StockDetailMasterViewModel sdmv = new StockDetailMasterViewModel();
+                    //sdmv.CreateUser = User.Identity.Name;
+                    //sdmv.CreateDate = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                    //sdmv.CreateUser = spvm.AllocateUser;
+                    chkinout.result = db.PBCheckInCheckOutIns(chkinout.CheckId, chkinout.CustomerName, chkinout.ContactNo, chkinout.HouseNoSociety, chkinout.Landmark, chkinout.City, chkinout.Pincode, chkinout.CheckinDateTime, chkinout.CheckoutDateTime, chkinout.WaitingTime, chkinout.BookingId, chkinout.CompanyCode, chkinout.CreateDate, chkinout.CreateUser, chkinout.UpdateDate, chkinout.UpdateUser,chkinout.Note ,chkinout.Action).FirstOrDefault();
+                    var response = Request.CreateResponse(HttpStatusCode.OK, chkinout);
+                    chkinout.success = "true";
+                }
+            }
+            catch (Exception e)
+            {
+                chkinout.success = "false";
+                chkinout.message = e.Message;
+                obj.LogMessage("APIController", "StockPurchaseInsUpd", e.Message, iNotifyLogger.LogType.Exception);
+            }
+            return Json(chkinout);
+        }
+
+
+        #endregion
+
+        #endregion
+
 
     }
 

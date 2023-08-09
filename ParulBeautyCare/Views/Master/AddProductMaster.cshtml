@@ -44,7 +44,7 @@
                         <div class="row form-group">
                             <div class="col-sm-3">
                                 <label for="exampleInputUsername2" class="col-form-label">
-                                    ProductCode
+                                    Product Code
                                     @Html.ValidationMessageFor(m => m.ProductCode, "", new { @class = "text-danger h3" })
                                 </label>
 
@@ -53,7 +53,7 @@
                                                                             {"class","form-control text-capitalize"},
                                                                                {"autocomplete","off"},
                                                                             {"required","required"},
-                                                                            {"placeholder","Enter ProductCode"}
+                                                                            {"placeholder","Enter Product Code"}
                                                                             })
                             </div>
                             <div class="col-sm-3">
@@ -71,7 +71,7 @@
                             </div>
                             <div class="col-sm-3">
                                 <label for="exampleInputUsername2" class="col-form-label">
-                                    NumberOfPerson
+                                    Number Of Person
                                     @Html.ValidationMessageFor(m => m.NumberOfPerson, "", new { @class = "text-danger h3" })
                                 </label>
                                 @Html.TextBoxFor(m => m.NumberOfPerson, new Dictionary<string, object>() {
@@ -84,7 +84,7 @@
                             </div>
                             <div class="col-sm-3">
                                 <label for="exampleInputUsername2" class="col-form-label">
-                                    ProductType
+                                    Product Type
                                     @Html.ValidationMessageFor(m => m.ProductTypeId, "", new { @class = "text-danger h3" })
                                 </label>
                                 @Html.DropDownListFor(model => model.ProductTypeId, new SelectList(Model.ProductTypeMasterList, "ProductTypeId", "ProductTName"), "Select ProductType", new Dictionary<string, object>

@@ -561,7 +561,18 @@
         $(".alphanumber").inputFilter(function (value) { return /^[a-zA-Z0-9-]*$/.test(value); }, "Only Alphabets and Numbers Allowed.");
         $(".alphanum").inputFilter(function (value) { return /^[a-zA-Z0-9-,<]*$/.test(value); }, "Only Alphabets and Numbers Allowed.");
         $(".Rangenumberdecimal").inputFilter(function (value) { return /^\d*[.]?\d*[-]?\d*[.]?\d*$/.test(value); }, " Numbers Only Allow");
-
+        $(".twonumberonly").on("input", function () {
+            var value = $(this).val();
+            value = value.replace(/[^\d]/g, ''); // Remove non-digit characters
+            value = value.substring(0, 2); // Restrict to at most two digits
+            $(this).val(value);
+        });
+        $(".pincodevalidation").on("input", function () {
+            var value = $(this).val();
+            value = value.replace(/[^\d]/g, ''); // Remove non-digit characters
+            value = value.substring(0, 6); // Restrict to at most two digits
+            $(this).val(value);
+        });
     </script>
 </body>
 </html>

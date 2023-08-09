@@ -135,7 +135,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Controllers\AppointmentController.cs" />
+    <Compile Include="Controllers\BookingManagementController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MasterController.cs" />
     <Compile Include="Controllers\StaffManagementController.cs" />
@@ -1836,10 +1836,6 @@
     <Content Include="Content\assets\fontawesome-free-6.4.0-web\svgs\solid\plus-minus.svg" />
     <Content Include="Content\assets\fontawesome-free-6.4.0-web\svgs\solid\plus.svg" />
     <Content Include="Content\assets\fontawesome-free-6.4.0-web\svgs\solid\podcast.svg" />
-    <Content Include="Content\assets\fontawesome-free-6.4.0-web\svgs\solid\poo-storm.svg" />
-    <Content Include="Content\assets\fontawesome-free-6.4.0-web\svgs\solid\poo.svg" />
-    <Content Include="Content\assets\fontawesome-free-6.4.0-web\svgs\solid\poop.svg" />
-    <Content Include="Content\assets\fontawesome-free-6.4.0-web\svgs\solid\power-off.svg" />
     <Content Include="Content\assets\fontawesome-free-6.4.0-web\svgs\solid\prescription-bottle-medical.svg" />
     <Content Include="Content\assets\fontawesome-free-6.4.0-web\svgs\solid\prescription-bottle.svg" />
     <Content Include="Content\assets\fontawesome-free-6.4.0-web\svgs\solid\prescription.svg" />
@@ -2788,7 +2784,7 @@
     <Content Include="Views\UserManagement\ViewPageMaster.cshtml" />
     <Content Include="Views\UserManagement\ViewPageModuleMaster.cshtml" />
     <Content Include="Views\UserManagement\ViewRoleModuleMaster.cshtml" />
-    <Content Include="Views\Appointment\Index.cshtml" />
+    <Content Include="Views\BookingManagement\Index.cshtml" />
     <Content Include="Views\StaffManagement\AddStaffMgmt.cshtml" />
     <Content Include="Views\StaffManagement\ViewStaffMgmt.cshtml" />
     <Content Include="Views\Home\Menu.cshtml" />
@@ -2820,9 +2816,11 @@
     <Content Include="Views\Master\AddDepartmentMaster.cshtml" />
     <Content Include="Views\StockManagement\ViewStockAllocation.cshtml" />
     <Content Include="Views\StockManagement\AddStockAllocation.cshtml" />
-    <Content Include="Views\Appointment\BookAppointment.cshtml" />
+    <Content Include="Views\BookingManagement\BookAppointment.cshtml" />
     <Content Include="Views\StockManagement\ViewStockTransfer.cshtml" />
     <Content Include="Views\StockManagement\AddStockTransfer.cshtml" />
+    <Content Include="Views\BookingManagement\CheckIn.cshtml" />
+    <Content Include="Views\BookingManagement\CheckOut.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -39,9 +39,9 @@
                         <table id="Mybase-style" class="table table-striped">
                             <thead>
                                 <tr>
-                                    @*<th>
+                                    <th>
                                         @Html.DisplayName("Action")
-                                    </th>*@
+                                    </th>
                                     <th>
                                         @Html.DisplayName("Product Type")
                                     </th>
@@ -62,14 +62,19 @@
                                     foreach (var item in Model)
                                     {
                                         <tr>
-                                            @*<td>
-                        @if (ViewBag.UpdateRight == 1)
-                        {
-                            <a href="@Url.Action("EditProductTypeMaster","Master",new { id = item.ProductTypeId })" class="mx-3"><i class="fa fa-pencil"></i></a>
-                        }
+                                            <td>
+                                               
+                                                @if (Convert.ToInt32(TempData["UpdateRight"]) == 1)
+                                                {
+                                                    <a href="@Url.Action("EditProductTypeMaster","Master",new { id = item.ProductTypeId })" class="mx-3"><i class="fa fa-pencil"></i></a>
+                                                }
+                                                else
+                                                {
+                                                    @*<img src="~/Images/edit_dis_2.png" style=" width: 13%;" />*@
+                                                    <img src="~/Images/icons8-no-edit-16 (1).png" />
+                                                }
 
-
-                    </td>*@
+                                            </td>
                                             <td>
                                                 @Html.DisplayFor(modelItem => item.ProductTName)
                                             </td>

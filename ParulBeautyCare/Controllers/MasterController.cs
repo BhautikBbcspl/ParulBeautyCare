@@ -1083,7 +1083,7 @@ namespace ParulBeautyCare.Controllers
                 }
                 else
                 {
-                    sm.Action = "Update";
+                    sm.Action = "update";
                     sm.CreateDate = generalFunctions.DateTimeConvert(sm.CreateDate);
                     sm.CreateUser = User.Identity.Name;
                     sm.UpdateDate = generalFunctions.getTimeZoneDatetimedb();

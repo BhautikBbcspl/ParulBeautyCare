@@ -78,7 +78,16 @@
     <Compile Include="DataModels\PBAvailableStockRtr_Result.cs">
       <DependentUpon>ParulBeautyCaredb.tt</DependentUpon>
     </Compile>
+    <Compile Include="DataModels\PBBookingDetailRtr_Result.cs">
+      <DependentUpon>ParulBeautyCaredb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModels\PBBookingHeaderRtr_Result.cs">
+      <DependentUpon>ParulBeautyCaredb.tt</DependentUpon>
+    </Compile>
     <Compile Include="DataModels\PBCategoryMasterRetrieve_Result.cs">
+      <DependentUpon>ParulBeautyCaredb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModels\PBCheckInCheckOutRetrieve_Result.cs">
       <DependentUpon>ParulBeautyCaredb.tt</DependentUpon>
     </Compile>
     <Compile Include="DataModels\PBDepartmentMasterRetrieve_Result.cs">

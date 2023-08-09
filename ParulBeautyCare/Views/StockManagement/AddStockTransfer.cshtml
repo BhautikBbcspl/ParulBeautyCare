@@ -3,13 +3,18 @@
     ViewBag.Title = "Stock Transfer";
     ViewBag.Module = "Stock Management";
 }
+<style>
+    .bg-gradient-primary {
+        background-image: linear-gradient(195deg, #EC407A 0%, #D81B60 100%);
+    }
+</style>
 <div class="content-wrapper">
     <div class="row">
         <div class="col-12 grid-margin">
             <div class="card">
                 <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
                     <div class="bg-gradient-pinkHeader shadow-primary border-radius-lg pt-3 d-flex justify-content-between">
-                        <h2 class="text-white text-capitalize ps-3 title_margin"><b>STOCK TRANSFER</b></h2>
+                        <h2 class="text-white text-capitalize ps-3 title_margin"><b>Stock Transfer</b></h2>
 
 
                         @*@if (Convert.ToInt32(TempData["ViewRight"]) == 1)
@@ -42,10 +47,10 @@
 
                                 <div class="input-group input-group-outline mb-3">
                                     @Html.DropDownListFor(m => m.FromStaffId, new SelectList(Model.StaffList, "StaffId", "StaffName"), "Select Staff Member",
-                                 new Dictionary<string, object>() {
+                  new Dictionary<string, object>() {
                                                    {"id","ddlStaffId"},
                                                    { "class","form-control form-select js-example-basic-single w-100"}
-                                     })
+                      })
                                 </div>
                             </div>
 
@@ -57,10 +62,10 @@
 
                                 <div class="input-group input-group-outline mb-3">
                                     @Html.DropDownListFor(m => m.ToStaffId, new SelectList(Model.StaffList, "StaffId", "StaffName"), "Select Staff Member",
-                                new Dictionary<string, object>() {
+                 new Dictionary<string, object>() {
                                                   {"id","ddlStaff2Id"},
                                                   { "class","form-control form-select js-example-basic-single w-100"}
-                                    })
+                     })
                                 </div>
                             </div>
 
@@ -68,7 +73,7 @@
                         </div>
 
                         <button type="submit" class="btn btn-primary mr-2 mt-3" onclick="return formSubmit('Are You sure you want to save data?')">Submit</button>
-                      
+
                         <!--Available Stock List-->
                         <div class="row mt-5">
                             <div class="col-12">
@@ -134,6 +139,69 @@
                         </div>
                         <!---->
                     }
+
+
+                    <!--RUFF -->
+                @*<div class="row mt-4">
+                    <div class="col-lg-2 col-md-2 mt-4 mb-2">
+                        <div class="card z-index-2 ">
+                            <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2 bg-transparent">
+                                <div class="bg-gradient-primary shadow-primary border-radius-lg py-3 pe-1 ">
+                                    <div class="text-center text-white">
+                                        <h3>Face Wash</h3>
+                                        <h5>Available Stock : 1</h5>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                Quantity
+                                @Html.TextBoxFor(model => model.Qty, new { @class = "form-control", id = "Qty", placeholder = "Quantity", required = "required" })
+
+                                <hr class="dark horizontal">
+                                <button type="submit" class="btn-sm btn-primary" onclick="return formSubmit('Are You sure you want to save data?')">Transfer</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-2 mt-4 mb-2">
+                        <div class="card z-index-2 ">
+                            <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2 bg-transparent">
+                                <div class="bg-gradient-primary shadow-primary border-radius-lg py-3 pe-1 ">
+                                    <div class="text-center text-white">
+                                        <h3>Eye Liner</h3>
+                                        <h5>Available Stock : 2</h5>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                Quantity
+                                @Html.TextBoxFor(model => model.Qty, new { @class = "form-control", id = "Qty", placeholder = "Quantity", required = "required" })
+
+                                <hr class="dark horizontal">
+                                <button type="submit" class="btn-sm btn-primary" onclick="return formSubmit('Are You sure you want to save data?')">Transfer</button>
+</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-2 mt-4 mb-2">
+                        <div class="card z-index-2 ">
+                            <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2 bg-transparent">
+                                <div class="bg-gradient-primary shadow-primary border-radius-lg py-3 pe-1 ">
+                                    <div class="text-center text-white">
+                                        <h3>Nail Art Pen</h3>
+                                        <h5>Available Stock : 2</h5>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                Quantity
+                                @Html.TextBoxFor(model => model.Qty, new { @class = "form-control", id = "Qty", placeholder = "Quantity", required = "required" })
+
+                                <hr class="dark horizontal">
+                                <button type="submit" class="btn-sm btn-primary" onclick="return formSubmit('Are You sure you want to save data?')">Transfer</button>
+                            </div>
+                        </div>
+                    </div>  
+                </div>*@
+                    <!--RUFF -->
                 </div>
             </div>
         </div>
@@ -141,43 +209,6 @@
 </div>
 <!--Without Ajax-->
 <script>
-        $(document).ready(function () {
-            debugger
-            var originalToStaffOptions = $('#ddlStaff2Id').html();
-            var selectedStaffId = $('#ddlStaffId').val()
-            if (selectedStaffId != "")
-            {
-                updateToStaffDropdown(selectedStaffId);
-            }
-
-
-            $('#ddlStaffId').change(function () {
-                debugger
-                var selectedStaffId = $(this).val();
-                updateToStaffDropdown(selectedStaffId);
-
-                if (selectedStaffId != "") {
-                    var form = $('#myForm');
-                    var currentAction = form.attr('action');
-                    var newAction = currentAction.replace('/StockManagement/AddStockTransfer', '/StockManagement/StockAvailable?id=' + selectedStaffId);
-                    form.attr('action', newAction);
-                    form.submit();
-                }
-            });
-
-            function updateToStaffDropdown(selectedStaffId) {
-                debugger
-                if ($('#ddlStaff2Id').val() === selectedStaffId) {
-                    debugger
-                    $('#ddlStaff2Id option[value="' + selectedStaffId + '"]').remove();
-                }
-                $('#ddlStaff2Id').html(originalToStaffOptions); // Restore original options
-                $('#ddlStaff2Id option[value="' + selectedStaffId + '"]').remove(); // Remove selected option
-            }
-
-        });
-    </script>
-@*<script>
     $(document).ready(function () {
         debugger
         var originalToStaffOptions = $('#ddlStaff2Id').html();
@@ -185,6 +216,7 @@
         if (selectedStaffId != "") {
             updateToStaffDropdown(selectedStaffId);
         }
+
 
         $('#ddlStaffId').change(function () {
             debugger
@@ -196,20 +228,8 @@
                 var currentAction = form.attr('action');
                 var newAction = currentAction.replace('/StockManagement/AddStockTransfer', '/StockManagement/StockAvailable?id=' + selectedStaffId);
                 form.attr('action', newAction);
-                // form.submit(); // Removed this form submission here
+                form.submit();
             }
-        });
-
-        $('#myForm').submit(function (e) {
-            debugger
-            var toStaffId = $('#ddlStaff2Id').val();
-            if (toStaffId === null) {
-                debugger
-                e.preventDefault(); // Prevent form submission
-                alert('Please select the "To Staff Member"');
-                return false; // Prevent form submission entirely
-            }
-            return true; // Allow form submission if everything is valid
         });
 
         function updateToStaffDropdown(selectedStaffId) {
@@ -221,79 +241,126 @@
             $('#ddlStaff2Id').html(originalToStaffOptions); // Restore original options
             $('#ddlStaff2Id option[value="' + selectedStaffId + '"]').remove(); // Remove selected option
         }
+
     });
-</script>*@
-<!--Using Ajax with table design-->
+</script>
 @*<script>
-    $(document).ready(function () {
-        var originalToStaffOptions = $('#ddlStaff2Id').html();
-        var selectedStaffId = $('#ddlStaffId').val();
-        if (selectedStaffId != "") {
-            updateToStaffDropdown(selectedStaffId);
-        }
-         $('#ddlStaffId').change(function () {
+        $(document).ready(function () {
+            debugger
+            var originalToStaffOptions = $('#ddlStaff2Id').html();
+            var selectedStaffId = $('#ddlStaffId').val()
+            if (selectedStaffId != "") {
+                updateToStaffDropdown(selectedStaffId);
+            }
+
+            $('#ddlStaffId').change(function () {
+                debugger
                 var selectedStaffId = $(this).val();
                 updateToStaffDropdown(selectedStaffId);
 
-                // Make an AJAX call to the StockAvailable action
-                $.ajax({
-                    url: '@Url.Action("StockAvailable", "StockManagement")',
-                    data: { id: selectedStaffId },
-                    type: 'GET',
-                    success: function (data) {
-                        // Update "To Staff Member" dropdown options
-                        $('#ddlStaff2Id').html(originalToStaffOptions);
-                        $('#ddlStaff2Id option[value="' + selectedStaffId + '"]').remove();
-
-                        // Clear the existing table body
-                        $('#base-style tbody').empty();
-
-                        // Iterate through the received data and update the table
-                        $.each(data, function (index, item) {
-                            var row = '<tr>' +
-                                '<td>' +
-                                '<div class="form-check">' +
-                                '<label class="form-check-label">' +
-                                '<input type="checkbox" class="form-check-input" name="selectedIds" value="' + item.StockDetailId + '" />' +
-                                '</label>' +
-                                '</div>' +
-                                '</td>' +
-                                '<td>' + item.ProductName + '</td>' +
-                                '<td>' + item.availstock + '</td>' +
-                                '<td><img src="data:image/png;base64,' + item.Barcode + '" alt="Barcode Image" /></td>' +
-                                '<td>' + item.NoOfPerson + '</td>' +
-                                '<td>' + item.availperson + '</td>' +
-                                '</tr>';
-
-                            $('#base-style tbody').append(row);
-                        });
-                    },
-                    error: function (xhr, status, error) {
-                        // Handle error if needed
-                    }
-                });
+                if (selectedStaffId != "") {
+                    var form = $('#myForm');
+                    var currentAction = form.attr('action');
+                    var newAction = currentAction.replace('/StockManagement/AddStockTransfer', '/StockManagement/StockAvailable?id=' + selectedStaffId);
+                    form.attr('action', newAction);
+                    // form.submit(); // Removed this form submission here
+                }
             });
-        
-        function updateToStaffDropdown(selectedStaffId) {
-            if ($('#ddlStaff2Id').val() === selectedStaffId) {
-                $('#ddlStaff2Id option[value="' + selectedStaffId + '"]').remove();
+
+            $('#myForm').submit(function (e) {
+                debugger
+                var toStaffId = $('#ddlStaff2Id').val();
+                if (toStaffId === null) {
+                    debugger
+                    e.preventDefault(); // Prevent form submission
+                    alert('Please select the "To Staff Member"');
+                    return false; // Prevent form submission entirely
+                }
+                return true; // Allow form submission if everything is valid
+            });
+
+            function updateToStaffDropdown(selectedStaffId) {
+                debugger
+                if ($('#ddlStaff2Id').val() === selectedStaffId) {
+                    debugger
+                    $('#ddlStaff2Id option[value="' + selectedStaffId + '"]').remove();
+                }
+                $('#ddlStaff2Id').html(originalToStaffOptions); // Restore original options
+                $('#ddlStaff2Id option[value="' + selectedStaffId + '"]').remove(); // Remove selected option
             }
-            $('#ddlStaff2Id').html(originalToStaffOptions); // Restore original options
-            $('#ddlStaff2Id option[value="' + selectedStaffId + '"]').remove(); // Remove selected option
-        }
+        });
+    </script>*@
+<!--Using Ajax with table design-->
+@*<script>
+        $(document).ready(function () {
+            var originalToStaffOptions = $('#ddlStaff2Id').html();
+            var selectedStaffId = $('#ddlStaffId').val();
+            if (selectedStaffId != "") {
+                updateToStaffDropdown(selectedStaffId);
+            }
+             $('#ddlStaffId').change(function () {
+                    var selectedStaffId = $(this).val();
+                    updateToStaffDropdown(selectedStaffId);
 
-        // Button click event handler NOt Included
-        //$('#submitBtn').click(function (event) {
-        //    event.preventDefault(); // Prevent the default form submission
+                    // Make an AJAX call to the StockAvailable action
+                    $.ajax({
+                        url: '@Url.Action("StockAvailable", "StockManagement")',
+                        data: { id: selectedStaffId },
+                        type: 'GET',
+                        success: function (data) {
+                            // Update "To Staff Member" dropdown options
+                            $('#ddlStaff2Id').html(originalToStaffOptions);
+                            $('#ddlStaff2Id option[value="' + selectedStaffId + '"]').remove();
 
-        //    var form = $('#myForm');
-        //    if (form[0].checkValidity()) {
-        //        // If the form is valid, submit the form
-        //        form.submit();
-        //    } else {
-        //        // If the form is invalid, show validation errors
-        //        form.addClass('was-validated');
-        //    }
-        //});
-    });
-</script>*@
+                            // Clear the existing table body
+                            $('#base-style tbody').empty();
+
+                            // Iterate through the received data and update the table
+                            $.each(data, function (index, item) {
+                                var row = '<tr>' +
+                                    '<td>' +
+                                    '<div class="form-check">' +
+                                    '<label class="form-check-label">' +
+                                    '<input type="checkbox" class="form-check-input" name="selectedIds" value="' + item.StockDetailId + '" />' +
+                                    '</label>' +
+                                    '</div>' +
+                                    '</td>' +
+                                    '<td>' + item.ProductName + '</td>' +
+                                    '<td>' + item.availstock + '</td>' +
+                                    '<td><img src="data:image/png;base64,' + item.Barcode + '" alt="Barcode Image" /></td>' +
+                                    '<td>' + item.NoOfPerson + '</td>' +
+                                    '<td>' + item.availperson + '</td>' +
+                                    '</tr>';
+
+                                $('#base-style tbody').append(row);
+                            });
+                        },
+                        error: function (xhr, status, error) {
+                            // Handle error if needed
+                        }
+                    });
+                });
+
+            function updateToStaffDropdown(selectedStaffId) {
+                if ($('#ddlStaff2Id').val() === selectedStaffId) {
+                    $('#ddlStaff2Id option[value="' + selectedStaffId + '"]').remove();
+                }
+                $('#ddlStaff2Id').html(originalToStaffOptions); // Restore original options
+                $('#ddlStaff2Id option[value="' + selectedStaffId + '"]').remove(); // Remove selected option
+            }
+
+            // Button click event handler NOt Included
+            //$('#submitBtn').click(function (event) {
+            //    event.preventDefault(); // Prevent the default form submission
+
+            //    var form = $('#myForm');
+            //    if (form[0].checkValidity()) {
+            //        // If the form is valid, submit the form
+            //        form.submit();
+            //    } else {
+            //        // If the form is invalid, show validation errors
+            //        form.addClass('was-validated');
+            //    }
+            //});
+        });
+    </script>*@

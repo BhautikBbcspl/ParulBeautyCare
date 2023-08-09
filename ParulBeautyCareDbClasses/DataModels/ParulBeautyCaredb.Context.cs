@@ -1234,5 +1234,129 @@ namespace ParulBeautyCareDbClasses.DataModels
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PBStockTransferInsert", stockHeaderIdParameter, transferDateParameter, fromStaffIdParameter, toStaffIdParameter, createDateParameter, createUserParameter, updateDateParameter, updateUserParameter, actionParameter);
         }
+    
+        public virtual ObjectResult<PBBookingDetailRtr_Result> PBBookingDetailRtr(string bookingId, string action, string companycode)
+        {
+            var bookingIdParameter = bookingId != null ?
+                new ObjectParameter("BookingId", bookingId) :
+                new ObjectParameter("BookingId", typeof(string));
+    
+            var actionParameter = action != null ?
+                new ObjectParameter("action", action) :
+                new ObjectParameter("action", typeof(string));
+    
+            var companycodeParameter = companycode != null ?
+                new ObjectParameter("companycode", companycode) :
+                new ObjectParameter("companycode", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PBBookingDetailRtr_Result>("PBBookingDetailRtr", bookingIdParameter, actionParameter, companycodeParameter);
+        }
+    
+        public virtual ObjectResult<PBBookingHeaderRtr_Result> PBBookingHeaderRtr(string bookingId, string action, string companycode)
+        {
+            var bookingIdParameter = bookingId != null ?
+                new ObjectParameter("BookingId", bookingId) :
+                new ObjectParameter("BookingId", typeof(string));
+    
+            var actionParameter = action != null ?
+                new ObjectParameter("action", action) :
+                new ObjectParameter("action", typeof(string));
+    
+            var companycodeParameter = companycode != null ?
+                new ObjectParameter("companycode", companycode) :
+                new ObjectParameter("companycode", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PBBookingHeaderRtr_Result>("PBBookingHeaderRtr", bookingIdParameter, actionParameter, companycodeParameter);
+        }
+    
+        public virtual ObjectResult<string> PBCheckInCheckOutIns(string checkId, string customerName, string contactNo, string houseNoSociety, string landmark, string city, string pincode, string checkinDateTime, string checkoutDateTime, string waitingTime, string bookingId, string companyCode, string createDate, string createUser, string updateDate, string updateUser, string note, string action)
+        {
+            var checkIdParameter = checkId != null ?
+                new ObjectParameter("CheckId", checkId) :
+                new ObjectParameter("CheckId", typeof(string));
+    
+            var customerNameParameter = customerName != null ?
+                new ObjectParameter("CustomerName", customerName) :
+                new ObjectParameter("CustomerName", typeof(string));
+    
+            var contactNoParameter = contactNo != null ?
+                new ObjectParameter("ContactNo", contactNo) :
+                new ObjectParameter("ContactNo", typeof(string));
+    
+            var houseNoSocietyParameter = houseNoSociety != null ?
+                new ObjectParameter("HouseNoSociety", houseNoSociety) :
+                new ObjectParameter("HouseNoSociety", typeof(string));
+    
+            var landmarkParameter = landmark != null ?
+                new ObjectParameter("Landmark", landmark) :
+                new ObjectParameter("Landmark", typeof(string));
+    
+            var cityParameter = city != null ?
+                new ObjectParameter("City", city) :
+                new ObjectParameter("City", typeof(string));
+    
+            var pincodeParameter = pincode != null ?
+                new ObjectParameter("Pincode", pincode) :
+                new ObjectParameter("Pincode", typeof(string));
+    
+            var checkinDateTimeParameter = checkinDateTime != null ?
+                new ObjectParameter("CheckinDateTime", checkinDateTime) :
+                new ObjectParameter("CheckinDateTime", typeof(string));
+    
+            var checkoutDateTimeParameter = checkoutDateTime != null ?
+                new ObjectParameter("CheckoutDateTime", checkoutDateTime) :
+                new ObjectParameter("CheckoutDateTime", typeof(string));
+    
+            var waitingTimeParameter = waitingTime != null ?
+                new ObjectParameter("WaitingTime", waitingTime) :
+                new ObjectParameter("WaitingTime", typeof(string));
+    
+            var bookingIdParameter = bookingId != null ?
+                new ObjectParameter("BookingId", bookingId) :
+                new ObjectParameter("BookingId", typeof(string));
+    
+            var companyCodeParameter = companyCode != null ?
+                new ObjectParameter("CompanyCode", companyCode) :
+                new ObjectParameter("CompanyCode", typeof(string));
+    
+            var createDateParameter = createDate != null ?
+                new ObjectParameter("CreateDate", createDate) :
+                new ObjectParameter("CreateDate", typeof(string));
+    
+            var createUserParameter = createUser != null ?
+                new ObjectParameter("CreateUser", createUser) :
+                new ObjectParameter("CreateUser", typeof(string));
+    
+            var updateDateParameter = updateDate != null ?
+                new ObjectParameter("UpdateDate", updateDate) :
+                new ObjectParameter("UpdateDate", typeof(string));
+    
+            var updateUserParameter = updateUser != null ?
+                new ObjectParameter("UpdateUser", updateUser) :
+                new ObjectParameter("UpdateUser", typeof(string));
+    
+            var noteParameter = note != null ?
+                new ObjectParameter("Note", note) :
+                new ObjectParameter("Note", typeof(string));
+    
+            var actionParameter = action != null ?
+                new ObjectParameter("Action", action) :
+                new ObjectParameter("Action", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("PBCheckInCheckOutIns", checkIdParameter, customerNameParameter, contactNoParameter, houseNoSocietyParameter, landmarkParameter, cityParameter, pincodeParameter, checkinDateTimeParameter, checkoutDateTimeParameter, waitingTimeParameter, bookingIdParameter, companyCodeParameter, createDateParameter, createUserParameter, updateDateParameter, updateUserParameter, noteParameter, actionParameter);
+        }
+    
+        public virtual ObjectResult<PBCheckInCheckOutRetrieve_Result> PBCheckInCheckOutRetrieve(string action, string companycode)
+        {
+            var actionParameter = action != null ?
+                new ObjectParameter("action", action) :
+                new ObjectParameter("action", typeof(string));
+    
+            var companycodeParameter = companycode != null ?
+                new ObjectParameter("companycode", companycode) :
+                new ObjectParameter("companycode", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PBCheckInCheckOutRetrieve_Result>("PBCheckInCheckOutRetrieve", actionParameter, companycodeParameter);
+        }
     }
 }
