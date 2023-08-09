@@ -3,6 +3,7 @@ using ParulBeautyCare.GeneralClasses;
 using ParulBeautyCareDbClasses.DataModels;
 using ParulBeautyCareViewModel.ViewModel;
 using ParulBeautyCareViewModel.ViewModel.BookingMgmtViewModel;
+using ParulBeautyCareViewModel.ViewModel.Master;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,7 +25,70 @@ namespace ParulBeautyCare.Controllers
         }
         public ActionResult BookAppointment()
         {
-            return View();
+            BookAppointmentViewModel mv = new BookAppointmentViewModel();
+            mv.Action = "active";
+            mv.CompanyCode = LoggedUserDetails.CompanyCode;
+            CategoryMasterViewModel pm = new CategoryMasterViewModel();
+            pm.Action = mv.Action;
+            pm.CompanyCode = mv.CompanyCode;
+            var CategoryList = ApiCall.PostApi("CategoryMasterRetrieve", Newtonsoft.Json.JsonConvert.SerializeObject(mv));
+            pm = JsonConvert.DeserializeObject<CategoryMasterViewModel>(CategoryList);
+            SubCategoryMasterViewModel sm = new SubCategoryMasterViewModel();
+            sm.Action = mv.Action;
+            sm.CompanyCode = mv.CompanyCode;
+            var SubCategoryList = ApiCall.PostApi("SubCategoryMasterRetrieve", Newtonsoft.Json.JsonConvert.SerializeObject(mv));
+            sm = JsonConvert.DeserializeObject<SubCategoryMasterViewModel>(SubCategoryList);
+            mv.CategoryList = pm.CategoryMasterList.Select(c => new BookCategoryViewModel()
+            {
+                CategoryId = c.CategoryId.ToString(),
+                CategoryName = c.CategoryName
+            }).ToList();
+            mv.SubCategoryList = sm.SubCategoryMasterList.Select(c => new BookSubCategoryViewModel()
+            {
+                SubcategoryId = c.SubCategoryId.ToString(),
+                SubcategoryName = c.SubCategoryName
+            }).ToList();
+            return View(mv);
+        }
+        public ActionResult SelectSubCategoryJson(string ddlCategoryDropdown)
+        {
+            BookAppointmentViewModel mv = new BookAppointmentViewModel();
+
+            SubCategoryMasterViewModel sm = new SubCategoryMasterViewModel();
+            sm.Action = "GetList";
+            sm.CategoryId = ddlCategoryDropdown;
+            sm.CompanyCode = LoggedUserDetails.CompanyCode;
+            var emplog = ApiCall.PostApi("SubCategoryMasterRetrieve", Newtonsoft.Json.JsonConvert.SerializeObject(sm));
+            sm = JsonConvert.DeserializeObject<SubCategoryMasterViewModel>(emplog);
+            //var SubCateGory = mv.SubCategoryList.Select(c => new SubCategoryMasterViewModel() { SubCategoryId = c.SubCategoryId.ToString(), SubCategoryName= c.SubCategoryName, Amount = c.Amount.ToString() });
+            List<SubCategoryMasterViewModel> SubCateGory = new List<SubCategoryMasterViewModel>();
+            if (sm != null && sm.SubCategoryMasterList != null)
+            {
+                SubCateGory = sm.SubCategoryMasterList.Select(c => new SubCategoryMasterViewModel()
+                {
+                    SubCategoryId = c.SubCategoryId.ToString(),
+                    SubCategoryName = c.SubCategoryName
+                }).ToList();
+            }
+            var obj = new { SubCateGory };
+            return Json(obj, JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult SelectSubCategoryDetails(string Subcateid)
+        {
+            SubCategoryMasterViewModel sm = new SubCategoryMasterViewModel();
+            sm.Action = "Detail";
+            sm.CategoryId = Subcateid;
+            sm.CompanyCode = LoggedUserDetails.CompanyCode;
+            var emplog = ApiCall.PostApi("SubCategoryMasterRetrieve", Newtonsoft.Json.JsonConvert.SerializeObject(sm));
+            sm = JsonConvert.DeserializeObject<SubCategoryMasterViewModel>(emplog);
+            var SubCateGory = sm.SubCategoryMasterList.Select(c => new SubCategoryMasterViewModel()
+            {
+                SubCategoryId = c.SubCategoryId.ToString(),
+                SubCategoryName = c.SubCategoryName,
+                Amount = c.Amount.ToString()
+            }).ToList();
+            var obj = new { SubCateGory };
+            return Json(obj, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult CheckIn()

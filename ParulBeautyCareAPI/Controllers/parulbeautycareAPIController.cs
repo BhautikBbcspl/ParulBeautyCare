@@ -639,7 +639,7 @@ namespace ParulBeautyCareAPI.Controllers
             {
                 using (parulbeautycareEntities db = new parulbeautycareEntities())
                 {
-                    lvm.SubCategoryMasterList = db.PBSubCategoryMasterRetrieve(lvm.Action, lvm.CompanyCode, lvm.SubCategoryId).ToList();
+                    lvm.SubCategoryMasterList = db.PBSubCategoryMasterRetrieve(lvm.Action, lvm.CompanyCode, lvm.CategoryId).ToList();
                     var response = Request.CreateResponse(HttpStatusCode.OK, lvm);
                     lvm.success = "true";
                 }

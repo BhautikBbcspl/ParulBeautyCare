@@ -749,23 +749,6 @@ namespace ParulBeautyCareDbClasses.DataModels
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("PBSubCategoryMasterInsUpd", subCategoryIdParameter, subCategorynameParameter, categoryIdParameter, isMultiPersonParameter, numberOfPersonParameter, yearIdParameter, noOfSittingParameter, timeDuraionParameter, amountParameter, companyCodeParameter, activeStatusParameter, createdateParameter, updatedateParameter, createuserParameter, actionParameter);
         }
     
-        public virtual ObjectResult<PBSubCategoryMasterRetrieve_Result> PBSubCategoryMasterRetrieve(string action, string companycode, string subCategoryId)
-        {
-            var actionParameter = action != null ?
-                new ObjectParameter("action", action) :
-                new ObjectParameter("action", typeof(string));
-    
-            var companycodeParameter = companycode != null ?
-                new ObjectParameter("companycode", companycode) :
-                new ObjectParameter("companycode", typeof(string));
-    
-            var subCategoryIdParameter = subCategoryId != null ?
-                new ObjectParameter("SubCategoryId", subCategoryId) :
-                new ObjectParameter("SubCategoryId", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PBSubCategoryMasterRetrieve_Result>("PBSubCategoryMasterRetrieve", actionParameter, companycodeParameter, subCategoryIdParameter);
-        }
-    
         public virtual ObjectResult<string> PBTimeSlotMasterInsUpd(string slotId, string slotname, string companyCode, string activestatus, string createdate, string updatedate, string createuser, string action)
         {
             var slotIdParameter = slotId != null ?
@@ -1357,6 +1340,23 @@ namespace ParulBeautyCareDbClasses.DataModels
                 new ObjectParameter("companycode", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PBCheckInCheckOutRetrieve_Result>("PBCheckInCheckOutRetrieve", actionParameter, companycodeParameter);
+        }
+    
+        public virtual ObjectResult<PBSubCategoryMasterRetrieve_Result> PBSubCategoryMasterRetrieve(string action, string companycode, string subCategoryId)
+        {
+            var actionParameter = action != null ?
+                new ObjectParameter("action", action) :
+                new ObjectParameter("action", typeof(string));
+    
+            var companycodeParameter = companycode != null ?
+                new ObjectParameter("companycode", companycode) :
+                new ObjectParameter("companycode", typeof(string));
+    
+            var subCategoryIdParameter = subCategoryId != null ?
+                new ObjectParameter("SubCategoryId", subCategoryId) :
+                new ObjectParameter("SubCategoryId", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PBSubCategoryMasterRetrieve_Result>("PBSubCategoryMasterRetrieve", actionParameter, companycodeParameter, subCategoryIdParameter);
         }
     }
 }

@@ -384,8 +384,22 @@
             // Wrap the table with the new div element
             tableElement.wrap(divElement);
 
+          
+            $(".datetime").flatpickr({
+                enableTime: true,
+                dateFormat: "d-m-Y H:i"
+            });
             $(".dateflat").flatpickr({
                 dateFormat: "d-m-Y"
+            });
+            $('.timepicker').flatpickr({
+                enableTime: true, // Set this to enable time selection
+                noCalendar: true, // Disable the date picker
+                dateFormat: 'H:i', // Use 24-hour time format (HH:mm)
+                //time_24hr: true, // Enable 24-hour format
+                icons: {
+                    time: 'fa fa-clock'
+                }
             });
 
             $(".rangeDates").flatpickr({

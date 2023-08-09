@@ -573,11 +573,6 @@
             <Parameter Name="createuser" Mode="In" Type="String" />
             <Parameter Name="action" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="PBSubCategoryMasterRetrieve" ReturnType="Collection(parulbeautycareModel.PBSubCategoryMasterRetrieve_Result)">
-            <Parameter Name="action" Mode="In" Type="String" />
-            <Parameter Name="companycode" Mode="In" Type="String" />
-            <Parameter Name="SubCategoryId" Mode="In" Type="String" />
-          </FunctionImport>
           <FunctionImport Name="PBTimeSlotMasterInsUpd" ReturnType="Collection(String)">
             <Parameter Name="SlotId" Mode="In" Type="String" />
             <Parameter Name="Slotname" Mode="In" Type="String" />
@@ -739,6 +734,11 @@
             <Parameter Name="action" Mode="In" Type="String" />
             <Parameter Name="companycode" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="PBSubCategoryMasterRetrieve" ReturnType="Collection(parulbeautycareModel.PBSubCategoryMasterRetrieve_Result)">
+            <Parameter Name="action" Mode="In" Type="String" />
+            <Parameter Name="companycode" Mode="In" Type="String" />
+            <Parameter Name="SubCategoryId" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="PBCategoryMasterRetrieve_Result">
           <Property Type="Int32" Name="CategoryId" Nullable="false" />
@@ -899,23 +899,6 @@
           <Property Type="String" Name="CreateDate" Nullable="true" MaxLength="4000" />
           <Property Type="String" Name="CreateUser" Nullable="true" MaxLength="50" />
         </ComplexType>
-        <ComplexType Name="PBSubCategoryMasterRetrieve_Result">
-          <Property Type="Int32" Name="SubCategoryId" Nullable="false" />
-          <Property Type="String" Name="SubCategoryName" Nullable="true" />
-          <Property Type="Int32" Name="CategoryId" Nullable="true" />
-          <Property Type="String" Name="CategoryName" Nullable="true" MaxLength="250" />
-          <Property Type="Boolean" Name="ismultiperson" Nullable="true" />
-          <Property Type="Int32" Name="NumberOfPerson" Nullable="true" />
-          <Property Type="Int32" Name="YearId" Nullable="false" />
-          <Property Type="Boolean" Name="IsActive" Nullable="true" />
-          <Property Type="Int32" Name="NoOfSitting" Nullable="true" />
-          <Property Type="String" Name="TimeDuraion" Nullable="true" MaxLength="50" />
-          <Property Type="Decimal" Name="Amount" Nullable="true" Precision="18" Scale="2" />
-          <Property Type="String" Name="CompanyCode" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="CreateDate" Nullable="true" MaxLength="4000" />
-          <Property Type="String" Name="CreateUser" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="yearperiod" Nullable="true" MaxLength="50" />
-        </ComplexType>
         <ComplexType Name="PBTimeSlotMasterRetrieve_Result">
           <Property Type="Int32" Name="SlotId" Nullable="false" />
           <Property Type="String" Name="SlotName" Nullable="true" MaxLength="50" />
@@ -1045,6 +1028,23 @@
           <Property Type="String" Name="CreateUser" Nullable="true" MaxLength="50" />
           <Property Type="DateTime" Name="UpdateDate" Nullable="true" Precision="23" />
           <Property Type="String" Name="UpdateUser" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="PBSubCategoryMasterRetrieve_Result">
+          <Property Type="Int32" Name="SubCategoryId" Nullable="false" />
+          <Property Type="String" Name="SubCategoryName" Nullable="true" />
+          <Property Type="Int32" Name="CategoryId" Nullable="true" />
+          <Property Type="String" Name="CategoryName" Nullable="true" MaxLength="250" />
+          <Property Type="Boolean" Name="ismultiperson" Nullable="true" />
+          <Property Type="Int32" Name="NumberOfPerson" Nullable="true" />
+          <Property Type="Int32" Name="YearId" Nullable="false" />
+          <Property Type="Boolean" Name="IsActive" Nullable="true" />
+          <Property Type="Int32" Name="NoOfSitting" Nullable="true" />
+          <Property Type="String" Name="TimeDuraion" Nullable="true" MaxLength="50" />
+          <Property Type="Decimal" Name="Amount" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="String" Name="CompanyCode" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="CreateDate" Nullable="true" MaxLength="4000" />
+          <Property Type="String" Name="CreateUser" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="yearperiod" Nullable="true" MaxLength="50" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1275,27 +1275,6 @@
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="PBSubCategoryMasterInsUpd" FunctionName="parulbeautycareModel.Store.PBSubCategoryMasterInsUpd" />
-          <FunctionImportMapping FunctionImportName="PBSubCategoryMasterRetrieve" FunctionName="parulbeautycareModel.Store.PBSubCategoryMasterRetrieve">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="parulbeautycareModel.PBSubCategoryMasterRetrieve_Result">
-                <ScalarProperty Name="SubCategoryId" ColumnName="SubCategoryId" />
-                <ScalarProperty Name="SubCategoryName" ColumnName="SubCategoryName" />
-                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
-                <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
-                <ScalarProperty Name="ismultiperson" ColumnName="ismultiperson" />
-                <ScalarProperty Name="NumberOfPerson" ColumnName="NumberOfPerson" />
-                <ScalarProperty Name="YearId" ColumnName="YearId" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="NoOfSitting" ColumnName="NoOfSitting" />
-                <ScalarProperty Name="TimeDuraion" ColumnName="TimeDuraion" />
-                <ScalarProperty Name="Amount" ColumnName="Amount" />
-                <ScalarProperty Name="CompanyCode" ColumnName="CompanyCode" />
-                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
-                <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
-                <ScalarProperty Name="yearperiod" ColumnName="yearperiod" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="PBTimeSlotMasterInsUpd" FunctionName="parulbeautycareModel.Store.PBTimeSlotMasterInsUpd" />
           <FunctionImportMapping FunctionImportName="PBTimeSlotMasterRetrieve" FunctionName="parulbeautycareModel.Store.PBTimeSlotMasterRetrieve">
             <ResultMapping>
@@ -1467,6 +1446,27 @@
                 <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
                 <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
                 <ScalarProperty Name="UpdateUser" ColumnName="UpdateUser" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="PBSubCategoryMasterRetrieve" FunctionName="parulbeautycareModel.Store.PBSubCategoryMasterRetrieve">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="parulbeautycareModel.PBSubCategoryMasterRetrieve_Result">
+                <ScalarProperty Name="SubCategoryId" ColumnName="SubCategoryId" />
+                <ScalarProperty Name="SubCategoryName" ColumnName="SubCategoryName" />
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+                <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+                <ScalarProperty Name="ismultiperson" ColumnName="ismultiperson" />
+                <ScalarProperty Name="NumberOfPerson" ColumnName="NumberOfPerson" />
+                <ScalarProperty Name="YearId" ColumnName="YearId" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="NoOfSitting" ColumnName="NoOfSitting" />
+                <ScalarProperty Name="TimeDuraion" ColumnName="TimeDuraion" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="CompanyCode" ColumnName="CompanyCode" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+                <ScalarProperty Name="yearperiod" ColumnName="yearperiod" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
