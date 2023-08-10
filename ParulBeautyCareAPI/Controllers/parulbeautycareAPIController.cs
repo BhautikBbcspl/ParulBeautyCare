@@ -63,7 +63,28 @@ namespace ParulBeautyCareAPI.Controllers
             }
             return Json(lvm);
         }
-
+        [HttpPost]
+        [Route("api/parulbeautycareAPI/PackageMasterRtr")]
+        public IHttpActionResult PackageMasterRtr([FromBody] PackageMasterViewModel lvm)
+        {
+            iNotifyLogger obj = new iNotifyLogger();
+            try
+            {
+                using (parulbeautycareEntities db = new parulbeautycareEntities())
+                {
+                    lvm.PackageList = db.PBPackageMasterRtr(lvm.Action).ToList();
+                    var response = Request.CreateResponse(HttpStatusCode.OK, lvm);
+                    lvm.success = "true";
+                }
+            }
+            catch (Exception e)
+            {
+                lvm.success = "false";
+                lvm.message = e.Message;
+                obj.LogMessage("APIController", "PackageMasterRtr", e.Message, iNotifyLogger.LogType.Exception);
+            }
+            return Json(lvm);
+        }
         #region ==> UserManagement
         [HttpPost]
         [Route("api/parulbeautycareAPI/ModuleMasterRtr")]
