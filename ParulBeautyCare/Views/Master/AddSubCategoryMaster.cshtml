@@ -41,91 +41,92 @@
                         @Html.HiddenFor(x => x.SubCategoryId)
                         @Html.HiddenFor(x => x.CreateUser)
                         @Html.HiddenFor(x => x.CreateDate)
-                        <div class="row form-group">
-                            <div class="col-sm-3">
-                                <label for="exampleInputUsername2" class="col-form-label">
-                                    Category
-                                    @Html.ValidationMessageFor(m => m.CategoryId, "", new { @class = "text-danger" })
-                                </label>
-                                @Html.DropDownListFor(model => model.CategoryId, new SelectList(Model.CategoryMasterList, "CategoryId", "CategoryName"), "Select Category", new Dictionary<string, object>
-                                          () {
-                                          {"id","ddlCategory"},
-                                          { "class","js-example-basic-single  w-100"},
-                                          {"autocomplete","off"},
-                                          {"required","required"},
-                                          {"placeholder","Enter category"}
-                                           })
-                            </div>
-                            <div class="col-sm-3">
-                                <label for="exampleInputUsername2" class="col-form-label">
-                                    Sub Category Name
-                                    @Html.ValidationMessageFor(m => m.SubCategoryName, "", new { @class = "text-danger" })
-                                </label>
-
-                                @Html.TextBoxFor(m => m.SubCategoryName, new Dictionary<string, object>() {
-                                                                            {"id","txtSubCategoryName"},
-                                                                            {"class","form-control text-capitalize"},
-                                                                               {"autocomplete","off"},
-                                                                            {"required","required"},
-                                                                            {"placeholder","Enter SubCategory Name"}
-                                                                            })
-                            </div>
-                            <div class="col-sm-3">
-                                <label for="exampleInputPassword2" class="col-form-label">
-                                    Is Multiple Person Can Use ?
-                                </label>
-                                <div class="input-group input-group-outline mb-3">
-                                    @Html.DropDownListFor(x => x.IsMultiPerson, new List<SelectListItem>
-                                         {
-                                               new SelectListItem{ Text="Yes", Value = "true",Selected=true },
-                                               new SelectListItem{ Text="No", Value = "false" }
-                                            }, new { @class = "js-example-basic-single  w-100", @id = "IsMultiPerson" })
-                                </div>
-                            </div>
-                            <div class="col-sm-3" id="divtxtNumberOfPerson">
-                                <label for="exampleInputUsername2" class="col-form-label">
-                                    Number Of Person
-                                    @Html.ValidationMessageFor(m => m.NumberOfPerson, "", new { @class = "text-danger" })
-                                </label>
-                                @Html.TextBoxFor(m => m.NumberOfPerson, new Dictionary<string, object>() {
-                                                                            {"id","txtNumberOfPerson"},
-                                                                            {"class","form-control text-capitalize"},
-                                                                               {"autocomplete","off"},
-                                                                            {"placeholder","Enter How Many NUmber Of Person Can Use"}
-                                                                            })
-                            </div>
+                    <div class="row form-group">
+                        <div class="col-sm-3">
+                            <label for="exampleInputUsername2" class="col-form-label">
+                                Category
+                                @Html.ValidationMessageFor(m => m.CategoryId, "", new { @class = "text-danger" })
+                            </label>
+                            @Html.DropDownListFor(model => model.CategoryId, new SelectList(Model.CategoryMasterList, "CategoryId", "CategoryName"), "Select Category", new Dictionary<string, object>
+                                      () {
+                                      {"id","ddlCategory"},
+                                      { "class","js-example-basic-single  w-100"},
+                                      {"autocomplete","off"},
+                                      {"required","required"},
+                                      {"placeholder","Enter category"}
+                                       })
                         </div>
-                        <div class="row form-group">
+                        <div class="col-sm-3">
+                            <label for="exampleInputUsername2" class="col-form-label">
+                                Sub Category Name
+                                @Html.ValidationMessageFor(m => m.SubCategoryName, "", new { @class = "text-danger" })
+                            </label>
+
+                            @Html.TextBoxFor(m => m.SubCategoryName, new Dictionary<string, object>() {
+                                                                        {"id","txtSubCategoryName"},
+                                                                        {"class","form-control text-capitalize"},
+                                                                           {"autocomplete","off"},
+                                                                        {"required","required"},
+                                                                        {"placeholder","Enter SubCategory Name"}
+                                                                        })
+                        </div>
+                        @*<div class="col-sm-3">
+            <label for="exampleInputPassword2" class="col-form-label">
+                Is Multiple Person Can Use ?
+            </label>
+            <div class="input-group input-group-outline mb-3">
+                @Html.DropDownListFor(x => x.IsMultiPerson, new List<SelectListItem>
+                     {
+                           new SelectListItem{ Text="Yes", Value = "true",Selected=true },
+                           new SelectListItem{ Text="No", Value = "false" }
+                        }, new { @class = "js-example-basic-single  w-100", @id = "IsMultiPerson" })
+            </div>
+        </div>
+        <div class="col-sm-3" id="divtxtNumberOfPerson">
+            <label for="exampleInputUsername2" class="col-form-label">
+                Number Of Person
+                @Html.ValidationMessageFor(m => m.NumberOfPerson, "", new { @class = "text-danger" })
+            </label>
+            @Html.TextBoxFor(m => m.NumberOfPerson, new Dictionary<string, object>() {
+                                                        {"id","txtNumberOfPerson"},
+                                                        {"class","form-control text-capitalize"},
+                                                           {"autocomplete","off"},
+                                                        {"placeholder","Enter How Many NUmber Of Person Can Use"}
+                                                        })
+        </div>*@
+                        <div class="col-sm-3">
+                            <label for="exampleInputUsername2" class="col-form-label">
+                                No Of Sitting
+                                @Html.ValidationMessageFor(m => m.NoOfSitting, "", new { @class = "text-danger" })
+                            </label>
+                            @Html.TextBoxFor(m => m.NoOfSitting, new Dictionary<string, object>() {
+                                                               {"id","txtNumberOfSitting"},
+                                                               {"class","form-control text-capitalize"},
+                                                                  {"autocomplete","off"},
+                                                               {"required","required"},
+                                                               {"placeholder","Enter Sitting Number"}
+                                                               })
+                        </div>
+                   
+                       
+                            @*<div class="col-sm-3">
+            <label for="exampleInputUsername2" class="col-form-label">
+                Yearperiod
+                @Html.ValidationMessageFor(m => m.YearId, "", new { @class = "text-danger" })
+            </label>
+            @Html.DropDownListFor(model => model.YearId, new SelectList(Model.YearMasterList, "YearId", "yearperiod"), "Select Yearperiod", new Dictionary<string, object>
+                      () {
+                      {"id","ddlYearperiod"},
+                      { "class","js-example-basic-single  w-100"},
+                      {"autocomplete","off"},
+                      {"required","required"},
+                      {"placeholder","Enter Yearperiod"}
+                       })
+        </div>*@
+                            
                             <div class="col-sm-3">
                                 <label for="exampleInputUsername2" class="col-form-label">
-                                    Yearperiod
-                                    @Html.ValidationMessageFor(m => m.YearId, "", new { @class = "text-danger" })
-                                </label>
-                                @Html.DropDownListFor(model => model.YearId, new SelectList(Model.YearMasterList, "YearId", "yearperiod"), "Select Yearperiod", new Dictionary<string, object>
-                                          () {
-                                          {"id","ddlYearperiod"},
-                                          { "class","js-example-basic-single  w-100"},
-                                          {"autocomplete","off"},
-                                          {"required","required"},
-                                          {"placeholder","Enter Yearperiod"}
-                                           })
-                            </div>
-                            <div class="col-sm-3">
-                                <label for="exampleInputUsername2" class="col-form-label">
-                                    NoOfSitting
-                                    @Html.ValidationMessageFor(m => m.NoOfSitting, "", new { @class = "text-danger" })
-                                </label>
-                                @Html.TextBoxFor(m => m.NoOfSitting, new Dictionary<string, object>() {
-                                                                   {"id","txtNumberOfSitting"},
-                                                                   {"class","form-control text-capitalize"},
-                                                                      {"autocomplete","off"},
-                                                                   {"required","required"},
-                                                                   {"placeholder","Enter Sitting Number"}
-                                                                   })
-                            </div>
-                            <div class="col-sm-3">
-                                <label for="exampleInputUsername2" class="col-form-label">
-                                    TimeDuration
+                                    Time Duration
                                     @Html.ValidationMessageFor(m => m.TimeDuraion, "", new { @class = "text-danger" })
                                 </label>
                                 @Html.TextBoxFor(m => m.TimeDuraion, new Dictionary<string, object>() {
@@ -137,8 +138,16 @@
                                                                    })
                             </div>
                             <div class="col-sm-3">
+                                <label class="col-form-label">Appointment Day Interval</label>
+                                <div class="d-inline-flex">
+                                    @Html.TextBoxFor(model => model.DayInterval, new { @class = "form-control text-capitalize twonumberonly", id = "WaitingTime", placeholder = "Enter Day Interval" })
+                                    @Html.TextBoxFor(model => model.DayInterval, new { @class = "form-control text-capitalize twonumberonly", id = "WaitingTime", placeholder = "Day", disabled = "disabled" })
+                                </div>
+
+                            </div>
+                            <div class="col-sm-3">
                                 <label for="exampleInputUsername2" class="col-form-label">
-                                    Amount
+                                    Price
                                     @Html.ValidationMessageFor(m => m.Amount, "", new { @class = "text-danger" })
                                 </label>
                                 @Html.TextBoxFor(m => m.Amount, new Dictionary<string, object>() {
@@ -149,8 +158,7 @@
                                                                    {"placeholder","Enter Amount"}
                                                                    })
                             </div>
-                        </div>
-                        <div class="row form-group">
+                     
                             <div class="col-sm-3">
                                 <label for="exampleInputPassword2" class="col-form-label">IsActive</label>
                                 <div class="input-group input-group-outline mb-3">
@@ -171,7 +179,7 @@
         </div>
     </div>
 </div>
-<script>
+@*<script>
     // Wait for the document to be ready
     $(document).ready(function () {
         // Get the dropdown element
@@ -189,4 +197,4 @@
             }
         });
     });
-</script>
+</script>*@

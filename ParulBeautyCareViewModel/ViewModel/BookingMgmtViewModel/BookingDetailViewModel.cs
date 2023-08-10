@@ -14,6 +14,7 @@ namespace ParulBeautyCareViewModel.ViewModel.BookingMgmtViewModel
         public string CategoryId { get; set; }
         public string SubCategoryId { get; set; }
         public string AllocatedTo { get; set; }
+        public string AllocationDate { get; set; }
         public string AppointmentDate { get; set; }
         public string AppointmentTime { get; set; }
         public string DoneBy { get; set; }
@@ -32,5 +33,6 @@ namespace ParulBeautyCareViewModel.ViewModel.BookingMgmtViewModel
         public string message { get; set; }
         public string Action { get; set; }
         public string CompanyCode { get; set; }
+        public string result { get; set; }
     }
 }

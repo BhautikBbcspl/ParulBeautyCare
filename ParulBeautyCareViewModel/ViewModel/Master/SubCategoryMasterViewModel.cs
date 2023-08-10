@@ -18,17 +18,17 @@ namespace ParulBeautyCareViewModel.ViewModel.Master
         [Required(ErrorMessage = "*")]
         public string SubCategoryName { get; set; }
 
-        [Required(ErrorMessage = "*")]
+        //[Required(ErrorMessage = "*")]
         public string IsMultiPerson { get; set; }
-
-     
         public string NumberOfPerson { get; set; }
 
-        [Required(ErrorMessage = "*")]
+        //[Required(ErrorMessage = "*")]
         public string YearId { get; set; }
 
         [Required(ErrorMessage = "*")]
         public string NoOfSitting { get; set; }
+
+        public string DayInterval { get; set; }
         public string IsActive { get; set; }
         public string CompanyCode { get; set; }
         public string CreateDate { get; set; }

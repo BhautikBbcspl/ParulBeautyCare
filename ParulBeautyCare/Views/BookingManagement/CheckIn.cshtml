@@ -35,18 +35,11 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    @*<div class="row">
-                            <div class="d-xl-flex justify-content-end align-items-end">
-                                <a class="btn btn-sm btn-outline-primary btn-round mb-3" href="@Url.Action("ViewStockPurchase","StockManagement")">
-                                    <i class="fa fa-eye mx-2"></i>View
-                                </a>
-                            </div>
-                        </div>*@
+                  
                     @using (Html.BeginForm("CheckIn", "BookingManagement", FormMethod.Post, new { @class = "forms-sample" , autocomplete = "off" }))
                     {
                         @Html.AntiForgeryToken();
-                        @*@Html.HiddenFor(m => m.CheckId)*@
-                       
+                        
                     <div class="row form-group">
                         <div class="col-sm-3">
                             <label class="col-form-label">Customer Name @Html.ValidationMessageFor(m => m.CustomerName, "", new { @class = "text-danger h3" })</label>
@@ -99,12 +92,17 @@
                             </div>
                         </div>
 
-                        <div class="col-sm-3"><label class="col-form-label">Waiting Time</label>
-                                              <div class="d-inline-flex">
-                                                  @Html.TextBoxFor(model => model.WaitingTime, new { @class = "form-control text-capitalize twonumberonly", id = "WaitingTime", placeholder = "Enter Waiting Time" })
-                                                  @Html.TextBoxFor(model => model.WaitingTime, new { @class = "form-control text-capitalize twonumberonly", id = "WaitingTime", placeholder = "Minutes",disabled= "disabled" })
-                                              </div>
-                           
+                        <div class="col-sm-3">
+                            <label class="col-form-label">Waiting Time</label>
+                            <div class="d-inline-flex">
+                                @Html.TextBoxFor(model => model.WaitingTime, new { @class = "form-control text-capitalize twonumberonly", id = "WaitingTime", placeholder = "Enter Waiting Time" })
+                                @Html.TextBoxFor(model => model.WaitingTime, new { @class = "form-control text-capitalize twonumberonly", id = "WaitingTime", placeholder = "Minutes", disabled = "disabled" })
+                            </div>
+
+                        </div>
+                        <div class="col-sm-3">
+                            <label class="col-form-label">Note (Optional)</label>
+                            @Html.TextAreaFor(model => model.Note, new { @class = "form-control text-capitalize", id = "Note", placeholder = "Enter any additinoal notes here..." })
                         </div>
                     </div>
                         @*<button type="submit" class="btn btn-primary mr-2 mt-3" onclick="return confirm('Are You sure you want to save data?')">Submit</button>*@

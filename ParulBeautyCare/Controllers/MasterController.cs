@@ -1369,7 +1369,7 @@ namespace ParulBeautyCare.Controllers
                 }
                 //
                 SubCategoryMasterViewModel mv = new SubCategoryMasterViewModel();
-                mv.Action = "All";
+                mv.Action = "active";
                 mv.CompanyCode = LoggedUserDetails.CompanyCode;
                 var emplog = ApiCall.PostApi("SubCategoryMasterRetrieve", Newtonsoft.Json.JsonConvert.SerializeObject(mv));
                 mv = JsonConvert.DeserializeObject<SubCategoryMasterViewModel>(emplog);
@@ -1428,6 +1428,10 @@ namespace ParulBeautyCare.Controllers
                     ym = JsonConvert.DeserializeObject<YearMasterViewModel>(Yearlist);
                     sm.YearMasterList = ym.YearMasterList;
                     //
+                    if (sm.DayInterval != null)
+                    {
+                        sm.DayInterval = sm.DayInterval + " Day";
+                    }
                     sm.CreateDate = generalFunctions.getTimeZoneDatetimedb();
                     sm.UpdateDate = generalFunctions.getTimeZoneDatetimedb();
                     sm.Action = "insert";

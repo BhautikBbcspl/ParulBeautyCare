@@ -81,15 +81,17 @@
                         @if (Model.CheckInCheckOutList.Count > 0)
                         {
 
-                                foreach (var item in Model.CheckInCheckOutList)
+                            <div id="card-container" class="row">
+                                @foreach (var item in Model.CheckInCheckOutList)
                                 {
-                                    <div class="col-lg-2 col-md-4 col-12 mt-4 mb-2 card-container">
+                                    <div class="col-lg-3 col-md-4 col-sm-6 col-12 mt-4 mb-2 card-container">
+                                        @*<div class="col-lg-2 col-md-4 col-12 mt-4 mb-2 card-container">*@
                                         <div class="card z-index-2">
                                             <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2 bg-transparent">
                                                 <div class="bg-gradient-primary shadow-primary border-radius-lg py-3 pe-1 ">
                                                     <div class="text-center">
                                                         <h3 class="customer-name">@*<i class="fas fa-user"></i>*@ @item.CustomerName</h3>
-                                                   
+
                                                     </div>
                                                     <table>
                                                         <tr>
@@ -113,14 +115,24 @@
                                             </div>
                                             <div class="card-body text-center">
                                                 <hr class="dark horizontal">
-                                                @*<input type="submit" class="btn black" value="@item.CheckId" onclick="return formSubmit('Are You sure you want to save data?')" />*@
                                                 @Html.Hidden("CheckId", null, new { id = "CheckIdInput" })
-                                            <button class="btn black checkout-button" data-checkid="@item.CheckId" type="button" onclick="return formSubmitCheckOut('Are You sure you want to save data?')">Check Out</button>
+                                                <button class="btn black checkout-button" data-checkid="@item.CheckId" type="button" onclick="return formSubmitCheckOut('Are You sure you want to save data?')">Check Out</button>
                                             </div>
                                         </div>
                                     </div>
 
                                 }
+                            </div>
+
+
+                            <div class="row mt-4">
+                                <div class="col-md-12 text-md-end">
+                                    <ul class="pagination float-end" id="pagination">
+                                        <!-- Pagination links will be dynamically added here -->
+                                    </ul>
+                                </div>
+                            </div>
+                            
                         }
                         else
                         {
@@ -138,65 +150,6 @@
 
                     </div>
 
-                        @*<div class="row mt-4">
-                                                <div class="col-lg-2 col-md-2 mt-4 mb-2">
-                                                    <div class="card z-index-2 ">
-                                                        <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2 bg-transparent">
-                                                            <div class="bg-gradient-primary shadow-primary border-radius-lg py-3 pe-1 ">
-                                                                <div class="text-center text-white">
-                                                                    <h3>Face Wash</h3>
-                                                                    <h5>Available Stock : 1</h5>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="card-body">
-                                                            Quantity
-                                                            @Html.TextBoxFor(model => model.Qty, new { @class = "form-control", id = "Qty", placeholder = "Quantity", required = "required" })
-
-                                                            <hr class="dark horizontal">
-                                                            <button type="submit" class="btn-sm btn-primary" onclick="return formSubmit('Are You sure you want to save data?')">Transfer</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-2 col-md-2 mt-4 mb-2">
-                                                    <div class="card z-index-2 ">
-                                                        <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2 bg-transparent">
-                                                            <div class="bg-gradient-primary shadow-primary border-radius-lg py-3 pe-1 ">
-                                                                <div class="text-center text-white">
-                                                                    <h3>Eye Liner</h3>
-                                                                    <h5>Available Stock : 2</h5>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="card-body">
-                                                            Quantity
-                                                            @Html.TextBoxFor(model => model.Qty, new { @class = "form-control", id = "Qty", placeholder = "Quantity", required = "required" })
-
-                                                            <hr class="dark horizontal">
-                                                            <button type="submit" class="btn-sm btn-primary" onclick="return formSubmit('Are You sure you want to save data?')">Transfer</button>
-                            </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-2 col-md-2 mt-4 mb-2">
-                                                    <div class="card z-index-2 ">
-                                                        <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2 bg-transparent">
-                                                            <div class="bg-gradient-primary shadow-primary border-radius-lg py-3 pe-1 ">
-                                                                <div class="text-center text-white">
-                                                                    <h3>Nail Art Pen</h3>
-                                                                    <h5>Available Stock : 2</h5>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="card-body">
-                                                            Quantity
-                                                            @Html.TextBoxFor(model => model.Qty, new { @class = "form-control", id = "Qty", placeholder = "Quantity", required = "required" })
-
-                                                            <hr class="dark horizontal">
-                                                            <button type="submit" class="btn-sm btn-primary" onclick="return formSubmit('Are You sure you want to save data?')">Transfer</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>*@
                     }
 
                 </div>
@@ -205,35 +158,19 @@
     </div>
 </div>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-@*<script>
-    $(document).ready(function () {
-        $("#searchInput").on("keyup", function () {
-            var searchText = $(this).val().toLowerCase();
-            $(".card-container").each(function () {
-                var customerName = $(this).find(".customer-name").text().toLowerCase();
-                if (customerName.includes(searchText)) {
-                    $(this).css("display", "block"); // Show the card container
-                } else {
-                    $(this).css("display", "none");  // Hide the card container
-                }
-            });
-        });
-    });
-</script>*@
 <script>
     $(document).ready(function () {
         $("#searchInput").on("keyup", function () {
             var searchText = $(this).val().toLowerCase();
-            var id=
-            $(".card-container").each(function () {
-                var customerName = $(this).find(".customer-name").text().toLowerCase();
-                if (customerName.includes(searchText)) {
-                    $(this).css("display", "block"); // Show the card container
-                } else {
-                    $(this).css("display", "none");  // Hide the card container
-                }
-            });
+            var id =
+                $(".card-container").each(function () {
+                    var customerName = $(this).find(".customer-name").text().toLowerCase();
+                    if (customerName.includes(searchText)) {
+                        $(this).css("display", "block"); // Show the card container
+                    } else {
+                        $(this).css("display", "none");  // Hide the card container
+                    }
+                });
         });
     });
 </script>
@@ -267,3 +204,58 @@
         return false;
     }
 </script>
+<!--Pagination Start-->
+<script>
+    const cardsPerPage = 8; // Number of cards to display per page
+    const cardContainer = document.getElementById('card-container');
+    const pagination = document.getElementById('pagination');
+
+    const cards = document.querySelectorAll('.card-container');
+    const numPages = Math.ceil(cards.length / cardsPerPage);
+
+    function displayPage(page) {
+        cardContainer.innerHTML = '';
+        const startIndex = (page - 1) * cardsPerPage;
+        const endIndex = startIndex + cardsPerPage;
+
+        for (let i = startIndex; i < endIndex && i < cards.length; i++) {
+            cardContainer.appendChild(cards[i]);
+        }
+    }
+
+    function createPaginationLinks() {
+        pagination.innerHTML = '';
+
+        for (let i = 1; i <= numPages; i++) {
+            const listItem = document.createElement('li');
+            listItem.className = 'page-item';
+            const link = document.createElement('a');
+            link.href = '#';
+            link.className = 'page-link';
+            link.textContent = i;
+            link.addEventListener('click', () => {
+                displayPage(i);
+                updatePaginationLinks(i);
+            });
+            listItem.appendChild(link);
+            pagination.appendChild(listItem);
+        }
+    }
+
+    function updatePaginationLinks(activePage) {
+        const listItems = pagination.querySelectorAll('.page-item');
+
+        listItems.forEach((listItem, index) => {
+            const link = listItem.querySelector('.page-link');
+            if (index + 1 === activePage) {
+                listItem.classList.add('active');
+            } else {
+                listItem.classList.remove('active');
+            }
+        });
+    }
+
+    displayPage(1); // Initial display
+    createPaginationLinks();
+</script>
+<!--Pagination End-->

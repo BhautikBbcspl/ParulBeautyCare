@@ -1,0 +1,264 @@
+﻿@model ParulBeautyCareViewModel.ViewModel.BookingMgmtViewModel.BookingStaffAllocationViewModel
+@{
+    ViewBag.Title = "Booking Staff Allocation";
+    ViewBag.Module = "Book Management";
+}
+<style>
+    #DetailTable .form-control {
+        display: block;
+        width: 100%;
+        padding: 0.875rem 1.375rem;
+        font-size: 0.875rem;
+        font-weight: 400;
+        line-height: 1;
+        color: #212529;
+        background-clip: padding-box;
+        border: 1px solid #ced4da;
+        appearance: none;
+        border-radius: 1px;
+        transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    }
+</style>
+<div class="content-wrapper">
+    <div class="card">
+        <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+            <div class="bg-gradient-pinkHeader shadow-primary border-radius-lg pt-3 d-flex justify-content-between row">
+                <h2 class="text-white text-capitalize ps-3 title_margin col-md-6"><b>BOOKING STAFF ALLOCATION</b></h2>
+            </div>
+        </div>
+        <div class="card-body">
+            @using (Html.BeginForm("BookingStaffAllocation", "BookingManagement", FormMethod.Post, new { @class = "forms-sample" }))
+            {
+                @Html.AntiForgeryToken();
+                <div class="row form-group">
+                    <div class="col-lg-4 col-md-6 col-sm-4">
+                        <label class="col-form-label">
+                            Select Customer
+                            @Html.ValidationMessageFor(m => m.BookingId, "", new { @class = "text-danger h3" })
+                        </label>
+
+                        <div class="input-group input-group-outline mb-3">
+                            @Html.DropDownListFor(m => m.BookingId, new SelectList(Model.BookingHeaderList.GroupBy(header => header.CustomerName).Select(group => group.First()), "BookingId", "CustomerName"), "Select Customer",
+                         new Dictionary<string, object>() {
+                                           {"id","ddlBookingId"},
+                                           { "class","form-control form-select js-example-basic-single w-100"},
+                                            {"onchange" ,"javascript:GetDetailData(this.value)" }
+                             })
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-sm-4" id="detailCardContainer" style="display:none;">
+                        <div class="card2">
+                            <div class="card-body2">
+                                <h5 class="card-title2">Customer Details</h5>
+                                <div id="dragula-left" class="py-2">
+                                    <div class="card2 innerCard">
+                                        <div class="card-body2 p-3 innerCardBody">
+                                            <div class="media">
+                                                <i class="typcn typcn-user icon-sm me-3"></i>
+                                                <h3 class="mt-1 customer-name"></h3>
+                                            </div>
+                                            <div class="media">
+                                                <i class="typcn typcn-phone icon-sm me-3"></i>
+                                                <h5 class="mt-1 contact-number"></h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+
+            <input type="hidden" id="formData" name="formData" />
+            <div class="row mt-5">
+                <div class="col-12">
+                    <div class="table-responsive">
+                        <table id="DetailTable" class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        @Html.DisplayName("Customer Name")
+                                    </th>
+                                    <th>
+                                        @Html.DisplayName("Appointment Date")
+                                    </th>
+                                    <th>
+                                        @Html.DisplayName("Appointment Time")
+                                    </th>
+                                    <th>
+                                        @Html.DisplayName("Category")
+                                    </th>
+                                    <th>
+                                        @Html.DisplayName("Sub Category")
+                                    </th>
+                                    <th>
+                                        @Html.DisplayName("Allocate To")
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                        <button id="Allocation" class="btn btn-primary mr-2 mt-3 float-end" value="@ViewBag.action">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function GetDetailData(_BookingHeaderId) {
+        $.ajax({
+            url: "@System.Configuration.ConfigurationManager.AppSettings["myKey"]" + "/BookingManagement/BookingDetailRTR",
+            data: { BookingHeaderId: _BookingHeaderId },
+            cache: false,
+            type: "POST",
+            datatype: "json",
+            traditional: true,
+            success:
+                function (data) {
+                    debugger
+                    if (data.bhv.length === 0 && data.bdv.length === 0) {
+                        // Both data.bhv and data.bdv are null, hide the card and table
+                        $('#detailCardContainer').hide();
+                        var tableBody = $('#DetailTable tbody');
+                        tableBody.empty();
+                    } else {
+                        $('#detailCardContainer').show();
+                        $.each(data.bhv, function (index, item) {
+                            var customerName = item.CustomerName;
+                            var contactNo = item.ContactNo;
+                            $('.customer-name').text(customerName);
+                            $('.contact-number').text('Contact No: ' + contactNo);
+                        })
+
+                        var tableBody = $('#DetailTable tbody');
+                        tableBody.empty();
+                        $.each(data.bdv, function (index, item) {
+                            var row = $('<tr></tr>');
+                            var BookingDetailId = $('<input type="text" class="form-control booking-detail-id" autocomplete="off" hidden>').attr('name', 'DetailTable[' + index + '].BookingDetailId').val(item.BookingDetailId);
+                            var CustomerName = $('<input type="text" class="form-control text-capitalize w-100" autocomplete="off" readonly="true">').attr('name', 'DetailTable[' + index + '].CustomerName').val(item.CustomerName);
+                            var AppointmentDate = $('<input type="text" class="form-control text-capitalize w-100" autocomplete="off" readonly="true">').attr('name', 'DetailTable[' + index + '].AppointmentDate').val(item.AppointmentDate);
+                            var AppointmentTime = $('<input type="text" class="form-control text-capitalize w-100" autocomplete="off" readonly="true">').attr('name', 'DetailTable[' + index + '].AppointmentTime').val(item.AppointmentTime);
+                            var CategoryName = $('<input type="text" class="form-control text-capitalize w-100" autocomplete="off" readonly="true">').attr('name', 'DetailTable[' + index + '].CategoryName').val(item.CategoryName);
+                            var SubCategoryName = $('<input type="text" class="form-control text-capitalize w-100" autocomplete="off" readonly="true">').attr('name', 'DetailTable[' + index + '].SubCategoryName').val(item.SubCategoryName);
+
+                            var staffDropdown = $('<select class="form-select js-example-basic-single" style="width: 203.938px !important;" name="DetailTable[' + index + '].StaffId"><option>Select Staff</option></select>');
+                            $.each(data.smv, function (staffIndex, staffItem) {
+
+                                var option = $('<option>', {
+                                    value: staffItem.StaffId,
+                                    text: staffItem.StaffName
+                                });
+
+                                if (staffItem.StaffId === item.AllocatedTo) {
+                                    option.prop('selected', true);
+                                }
+
+                                staffDropdown.append(option);
+                            });
+
+                            var CustomerNameCell = $('<td></td>').append(BookingDetailId, CustomerName);
+                            var AppointmentDateCell = $('<td></td>').append(AppointmentDate);
+                            var AppointmentTimeCell = $('<td></td>').append(AppointmentTime);
+                            var CategoryNameCell = $('<td></td>').append(CategoryName);
+                            var SubCategoryNameCell = $('<td></td>').append(SubCategoryName);
+                            var StaffCell = $('<td></td>').append(staffDropdown);
+
+                            row.append(CustomerNameCell, AppointmentDateCell, AppointmentTimeCell, CategoryNameCell, SubCategoryNameCell, StaffCell);
+                            tableBody.append(row);
+
+                            if ($(".js-example-basic-single").length) {
+                                $(".js-example-basic-single").select2();
+                            }
+                        });
+                    }
+                }
+        })
+    }
+</script>
+<script>
+    $(document).ready(function () {
+        $("#Allocation").click(function (e) {
+            e.preventDefault(); // Prevent default form submission
+
+            var formDataArray = [];
+            $('#DetailTable tbody tr').each(function () {
+                var row = $(this);
+                var BookingDetailId = row.find('.booking-detail-id').val();
+                var StaffId = row.find('.js-example-basic-single').val();
+
+                var formDataItem = {
+                    BookingDetailId: BookingDetailId,
+                    AllocatedTo: StaffId
+                };
+
+                formDataArray.push(formDataItem);
+            });
+
+            $("#formData").val(JSON.stringify(formDataArray));
+
+            $.ajax({
+                url: "@System.Configuration.ConfigurationManager.AppSettings["myKey"]" + "/BookingManagement/AddBookingStaffAllocation",
+                type: "POST",
+                contentType: "application/json",
+                data: JSON.stringify(formDataArray),
+                success: function (data) {
+                    SweetAlert(data.Message, data.Type);
+                },
+                error: function (error) {
+                    SweetAlert(error.Message, error.Type);
+                }
+            });
+        });
+    });
+    function SweetAlert(Message, Type) {
+        if (Type == 'success') {
+            Swal.fire({
+                position: 'top-end',
+                icon: 'success',
+                title: Message,
+                showConfirmButton: false,
+                timer: 3000
+            })
+        }
+        else if (Type == 'error') {
+            Swal.fire({
+                position: 'top-end',
+                icon: 'error',
+                title: Message,
+                showConfirmButton: false,
+                timer: 3000
+            })
+        }
+        else if (Type == 'warning') {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire(
+                        'Deleted!',
+                        'Your record has been deleted.',
+                        'success'
+                    )
+                }
+            })
+        }
+        else if (Type == 'info') {
+            Swal.fire({
+                position: 'top-end',
+                icon: 'info',
+                title: Message,
+                showConfirmButton: false,
+                timer: 3000
+            })
+        }
+    }
+</script>

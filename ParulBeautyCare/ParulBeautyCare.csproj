@@ -2821,6 +2821,7 @@
     <Content Include="Views\StockManagement\AddStockTransfer.cshtml" />
     <Content Include="Views\BookingManagement\CheckIn.cshtml" />
     <Content Include="Views\BookingManagement\CheckOut.cshtml" />
+    <Content Include="Views\BookingManagement\BookingStaffAllocation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -13,11 +13,15 @@ namespace ParulBeautyCareDbClasses.DataModels
     
     public partial class PBBookingDetailRtr_Result
     {
+        public int BookingDetailId { get; set; }
         public Nullable<int> BookingId { get; set; }
         public Nullable<int> CategoryId { get; set; }
+        public string CategoryName { get; set; }
         public Nullable<int> SubCategoryId { get; set; }
+        public string SubCategoryName { get; set; }
         public Nullable<int> AllocatedTo { get; set; }
-        public Nullable<System.DateTime> AppointmentDate { get; set; }
+        public Nullable<System.DateTime> AllocationDate { get; set; }
+        public string AppointmentDate { get; set; }
         public string AppointmentTime { get; set; }
         public Nullable<int> DoneBy { get; set; }
         public Nullable<System.DateTime> DoneDate { get; set; }
@@ -25,11 +29,10 @@ namespace ParulBeautyCareDbClasses.DataModels
         public Nullable<decimal> Discount { get; set; }
         public Nullable<decimal> FinalAmount { get; set; }
         public Nullable<int> Status { get; set; }
-        public string CreateUser { get; set; }
         public string UpdateDate { get; set; }
         public string UpdateUser { get; set; }
         public string CustomerName { get; set; }
         public string CreateDate { get; set; }
-        public string CreateUser1 { get; set; }
+        public string CreateUser { get; set; }
     }
 }

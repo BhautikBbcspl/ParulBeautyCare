@@ -19,7 +19,7 @@ namespace ParulBeautyCareDbClasses.DataModels
         public string CategoryName { get; set; }
         public Nullable<bool> ismultiperson { get; set; }
         public Nullable<int> NumberOfPerson { get; set; }
-        public int YearId { get; set; }
+        public Nullable<int> YearId { get; set; }
         public Nullable<bool> IsActive { get; set; }
         public Nullable<int> NoOfSitting { get; set; }
         public string TimeDuraion { get; set; }
@@ -28,5 +28,6 @@ namespace ParulBeautyCareDbClasses.DataModels
         public string CreateDate { get; set; }
         public string CreateUser { get; set; }
         public string yearperiod { get; set; }
+        public string DayInterval { get; set; }
     }
 }

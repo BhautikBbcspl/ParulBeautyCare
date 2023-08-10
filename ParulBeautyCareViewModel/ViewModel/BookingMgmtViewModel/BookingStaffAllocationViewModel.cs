@@ -12,11 +12,10 @@ namespace ParulBeautyCareViewModel.ViewModel.BookingMgmtViewModel
     {
         [Required(ErrorMessage = "*")]
         public string BookingId { get; set; }
-        public string CustomerName { get; set; }
-        public string CompanyCode { get; set; }
-        public string Action { get; set; }
         public List<PBBookingHeaderRtr_Result> BookingHeaderList { get; set; }
         public string success { get; set; }
+        public string CompanyCode { get; set; }
+        public string Action { get; set; }
         public string message { get; set; }
     }
 }

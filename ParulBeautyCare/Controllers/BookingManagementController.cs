@@ -50,6 +50,131 @@ namespace ParulBeautyCare.Controllers
             }).ToList();
             return View(mv);
         }
+
+        #region==> Booking Allocation
+        public ActionResult BookingStaffAllocation()
+        {
+            try
+            {
+                MenuRightsViewModel mv1 = new MenuRightsViewModel();
+                //mv1.Usercode = LoggedUserDetails.UserName;
+                //string url = generalFunctions.getCommon(Request.Url.AbsoluteUri);
+                //mv1.PageName = url;
+                //var MenuRtr = ApiCall.PostApi("MenuRightsRtr", Newtonsoft.Json.JsonConvert.SerializeObject(mv1));
+                //mv1 = JsonConvert.DeserializeObject<MenuRightsViewModel>(MenuRtr);
+                //if (mv1.MenuRightsList.Count > 0)
+                //{
+                //    //ViewBag.ViewRight = mv1.MenuRightsList.FirstOrDefault().ViewRight;
+                //    //ViewBag.InsertRight = mv1.MenuRightsList.FirstOrDefault().InsertRight;
+                //    //ViewBag.UpdateRight = mv1.MenuRightsList.FirstOrDefault().UpdateRight;
+                //    //ViewBag.DeleteRight = mv1.MenuRightsList.FirstOrDefault().DeleteRight;
+                //    TempData["ViewRight"] = mv1.MenuRightsList.FirstOrDefault().ViewRight;
+                //    TempData["InsertRight"] = mv1.MenuRightsList.FirstOrDefault().InsertRight;
+                //    TempData["UpdateRight"] = mv1.MenuRightsList.FirstOrDefault().UpdateRight;
+                //    TempData["DeleteRight"] = mv1.MenuRightsList.FirstOrDefault().DeleteRight;
+                //}
+                //else
+                //{
+                //    var data = new { Message = "Sorry,You have no rights to access this page", Type = "error" };
+                //    TempData["SweetAlert"] = data;
+                //    return RedirectToAction("Dashboard", "Home");
+                //}
+
+                BookingStaffAllocationViewModel model = new BookingStaffAllocationViewModel();
+                model.CompanyCode = LoggedUserDetails.CompanyCode;
+                model.Action = "all";
+
+                using (parulbeautycareEntities db = new parulbeautycareEntities())
+                {
+                    BookingHeaderViewModel bvm = new BookingHeaderViewModel();
+                    var BookingList = ApiCall.PostApi("BookingHeaderRetrieve", Newtonsoft.Json.JsonConvert.SerializeObject(model));
+                    bvm = JsonConvert.DeserializeObject<BookingHeaderViewModel>(BookingList);
+                    model.BookingHeaderList = bvm.BookingHeaderList;
+                    model.BookingHeaderList.ForEach(e =>
+                    {
+                        e.CustomerName = $"{e.BookingCode} - {e.CustomerName}";
+                    });
+                }
+                return View(model);
+            }
+            catch (Exception ex)
+            {
+                //Danger(ex.Message.ToString(), true);
+                //return RedirectToAction("Dashboard", "Home");
+                var data = new { Message = ex.Message.ToString(), Type = "error" };
+                TempData["SweetAlert"] = data;
+                return RedirectToAction("Dashboard", "Home");
+            }
+        }
+        [HttpPost]
+        public ActionResult AddBookingStaffAllocation(List<BookingDetailViewModel> formData)
+        {
+            try
+            {
+                BookingDetailViewModel bdv = new BookingDetailViewModel();
+                foreach (var detail in formData)
+                {
+                    bdv.BookingDetailId = detail.BookingDetailId;
+                    bdv.AllocatedTo = detail.AllocatedTo;
+                    bdv.UpdateDate = generalFunctions.getTimeZoneDatetimedb();
+                    bdv.Action = "allocation";
+                    bdv.Status = "1";
+                    bdv.UpdateUser = User.Identity.Name;
+                    bdv.CompanyCode = LoggedUserDetails.CompanyCode;
+                    bdv.AllocationDate = generalFunctions.getTimeZoneDatetimedb();
+                    var bookdetail = ApiCall.PostApi("BookingDetailInsUpd", Newtonsoft.Json.JsonConvert.SerializeObject(bdv));
+                    bdv = JsonConvert.DeserializeObject<BookingDetailViewModel>(bookdetail);
+
+                }
+                string msg = "Booking allocated successfully.";
+                if (msg.Contains("successfully"))
+                {
+                    var data = new { Message = msg, Type = "success" };
+                    return Json(data, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    var data = new { Message = msg, Type = "error" };
+                    return Json(data, JsonRequestBehavior.AllowGet);
+                }
+            }
+            catch (Exception ex)
+            {
+                var data = new { Message = ex.Message.ToString(), Type = "error" };
+                TempData["SweetAlert"] = data;
+                return RedirectToAction("Dashboard", "Home");
+            }
+        }
+
+        [HttpPost]
+        public ActionResult BookingDetailRTR(string BookingHeaderId)
+        {
+            BookingDetailViewModel bvm = new BookingDetailViewModel();
+            bvm.BookingId = BookingHeaderId;
+            bvm.CompanyCode = LoggedUserDetails.CompanyCode;
+            bvm.Action = "details";
+            var BookingDetailList = ApiCall.PostApi("BookingDetailRetrieve", Newtonsoft.Json.JsonConvert.SerializeObject(bvm));
+            bvm = JsonConvert.DeserializeObject<BookingDetailViewModel>(BookingDetailList);
+            List<PBBookingDetailRtr_Result> bdv = bvm.BookingDetailList;
+
+            StaffMasterViewModel mv = new StaffMasterViewModel();
+            mv.Action = "Active";
+            mv.CompanyCode = LoggedUserDetails.CompanyCode;
+            var StaffList = ApiCall.PostApi("StaffMasterRetrieve", Newtonsoft.Json.JsonConvert.SerializeObject(mv));
+            mv = JsonConvert.DeserializeObject<StaffMasterViewModel>(StaffList);
+            List<PBStaffMasterRtr_Result> smv = mv.StaffMasterList;
+
+            BookingHeaderViewModel bhm = new BookingHeaderViewModel();
+            bhm.CompanyCode = LoggedUserDetails.CompanyCode;
+            bhm.Action = "all";
+            var BookingHeaderList = ApiCall.PostApi("BookingHeaderRetrieve", Newtonsoft.Json.JsonConvert.SerializeObject(bhm));
+            bhm = JsonConvert.DeserializeObject<BookingHeaderViewModel>(BookingHeaderList);
+            List<PBBookingHeaderRtr_Result> bhv = bhm.BookingHeaderList.Where(x => x.BookingId.ToString() == BookingHeaderId).ToList();
+
+            var obj = new { bdv, smv, bhv };
+            return Json(obj, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
         public ActionResult SelectSubCategoryJson(string ddlCategoryDropdown)
         {
             BookAppointmentViewModel mv = new BookAppointmentViewModel();

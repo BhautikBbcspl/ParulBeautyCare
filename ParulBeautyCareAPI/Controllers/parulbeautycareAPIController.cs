@@ -662,7 +662,7 @@ namespace ParulBeautyCareAPI.Controllers
             {
                 using (parulbeautycareEntities db = new parulbeautycareEntities())
                 {
-                    sm.result = db.PBSubCategoryMasterInsUpd(sm.SubCategoryId, sm.SubCategoryName, sm.CategoryId, sm.IsMultiPerson, sm.NumberOfPerson, sm.YearId, sm.NoOfSitting, sm.TimeDuraion, sm.Amount, sm.CompanyCode, sm.IsActive, sm.CreateDate, sm.UpdateDate, sm.CreateUser, sm.Action).FirstOrDefault();
+                    sm.result = db.PBSubCategoryMasterInsUpd(sm.SubCategoryId, sm.SubCategoryName, sm.CategoryId, sm.IsMultiPerson, sm.NumberOfPerson, sm.YearId, sm.NoOfSitting, sm.TimeDuraion, sm.Amount, sm.CompanyCode, sm.IsActive, sm.CreateDate, sm.UpdateDate, sm.CreateUser, sm.DayInterval,sm.Action).FirstOrDefault();
                     var response = Request.CreateResponse(HttpStatusCode.OK, sm);
                     sm.success = "true";
                 }
@@ -1000,27 +1000,75 @@ namespace ParulBeautyCareAPI.Controllers
         #region ==> Booking Staff Allocation
         [HttpPost]
         [Route("api/parulbeautycareAPI/BookingHeaderRetrieve")]
-        public IHttpActionResult BookingHeaderRetrieve([FromBody] BookingStaffAllocationViewModel spvm)
+        public IHttpActionResult BookingHeaderRetrieve([FromBody] BookingHeaderViewModel bhvm)
         {
             iNotifyLogger obj = new iNotifyLogger();
             try
             {
-
                 using (parulbeautycareEntities db = new parulbeautycareEntities())
                 {
-                    spvm.BookingHeaderList = db.PBBookingHeaderRtr(spvm.BookingId, spvm.Action, spvm.CompanyCode).ToList();
-                    var response = Request.CreateResponse(HttpStatusCode.OK, spvm);
-                    spvm.success = "true";
+                    bhvm.BookingHeaderList = db.PBBookingHeaderRtr(bhvm.BookingId, bhvm.Action, bhvm.CompanyCode).ToList();
+                    var response = Request.CreateResponse(HttpStatusCode.OK, bhvm);
+                    bhvm.success = "true";
                 }
             }
             catch (Exception e)
             {
-                spvm.success = "false";
-                spvm.message = e.Message;
+                bhvm.success = "false";
+                bhvm.message = e.Message;
                 obj.LogMessage("APIController", "BookingHeaderRetrieve", e.Message, iNotifyLogger.LogType.Exception);
             }
-            return Json(spvm);
+            return Json(bhvm);
         }
+
+        #region==> Booking Detail
+        [HttpPost]
+        [Route("api/parulbeautycareAPI/BookingDetailRetrieve")]
+        public IHttpActionResult BookingDetailRetrieve([FromBody] BookingDetailViewModel bdvm)
+        {
+            iNotifyLogger obj = new iNotifyLogger();
+            try
+            {
+                using (parulbeautycareEntities db = new parulbeautycareEntities())
+                {
+                    bdvm.BookingDetailList = db.PBBookingDetailRtr(bdvm.BookingId, bdvm.Action, bdvm.CompanyCode).ToList();
+                    var response = Request.CreateResponse(HttpStatusCode.OK, bdvm);
+                    bdvm.success = "true";
+                }
+            }
+            catch (Exception e)
+            {
+                bdvm.success = "false";
+                bdvm.message = e.Message;
+                obj.LogMessage("APIController", "BookingDetailRetrieve", e.Message, iNotifyLogger.LogType.Exception);
+            }
+            return Json(bdvm);
+        }
+
+
+        [HttpPost]
+        [Route("api/parulbeautycareAPI/BookingDetailInsUpd")]
+        public IHttpActionResult BookingDetailInsUpd([FromBody] BookingDetailViewModel sm)
+        {
+            iNotifyLogger obj = new iNotifyLogger();
+            try
+            {
+                using (parulbeautycareEntities db = new parulbeautycareEntities())
+                {
+                    sm.result = db.PBBookingDetailInsUpd(sm.BookingDetailId, sm.BookingId, sm.CategoryId, sm.SubCategoryId, sm.AllocatedTo, sm.AllocationDate, sm.AppointmentDate, sm.AppointmentTime, sm.DoneBy, sm.DoneDate, sm.Amount, sm.Discount, sm.FinalAmount, sm.Status, sm.CreateDate, sm.CreateUser, sm.UpdateDate, sm.UpdateUser, sm.CustomerName, sm.Action).FirstOrDefault();
+                    var response = Request.CreateResponse(HttpStatusCode.OK, sm);
+                    sm.success = "true";
+                }
+            }
+            catch (Exception e)
+            {
+                sm.success = "false";
+                sm.message = e.Message;
+                obj.LogMessage("APIController", "CategoryMasterInsUpd", e.Message, iNotifyLogger.LogType.Exception);
+            }
+            return Json(sm);
+        }
+        #endregion
         #endregion
 
         #region ==> Check In Out

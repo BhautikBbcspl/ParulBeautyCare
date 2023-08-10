@@ -33143,3 +33143,49 @@ div.dataTables_wrapper div.dataTables_filter {
 }
 
 /**/
+@media (min-width: 996px) and (max-width: 1222px) {
+    .card-container {
+        flex: 0 0 33.33%;
+        max-width: 33.33%;
+    }
+}
+
+/* Cards */
+.card2 {
+    box-shadow: none;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    -ms-box-shadow: none;
+    border: 1px solid #e7eaed !important;
+}
+
+    .card2 .card-body2 {
+        background-color: #d81b60;
+        padding: 1rem 1rem;
+    }
+
+        .card2 .card-body2 + .card-body2 {
+            padding-top: 1rem;
+        }
+
+    .card2 .card-title2 {
+        color: #ffffff;
+        text-transform: capitalize;
+        font-size: 1.125rem;
+        font-weight: 600;
+    }
+
+    .card2 .card-subtitle2 {
+        font-weight: 400;
+        margin-top: 0.625rem;
+        margin-bottom: 0.625rem;
+    }
+
+.innerCard {
+    border: none !important;
+}
+
+.innerCardBody {
+    border-radius: 10px !important;
+    background-color: #ffffff !important;
+}

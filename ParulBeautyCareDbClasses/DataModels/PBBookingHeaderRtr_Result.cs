@@ -14,6 +14,7 @@ namespace ParulBeautyCareDbClasses.DataModels
     public partial class PBBookingHeaderRtr_Result
     {
         public int BookingId { get; set; }
+        public string BookingCode { get; set; }
         public Nullable<int> CustomerId { get; set; }
         public string ContactNo { get; set; }
         public string CustomerName { get; set; }
