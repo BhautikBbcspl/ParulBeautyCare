@@ -183,9 +183,6 @@
           <Parameter Name="action" Type="nvarchar" Mode="In" />
           <Parameter Name="moduleid" Type="nvarchar" Mode="In" />
         </Function>
-        <Function Name="PBPackageMasterRtr" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="action" Type="nvarchar" Mode="In" />
-        </Function>
         <Function Name="PBPageMasterInsUpd" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="pageId" Type="nvarchar" Mode="In" />
           <Parameter Name="PageName" Type="nvarchar(max)" Mode="In" />
@@ -788,9 +785,6 @@
             <Parameter Name="action" Mode="In" Type="String" />
             <Parameter Name="companycode" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="PBPackageMasterRtr" ReturnType="Collection(parulbeautycareModel.PBPackageMasterRtr_Result)">
-            <Parameter Name="action" Mode="In" Type="String" />
-          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="PBCategoryMasterRetrieve_Result">
           <Property Type="Int32" Name="CategoryId" Nullable="false" />
@@ -1102,16 +1096,6 @@
           <Property Type="String" Name="UpdateUser" Nullable="true" MaxLength="50" />
           <Property Type="String" Name="CreateDate" Nullable="true" MaxLength="4000" />
           <Property Type="String" Name="CreateUser" Nullable="true" MaxLength="50" />
-        </ComplexType>
-        <ComplexType Name="PBPackageMasterRtr_Result">
-          <Property Type="Int32" Name="PackageId" Nullable="false" />
-          <Property Type="String" Name="PackageName" Nullable="true" MaxLength="50" />
-          <Property Type="Boolean" Name="IsActive" Nullable="true" />
-          <Property Type="String" Name="CompanyCode" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="CreateUser" Nullable="true" MaxLength="50" />
-          <Property Type="DateTime" Name="CreateDate" Nullable="true" Precision="23" />
-          <Property Type="String" Name="UpdateUser" Nullable="true" MaxLength="50" />
-          <Property Type="DateTime" Name="UpdateDate" Nullable="true" Precision="23" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1540,20 +1524,6 @@
                 <ScalarProperty Name="UpdateUser" ColumnName="UpdateUser" />
                 <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
                 <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="PBPackageMasterRtr" FunctionName="parulbeautycareModel.Store.PBPackageMasterRtr">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="parulbeautycareModel.PBPackageMasterRtr_Result">
-                <ScalarProperty Name="PackageId" ColumnName="PackageId" />
-                <ScalarProperty Name="PackageName" ColumnName="PackageName" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="CompanyCode" ColumnName="CompanyCode" />
-                <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
-                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
-                <ScalarProperty Name="UpdateUser" ColumnName="UpdateUser" />
-                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

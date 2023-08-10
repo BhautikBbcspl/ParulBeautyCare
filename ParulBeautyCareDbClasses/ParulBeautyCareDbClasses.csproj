@@ -111,9 +111,6 @@
     <Compile Include="DataModels\PBModuleMasterRtr_Result.cs">
       <DependentUpon>ParulBeautyCaredb.tt</DependentUpon>
     </Compile>
-    <Compile Include="DataModels\PBPackageMasterRtr_Result.cs">
-      <DependentUpon>ParulBeautyCaredb.tt</DependentUpon>
-    </Compile>
     <Compile Include="DataModels\PBPageMasterRtr_Result.cs">
       <DependentUpon>ParulBeautyCaredb.tt</DependentUpon>
     </Compile>

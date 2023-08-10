@@ -51,7 +51,6 @@
     <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\Master\DepartmentMasterViewModel.cs" />
     <Compile Include="ViewModel\Master\CategoryMasterViewModel.cs" />
-    <Compile Include="ViewModel\Master\PackageMasterViewModel.cs" />
     <Compile Include="ViewModel\Master\SubCategoryMasterViewModel.cs" />
     <Compile Include="ViewModel\Master\YearMasterViewModel.cs" />
     <Compile Include="ViewModel\StockMgmtViewModel\ProductTypeMasterViewModel.cs" />

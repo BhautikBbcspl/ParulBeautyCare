@@ -1447,14 +1447,5 @@ namespace ParulBeautyCareDbClasses.DataModels
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PBBookingHeaderRtr_Result>("PBBookingHeaderRtr", bookingIdParameter, actionParameter, companycodeParameter);
         }
-    
-        public virtual ObjectResult<PBPackageMasterRtr_Result> PBPackageMasterRtr(string action)
-        {
-            var actionParameter = action != null ?
-                new ObjectParameter("action", action) :
-                new ObjectParameter("action", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PBPackageMasterRtr_Result>("PBPackageMasterRtr", actionParameter);
-        }
     }
 }
