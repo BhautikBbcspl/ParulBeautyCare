@@ -1,0 +1,77 @@
+﻿@model ParulBeautyCareViewModel.ViewModel.Master.InteServiceProductMasterViewModel
+@{
+    ViewBag.Title = "Integration Service-Product";
+    ViewBag.Module = "Master";
+}
+
+<div class="content-wrapper" style="overflow:unset !important">
+    <div class="row">
+        <div class="col-12 grid-margin">
+            <div class="card">
+                <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+                    <div class="bg-gradient-pinkHeader shadow-primary border-radius-lg pt-3 d-flex justify-content-between row">
+                        <h2 class="text-white text-capitalize ps-3 title_margin col-md-6"><b>Integration Service-Product</b></h2>
+                        <a class="dedcription-btn anc col-md-6" href="@Url.Action("ViewInteServiceProductMaster","Master")">
+                            <span class="name-descripeion"> <b> VIEW RECORDS</b> </span>
+                            <div class="btn-icon brain">
+                                <i class="fa-solid fa-list-check"> </i>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="card-body">
+                    @using (Html.BeginForm("AddInteServiceProductMaster", "Master", FormMethod.Post, new { @class = "forms-sample" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.HiddenFor(x => x.Action)
+                        @Html.HiddenFor(x => x.InteServiceProductId)
+                        @Html.HiddenFor(x => x.CreateUser)
+                        @Html.HiddenFor(x => x.CreateDate)
+                        <div class="row form-group">
+                            <div class="col-sm-3">
+                                <label class="col-form-label">
+                                    Service
+                                    @Html.ValidationMessageFor(m => m.ServiceId, "", new { @class = "text-danger" })
+                                </label>
+                                @Html.DropDownListFor(model => model.ServiceId, new SelectList(Model.SubCategoryMasterList, "SubCategoryId", "SubCategoryName"), "Select Service", new Dictionary<string, object>
+                                       () {
+                                          {"id","ddlService"},
+                                          { "class","js-example-basic-single  w-100"},
+                                          {"autocomplete","off"},
+                                          {"required","required"},
+                                          {"placeholder","Select Service"}
+                                           })
+                            </div>
+                            <div class="col-sm-3">
+                                <label class="col-form-label">
+                                    Product
+                                    @Html.ValidationMessageFor(m => m.ProductId, "", new { @class = "text-danger" })
+                                </label>
+                                @Html.DropDownListFor(model => model.ProductId, new SelectList(Model.ProductMasterList, "ProductId", "ProductName"), "Select Product", new Dictionary<string, object>
+                                       () {
+                                          {"id","ddlProduct"},
+                                          { "class","js-example-basic-single  w-100"},
+                                          {"autocomplete","off"},
+                                          {"required","required"},
+                                          {"placeholder","Select Product"}
+                                           })
+                            </div>
+                            <div class="col-sm-3">
+                                <label class="col-form-label">IsActive</label>
+                                <div class="input-group input-group-outline mb-3">
+                                    @Html.DropDownListFor(x => x.IsActive, new List<SelectListItem>
+                                           {
+                                               new SelectListItem{ Text="Enable", Value = "true",Selected=true },
+                                               new SelectListItem{ Text="Disable", Value = "false" }
+                                            }, new { @class = "js-example-basic-single  w-100", @id = "IsActive" })
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary mr-2 mt-3" onclick="return formSubmit('Are You sure you want to save data?')">Submit</button>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

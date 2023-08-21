@@ -29,6 +29,7 @@ namespace ParulBeautyCareViewModel.ViewModel.StockMgmtViewModel
         public string CreateUser { get; set; }
         public string UpdateDate { get; set; }
         public string UpdateUser { get; set; }
+        public string ProductImage { get; set; }
         public List<PBProductTypeMasterRetrieve_Result> ProductTypeMasterList { get; set; }
         public List<PBProductMasterRtr_Result> ProductMasterList { get; set; }
         public string Action { get; set; }

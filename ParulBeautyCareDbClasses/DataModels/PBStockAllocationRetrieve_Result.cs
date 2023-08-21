@@ -18,6 +18,7 @@ namespace ParulBeautyCareDbClasses.DataModels
         public Nullable<int> StaffId { get; set; }
         public string AllocateUser { get; set; }
         public string ProductName { get; set; }
+        public string ProductImage { get; set; }
         public Nullable<decimal> Qty { get; set; }
         public string AllocationDate { get; set; }
         public string StaffName { get; set; }

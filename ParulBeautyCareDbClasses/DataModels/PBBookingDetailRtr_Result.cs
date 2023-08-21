@@ -20,9 +20,12 @@ namespace ParulBeautyCareDbClasses.DataModels
         public Nullable<int> SubCategoryId { get; set; }
         public string SubCategoryName { get; set; }
         public Nullable<int> AllocatedTo { get; set; }
+        public string StaffCode { get; set; }
+        public string StaffName { get; set; }
         public Nullable<System.DateTime> AllocationDate { get; set; }
         public string AppointmentDate { get; set; }
-        public string AppointmentTime { get; set; }
+        public Nullable<int> AppointmentTime { get; set; }
+        public string SlotName { get; set; }
         public Nullable<int> DoneBy { get; set; }
         public Nullable<System.DateTime> DoneDate { get; set; }
         public Nullable<decimal> Amount { get; set; }

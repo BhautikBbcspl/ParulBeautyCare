@@ -1,0 +1,121 @@
+﻿@model ParulBeautyCareViewModel.ViewModel.Master.VendorMasterViewModel
+@{
+    ViewBag.Title = "Vendor Master";
+    ViewBag.Module = "Master";
+}
+
+<div class="content-wrapper">
+    <div class="card">
+        <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+            <div class="bg-gradient-pinkHeader shadow-primary border-radius-lg pt-3 d-flex justify-content-between row">
+                <h2 class="text-white text-capitalize ps-3 title_margin col-md-6"><b>Vendor List</b></h2>
+                @if (Convert.ToInt32(TempData["InsertRight"]) == 1)
+                {
+                    <a class="dedcription-btn anc col-md-6" href="@Url.Action("AddVendorMaster","Master")">
+                        <span class="name-descripeion text-capitalize"> <b>Add Records</b> </span>
+                        <div class="btn-icon brain">
+                            <i class="fas fa-plus"> </i>
+                        </div>
+                    </a>
+                }
+            </div>
+        </div>
+        <div class="card-body">
+
+            <div class="row">
+                <div class="col-12">
+                    <table id="Mybase-style" class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>
+                                    @Html.DisplayName("Action")
+                                </th>
+                                <th>
+                                    @Html.DisplayName("VendorCode")
+                                </th>
+                                <th>
+                                    @Html.DisplayName("VendorName")
+                                </th>
+                                <th>
+                                    @Html.DisplayName("Email")
+                                </th>
+                                <th>
+                                    @Html.DisplayName("Contact No")
+                                </th>
+                                <th>
+                                    @Html.DisplayName("Address")
+                                </th>
+                                <th>
+                                    @Html.DisplayName("IsActive")
+                                </th>
+                              
+                                <th>
+                                    @Html.DisplayName("Create Date")
+                                </th>
+                                <th>
+                                    @Html.DisplayName("Create User")
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Convert.ToInt32(TempData["ViewRight"]) == 1)
+                            {
+                                foreach (var item in Model.VendorList)
+                                {
+                                    <tr>
+                                        <td>
+                                            @if (Convert.ToInt32(TempData["UpdateRight"]) == 1)
+                                            {
+                                                <a href="@Url.Action("EditVendorMaster","Master",new { vendorid = item.VendorId })" class="mx-3"><i class="fa fa-pencil"></i></a>
+                                            }
+                                            else
+                                            {
+                                                @*<img src="~/Images/edit_dis_2.png" style=" width: 13%;" />*@
+                                                <img src="~/Images/icons8-no-edit-16 (1).png" class="mx-3"/>
+                                            }
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.VendorCode)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.VendorName)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Email)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Phone)
+                                        </td>
+                                        
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Address)
+                                        </td>
+                                        <td>
+                                         
+                                            <div class="button r" id="button-2">
+                                                <input type="checkbox" class="checkbox" onclick='ActiveDeactiveStatusChange(this, "@item.VendorId", "VendorMaster")' @(item.IsActive == true ? "checked" : "")>
+                                                <div class="knobs"></div>
+                                                <div class="layer"></div>
+                                            </div>
+                                        </td>
+                                        <td> @Html.DisplayFor(modelItem => item.CreateDate)</td>
+                                        <td> @Html.DisplayFor(modelItem => item.CreateUser)</td>
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td>You have no rights to view data</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

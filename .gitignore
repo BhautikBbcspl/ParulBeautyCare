@@ -361,7 +361,3 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
-/ParulBeautyCare
-/ParulBeautyCareDbClasses/DataModels
-/ParulBeautyCareViewModel/ViewModel/BookingMgmtViewModel/BookingDetailViewModel.cs
-/ParulBeautyCareViewModel/ViewModel/BookingMgmtViewModel

@@ -29,6 +29,9 @@ namespace ParulBeautyCareViewModel.ViewModel.Master
         public string NoOfSitting { get; set; }
 
         public string DayInterval { get; set; }
+        public string DayPlaceholder { get; set; }
+        public string Incentive { get; set; }
+        public string GSTPercentage { get; set; }
         public string IsActive { get; set; }
         public string CompanyCode { get; set; }
         public string CreateDate { get; set; }

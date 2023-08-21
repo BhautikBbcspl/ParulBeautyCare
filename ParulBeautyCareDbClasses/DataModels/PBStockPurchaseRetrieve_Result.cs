@@ -25,8 +25,10 @@ namespace ParulBeautyCareDbClasses.DataModels
         public Nullable<System.DateTime> MfgDate { get; set; }
         public Nullable<System.DateTime> ExpDate { get; set; }
         public Nullable<System.DateTime> PurchaseDate { get; set; }
-        public string Vendor { get; set; }
+        public int VendorId { get; set; }
+        public string VendorName { get; set; }
         public string ProductName { get; set; }
+        public string ProductImage { get; set; }
         public string ProductTName { get; set; }
         public string pDate { get; set; }
         public string manufactureDate { get; set; }

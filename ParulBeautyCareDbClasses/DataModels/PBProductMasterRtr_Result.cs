@@ -16,6 +16,7 @@ namespace ParulBeautyCareDbClasses.DataModels
         public int ProductId { get; set; }
         public string ProductCode { get; set; }
         public string ProductName { get; set; }
+        public string ProductImage { get; set; }
         public string NumberOfPerson { get; set; }
         public string CompanyCode { get; set; }
         public Nullable<bool> IsActive { get; set; }

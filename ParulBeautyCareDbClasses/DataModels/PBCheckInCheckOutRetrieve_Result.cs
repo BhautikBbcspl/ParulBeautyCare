@@ -16,10 +16,7 @@ namespace ParulBeautyCareDbClasses.DataModels
         public int CheckId { get; set; }
         public string CustomerName { get; set; }
         public string ContactNo { get; set; }
-        public string HouseNoSociety { get; set; }
-        public string Landmark { get; set; }
-        public string City { get; set; }
-        public string Pincode { get; set; }
+        public string Address { get; set; }
         public Nullable<System.DateTime> CheckinDateTime { get; set; }
         public Nullable<System.DateTime> CheckoutDateTime { get; set; }
         public string WaitingTime { get; set; }

@@ -51,7 +51,7 @@
                             @Html.TextBoxFor(model => model.ContactNo, new { @class = "form-control contacterror", id = "ContactNo", placeholder = "Enter Contact Number", required = "required" })
                         </div>
 
-                        <div class="col-sm-3">
+                        @*<div class="col-sm-3">
                             <label class="col-form-label">House No / Society Name </label>
                             @Html.TextBoxFor(model => model.HouseNoSociety, new { @class = "form-control text-capitalize", id = "HouseNoSociety", placeholder = "Enter House Number / Society Name" })
                         </div>
@@ -59,15 +59,15 @@
                         <div class="col-sm-3">
                             <label class="col-form-label">Landmark </label>
                             @Html.TextBoxFor(model => model.Landmark, new { @class = "form-control text-capitalize", id = "Landmark", placeholder = "Enter Landmark" })
-                        </div>
+                        </div>*@
                         <div class="col-sm-3">
-                            <label class="col-form-label">City @Html.ValidationMessageFor(m => m.City, "", new { @class = "text-danger h3" })</label>
-                            @Html.TextBoxFor(model => model.City, new { @class = "form-control text-capitalize", id = "City", placeholder = "Enter City", required = "required" })
+                            <label class="col-form-label">Address @Html.ValidationMessageFor(m => m.Address, "", new { @class = "text-danger h3" })</label>
+                            @Html.TextBoxFor(model => model.Address, new { @class = "form-control text-capitalize", id = "City", placeholder = "Enter City", required = "required" })
                         </div>
-                        <div class="col-sm-3">
+                        @*<div class="col-sm-3">
                             <label class="col-form-label">Pincode @Html.ValidationMessageFor(m => m.Pincode, "", new { @class = "text-danger h3" })</label>
                             @Html.TextBoxFor(model => model.Pincode, new { @class = "form-control text-capitalize pincodevalidation", id = "Pincode", placeholder = "Enter Pincode", required = "required" })
-                        </div>
+                        </div>*@
 
                         <div class="col-sm-3">
                             <div class="form-check">
@@ -129,6 +129,5 @@
         checkbox.addEventListener('change', function () {
             // Show the ddlDivBooking div when the checkbox is checked, otherwise hide it
             ddlDivBooking.style.display = this.checked ? 'block' : 'none';
-        });
-    //Test
+    });
 </script>

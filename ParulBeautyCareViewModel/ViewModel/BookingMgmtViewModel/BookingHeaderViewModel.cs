@@ -33,6 +33,7 @@ namespace ParulBeautyCareViewModel.ViewModel.BookingMgmtViewModel
         public string CreateDate { get; set; }
         public string CreateUser { get; set; }
         public List<PBBookingHeaderRtr_Result> BookingHeaderList { get; set; }
+        public List<PBBookingDetailRtr_Result> BookingDetailList { get; set; }
         public string success { get; set; }
         public string message { get; set; }
 

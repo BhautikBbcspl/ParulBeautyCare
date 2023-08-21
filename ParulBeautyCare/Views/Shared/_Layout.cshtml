@@ -28,6 +28,10 @@
     @*<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">*@
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!--File Upload CSS-->
+    <link rel="stylesheet" href="~/Content/assets/vendors/dropify/dropify.min.css">
+    <link rel="stylesheet" href="~/Content/assets/vendors/jquery-file-upload/uploadfile.css">
+    <!---->
 
     <script src="~/Content/assets/bootstrap/jquery-3.7.0.js"></script>
     <style>
@@ -67,6 +71,7 @@
             padding-top: 13px !important;
             margin-top: -11px !important;
         }
+
         .field-icon {
             float: right;
             margin-top: -30px;
@@ -74,6 +79,12 @@
             right: 15px;
             z-index: 2;
         }
+
+        .select2 {
+            width: 100% !important;
+        }
+
+    
     </style>
 </head>
 <body>
@@ -253,13 +264,8 @@
     <script src="~/Content/assets/js/select2.js"></script>
 
 
-
-
-
     <script src="~/Scripts/jquery.validate.min.js"></script>
     <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
-
-
 
 
     <!--Datatable-->
@@ -281,7 +287,15 @@
     <script src="~/Content/assets/bootstrap/Custom.js"></script>
     <script src="~/Content/assets/bootstrap/flatpickr.js"></script>
 
-
+    <!--File Upload JS-->
+    <script src="~/Content/assets/vendors/dropify/dropify.min.js"></script>
+    @*<script src="~/Content/assets/vendors/jquery-file-upload/jquery.uploadfile.min.js"></script>*@
+    <script src="~/Content/assets/js/dropify.js"></script>
+    <!---->
+   
+    <!-- End custom js for this page-->
+    <!-- Custom js for this page-->
+    <!-- End custom js for this page-->
     @if (TempData["SweetAlert"] != null)
     {
         <script>
@@ -289,7 +303,7 @@
 
             SweetAlert(data.Message, data.Type);
             function SweetAlert(Message, Type) {
-                
+
                 if (Type == 'success') {
                     Swal.fire({
                         position: 'top-end',
@@ -384,7 +398,7 @@
             // Wrap the table with the new div element
             tableElement.wrap(divElement);
 
-          
+
             $(".datetime").flatpickr({
                 enableTime: true,
                 dateFormat: "d-m-Y H:i"
@@ -432,7 +446,7 @@
             success: function (response) {
                 var sweetAlertMessage = "Status updated successfully";
                 // Call SweetAlert function with success message and type
-              
+
                 Swal.fire({
                     position: 'top-end',
                     icon: 'success',
@@ -500,7 +514,8 @@
                 });
             }
         }*@
-         function UmActiveDeactiveStatusChange(status, Code, Type) {
+        function UmActiveDeactiveStatusChange(status, Code, Type) {
+             debugger
             $('#AjaxLoader').show();
             if (Code != null) {
                 var Value = status.checked;
@@ -511,22 +526,34 @@
                     data: { Code: Code, status: Value, Type: Type },
                     dataType: "html",
                     success: function (response) {
-                        var result = "<div class='alert alert-success background-success'>" + response + "</div>"
-                        $(".msg").html(result);
-                        window.setTimeout(function () {
-                            $(".alert").fadeTo(2000, 0).slideUp(2000, function () {
-                                $(this).remove();
-                            });
-                        }, 8000);
+                        var sweetAlertMessage = "Status updated successfully";
+                        // Call SweetAlert function with success message and type
+
+                        Swal.fire({
+                            position: 'top-end',
+                            icon: 'success',
+                            title: sweetAlertMessage,
+                            showConfirmButton: false,
+                            timer: 3000
+                        })
+
+                        // Remove old alert class inside the div
+                        $(".msg").find(".alert").remove();
                     },
                     error: function (xhr, status, error) {
-                        var result = "<div class='alert alert-danger background-danger'>Status Not Updated</div>"
-                        $(".msg").html(result);
-                        window.setTimeout(function () {
-                            $(".alert").fadeTo(2000, 0).slideUp(2000, function () {
-                                $(this).remove();
-                            });
-                        }, 8000);
+                        var sweetAlertMessage = "Status not updated";
+                        // Call SweetAlert function with success message and type
+
+                        Swal.fire({
+                            position: 'top-end',
+                            icon: 'error',
+                            title: sweetAlertMessage,
+                            showConfirmButton: false,
+                            timer: 3000
+                        })
+
+                        // Remove old alert class inside the div
+                        $(".msg").find(".alert").remove();
                     }
                 });
             }
@@ -581,12 +608,7 @@
             value = value.substring(0, 2); // Restrict to at most two digits
             $(this).val(value);
         });
-        $(".pincodevalidation").on("input", function () {
-            var value = $(this).val();
-            value = value.replace(/[^\d]/g, ''); // Remove non-digit characters
-            value = value.substring(0, 6); // Restrict to at most two digits
-            $(this).val(value);
-        });
+
     </script>
 </body>
 </html>

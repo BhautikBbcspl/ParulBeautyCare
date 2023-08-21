@@ -29,5 +29,7 @@ namespace ParulBeautyCareDbClasses.DataModels
         public string CreateUser { get; set; }
         public string yearperiod { get; set; }
         public string DayInterval { get; set; }
+        public Nullable<decimal> Incentive { get; set; }
+        public Nullable<decimal> GSTPercentage { get; set; }
     }
 }

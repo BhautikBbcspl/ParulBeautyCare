@@ -88,7 +88,7 @@ namespace ParulBeautyCare.Controllers
             {
                 StockPurchaseViewModel spvm = new StockPurchaseViewModel();
                 spvm.CompanyCode = LoggedUserDetails.CompanyCode;
-                spvm.Action = "all";
+                spvm.Action = "active";
 
                 if (!User.Identity.IsAuthenticated)
                 {
@@ -110,6 +110,13 @@ namespace ParulBeautyCare.Controllers
                 spvm.DeptList = dm.DepartmentList;
                 //
 
+                //Vendor List Bind
+                VendorMasterViewModel vnd = new VendorMasterViewModel();
+                var VendList = ApiCall.PostApi("VendorMasterRetrieve", Newtonsoft.Json.JsonConvert.SerializeObject(spvm));
+                vnd = JsonConvert.DeserializeObject<VendorMasterViewModel>(VendList);
+                spvm.VendorList = vnd.VendorList;
+                //
+
                 return View(spvm);
             }
             catch (Exception ex)
@@ -119,6 +126,7 @@ namespace ParulBeautyCare.Controllers
                 return RedirectToAction("Dashboard", "Home");
             }
         }
+       
         [HttpPost]
         public ActionResult AddStockPurchase(StockPurchaseViewModel spvm)
         {
@@ -140,6 +148,12 @@ namespace ParulBeautyCare.Controllers
                 spvm.DeptList = dm.DepartmentList;
                 //
 
+                //Vendor List Bind
+                VendorMasterViewModel vnd = new VendorMasterViewModel();
+                var VendList = ApiCall.PostApi("VendorMasterRetrieve", Newtonsoft.Json.JsonConvert.SerializeObject(spvm));
+                vnd = JsonConvert.DeserializeObject<VendorMasterViewModel>(VendList);
+                spvm.VendorList = vnd.VendorList;
+                //
                 if (spvm.PurchaseId == null)
                 {
                     spvm.CompanyCode = LoggedUserDetails.CompanyCode;
@@ -249,12 +263,19 @@ namespace ParulBeautyCare.Controllers
                 spvm.DeptList = dm.DepartmentList;
                 //
 
+                //Vendor List Bind
+                VendorMasterViewModel vnd = new VendorMasterViewModel();
+                var VendList = ApiCall.PostApi("VendorMasterRetrieve", Newtonsoft.Json.JsonConvert.SerializeObject(spvm));
+                vnd = JsonConvert.DeserializeObject<VendorMasterViewModel>(VendList);
+                spvm.VendorList = vnd.VendorList;
+                //
+
                 spvm.PurchaseId = spvm.StockPurchaseList.FirstOrDefault().PurchaseId.ToString();
                 spvm.PurchaseDate = generalFunctions.ShortDateConvert(spvm.StockPurchaseList.FirstOrDefault().PurchaseDate.ToString());
                 spvm.MfgDate = generalFunctions.ShortDateConvert(spvm.StockPurchaseList.FirstOrDefault().MfgDate.ToString());
                 spvm.ExpDate = generalFunctions.ShortDateConvert(spvm.StockPurchaseList.FirstOrDefault().ExpDate.ToString());
                 spvm.Quantity = spvm.StockPurchaseList.FirstOrDefault().Quantity.ToString();
-                spvm.Vendor = spvm.StockPurchaseList.FirstOrDefault().Vendor.ToString();
+                spvm.VendorId = spvm.StockPurchaseList.FirstOrDefault().VendorId.ToString();
                 spvm.ProductId = spvm.StockPurchaseList.FirstOrDefault().ProductId.ToString();
                 spvm.DepartmentId = spvm.StockPurchaseList.FirstOrDefault().DepartmentId.ToString();
                 spvm.CompanyCode = spvm.StockPurchaseList.FirstOrDefault().CompanyCode.ToString();
@@ -766,9 +787,7 @@ namespace ParulBeautyCare.Controllers
                         writer.Options.PureBarcode = true;
                         img = writer.Write(row.AutoSrNo.ToString());
                         img.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
-
                         row.Barcode = Convert.ToBase64String(ms.ToArray());
-
                     }
                 }
 
@@ -783,6 +802,62 @@ namespace ParulBeautyCare.Controllers
                 return RedirectToAction("Dashboard", "Home");
             }
         }
+        public ActionResult StockAvailable2(int id,string pname)
+        {
+
+            try
+            {
+                if (!User.Identity.IsAuthenticated)
+                {
+                    FormsAuthentication.RedirectToLoginPage();
+                }
+                string url = generalFunctions.getCommon(Request.Url.AbsoluteUri);
+
+                StockTransferHeaderViewModel sthvm = new StockTransferHeaderViewModel();
+                sthvm.Action = "Active";
+                sthvm.CompanyCode = LoggedUserDetails.CompanyCode;
+
+                //Staff List Bind
+                StaffMasterViewModel sm = new StaffMasterViewModel();
+                var StaffList = ApiCall.PostApi("StaffMasterRetrieve", Newtonsoft.Json.JsonConvert.SerializeObject(sthvm));
+                sm = JsonConvert.DeserializeObject<StaffMasterViewModel>(StaffList);
+                sthvm.StaffList = sm.StaffMasterList;
+                //
+
+                //Stock Purchase List 
+                sthvm.FromStaffId = id.ToString();
+                StockTransferHeaderViewModel ss = new StockTransferHeaderViewModel();
+                var StockAvailableList = ApiCall.PostApi("AvailableStockRetrieve", Newtonsoft.Json.JsonConvert.SerializeObject(sthvm));
+                sthvm = JsonConvert.DeserializeObject<StockTransferHeaderViewModel>(StockAvailableList);
+                //
+                foreach (var row in sthvm.AvailableStockList.Where(x=>x.ProductName==pname))
+                {
+                    Bitmap img = null;
+                    using (var ms = new MemoryStream())
+                    {
+                        var writer = new ZXing.BarcodeWriter() { Format = BarcodeFormat.EAN_13 };
+                        writer.Options.Height = 40;
+                        writer.Options.Width = 60;
+                        writer.Options.PureBarcode = true;
+                        img = writer.Write(row.AutoSrNo.ToString());
+                        img.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
+                        row.Barcode = Convert.ToBase64String(ms.ToArray());
+                    }
+                }
+                sthvm.AvailableStockList = sthvm.AvailableStockList.Where(x => x.ProductName == pname).ToList();
+
+                return View("AddStockTransfer", sthvm);
+                //return Json(sthvm.AvailableStockList, JsonRequestBehavior.AllowGet);
+
+            }
+            catch (Exception ex)
+            {
+                var data = new { Message = ex.Message.ToString(), Type = "error" };
+                TempData["SweetAlert"] = data;
+                return RedirectToAction("Dashboard", "Home");
+            }
+        }
+
         //public ActionResult EditStockAllocation(int id)
         //{
 

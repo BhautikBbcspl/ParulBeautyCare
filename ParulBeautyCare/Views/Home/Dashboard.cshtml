@@ -355,6 +355,7 @@
                         </div>
                     </div>
                 </div>
+
             </div>
         </div>
     </div>
@@ -456,7 +457,33 @@
                     </div>
                 </div>
             </div>
+            @*<div class="card">
+                <div class="card-body">
+                    <form id="enquiryForm">
+                        <h4 class="card-title">Enquiry Form</h4>
+                        <p class="card-description">
+                            A simple suggestion engine
+                        </p>
+                        <div class="form-group row">
+                            <div class="col">
+                                <label>Name</label>
+                                <div id="the-basics">
+                                    <input class="typeahead" id="txtPName" type="text" name="PersonName" placeholder="Enter Name">
+                                </div>
+                            </div>
+                            <div class="col">
+                                <label>Contact No</label>
+                                <div id="bloodhound">
+                                    <input class="typeahead" id="txtEmail" type="text" name="PersonContactNo" placeholder="Enter Contact No">
+                                </div>
+                            </div>
+                            <button type="button" id="submitBtn" class=" mt-5 add btn btn-primary font-weight-bold todo-list-add-btn">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>*@
         </div>
+
         <div class="col-lg-7 col-xl-7 d-flex grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
@@ -579,7 +606,36 @@
 
 
 </div>
+<script>
+    $(document).ready(function () {
+        $("#submitBtn").click(function () {
+            var formData = $("#enquiryForm").serialize(); // Serialize the form data
 
+            $.ajax({
+                type: "POST",
+                url: "/Home/Enquiry", // Change this URL to match your controller action
+                data: formData,
+                success: function (response) {
+                    debugger
+                    // Handle the success response from the server
+                    $("#txtPName").val('');
+                    $("#txtEmail").val('');
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: 'Enquiry saved successfully',
+                        showConfirmButton: false,
+                        timer: 3000
+                    })
+                },
+                error: function (error) {
+                    // Handle errors
+                    SweetAlert(error.Message, error.Type);
+                }
+            });
+        });
+    });
+</script>
 <script>
     var ctx = document.getElementById("chart-bars").getContext("2d");
 

@@ -93,10 +93,19 @@
     <Compile Include="DataModels\PBDepartmentMasterRetrieve_Result.cs">
       <DependentUpon>ParulBeautyCaredb.tt</DependentUpon>
     </Compile>
+    <Compile Include="DataModels\PBIntePackageServiceMasterRetrieve_Result.cs">
+      <DependentUpon>ParulBeautyCaredb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModels\PBIntePackageServiceRtr_Result.cs">
+      <DependentUpon>ParulBeautyCaredb.tt</DependentUpon>
+    </Compile>
     <Compile Include="DataModels\PBIntePageModuleRtr_Result.cs">
       <DependentUpon>ParulBeautyCaredb.tt</DependentUpon>
     </Compile>
     <Compile Include="DataModels\PBInteRoleModuleRtr_Result.cs">
+      <DependentUpon>ParulBeautyCaredb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModels\PBInteServiceProductMasterRetrieve_Result.cs">
       <DependentUpon>ParulBeautyCaredb.tt</DependentUpon>
     </Compile>
     <Compile Include="DataModels\PBLoginRtr_Result.cs">
@@ -109,6 +118,9 @@
       <DependentUpon>ParulBeautyCaredb.tt</DependentUpon>
     </Compile>
     <Compile Include="DataModels\PBModuleMasterRtr_Result.cs">
+      <DependentUpon>ParulBeautyCaredb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModels\PBPackageMasterRtr_Result.cs">
       <DependentUpon>ParulBeautyCaredb.tt</DependentUpon>
     </Compile>
     <Compile Include="DataModels\PBPageMasterRtr_Result.cs">
@@ -139,6 +151,9 @@
       <DependentUpon>ParulBeautyCaredb.tt</DependentUpon>
     </Compile>
     <Compile Include="DataModels\PBTimeSlotMasterRetrieve_Result.cs">
+      <DependentUpon>ParulBeautyCaredb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModels\PBVendorMasterRetrieve_Result.cs">
       <DependentUpon>ParulBeautyCaredb.tt</DependentUpon>
     </Compile>
     <Compile Include="DataModels\PBYearMasterRetrieve_Result.cs">

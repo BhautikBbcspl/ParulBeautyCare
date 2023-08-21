@@ -614,7 +614,7 @@ namespace ParulBeautyCareAPI.Controllers
             {
                 using (parulbeautycareEntities db = new parulbeautycareEntities())
                 {
-                    sm.result = db.PBProductMasterInsUpd(sm.ProductId, sm.ProductCode, sm.ProductName, sm.NumberOfPerson, sm.ProductTypeId, sm.IsActive, sm.CompanyCode, sm.CreateDate, sm.UpdateDate, sm.CreateUser, sm.UpdateUser, sm.Action).FirstOrDefault();
+                    sm.result = db.PBProductMasterInsUpd(sm.ProductId, sm.ProductCode, sm.ProductName, sm.ProductImage,sm.NumberOfPerson, sm.ProductTypeId, sm.IsActive, sm.CompanyCode, sm.CreateDate, sm.UpdateDate, sm.CreateUser, sm.UpdateUser, sm.Action).FirstOrDefault();
                     var response = Request.CreateResponse(HttpStatusCode.OK, sm);
                     sm.success = "true";
                 }
@@ -639,7 +639,7 @@ namespace ParulBeautyCareAPI.Controllers
             {
                 using (parulbeautycareEntities db = new parulbeautycareEntities())
                 {
-                    lvm.SubCategoryMasterList = db.PBSubCategoryMasterRetrieve(lvm.Action, lvm.CompanyCode, lvm.CategoryId).ToList();
+                    lvm.SubCategoryMasterList = db.PBSubCategoryMasterRetrieve(lvm.Action, lvm.CompanyCode, lvm.SubCategoryId).ToList();
                     var response = Request.CreateResponse(HttpStatusCode.OK, lvm);
                     lvm.success = "true";
                 }
@@ -662,7 +662,7 @@ namespace ParulBeautyCareAPI.Controllers
             {
                 using (parulbeautycareEntities db = new parulbeautycareEntities())
                 {
-                    sm.result = db.PBSubCategoryMasterInsUpd(sm.SubCategoryId, sm.SubCategoryName, sm.CategoryId, sm.IsMultiPerson, sm.NumberOfPerson, sm.YearId, sm.NoOfSitting, sm.TimeDuraion, sm.Amount, sm.CompanyCode, sm.IsActive, sm.CreateDate, sm.UpdateDate, sm.CreateUser, sm.DayInterval,sm.Action).FirstOrDefault();
+                    sm.result = db.PBSubCategoryMasterInsUpd(sm.SubCategoryId, sm.SubCategoryName, sm.CategoryId, sm.IsMultiPerson, sm.NumberOfPerson, sm.YearId, sm.NoOfSitting, sm.TimeDuraion, sm.Amount, sm.CompanyCode, sm.IsActive, sm.CreateDate, sm.UpdateDate, sm.CreateUser, sm.DayInterval, sm.Incentive, sm.GSTPercentage, sm.Action).FirstOrDefault();
                     var response = Request.CreateResponse(HttpStatusCode.OK, sm);
                     sm.success = "true";
                 }
@@ -773,6 +773,201 @@ namespace ParulBeautyCareAPI.Controllers
         }
         #endregion
 
+        #region==> Vendor Master
+        [HttpPost]
+        [Route("api/parulbeautycareAPI/VendorMasterRetrieve")]
+        public IHttpActionResult VendorMasterRetrieve([FromBody] VendorMasterViewModel vnd)
+        {
+            iNotifyLogger obj = new iNotifyLogger();
+            try
+            {
+                using (parulbeautycareEntities db = new parulbeautycareEntities())
+                {
+                    vnd.VendorList = db.PBVendorMasterRetrieve(vnd.Action, vnd.CompanyCode, vnd.VendorId).ToList();
+                    var response = Request.CreateResponse(HttpStatusCode.OK, vnd);
+                    vnd.success = "true";
+
+                }
+            }
+            catch (Exception e)
+            {
+                vnd.success = "false";
+                vnd.message = e.Message;
+                obj.LogMessage("APIController", "VenderMasterRetrieve", e.Message, iNotifyLogger.LogType.Exception);
+            }
+            return Json(vnd);
+        }
+
+        [HttpPost]
+        [Route("api/parulbeautycareAPI/VendorMasterInsUpd")]
+        public IHttpActionResult VendorMasterInsUpd([FromBody] VendorMasterViewModel vnd)
+        {
+            iNotifyLogger obj = new iNotifyLogger();
+            try
+            {
+                using (parulbeautycareEntities db = new parulbeautycareEntities())
+                {
+                    vnd.result = db.PBVendorMasterInsUpd(vnd.VendorId, vnd.VendorCode, vnd.VendorName, vnd.Email, vnd.Phone, vnd.Address, vnd.IsActive, vnd.CompanyCode, vnd.CreateDate, vnd.CreateUser, vnd.UpdateDate, vnd.UpdateUser,vnd.Action).FirstOrDefault();
+                    var response = Request.CreateResponse(HttpStatusCode.OK, vnd);
+                    vnd.success = "true";
+                }
+            }
+            catch (Exception e)
+            {
+                vnd.success = "false";
+                vnd.message = e.Message;
+                obj.LogMessage("APIController", "VendorMasterInsUpd", e.Message, iNotifyLogger.LogType.Exception);
+            }
+            return Json(vnd);
+        }
+        #endregion
+
+        #region==> Package Master
+        [HttpPost]
+        [Route("api/parulbeautycareAPI/PackageMasterRtr")]
+        public IHttpActionResult PackageMasterRtr([FromBody] PackageMasterViewModel lvm)
+        {
+            iNotifyLogger obj = new iNotifyLogger();
+            try
+            {
+                using (parulbeautycareEntities db = new parulbeautycareEntities())
+                {
+                    lvm.PackageList = db.PBPackageMasterRtr(lvm.Action, lvm.CompanyCode, lvm.PackageId).ToList();
+                    var response = Request.CreateResponse(HttpStatusCode.OK, lvm);
+                    lvm.success = "true";
+                }
+            }
+            catch (Exception e)
+            {
+                lvm.success = "false";
+                lvm.message = e.Message;
+                obj.LogMessage("APIController", "PackageMasterRtr", e.Message, iNotifyLogger.LogType.Exception);
+            }
+            return Json(lvm);
+        }
+
+
+        [HttpPost]
+        [Route("api/parulbeautycareAPI/PackageMasterInsUpd")]
+        public IHttpActionResult PackageMasterInsUpd([FromBody] PackageMasterViewModel sm)
+        {
+            iNotifyLogger obj = new iNotifyLogger();
+            try
+            {
+                using (parulbeautycareEntities db = new parulbeautycareEntities())
+                {
+                    sm.result = db.PBPackageMasterInsUpd(sm.PackageId, sm.PackageName, sm.PackageAmount, sm.IsActive, sm.CompanyCode, sm.CreateUser, sm.CreateDate, sm.UpdateUser, sm.UpdateDate, sm.Action).FirstOrDefault();
+                    var response = Request.CreateResponse(HttpStatusCode.OK, sm);
+                    sm.success = "true";
+                }
+            }
+            catch (Exception e)
+            {
+                sm.success = "false";
+                sm.message = e.Message;
+                obj.LogMessage("APIController", "PackageMasterInsUpd", e.Message, iNotifyLogger.LogType.Exception);
+            }
+            return Json(sm);
+        }
+        #endregion
+
+        #region==> Integration Package Service Master
+        [HttpPost]
+        [Route("api/parulbeautycareAPI/IntePackageServiceMasterRetrieve")]
+        public IHttpActionResult IntePackageServiceMasterRetrieve([FromBody] IntePackageServiceMasterViewModel dpt)
+        {
+            iNotifyLogger obj = new iNotifyLogger();
+            try
+            {
+                using (parulbeautycareEntities db = new parulbeautycareEntities())
+                {
+                    dpt.IntePackageServiceMasterList = db.PBIntePackageServiceMasterRetrieve(dpt.Action, dpt.CompanyCode, dpt.IntePackageServiceId).ToList();
+                    var response = Request.CreateResponse(HttpStatusCode.OK, dpt);
+                    dpt.success = "true";
+
+                }
+            }
+            catch (Exception e)
+            {
+                dpt.success = "false";
+                dpt.message = e.Message;
+                obj.LogMessage("APIController", "IntePackageServiceMasterRetrieve", e.Message, iNotifyLogger.LogType.Exception);
+            }
+            return Json(dpt);
+        }
+
+        [HttpPost]
+        [Route("api/parulbeautycareAPI/IntePackageServiceMasterInsUpd")]
+        public IHttpActionResult IntePackageServiceMasterInsUpd([FromBody] IntePackageServiceMasterViewModel sm)
+        {
+            iNotifyLogger obj = new iNotifyLogger();
+            try
+            {
+                using (parulbeautycareEntities db = new parulbeautycareEntities())
+                {
+                    sm.result = db.PBIntePackageServiceMasterInsUpd(sm.IntePackageServiceId, sm.PackageId, sm.ProductId, sm.ServiceId, sm.IsActive, sm.CompanyCode, sm.CreateUser, sm.CreateDate, sm.UpdateUser, sm.UpdateDate, sm.Action).FirstOrDefault();
+                    var response = Request.CreateResponse(HttpStatusCode.OK, sm);
+                    sm.success = "true";
+                }
+            }
+            catch (Exception e)
+            {
+                sm.success = "false";
+                sm.message = e.Message;
+                obj.LogMessage("APIController", "IntePackageServiceMasterInsUpd", e.Message, iNotifyLogger.LogType.Exception);
+            }
+            return Json(sm);
+        }
+        #endregion
+
+        #region==> Integration Service Product Master
+        [HttpPost]
+        [Route("api/parulbeautycareAPI/InteServiceProductMasterRetrieve")]
+        public IHttpActionResult InteServiceProductMasterRetrieve([FromBody] InteServiceProductMasterViewModel dpt)
+        {
+            iNotifyLogger obj = new iNotifyLogger();
+            try
+            {
+                using (parulbeautycareEntities db = new parulbeautycareEntities())
+                {
+                    dpt.InteServiceProductMasterList = db.PBInteServiceProductMasterRetrieve(dpt.Action, dpt.CompanyCode, dpt.InteServiceProductId).ToList();
+                    var response = Request.CreateResponse(HttpStatusCode.OK, dpt);
+                    dpt.success = "true";
+
+                }
+            }
+            catch (Exception e)
+            {
+                dpt.success = "false";
+                dpt.message = e.Message;
+                obj.LogMessage("APIController", "InteServiceProductMasterRetrieve", e.Message, iNotifyLogger.LogType.Exception);
+            }
+            return Json(dpt);
+        }
+
+        [HttpPost]
+        [Route("api/parulbeautycareAPI/InteServiceProductMasterInsUpd")]
+        public IHttpActionResult InteServiceProductMasterInsUpd([FromBody] InteServiceProductMasterViewModel sm)
+        {
+            iNotifyLogger obj = new iNotifyLogger();
+            try
+            {
+                using (parulbeautycareEntities db = new parulbeautycareEntities())
+                {
+                    sm.result = db.PBInteServiceProductMasterInsUpd(sm.InteServiceProductId, sm.ServiceId, sm.ProductId, sm.IsActive, sm.CompanyCode, sm.CreateUser, sm.CreateDate, sm.UpdateUser, sm.UpdateDate, sm.Action).FirstOrDefault();
+                    var response = Request.CreateResponse(HttpStatusCode.OK, sm);
+                    sm.success = "true";
+                }
+            }
+            catch (Exception e)
+            {
+                sm.success = "false";
+                sm.message = e.Message;
+                obj.LogMessage("APIController", "InteServiceProductMasterInsUpd", e.Message, iNotifyLogger.LogType.Exception);
+            }
+            return Json(sm);
+        }
+        #endregion
         #endregion
 
         #region =====> Stock Management API
@@ -814,7 +1009,7 @@ namespace ParulBeautyCareAPI.Controllers
                 using (parulbeautycareEntities db = new parulbeautycareEntities())
                 {
 
-                    spvm.result = db.PBStockPurchaseMasterInsUpd(spvm.PurchaseId, spvm.CompanyCode, spvm.CreateDate, spvm.CreateUser, spvm.UpdateDate, spvm.UpdateUser, spvm.ProductId, spvm.ProductTypeId, spvm.Quantity, spvm.MfgDate, spvm.ExpDate, spvm.PurchaseDate, spvm.Vendor, spvm.DepartmentId, spvm.Action).FirstOrDefault();
+                    spvm.result = db.PBStockPurchaseMasterInsUpd(spvm.PurchaseId, spvm.CompanyCode, spvm.CreateDate, spvm.CreateUser, spvm.UpdateDate, spvm.UpdateUser, spvm.ProductId, spvm.ProductTypeId, spvm.Quantity, spvm.MfgDate, spvm.ExpDate, spvm.PurchaseDate, spvm.VendorId, spvm.DepartmentId, spvm.Action).FirstOrDefault();
                     var response = Request.CreateResponse(HttpStatusCode.OK, spvm);
                     spvm.success = "true";
                 }
@@ -997,6 +1192,7 @@ namespace ParulBeautyCareAPI.Controllers
 
         #region=====> Booking Management API
 
+
         #region ==> Booking Staff Allocation
         [HttpPost]
         [Route("api/parulbeautycareAPI/BookingHeaderRetrieve")]
@@ -1020,6 +1216,31 @@ namespace ParulBeautyCareAPI.Controllers
             }
             return Json(bhvm);
         }
+
+        #region ==> Booking Package Retrieve
+        [HttpPost]
+        [Route("api/parulbeautycareAPI/BookingPackageRetrieve")]
+        public IHttpActionResult BookingPackageRetrieve([FromBody] BookingPackageViewModel bhvm)
+        {
+            iNotifyLogger obj = new iNotifyLogger();
+            try
+            {
+                using (parulbeautycareEntities db = new parulbeautycareEntities())
+                {
+                    bhvm.PBIntePackageServiceList = db.PBIntePackageServiceRtr(bhvm.Action, bhvm.PackageId).ToList();
+                    var response = Request.CreateResponse(HttpStatusCode.OK, bhvm);
+                    bhvm.success = "true";
+                }
+            }
+            catch (Exception e)
+            {
+                bhvm.success = "false";
+                bhvm.message = e.Message;
+                obj.LogMessage("APIController", "BookingHeaderRetrieve", e.Message, iNotifyLogger.LogType.Exception);
+            }
+            return Json(bhvm);
+        }
+        #endregion
 
         #region==> Booking Detail
         [HttpPost]
@@ -1110,7 +1331,7 @@ namespace ParulBeautyCareAPI.Controllers
                     //sdmv.CreateUser = User.Identity.Name;
                     //sdmv.CreateDate = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
                     //sdmv.CreateUser = spvm.AllocateUser;
-                    chkinout.result = db.PBCheckInCheckOutIns(chkinout.CheckId, chkinout.CustomerName, chkinout.ContactNo, chkinout.HouseNoSociety, chkinout.Landmark, chkinout.City, chkinout.Pincode, chkinout.CheckinDateTime, chkinout.CheckoutDateTime, chkinout.WaitingTime, chkinout.BookingId, chkinout.CompanyCode, chkinout.CreateDate, chkinout.CreateUser, chkinout.UpdateDate, chkinout.UpdateUser,chkinout.Note ,chkinout.Action).FirstOrDefault();
+                    chkinout.result = db.PBCheckInCheckOutIns(chkinout.CheckId, chkinout.CustomerName, chkinout.ContactNo, chkinout.Address, chkinout.CheckinDateTime, chkinout.CheckoutDateTime, chkinout.WaitingTime, chkinout.BookingId, chkinout.CompanyCode, chkinout.CreateDate, chkinout.CreateUser, chkinout.UpdateDate, chkinout.UpdateUser,chkinout.Note ,chkinout.Action).FirstOrDefault();
                     var response = Request.CreateResponse(HttpStatusCode.OK, chkinout);
                     chkinout.success = "true";
                 }
@@ -1119,7 +1340,7 @@ namespace ParulBeautyCareAPI.Controllers
             {
                 chkinout.success = "false";
                 chkinout.message = e.Message;
-                obj.LogMessage("APIController", "StockPurchaseInsUpd", e.Message, iNotifyLogger.LogType.Exception);
+                obj.LogMessage("APIController", "CheckInCheckOutIns", e.Message, iNotifyLogger.LogType.Exception);
             }
             return Json(chkinout);
         }
@@ -1129,7 +1350,30 @@ namespace ParulBeautyCareAPI.Controllers
 
         #endregion
 
-
+        #region ==> Enquiry
+        [HttpPost]
+        [Route("api/parulbeautycareAPI/EnquiryIns")]
+        public IHttpActionResult EnquiryIns(EnquiryViewModel enqvm)
+        {
+            iNotifyLogger obj = new iNotifyLogger();
+            try
+            {
+                using (parulbeautycareEntities db = new parulbeautycareEntities())
+                {
+                    enqvm.result = db.PBEnquiryIns(enqvm.PersonName,enqvm.PersonEmailId,enqvm.PersonContactNo, enqvm.PersonAddress, enqvm.PersonEnquiryFor,enqvm.CreateDate,enqvm.CreateUser,enqvm.Action).FirstOrDefault();
+                    var response = Request.CreateResponse(HttpStatusCode.OK, enqvm);
+                    enqvm.success = "true";
+                }
+            }
+            catch (Exception e)
+            {
+                enqvm.success = "false";
+                enqvm.message = e.Message;
+                obj.LogMessage("APIController", "EnquiryIns", e.Message, iNotifyLogger.LogType.Exception);
+            }
+            return Json(enqvm);
+        }
+        #endregion
     }
 
 }

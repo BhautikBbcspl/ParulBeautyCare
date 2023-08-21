@@ -20,6 +20,7 @@ namespace ParulBeautyCareDbClasses.DataModels
         public string CustomerName { get; set; }
         public string Address { get; set; }
         public Nullable<System.DateTime> BookDate { get; set; }
+        public string bookingdate { get; set; }
         public Nullable<int> NoOfPerson { get; set; }
         public Nullable<decimal> TotalAmount { get; set; }
         public Nullable<decimal> DiscountPerc { get; set; }

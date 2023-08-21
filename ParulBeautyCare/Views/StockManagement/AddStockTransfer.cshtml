@@ -38,43 +38,83 @@
                         @Html.AntiForgeryToken();
                         @*@Html.HiddenFor(m => m.StockAllocationId)*@
 
-                        <div class="row form-group">
-                            <div class="col-sm-3">
-                                <label class="col-form-label">
-                                    From Staff Member
-                                    @Html.ValidationMessageFor(m => m.FromStaffId, "", new { @class = "text-danger h3" })
-                                </label>
+                    <div class="row form-group">
+                        <div class="col-sm-3">
+                            <label class="col-form-label">
+                                From Staff Member
+                                @Html.ValidationMessageFor(m => m.FromStaffId, "", new { @class = "text-danger h3" })
+                            </label>
 
-                                <div class="input-group input-group-outline mb-3">
-                                    @Html.DropDownListFor(m => m.FromStaffId, new SelectList(Model.StaffList, "StaffId", "StaffName"), "Select Staff Member",
-                  new Dictionary<string, object>() {
-                                                   {"id","ddlStaffId"},
-                                                   { "class","form-control form-select js-example-basic-single w-100"}
-                      })
-                                </div>
+                            <div class="input-group input-group-outline mb-3">
+                                @Html.DropDownListFor(m => m.FromStaffId, new SelectList(Model.StaffList, "StaffId", "StaffName"), "Select Staff Member",
+              new Dictionary<string, object>() {
+                                               {"id","ddlStaffId"},
+                                               { "class","form-control form-select js-example-basic-single w-100"}
+                  })
+                            </div>
+                        </div>
+
+
+
+                        <div class="col-sm-3">
+                            <label class="col-form-label">
+                                Product
+                                @Html.ValidationMessageFor(m => m.ProductName, "", new { @class = "text-danger h3" })
+                            </label>
+
+                            <div class="input-group input-group-outline mb-3">
+                                @Html.DropDownListFor(m => m.ProductName, new SelectList(Model.AvailableStockList
+                                                                                        .GroupBy(p => p.ProductName)
+                                                                                        .Select(group => group.First()),
+                                                                                        "ProductName", "ProductName"),
+                                                        "Select Product",
+                                                        new Dictionary<string, object>() {
+                                                            {"id", "ddlAvailProd"},
+                                                            {"class", "form-control form-select js-example-basic-single w-100"}
+                                                        })
                             </div>
 
-                            <div class="col-sm-3">
-                                <label class="col-form-label">
-                                    To Staff Member
-                                    @Html.ValidationMessageFor(m => m.ToStaffId, "", new { @class = "text-danger h3" })
-                                </label>
+                        </div>
+                        <div class="col-sm-3">
+                            <label class="col-form-label">
+                                Quantity
+                                @Html.ValidationMessageFor(m => m.ProductName, "", new { @class = "text-danger h3" })
+                            </label>
 
-                                <div class="input-group input-group-outline mb-3">
-                                    @Html.DropDownListFor(m => m.ToStaffId, new SelectList(Model.StaffList, "StaffId", "StaffName"), "Select Staff Member",
-                 new Dictionary<string, object>() {
-                                                  {"id","ddlStaff2Id"},
-                                                  { "class","form-control form-select js-example-basic-single w-100"}
-                     })
-                                </div>
-                            </div>
+                            <input type="number" placeholder="Enter the number of checkboxes to select" class="form-control" id="numCheckboxes" min="1">
 
 
                         </div>
 
+
+                        <div class="col-sm-3">
+                            <label class="col-form-label">
+                                To Staff Member
+                                @Html.ValidationMessageFor(m => m.ToStaffId, "", new { @class = "text-danger h3" })
+                            </label>
+
+                            <div class="input-group input-group-outline mb-3">
+                                @Html.DropDownListFor(m => m.ToStaffId, new SelectList(Model.StaffList, "StaffId", "StaffName"), "Select Staff Member",
+             new Dictionary<string, object>() {
+                                              {"id","ddlStaff2Id"},
+                                              { "class","form-control form-select js-example-basic-single w-100"}
+                 })
+                            </div>
+                        </div>
+
+
+
+                    </div>
+
                         <button type="submit" class="btn btn-primary mr-2 mt-3" onclick="return formSubmit('Are You sure you want to save data?')">Submit</button>
 
                         <!--Available Stock List-->
+                       
+                       @*<div class="row form-group">
+                            <div class="col-sm-3">
+                                <input type="number" placeholder="Enter the number of checkboxes to select" class="form-control" id="numCheckboxes" min="1" >
+                            </div>
+                        </div>*@
                         <div class="row mt-5">
                             <div class="col-12">
                                 <div class="table-responsive">
@@ -142,65 +182,65 @@
 
 
                     <!--RUFF -->
-                @*<div class="row mt-4">
-                    <div class="col-lg-2 col-md-2 mt-4 mb-2">
-                        <div class="card z-index-2 ">
-                            <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2 bg-transparent">
-                                <div class="bg-gradient-primary shadow-primary border-radius-lg py-3 pe-1 ">
-                                    <div class="text-center text-white">
-                                        <h3>Face Wash</h3>
-                                        <h5>Available Stock : 1</h5>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card-body">
-                                Quantity
-                                @Html.TextBoxFor(model => model.Qty, new { @class = "form-control", id = "Qty", placeholder = "Quantity", required = "required" })
+                    @*<div class="row mt-4">
+                                            <div class="col-lg-2 col-md-2 mt-4 mb-2">
+                                                <div class="card z-index-2 ">
+                                                    <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2 bg-transparent">
+                                                        <div class="bg-gradient-primary shadow-primary border-radius-lg py-3 pe-1 ">
+                                                            <div class="text-center text-white">
+                                                                <h3>Face Wash</h3>
+                                                                <h5>Available Stock : 1</h5>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        Quantity
+                                                        @Html.TextBoxFor(model => model.Qty, new { @class = "form-control", id = "Qty", placeholder = "Quantity", required = "required" })
 
-                                <hr class="dark horizontal">
-                                <button type="submit" class="btn-sm btn-primary" onclick="return formSubmit('Are You sure you want to save data?')">Transfer</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-2 col-md-2 mt-4 mb-2">
-                        <div class="card z-index-2 ">
-                            <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2 bg-transparent">
-                                <div class="bg-gradient-primary shadow-primary border-radius-lg py-3 pe-1 ">
-                                    <div class="text-center text-white">
-                                        <h3>Eye Liner</h3>
-                                        <h5>Available Stock : 2</h5>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card-body">
-                                Quantity
-                                @Html.TextBoxFor(model => model.Qty, new { @class = "form-control", id = "Qty", placeholder = "Quantity", required = "required" })
+                                                        <hr class="dark horizontal">
+                                                        <button type="submit" class="btn-sm btn-primary" onclick="return formSubmit('Are You sure you want to save data?')">Transfer</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-2 col-md-2 mt-4 mb-2">
+                                                <div class="card z-index-2 ">
+                                                    <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2 bg-transparent">
+                                                        <div class="bg-gradient-primary shadow-primary border-radius-lg py-3 pe-1 ">
+                                                            <div class="text-center text-white">
+                                                                <h3>Eye Liner</h3>
+                                                                <h5>Available Stock : 2</h5>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        Quantity
+                                                        @Html.TextBoxFor(model => model.Qty, new { @class = "form-control", id = "Qty", placeholder = "Quantity", required = "required" })
 
-                                <hr class="dark horizontal">
-                                <button type="submit" class="btn-sm btn-primary" onclick="return formSubmit('Are You sure you want to save data?')">Transfer</button>
-</div>
+                                                        <hr class="dark horizontal">
+                                                        <button type="submit" class="btn-sm btn-primary" onclick="return formSubmit('Are You sure you want to save data?')">Transfer</button>
                         </div>
-                    </div>
-                    <div class="col-lg-2 col-md-2 mt-4 mb-2">
-                        <div class="card z-index-2 ">
-                            <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2 bg-transparent">
-                                <div class="bg-gradient-primary shadow-primary border-radius-lg py-3 pe-1 ">
-                                    <div class="text-center text-white">
-                                        <h3>Nail Art Pen</h3>
-                                        <h5>Available Stock : 2</h5>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card-body">
-                                Quantity
-                                @Html.TextBoxFor(model => model.Qty, new { @class = "form-control", id = "Qty", placeholder = "Quantity", required = "required" })
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-2 col-md-2 mt-4 mb-2">
+                                                <div class="card z-index-2 ">
+                                                    <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2 bg-transparent">
+                                                        <div class="bg-gradient-primary shadow-primary border-radius-lg py-3 pe-1 ">
+                                                            <div class="text-center text-white">
+                                                                <h3>Nail Art Pen</h3>
+                                                                <h5>Available Stock : 2</h5>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        Quantity
+                                                        @Html.TextBoxFor(model => model.Qty, new { @class = "form-control", id = "Qty", placeholder = "Quantity", required = "required" })
 
-                                <hr class="dark horizontal">
-                                <button type="submit" class="btn-sm btn-primary" onclick="return formSubmit('Are You sure you want to save data?')">Transfer</button>
-                            </div>
-                        </div>
-                    </div>  
-                </div>*@
+                                                        <hr class="dark horizontal">
+                                                        <button type="submit" class="btn-sm btn-primary" onclick="return formSubmit('Are You sure you want to save data?')">Transfer</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>*@
                     <!--RUFF -->
                 </div>
             </div>
@@ -231,6 +271,23 @@
                 form.submit();
             }
         });
+
+
+        $('#ddlAvailProd').change(function () {
+            debugger
+            var prodName = $(this).val();
+            var selectedStaffId = $('#ddlStaffId').val();
+            updateToStaffDropdown(selectedStaffId);
+
+            if (selectedStaffId != "") {
+                var form = $('#myForm');
+                var currentAction = form.attr('action');
+                var newAction = currentAction.replace('/StockManagement/AddStockTransfer', '/StockManagement/StockAvailable2?id=' + selectedStaffId + '&&pname=' + prodName);
+                form.attr('action', newAction);
+                form.submit();
+            }
+        });
+
 
         function updateToStaffDropdown(selectedStaffId) {
             debugger
@@ -364,3 +421,49 @@
             //});
         });
     </script>*@
+
+
+<script>
+    $(document).ready(function () {
+        $('#numCheckboxes').on('input', function () {
+            var numSelected = parseInt($(this).val());
+
+            // Get the total number of checkboxes
+            var totalCheckboxes = $('input[name="selectedIds"]').length;
+
+            // Display an alert if entered value is greater than total checkboxes
+            if (numSelected > totalCheckboxes) {
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'error',
+                    title: 'Entered value exceeds total records!',
+                    showConfirmButton: false,
+                    timer: 3000
+                })
+                return;
+            }
+
+            // Uncheck all checkboxes
+            $('input[name="selectedIds"]').prop('checked', false);
+
+            // Check the specified number of checkboxes, up to the total number
+            $('input[name="selectedIds"]:lt(' + Math.min(numSelected, totalCheckboxes) + ')').prop('checked', true);
+        });
+    });
+
+</script>
+@*<script>
+    $(document).ready(function () {
+        // Create the input element
+        var inputElement = $('<input>', {
+            type: 'number',
+            placeholder: 'Enter the number of checkboxes to select',
+            class: 'form-control form-control-sm',
+            id: 'numCheckboxes',
+            min: '1'
+        });
+
+        // Insert the input element into the div with id "base-style_length"
+        $('#base-style_length').append(inputElement);
+    });
+</script>*@

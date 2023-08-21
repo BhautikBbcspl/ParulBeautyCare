@@ -30,7 +30,8 @@ namespace ParulBeautyCareViewModel.ViewModel.StockMgmtViewModel
         public string PurchaseDate { get; set; }
 
         [Required(ErrorMessage = "*")]
-        public string Vendor { get; set; }
+        public string VendorId { get; set; }
+        public string VendorName { get; set; }
         public string CompanyCode { get; set; }
         public string CreateDate { get; set; }
         public string CreateUser { get; set; }
@@ -43,5 +44,6 @@ namespace ParulBeautyCareViewModel.ViewModel.StockMgmtViewModel
         public List<PBProductMasterRtr_Result> ProductList { get; set; }
         public List<PBStockPurchaseRetrieve_Result> StockPurchaseList { get; set; }
         public List<PBDepartmentMasterRetrieve_Result> DeptList { get; set; }
+        public List<PBVendorMasterRetrieve_Result> VendorList { get; set; }
     }
 }

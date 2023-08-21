@@ -1,0 +1,204 @@
+﻿@model ParulBeautyCareViewModel.ViewModel.BookingMgmtViewModel.BookingDetailViewModel
+@{
+    ViewBag.Title = "Stock Transfer";
+    ViewBag.Module = "Stock Management";
+}
+<style>
+    .bg-gradient-primary {
+        background-image: linear-gradient(195deg, #EC407A 0%, #D81B60 100%);
+    }
+
+    #DetailTable .form-control {
+        display: block;
+        width: 100%;
+        padding: 0.875rem 1.375rem;
+        font-size: 0.875rem;
+        font-weight: 400;
+        line-height: 1;
+        color: #212529;
+        background-clip: padding-box;
+        border: 1px solid #ced4da;
+        appearance: none;
+        border-radius: 1px;
+        transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    }
+</style>
+<div class="content-wrapper">
+    <div class="row">
+        <div class="col-12 grid-margin">
+            <div class="card">
+                <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+                    <div class="bg-gradient-pinkHeader shadow-primary border-radius-lg pt-3 d-flex justify-content-between">
+                        <h2 class="text-white text-capitalize ps-3 title_margin"><b>Service Complition</b></h2>
+
+                    </div>
+                </div>
+                <div class="card-body">
+
+                    @using (Html.BeginForm("ServiceComplition", "BookingManagement", FormMethod.Post, new { @class = "forms-sample", id = "myForm" }))
+                    {
+                        @Html.AntiForgeryToken();
+                        @Html.HiddenFor(model => model.BookingId)
+                        <div class="row form-group">
+                            <div class="col-lg-4 col-md-6 col-sm-4">
+                                <label class="col-form-label">
+                                    Select Customer
+                                    @Html.ValidationMessageFor(m => m.BookingId, "", new { @class = "text-danger h3" })
+                                </label>
+
+                                <div class="input-group input-group-outline mb-3">
+                                    @Html.DropDownListFor(m => m.BookingId, new SelectList(Model.BookingHeaderList.GroupBy(header => header.CustomerName).Select(group => group.First()), "BookingId", "CustomerName"), "Select Customer",
+                                 new Dictionary<string, object>() {
+                                                   {"id","ddlBooking"},
+                                                   { "class","form-control form-select js-example-basic-single w-100"},
+                                                    {"onchange" ,"javascript:GetDetailData(this.value)" }
+                                     })
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-6 col-sm-4" id="detailCardContainer">
+                                @if (Model.BookingHeaderList2 != null)
+                                {
+                                    foreach (var item in Model.BookingHeaderList2)
+                                    {
+                                        <div class="card2">
+                                            <div class="card-body2">
+                                                <h5 class="card-title2">Customer Details</h5>
+                                                <div id="dragula-left" class="py-2">
+                                                    <div class="card2 innerCard">
+                                                        <div class="card-body2 p-3 innerCardBody">
+                                                            <div class="media">
+                                                                <i class="typcn typcn-user icon-sm me-3"></i>
+                                                                <h3 class="mt-1">@item.CustomerName</h3>
+                                                            </div>
+                                                            <div class="media">
+                                                                <i class="typcn typcn-phone icon-sm me-3"></i>
+                                                                <h5 class="mt-1">@item.ContactNo</h5>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                            </div>
+                        </div>
+
+                        <!--Available Stock List-->
+
+                        @*<div class="row form-group">
+                                <div class="col-sm-3">
+                                    <input type="number" placeholder="Enter the number of checkboxes to select" class="form-control" id="numCheckboxes" min="1" >
+                                </div>
+                            </div>*@
+                        <div class="row mt-5">
+                            <div class="col-12">
+                                <div class="table-responsive">
+                                    <table id="base-style" class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    @Html.DisplayName("Action")
+                                                </th>
+                                                <th>
+                                                    @Html.DisplayName("Category")
+                                                </th>
+                                                <th>
+                                                    @Html.DisplayName("Service")
+                                                </th>
+                                                <th>
+                                                    @Html.DisplayName("Appointment Date")
+                                                </th>
+                                                <th>
+                                                    @Html.DisplayName("Appointment Time")
+                                                </th>
+                                                <th>
+                                                    @Html.DisplayName("Allocated To")
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var item in Model.BookingDetailList)
+                                            {
+                                                <tr>
+                                                    <td>
+                                                        <div class="form-check">
+                                                            <label class="form-check-label">
+                                                                <input type="checkbox" class="form-check-input" name="selectedIds" value="@item.BookingDetailId" />
+                                                            </label>
+                                                        </div>
+                                                    </td>
+
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.CategoryName)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.SubCategoryName)
+                                                    </td>
+
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.AllocationDate)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.AppointmentTime)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.AllocatedTo)
+                                                    </td>
+                                                </tr>
+                                            }
+
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary mr-2 mt-3" onclick="return formSubmit('Are You sure you want to save data?')">Completed</button>
+                        <!---->
+                    }
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Without Ajax-->
+@*<script>
+        $(document).ready(function () {
+            $('#ddlBooking').change(function () {
+                var selectedBookingId = $(this).val();
+
+                if (selectedBookingId != "") {
+                    var form = $('#myForm');
+                    var bookingIdInput = form.find('[name="BookingId"]'); // Find the hidden input for BookingId
+                    bookingIdInput.val(selectedBookingId); // Set the value of BookingId
+
+                    var currentAction = form.attr('action');
+                    var newAction = currentAction.replace('/BookingManagement/ServiceComplition', '/BookingManagement/ServiceComplition');
+                    form.attr('action', newAction);
+                    form.submit();
+                }
+            });
+        });
+    </script>*@
+<script>
+    $(document).ready(function () {
+        debugger
+
+        var selectedStaffId = $('#ddlBooking').val()
+
+        $('#ddlBooking').change(function () {
+            debugger
+            var selectedBookingId = $(this).val();
+
+            if (selectedBookingId != "") {
+                var form = $('#myForm');
+                var currentAction = form.attr('action');
+                var newAction = currentAction.replace('/BookingManagement/ServiceComplition', '/BookingManagement/ServiceDetails?id=' + selectedBookingId);
+                form.attr('action', newAction);
+                form.submit();
+            }
+        });
+    });
+</script>

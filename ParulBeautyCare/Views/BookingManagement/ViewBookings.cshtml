@@ -1,0 +1,116 @@
+﻿@model ParulBeautyCareViewModel.ViewModel.BookingMgmtViewModel.BookingHeaderViewModel
+@{
+    ViewBag.Title = "Booking Calender";
+}
+<link href="~/Content/assets/vendors/fullcalendar/fullcalendar.min.css" rel="stylesheet" />
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Customer Booking Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body">
+                ...
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="d-flex justify-content-center align-items-center row">
+    <div class="col-md-1">
+    </div>
+    <div class="col-md-10">
+        <div class="card m-3">
+            <div class="card-body">
+                <h4 class="card-title">Booking Calender</h4>
+                <div id="Mycalendar" class="full-calendar"></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-1">
+    </div>
+</div>
+
+<script src="~/Content/assets/vendors/moment/moment.min.js"></script>
+<script src="~/Content/assets/vendors/fullcalendar/fullcalendar.min.js"></script>
+<script src="~/Content/assets/js/calendar.js"></script>
+<script>
+    (function ($) {
+        'use strict';
+        $(function () {
+            if ($('#Mycalendar').length) {
+                $('#Mycalendar').fullCalendar({
+                    header: {
+                        left: 'prev,next today',
+                        center: 'title',
+                        right: 'month,basicWeek,basicDay'
+                    },
+                    defaultDate: '2023-08-17',
+                    navLinks: true,
+                    editable: false,
+                    eventLimit: true,
+                    eventClick: function (calEvent, jsEvent, view) {
+                        // Call your function here with the calEvent data
+                        openEventDetailsModal(calEvent._id);
+                    },
+                    events: function (start, end, timezone, callback) {
+                        $.ajax({
+                            url: '/BookingManagement/ViewBookingsCalander',
+                            dataType: 'json',
+                            success: function (data) {
+                                
+                                var events = [];
+                                data.forEach(function (item) {
+                                    
+                                    var event = {
+                                        title: item.CustomerName,
+                                        start: item.bookingdate,
+                                        _id: item.BookingId
+                                    };
+                                    events.push(event);
+                                });
+
+                                callback(events);
+                            }
+                        });
+                    }
+                });
+            }
+        });
+    })(jQuery);
+    function openEventDetailsModal(id) {
+        $.get("@Url.Action("GetData", "BookingManagement")/" + id, function (data) {
+            var customerName = data[0].CustomerName;
+            var bookingCode = data[0].BookingCode;
+            var contactNumber = data[0].ContactNo;
+
+            $('.modal-body').html(
+                `<table class="table">
+<tr>
+<td>Customer Name</td>
+<td>${customerName}</td>
+</tr>
+<tr>
+<td>Booking Code</td>
+<td>${bookingCode}</td>
+</tr>
+<tr>
+<td>Contact Number</td>
+<td>${contactNumber}</td>
+</tr>
+<table>`
+            );
+           
+        $("#exampleModal").modal("show");
+    });
+}
+</script>

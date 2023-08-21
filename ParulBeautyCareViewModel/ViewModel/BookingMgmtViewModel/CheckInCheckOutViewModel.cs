@@ -17,14 +17,14 @@ namespace ParulBeautyCareViewModel.ViewModel.BookingMgmtViewModel
 
         [Required(ErrorMessage = "*")]
         public string ContactNo { get; set; }
-        public string HouseNoSociety { get; set; }
-        public string Landmark { get; set; }
+        //public string HouseNoSociety { get; set; }
+        //public string Landmark { get; set; }
 
         [Required(ErrorMessage = "*")]
-        public string City { get; set; }
+        public string Address { get; set; }
 
         [Required(ErrorMessage = "*")]
-        public string Pincode { get; set; }
+        //public string Pincode { get; set; }
 
 
         public string CheckinDateTime { get; set; }

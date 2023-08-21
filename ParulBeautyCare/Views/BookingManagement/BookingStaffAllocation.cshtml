@@ -1,7 +1,7 @@
 ﻿@model ParulBeautyCareViewModel.ViewModel.BookingMgmtViewModel.BookingStaffAllocationViewModel
 @{
     ViewBag.Title = "Booking Staff Allocation";
-    ViewBag.Module = "Book Management";
+    ViewBag.Module = "Booking Management";
 }
 <style>
     #DetailTable .form-control {
@@ -55,7 +55,7 @@
                                         <div class="card-body2 p-3 innerCardBody">
                                             <div class="media">
                                                 <i class="typcn typcn-user icon-sm me-3"></i>
-                                                <h3 class="mt-1 customer-name"></h3>
+                                                <h3 class="customer-name"></h3>
                                             </div>
                                             <div class="media">
                                                 <i class="typcn typcn-phone icon-sm me-3"></i>
@@ -118,9 +118,8 @@
             traditional: true,
             success:
                 function (data) {
-                    debugger
                     if (data.bhv.length === 0 && data.bdv.length === 0) {
-                        // Both data.bhv and data.bdv are null, hide the card and table
+
                         $('#detailCardContainer').hide();
                         var tableBody = $('#DetailTable tbody');
                         tableBody.empty();
@@ -137,14 +136,41 @@
                         tableBody.empty();
                         $.each(data.bdv, function (index, item) {
                             var row = $('<tr></tr>');
-                            var BookingDetailId = $('<input type="text" class="form-control booking-detail-id" autocomplete="off" hidden>').attr('name', 'DetailTable[' + index + '].BookingDetailId').val(item.BookingDetailId);
-                            var CustomerName = $('<input type="text" class="form-control text-capitalize w-100" autocomplete="off" readonly="true">').attr('name', 'DetailTable[' + index + '].CustomerName').val(item.CustomerName);
-                            var AppointmentDate = $('<input type="text" class="form-control text-capitalize w-100" autocomplete="off" readonly="true">').attr('name', 'DetailTable[' + index + '].AppointmentDate').val(item.AppointmentDate);
-                            var AppointmentTime = $('<input type="text" class="form-control text-capitalize w-100" autocomplete="off" readonly="true">').attr('name', 'DetailTable[' + index + '].AppointmentTime').val(item.AppointmentTime);
-                            var CategoryName = $('<input type="text" class="form-control text-capitalize w-100" autocomplete="off" readonly="true">').attr('name', 'DetailTable[' + index + '].CategoryName').val(item.CategoryName);
-                            var SubCategoryName = $('<input type="text" class="form-control text-capitalize w-100" autocomplete="off" readonly="true">').attr('name', 'DetailTable[' + index + '].SubCategoryName').val(item.SubCategoryName);
+                            if (item.Status === 2) {
+                                row.addClass('disabled-row');
+                                row.attr('disabled', 'disabled');
+                            }
+                            var BookingDetailId = $('<input type="text" class="form-control booking-detail-id" style="min-width: 175px !important;" autocomplete="off" hidden>').attr('name', 'DetailTable[' + index + '].BookingDetailId').val(item.BookingDetailId);
+                            var CustomerName = $('<input type="text" class="form-control text-capitalize" style="min-width: 175px !important;" autocomplete="off" readonly="true">').attr('name', 'DetailTable[' + index + '].CustomerName').val(item.CustomerName);
+                            var AppointmentDateDiv = $('<div class="input-group" style="flex-wrap:unset !important"></div>');
+                            var AppointmentDateTimePicker = $('<input type="text" id="AppointmentDate' + index + '" style="width:max-content !important" class="form-control AppointmentDate" autocomplete="off" readonly="true">')
+                                .attr('name', 'DetailTable[' + index + '].AppointmentDate')
+                                .val(item.AppointmentDate);
 
-                            var staffDropdown = $('<select class="form-select js-example-basic-single" style="width: 203.938px !important;" name="DetailTable[' + index + '].StaffId"><option>Select Staff</option></select>');
+                            var AppointmentDateInputGroupAppend = $('<div class="input-group-append"></div>');
+                            var AppointmentDateInputGroupText = $('<span class="input-group-text" id="appointmentIcon' + index + '"><i class="fa fa-calendar"></i></span>');
+
+                            AppointmentDateDiv.append(AppointmentDateTimePicker, AppointmentDateInputGroupAppend.append(AppointmentDateInputGroupText));
+
+                            var CategoryName = $('<input type="text" class="form-control text-capitalize" style="min-width: 175px !important;" autocomplete="off" readonly="true">').attr('name', 'DetailTable[' + index + '].CategoryName').val(item.CategoryName);
+                            var SubCategoryName = $('<input type="text" class="form-control text-capitalize" style="min-width: 175px !important;" autocomplete="off" readonly="true">').attr('name', 'DetailTable[' + index + '].SubCategoryName').val(item.SubCategoryName);
+
+                            var AppointTimeDropdown = $('<select class="form-select js-example-basic-single SlotId" style="width: 203.938px !important;" name="DetailTable[' + index + '].SlotId"><option value="0">Select Time Slot</option></select>');
+                            $.each(data.tsmv, function (TimeslotIndex, TimeslotItem) {
+
+                                var option1 = $('<option>', {
+                                    value: TimeslotItem.SlotId,
+                                    text: TimeslotItem.SlotName
+                                });
+
+                                if (TimeslotItem.SlotId === item.AppointmentTime) {
+                                    option1.prop('selected', true);
+                                }
+
+                                AppointTimeDropdown.append(option1);
+                            });
+
+                            var staffDropdown = $('<select class="form-select js-example-basic-single StaffId" style="width: 203.938px !important;" name="DetailTable[' + index + '].StaffId"><option>Select Staff</option></select>');
                             $.each(data.smv, function (staffIndex, staffItem) {
 
                                 var option = $('<option>', {
@@ -158,16 +184,117 @@
 
                                 staffDropdown.append(option);
                             });
+                            AppointmentDateTimePicker.on('change', function () {
+                                var selectedStaffId = $(staffDropdown).val();
+                                  var selectedAppointmentDate = $(this).val();
+                                  var selectedAppointmentTime = $(AppointTimeDropdown).val();
 
-                            var CustomerNameCell = $('<td></td>').append(BookingDetailId, CustomerName);
-                            var AppointmentDateCell = $('<td></td>').append(AppointmentDate);
-                            var AppointmentTimeCell = $('<td></td>').append(AppointmentTime);
-                            var CategoryNameCell = $('<td></td>').append(CategoryName);
-                            var SubCategoryNameCell = $('<td></td>').append(SubCategoryName);
-                            var StaffCell = $('<td></td>').append(staffDropdown);
+                                var formData = {
+                                    AllocatedTo: selectedStaffId,
+                                    AppointmentDate: selectedAppointmentDate,
+                                    AppointmentTime: selectedAppointmentTime
+                                };
+
+                                $.ajax({
+                                    url: "@System.Configuration.ConfigurationManager.AppSettings["myKey"]" + "/BookingManagement/CheckBookingAllocation",
+                                    type: "POST",
+                                    contentType: "application/json",
+                                    datatype: "json",
+                                    data: JSON.stringify(formData),
+                                    success: function (response) {
+                                        if (response.Type == 'info') {
+                                            SweetAlert(response.Message, response.Type);
+                                            AppointmentDateTimePicker.val('');
+                                        }
+                                    },
+                                    error: function (error) {
+                                        SweetAlert(error.Message, error.Type);
+                                    }
+                                });
+                            });
+                               AppointTimeDropdown.on('change', function () {
+                                var selectedStaffId = $(staffDropdown).val();
+                                var selectedAppointmentDate = $('#AppointmentDate' + index).val();
+                                var selectedAppointmentTime = $(this).val();
+
+                                var formData = {
+                                    AllocatedTo: selectedStaffId,
+                                    AppointmentDate: selectedAppointmentDate,
+                                    AppointmentTime: selectedAppointmentTime
+                                };
+
+                                $.ajax({
+                                    url: "@System.Configuration.ConfigurationManager.AppSettings["myKey"]" + "/BookingManagement/CheckBookingAllocation",
+                                    type: "POST",
+                                    contentType: "application/json",
+                                    datatype: "json",
+                                    data: JSON.stringify(formData),
+                                    success: function (response) {
+                                        if (response.Type == 'info') {
+                                            SweetAlert(response.Message, response.Type);
+                                            AppointTimeDropdown.find('option:first').prop('selected', true);
+                                            AppointTimeDropdown.trigger('change.select2');
+                                        }
+                                    },
+                                    error: function (error) {
+                                        SweetAlert(error.Message, error.Type);
+                                    }
+                                });
+                            });
+                            staffDropdown.on('change', function () {
+                                var selectedStaffId = $(this).val();
+                                var selectedAppointmentDate = $('#AppointmentDate' + index).val();
+                                var selectedAppointmentTime = $(AppointTimeDropdown).val();
+
+                                var formData = {
+                                    AllocatedTo: selectedStaffId,
+                                    AppointmentDate: selectedAppointmentDate,
+                                    AppointmentTime: selectedAppointmentTime
+                                };
+
+                                $.ajax({
+                                    url: "@System.Configuration.ConfigurationManager.AppSettings["myKey"]" + "/BookingManagement/CheckBookingAllocation",
+                                    type: "POST",
+                                    contentType: "application/json",
+                                    datatype: "json",
+                                    data: JSON.stringify(formData),
+                                    success: function (response) {
+                                        if (response.Type == 'info') {
+                                            SweetAlert(response.Message, response.Type);
+                                            staffDropdown.find('option:first').prop('selected', true);
+                                            staffDropdown.trigger('change.select2');
+                                        }
+                                    },
+                                    error: function (error) {
+                                        SweetAlert(error.Message, error.Type);
+                                    }
+                                });
+                            });
+
+                            var CustomerNameCell = $('<td class="col-sm-2 col-lg-2 col-md-2"></td>').append(BookingDetailId, CustomerName);
+                            var AppointmentDateCell = $('<td class="col-sm-2 col-lg-2 col-md-2"></td>').append(AppointmentDateDiv);
+                            var AppointmentTimeCell = $('<td class="col-sm-2 col-lg-2 col-md-2"></td>').append(AppointTimeDropdown);
+                            var CategoryNameCell = $('<td class="col-sm-2 col-lg-2 col-md-2"></td>').append(CategoryName);
+                            var SubCategoryNameCell = $('<td class="col-sm-2 col-lg-2 col-md-2"></td>').append(SubCategoryName);
+                            var StaffCell = $('<td class="col-sm-2 col-lg-2 col-md-2"></td>').append(staffDropdown);
 
                             row.append(CustomerNameCell, AppointmentDateCell, AppointmentTimeCell, CategoryNameCell, SubCategoryNameCell, StaffCell);
                             tableBody.append(row);
+
+                            var flatpickrInput = document.getElementById('AppointmentDate' + index);
+                            var appointmentIcon = document.getElementById('appointmentIcon' + index);
+
+                            flatpickr(flatpickrInput, {
+                                enableTime: false,
+                                dateFormat: "d-m-Y"
+                            });
+
+                            flatpickrInput.parentNode.insertBefore(appointmentIcon, flatpickrInput.nextSibling);
+
+                            $(appointmentIcon).on('click', function () {
+                                // Trigger the click event on the associated appointment date input
+                                $(flatpickrInput).click();
+                            });
 
                             if ($(".js-example-basic-single").length) {
                                 $(".js-example-basic-single").select2();
@@ -187,14 +314,20 @@
             $('#DetailTable tbody tr').each(function () {
                 var row = $(this);
                 var BookingDetailId = row.find('.booking-detail-id').val();
-                var StaffId = row.find('.js-example-basic-single').val();
+                var AppointmentDate = row.find('.AppointmentDate').val();
+                var AppointmentTime = row.find('.SlotId').val();
+                var StaffId = row.find('.StaffId').val();
 
                 var formDataItem = {
                     BookingDetailId: BookingDetailId,
+                    AppointmentDate: AppointmentDate,
+                    AppointmentTime: AppointmentTime,
                     AllocatedTo: StaffId
                 };
 
                 formDataArray.push(formDataItem);
+
+
             });
 
             $("#formData").val(JSON.stringify(formDataArray));
@@ -211,6 +344,8 @@
                     SweetAlert(error.Message, error.Type);
                 }
             });
+
+
         });
     });
     function SweetAlert(Message, Type) {

@@ -3,19 +3,18 @@
     ViewBag.Title = "Product Master"; 
     ViewBag.Module = "Master";
 }
-
-<div class="content-wrapper">
+<div class="content-wrapper" style="overflow:unset !important">
     <div class="row">
         <div class="col-12 grid-margin">
             <div class="card">
                 <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
                     <div class="bg-gradient-pinkHeader shadow-primary border-radius-lg pt-3 d-flex justify-content-between row">
-                        <h2 class="text-white text-capitalize ps-3 title_margin col-md-6"><b>Product Master</b></h2>
+                        <h2 class="text-white text-capitalize ps-3 title_margin col-md-6"><b>Create Product</b></h2>
                         @*@if (Convert.ToInt32(TempData["ViewRight"]) == 1)
-        {*@
+                            {*@
                         @*<a class="btn btn-light btn-icon mb-2 mx-2 title_a" href="@Url.Action("ViewProductMaster", "Master")">
-                            <i class="fa-solid fa-list-check mx-2 text-black"></i><b>View</b>
-                        </a>*@
+                                <i class="fa-solid fa-list-check mx-2 text-black"></i><b>View</b>
+                            </a>*@
                         <a class="dedcription-btn anc col-md-6" href="@Url.Action("ViewProductMaster","Master")">
                             <span class="name-descripeion"> <b> VIEW RECORDS</b> </span>
                             <div class="btn-icon brain">
@@ -27,14 +26,14 @@
                 </div>
                 <div class="card-body">
                     @*<div class="row">
-            <div class="d-xl-flex justify-content-between align-items-center">
-                <h1 class="pink"><b>@ViewBag.action Product Master </b></h1>
-                <a class="btn btn-outline-primary btn-round" href="@Url.Action("ViewProductMaster","Master")">
-                    <i class="fa fa-eye mx-2"></i>View Product
-                </a>
-            </div>
-        </div>*@
-                    @using (Html.BeginForm("AddProductMaster", "Master", FormMethod.Post, new { @class = "forms-sample" }))
+                            <div class="d-xl-flex justify-content-between align-items-center">
+                                <h1 class="pink"><b>@ViewBag.action Product Master </b></h1>
+                                <a class="btn btn-outline-primary btn-round" href="@Url.Action("ViewProductMaster","Master")">
+                                    <i class="fa fa-eye mx-2"></i>View Product
+                                </a>
+                            </div>
+                        </div>*@
+                    @using (Html.BeginForm("AddProductMaster", "Master", FormMethod.Post, new { @class = "forms-sample", enctype = "multipart/form-data" }))
                     {
                         @Html.AntiForgeryToken()
                         @Html.HiddenFor(x => x.Action)
@@ -109,10 +108,41 @@
                                             }, new { @class = "js-example-basic-single  w-100", @id = "IsActive" })
                                 </div>
                             </div>
+                            @*<div class="col-lg-4 grid-margin stretch-card">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h4 class="card-title d-flex">
+                                                Product Image
+                                            </h4>
+                                            <input type="file" name="ProductImage" class="dropify" />
+                                        </div>
+                                    </div>
+                                </div>*@
+
+                            <div class="col-lg-4 grid-margin stretch-card">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="card-title d-flex">
+                                            Product Image
+                                        </h4>
+                                        @if (Model.Action == "Update")
+                                        {
+                                            @Html.HiddenFor(m => m.ProductImage)
+                                            <input type="file" data-default-file="../../@Model.ProductImage" name="ProductImage" class="dropify" />
+                                        }
+                                        else
+                                        {
+                                            <input type="file" name="ProductImage" class="dropify" />
+                                        }
+
+
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                      
-                            <button type="submit" class="btn btn-primary mr-2 mt-3" value="@ViewBag.action" onclick="return formSubmit('Are You sure you want to save data?')">Submit</button>
-                            
+
+                        <button type="submit" class="btn btn-primary mr-2 mt-3" value="@ViewBag.action" onclick="return formSubmit('Are You sure you want to save data?')">Submit</button>
+
                     }
                 </div>
             </div>
@@ -120,3 +150,18 @@
     </div>
 </div>
 
+@*<script>
+    // Get the HTML element with the class "dropify-render"
+    var dropifyRenderElement = document.querySelector('.dropify-render');
+
+    if (dropifyRenderElement) {
+        // Create an <img> element
+        var imgElement = document.createElement('img');
+
+        // Set the src attribute of the <img> element
+        imgElement.src = "image_path_here"; // Replace "image_path_here" with your actual image path
+
+        // Append the <img> element to the "dropify-render" element
+        dropifyRenderElement.appendChild(imgElement);
+    }
+</script>*@

@@ -2769,7 +2769,7 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\Dashboard.cshtml" />
-    <Content Include="Views\Home\Invoice.cshtml" />
+    <Content Include="Views\BookingManagement\ViewBookings.cshtml" />
     <Content Include="Views\Home\Login.cshtml" />
     <Content Include="Views\Home\Profile.cshtml" />
     <Content Include="Views\Home\Staffmgmt.cshtml" />
@@ -2808,9 +2808,7 @@
     <Content Include="Views\Home\Error404.cshtml" />
     <Content Include="Views\Home\Error500.cshtml" />
     <Content Include="Views\Home\ErrorDefault.cshtml" />
-    <Content Include="Views\Master\AddSubCategoryMaster.cshtml" />
     <Content Include="Views\Master\AddYearMaster.cshtml" />
-    <Content Include="Views\Master\ViewSubCategoryMaster.cshtml" />
     <Content Include="Views\Master\ViewYearMaster.cshtml" />
     <Content Include="Views\Master\ViewDepartmentMaster.cshtml" />
     <Content Include="Views\Master\AddDepartmentMaster.cshtml" />
@@ -2822,10 +2820,24 @@
     <Content Include="Views\BookingManagement\CheckIn.cshtml" />
     <Content Include="Views\BookingManagement\CheckOut.cshtml" />
     <Content Include="Views\BookingManagement\BookingStaffAllocation.cshtml" />
+    <Content Include="Views\Master\ViewVendorMaster.cshtml" />
+    <Content Include="Views\Master\AddVendorMaster.cshtml" />
+    <Content Include="Views\Master\AddIntePackageServiceMaster.cshtml" />
+    <Content Include="Views\Master\AddPackageMaster.cshtml" />
+    <Content Include="Views\Master\ViewIntePackageServiceMaster.cshtml" />
+    <Content Include="Views\Master\ViewPackageMaster.cshtml" />
+    <Content Include="Views\BookingManagement\CheckIn2.cshtml" />
+    <Content Include="Views\BookingManagement\ServiceComplition_withoutajx.cshtml" />
+    <Content Include="Views\BookingManagement\ServiceCompletion.cshtml" />
+    <Content Include="Views\Master\AddInteServiceProductMaster.cshtml" />
+    <Content Include="Views\Master\AddSubCategoryMaster.cshtml" />
+    <Content Include="Views\Master\ViewInteServiceProductMaster.cshtml" />
+    <Content Include="Views\Master\ViewSubCategoryMaster.cshtml" />
+    <Content Include="Views\Home\Enquiry.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
+    <Folder Include="Uploads\ProductImages\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

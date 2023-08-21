@@ -1,0 +1,132 @@
+﻿@model ParulBeautyCareViewModel.ViewModel.BookingMgmtViewModel.CheckInCheckOutViewModel
+@{
+    ViewBag.Title = "Check In/Check Out";
+    ViewBag.Module = "Booking Management";
+}
+<style>
+    .input-group, .asColorPicker-wrap {
+        display: grid !important;
+    }
+
+    .form-check {
+        margin-top: 0px;
+        margin-bottom: 0px;
+    }
+</style>
+<div class="content-wrapper">
+    <div class="row">
+        <div class="col-12 grid-margin">
+            <div class="card">
+                <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+                    <div class="bg-gradient-pinkHeader shadow-primary border-radius-lg pt-3 d-flex justify-content-between row">
+                        <h2 class="text-white text-capitalize ps-3 title_margin col-md-6"><b>Check In</b></h2>
+
+                        <a class="dedcription-btn anc col-md-6" href="@Url.Action("CheckOut","BookingManagement")">
+                            <span class="name-descripeion"> <b>Check Out</b> </span>
+                            <div class="btn-icon brain">
+                                <i class="fa-solid fa-right-from-bracket"></i>
+                            </div>
+                        </a>
+                        @*}*@
+                    </div>
+                </div>
+                <div class="card-body">
+                    @using (Html.BeginForm("CheckIn2", "BookingManagement", FormMethod.Post, new { @class = "forms-sample", id = "myForm" }))
+                    {
+                        @Html.AntiForgeryToken();
+                    <div class="row">
+                        <div class="col-12">
+                            <table id="Mybase-style" class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            @Html.DisplayName("Action")
+                                        </th>
+                                        <th>
+                                            @Html.DisplayName("Booking Code")
+                                        </th>
+                                        <th>
+                                            @Html.DisplayName("Customer Name")
+                                        </th>
+                                        <th>
+                                            @Html.DisplayName("Address")
+                                        </th>
+                                        <th>
+                                            @Html.DisplayName("BookDate")
+                                        </th>
+                                        <th>
+                                            @Html.DisplayName("No of Person")
+                                        </th>
+                                        <th>
+                                            @Html.DisplayName("Function Date")
+                                        </th>
+                                        <th>
+                                            @Html.DisplayName("Ready Time")
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.BookingList)
+                                    {
+                                        <tr>
+                                            <td>
+                                                <div class="form-check">
+                                                    <label class="form-check-label">
+                                                        <input type="checkbox" class="form-check-input" name="selectedIds" value="@item.BookingId" />
+                                                    </label>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.BookingCode)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.CustomerName)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Address)
+                                            </td>
+
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.BookDate)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.NoOfPerson)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.FunctionDate)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.ReadyTime)
+                                            </td>
+                                        </tr>
+                                    }
+
+
+                                </tbody>
+                            </table>
+                        </div>
+                        <button type="submit" class="btn btn-primary mr-2 mt-3" onclick="return formSubmit('Are You sure you want to save data?')">Submit</button>
+                    </div>
+                    }
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    // Get a reference to the checkbox element
+    var checkbox = document.getElementById('IsBooking');
+
+    // Get a reference to the ddlDivBooking div
+    var ddlDivBooking = document.getElementById('ddlDivBooking');
+
+    // Initially hide the ddlDivBooking div on page load
+    ddlDivBooking.style.display = 'none';
+
+    // Add an event listener to the checkbox
+    checkbox.addEventListener('change', function () {
+        // Show the ddlDivBooking div when the checkbox is checked, otherwise hide it
+        ddlDivBooking.style.display = this.checked ? 'block' : 'none';
+    });
+</script>

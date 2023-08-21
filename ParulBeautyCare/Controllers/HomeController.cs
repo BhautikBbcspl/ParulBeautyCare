@@ -5,12 +5,13 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 using Newtonsoft.Json;
+using ParulBeautyCare.GeneralClasses;
 using ParulBeautyCareDbClasses.DataModels;
 using ParulBeautyCareViewModel.ViewModel;
 
 namespace ParulBeautyCare.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : GeneralClass
     {
         public ActionResult Index()
         {
@@ -124,15 +125,7 @@ namespace ParulBeautyCare.Controllers
                 return RedirectToAction("Login", "Home");
             }
         }
-        public ActionResult Invoice()
-        {
-            HttpCookie reqCookies = Request.Cookies["LoginMaster"];
-            if (reqCookies != null)
-            {
-                return View();
-            }
-            return View();
-        }
+      
         #endregion
 
         #region => Menu
@@ -155,6 +148,81 @@ namespace ParulBeautyCare.Controllers
             {
                 var error = ex.Message.ToString();
                 return Content("~/Home/Error404");
+            }
+        }
+        #endregion
+
+        #region ==> Enquiry 
+        public ActionResult Enquiry()
+        {
+            try
+            {
+               return View();
+               
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Login", "Home");
+            }
+        }
+       
+        [HttpPost]
+        public ActionResult Enquiry(EnquiryViewModel evm)
+        {
+            try
+            {
+                //Rights checking
+                if (!User.Identity.IsAuthenticated)
+                {
+                    FormsAuthentication.RedirectToLoginPage();
+                }
+                MenuRightsViewModel mv1 = new MenuRightsViewModel();
+                mv1.Usercode = LoggedUserDetails.UserName;
+                string url = generalFunctions.getCommon(Request.Url.AbsoluteUri);
+                mv1.PageName = url;
+                var MenuRtr = ApiCall.PostApi("MenuRightsRtr", Newtonsoft.Json.JsonConvert.SerializeObject(mv1));
+                mv1 = JsonConvert.DeserializeObject<MenuRightsViewModel>(MenuRtr);
+                if (mv1.MenuRightsList.Count > 0)
+                {
+                    //ViewBag.ViewRight = mv1.MenuRightsList.FirstOrDefault().ViewRight;
+                    //ViewBag.InsertRight = mv1.MenuRightsList.FirstOrDefault().InsertRight;
+                    //ViewBag.UpdateRight = mv1.MenuRightsList.FirstOrDefault().UpdateRight;
+                    //ViewBag.DeleteRight = mv1.MenuRightsList.FirstOrDefault().DeleteRight;
+                    TempData["ViewRight"] = mv1.MenuRightsList.FirstOrDefault().ViewRight;
+                    TempData["InsertRight"] = mv1.MenuRightsList.FirstOrDefault().InsertRight;
+                    TempData["UpdateRight"] = mv1.MenuRightsList.FirstOrDefault().UpdateRight;
+                    TempData["DeleteRight"] = mv1.MenuRightsList.FirstOrDefault().DeleteRight;
+                }
+                else
+                {
+                    var data = new { Message = "Sorry,You have no rights to access this page", Type = "error" };
+                    TempData["SweetAlert"] = data;
+                    return RedirectToAction("Dashboard", "Home");
+                }
+
+                evm.CreateDate = generalFunctions.getTimeZoneDatetimedb();
+                evm.Action = "insert";
+                evm.CreateUser = User.Identity.Name;
+                var emplog = ApiCall.PostApi("EnquiryIns", Newtonsoft.Json.JsonConvert.SerializeObject(evm));
+                evm = JsonConvert.DeserializeObject<EnquiryViewModel>(emplog);
+                string msg = evm.result;
+                if (msg.Contains("successfully"))
+                {
+                    var data = new { Message = msg, Type = "success" };
+                    TempData["SweetAlert"] = data;
+                    return RedirectToAction("Enquiry", "Home");
+                }
+                else
+                {
+                    var data = new { Message = msg, Type = "error" };
+                    TempData["SweetAlert"] = data;
+                    return RedirectToAction("Enquiry", "Home");
+                }
+               
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Login", "Home");
             }
         }
         #endregion

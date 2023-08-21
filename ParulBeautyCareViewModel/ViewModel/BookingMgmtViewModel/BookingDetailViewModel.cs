@@ -28,7 +28,10 @@ namespace ParulBeautyCareViewModel.ViewModel.BookingMgmtViewModel
         public string UpdateDate { get; set; }
         public string UpdateUser { get; set; }
         public string CustomerName { get; set; }
+        public string SubCategoryName { get; set; }
         public List<PBBookingDetailRtr_Result> BookingDetailList { get; set; }
+        public List<PBBookingHeaderRtr_Result> BookingHeaderList { get; set; }
+        public List<PBBookingHeaderRtr_Result> BookingHeaderList2 { get; set; }
         public string success { get; set; }
         public string message { get; set; }
         public string Action { get; set; }

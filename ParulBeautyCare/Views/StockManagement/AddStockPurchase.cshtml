@@ -40,63 +40,100 @@
                         @Html.HiddenFor(m => m.ProductTypeId)
                         @Html.HiddenFor(m => m.CreateUser)
                         @Html.HiddenFor(m => m.CreateDate)
-                        <div class="row form-group">
-                            <div class="col-sm-3">
-                                <label class="col-form-label">
-                                    Select Department
-                                    @Html.ValidationMessageFor(m => m.DepartmentId, "", new { @class = "text-danger h3" })
-                                </label>
+                    <div class="row form-group">
+                        <div class="col-sm-3">
+                            <label class="col-form-label">
+                                Select Department
+                                @Html.ValidationMessageFor(m => m.DepartmentId, "", new { @class = "text-danger h3" })
+                            </label>
 
-                                <div class="input-group input-group-outline mb-3">
-                                    @Html.DropDownListFor(m => m.DepartmentId, new SelectList(Model.DeptList, "DepartmentId", "DepartmentName"), "Select Department",
-                                        new Dictionary<string, object>() {
-                                                   {"id","ddlDeptId"},
-                                                   { "class","form-control form-select js-example-basic-single w-100"}
-                                            })
-                                </div>
-                            </div>
-
-                            <div class="col-sm-3">
-                                <label class="col-form-label">
-                                    Select Product
-                                    @Html.ValidationMessageFor(m => m.ProductId, "", new { @class = "text-danger h3" })
-                                </label>
-
-                                <div class="input-group input-group-outline mb-3">
-                                    @Html.DropDownListFor(m => m.ProductId, new SelectList(Model.ProductList, "ProductId", "ProductName"), "Select Product",
-                                        new Dictionary<string, object>() {
-                                                   {"id","ddlProdId"},
-                                                   { "class","form-control form-select js-example-basic-single w-100"}
-                                            })
-                                </div>
-                            </div>
-
-                            <div class="col-sm-3">
-                                <label class="col-form-label">Purchase Date  @Html.ValidationMessageFor(m => m.PurchaseDate, "", new { @class = "text-danger h3" })</label>
-                                @Html.TextBoxFor(model => model.PurchaseDate, new { @class = "form-control dateflat", id = "PurchaseDate", placeholder = "Purchase Date", required = "required" })
-
-                                @*<span toggle="#calander-field" class="fa fa-fw fa-calendar field-icon"></span>*@
-                            </div>
-                            <div class="col-sm-3">
-                                <label class="col-form-label">Manufacturing Date @Html.ValidationMessageFor(m => m.MfgDate, "", new { @class = "text-danger h3" })</label>
-
-                                @Html.TextBoxFor(model => model.MfgDate, new { @class = "form-control rangeDates", id = "MfgDate", placeholder = "Manufacturing Date", required = "required" })
-                            </div>
-                            <div class="col-sm-3">
-                                <label class="col-form-label">Expiry Date @Html.ValidationMessageFor(m => m.ExpDate, "", new { @class = "text-danger h3" })</label>
-
-                                @Html.TextBoxFor(model => model.ExpDate, new { @class = "form-control rangeDates", id = "ExpDate", placeholder = "Expiry Date", required = "required" })
-                            </div>
-                            <div class="col-sm-3">
-                                <label class="col-form-label">Quantity @Html.ValidationMessageFor(m => m.Quantity, "", new { @class = "text-danger h3" })</label>
-
-                                @Html.TextBoxFor(model => model.Quantity, new { @class = "form-control numberonly", id = "Quantity", placeholder = "Enter Quantity", required = "required" })
-                            </div>
-                            <div class="col-sm-3">
-                                <label class="col-form-label">Vendor @Html.ValidationMessageFor(m => m.Vendor, "", new { @class = "text-danger h3" })</label>
-                                @Html.TextBoxFor(model => model.Vendor, new { @class = "form-control text-capitalize", id = "Vender", placeholder = "Enter Vendor", required = "required" })
+                            <div class="input-group input-group-outline mb-3">
+                                @Html.DropDownListFor(m => m.DepartmentId, new SelectList(Model.DeptList, "DepartmentId", "DepartmentName"), "Select Department",
+                                    new Dictionary<string, object>() {
+                                               {"id","ddlDeptId"},
+                                               { "class","form-control form-select js-example-basic-single w-100"}
+                                        })
                             </div>
                         </div>
+
+                        <div class="col-sm-3">
+                            <label class="col-form-label">
+                                Select Product
+                                @Html.ValidationMessageFor(m => m.ProductId, "", new { @class = "text-danger h3" })
+                            </label>
+
+                            <div class="input-group input-group-outline mb-3">
+                                @Html.DropDownListFor(m => m.ProductId, new SelectList(Model.ProductList, "ProductId", "ProductName"), "Select Product",
+                                    new Dictionary<string, object>() {
+                                               {"id","ddlProdId"},
+                                               { "class","form-control form-select js-example-basic-single w-100"}
+                                        })
+                            </div>
+                        </div>
+
+                        <div class="col-sm-3">
+                            <label class="col-form-label">Purchase Date  @Html.ValidationMessageFor(m => m.PurchaseDate, "", new { @class = "text-danger h3" })</label>
+
+                            <div class="input-group date">
+                                @Html.TextBoxFor(model => model.PurchaseDate, new { @class = "form-control dateflat", id = "PurchaseDate", placeholder = "Purchase Date", required = "required" })
+                                <div class="input-group-append d-flex">
+                                    <!-- Use d-flex class for flexbox behavior -->
+                                    <span class="input-group-text" id="datepickerIcon" style="color: #212529 !important; border: 1px solid #ced4da !important; ">
+                                        <i class="fa fa-calendar"></i>
+                                    </span>
+                                </div>
+                            </div>
+                            @*<span toggle="#calander-field" class="fa fa-fw fa-calendar field-icon"></span>*@
+                        </div>
+                        <div class="col-sm-3">
+                            <label class="col-form-label">Manufacturing Date @Html.ValidationMessageFor(m => m.MfgDate, "", new { @class = "text-danger h3" })</label>
+
+
+                            <div class="input-group date">
+                                @Html.TextBoxFor(model => model.MfgDate, new { @class = "form-control rangeDates", id = "MfgDate", placeholder = "Manufacturing Date", required = "required" })
+                                <div class="input-group-append d-flex">
+                                    <!-- Use d-flex class for flexbox behavior -->
+                                    <span class="input-group-text" id="datepickerIcon" style="color: #212529 !important; border: 1px solid #ced4da !important; ">
+                                        <i class="fa fa-calendar"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <label class="col-form-label">Expiry Date @Html.ValidationMessageFor(m => m.ExpDate, "", new { @class = "text-danger h3" })</label>
+
+
+                            <div class="input-group date">
+                                @Html.TextBoxFor(model => model.ExpDate, new { @class = "form-control rangeDates", id = "ExpDate", placeholder = "Expiry Date", required = "required" })
+                                <div class="input-group-append d-flex">
+                                    <!-- Use d-flex class for flexbox behavior -->
+                                    <span class="input-group-text" id="datepickerIcon" style="color: #212529 !important; border: 1px solid #ced4da !important; ">
+                                        <i class="fa fa-calendar"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <label class="col-form-label">Quantity @Html.ValidationMessageFor(m => m.Quantity, "", new { @class = "text-danger h3" })</label>
+
+                            @Html.TextBoxFor(model => model.Quantity, new { @class = "form-control numberonly", id = "Quantity", placeholder = "Enter Quantity", required = "required" })
+                        </div>
+                       
+                        <div class="col-sm-3">
+                            <label class="col-form-label">
+                                Select Vendor
+                                @Html.ValidationMessageFor(m => m.VendorId, "", new { @class = "text-danger h3" })
+                            </label>
+
+                            <div class="input-group input-group-outline mb-3">
+                                @Html.DropDownListFor(m => m.VendorId, new SelectList(Model.VendorList, "VendorId", "VendorName"), "Select Vendor",
+                                    new Dictionary<string, object>() {
+                                               {"id","ddlVendId"},
+                                               { "class","form-control form-select js-example-basic-single w-100"}
+                                        })
+                            </div>
+                        </div>
+                    </div>
                         @*<button type="submit" class="btn btn-primary mr-2 mt-3" onclick="return confirm('Are You sure you want to save data?')">Submit</button>*@
                         <button type="submit" class="btn btn-primary mr-2 mt-3" onclick="return formSubmit('Are You sure you want to save data?')">Submit</button>
 

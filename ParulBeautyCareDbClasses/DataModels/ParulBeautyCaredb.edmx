@@ -84,10 +84,7 @@
           <Parameter Name="CheckId" Type="nvarchar" Mode="In" />
           <Parameter Name="CustomerName" Type="nvarchar" Mode="In" />
           <Parameter Name="ContactNo" Type="nvarchar" Mode="In" />
-          <Parameter Name="HouseNoSociety" Type="nvarchar" Mode="In" />
-          <Parameter Name="Landmark" Type="nvarchar" Mode="In" />
-          <Parameter Name="City" Type="nvarchar" Mode="In" />
-          <Parameter Name="Pincode" Type="nvarchar" Mode="In" />
+          <Parameter Name="Address" Type="nvarchar" Mode="In" />
           <Parameter Name="CheckinDateTime" Type="nvarchar" Mode="In" />
           <Parameter Name="CheckoutDateTime" Type="nvarchar" Mode="In" />
           <Parameter Name="WaitingTime" Type="nvarchar" Mode="In" />
@@ -118,6 +115,38 @@
           <Parameter Name="action" Type="nvarchar" Mode="In" />
           <Parameter Name="companycode" Type="nvarchar" Mode="In" />
           <Parameter Name="id" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="PBEnquiryIns" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="personname" Type="nvarchar" Mode="In" />
+          <Parameter Name="personemail" Type="nvarchar" Mode="In" />
+          <Parameter Name="personcontactno" Type="nvarchar" Mode="In" />
+          <Parameter Name="personaddress" Type="nvarchar" Mode="In" />
+          <Parameter Name="personenquiryfor" Type="nvarchar" Mode="In" />
+          <Parameter Name="createdate" Type="nvarchar" Mode="In" />
+          <Parameter Name="createuser" Type="nvarchar" Mode="In" />
+          <Parameter Name="action" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="PBIntePackageServiceMasterInsUpd" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IntePackageServiceId" Type="nvarchar" Mode="In" />
+          <Parameter Name="PackageId" Type="nvarchar" Mode="In" />
+          <Parameter Name="ProductId" Type="nvarchar" Mode="In" />
+          <Parameter Name="ServiceId" Type="nvarchar" Mode="In" />
+          <Parameter Name="activestatus" Type="nvarchar" Mode="In" />
+          <Parameter Name="CompanyCode" Type="nvarchar" Mode="In" />
+          <Parameter Name="CreateUser" Type="nvarchar" Mode="In" />
+          <Parameter Name="CreateDate" Type="nvarchar" Mode="In" />
+          <Parameter Name="UpdateUser" Type="nvarchar" Mode="In" />
+          <Parameter Name="UpdateDate" Type="nvarchar" Mode="In" />
+          <Parameter Name="action" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="PBIntePackageServiceMasterRetrieve" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="action" Type="nvarchar" Mode="In" />
+          <Parameter Name="companycode" Type="nvarchar" Mode="In" />
+          <Parameter Name="IntePackageServiceId" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="PBIntePackageServiceRtr" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="action" Type="nvarchar" Mode="In" />
+          <Parameter Name="PackageId" Type="nvarchar" Mode="In" />
         </Function>
         <Function Name="PBIntePageModuleInsUpd" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="InteId" Type="nvarchar" Mode="In" />
@@ -151,6 +180,23 @@
           <Parameter Name="updateuser" Type="nvarchar" Mode="In" />
         </Function>
         <Function Name="PBInteRoleModuleRtr" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="PBInteServiceProductMasterInsUpd" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="InteServiceProductId" Type="nvarchar" Mode="In" />
+          <Parameter Name="ServiceId" Type="nvarchar" Mode="In" />
+          <Parameter Name="ProductId" Type="nvarchar" Mode="In" />
+          <Parameter Name="activestatus" Type="nvarchar" Mode="In" />
+          <Parameter Name="CompanyCode" Type="nvarchar" Mode="In" />
+          <Parameter Name="CreateUser" Type="nvarchar" Mode="In" />
+          <Parameter Name="CreateDate" Type="nvarchar" Mode="In" />
+          <Parameter Name="UpdateUser" Type="nvarchar" Mode="In" />
+          <Parameter Name="UpdateDate" Type="nvarchar" Mode="In" />
+          <Parameter Name="action" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="PBInteServiceProductMasterRetrieve" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="action" Type="nvarchar" Mode="In" />
+          <Parameter Name="companycode" Type="nvarchar" Mode="In" />
+          <Parameter Name="InteServiceProductId" Type="nvarchar" Mode="In" />
+        </Function>
         <Function Name="PBLoginCheck" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="StaffMembercode" Type="nvarchar" Mode="In" />
           <Parameter Name="StaffMemberPassword" Type="nvarchar" Mode="In" />
@@ -183,6 +229,23 @@
           <Parameter Name="action" Type="nvarchar" Mode="In" />
           <Parameter Name="moduleid" Type="nvarchar" Mode="In" />
         </Function>
+        <Function Name="PBPackageMasterInsUpd" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="PackageId" Type="nvarchar" Mode="In" />
+          <Parameter Name="PackageName" Type="nvarchar" Mode="In" />
+          <Parameter Name="PackageAmount" Type="nvarchar" Mode="In" />
+          <Parameter Name="IsActive" Type="nvarchar" Mode="In" />
+          <Parameter Name="CompanyCode" Type="nvarchar" Mode="In" />
+          <Parameter Name="CreateUser" Type="nvarchar" Mode="In" />
+          <Parameter Name="CreateDate" Type="nvarchar" Mode="In" />
+          <Parameter Name="UpdateUser" Type="nvarchar" Mode="In" />
+          <Parameter Name="UpdateDate" Type="nvarchar" Mode="In" />
+          <Parameter Name="action" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="PBPackageMasterRtr" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="action" Type="nvarchar" Mode="In" />
+          <Parameter Name="companycode" Type="nvarchar" Mode="In" />
+          <Parameter Name="PackageId" Type="nvarchar" Mode="In" />
+        </Function>
         <Function Name="PBPageMasterInsUpd" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="pageId" Type="nvarchar" Mode="In" />
           <Parameter Name="PageName" Type="nvarchar(max)" Mode="In" />
@@ -203,6 +266,7 @@
           <Parameter Name="ProductId" Type="nvarchar" Mode="In" />
           <Parameter Name="ProductCode" Type="nvarchar" Mode="In" />
           <Parameter Name="ProductName" Type="nvarchar" Mode="In" />
+          <Parameter Name="ProductImage" Type="nvarchar(max)" Mode="In" />
           <Parameter Name="NumberOfPerson" Type="nvarchar" Mode="In" />
           <Parameter Name="ProductTypeId" Type="nvarchar" Mode="In" />
           <Parameter Name="Isactive" Type="nvarchar" Mode="In" />
@@ -317,7 +381,7 @@
           <Parameter Name="MfgDate" Type="nvarchar" Mode="In" />
           <Parameter Name="ExpDate" Type="nvarchar" Mode="In" />
           <Parameter Name="PurchaseDate" Type="nvarchar" Mode="In" />
-          <Parameter Name="Vendor" Type="nvarchar" Mode="In" />
+          <Parameter Name="VendorId" Type="nvarchar" Mode="In" />
           <Parameter Name="DeptId" Type="nvarchar" Mode="In" />
           <Parameter Name="action" Type="nvarchar" Mode="In" />
         </Function>
@@ -353,6 +417,8 @@
           <Parameter Name="updatedate" Type="nvarchar" Mode="In" />
           <Parameter Name="createuser" Type="nvarchar" Mode="In" />
           <Parameter Name="dayinterval" Type="nvarchar" Mode="In" />
+          <Parameter Name="Incentive" Type="nvarchar" Mode="In" />
+          <Parameter Name="GSTPercentage" Type="nvarchar" Mode="In" />
           <Parameter Name="action" Type="nvarchar" Mode="In" />
         </Function>
         <Function Name="PBSubCategoryMasterRetrieve" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -374,6 +440,26 @@
           <Parameter Name="action" Type="nvarchar" Mode="In" />
           <Parameter Name="companycode" Type="nvarchar" Mode="In" />
           <Parameter Name="SlotId" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="PBVendorMasterInsUpd" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="VendorId" Type="nvarchar" Mode="In" />
+          <Parameter Name="VendorCode" Type="nvarchar" Mode="In" />
+          <Parameter Name="VendorName" Type="nvarchar" Mode="In" />
+          <Parameter Name="Email" Type="nvarchar" Mode="In" />
+          <Parameter Name="Phone" Type="nvarchar" Mode="In" />
+          <Parameter Name="Address" Type="nvarchar" Mode="In" />
+          <Parameter Name="IsActive" Type="nvarchar" Mode="In" />
+          <Parameter Name="CompanyCode" Type="nvarchar" Mode="In" />
+          <Parameter Name="CreateDate" Type="nvarchar" Mode="In" />
+          <Parameter Name="CreateUser" Type="nvarchar" Mode="In" />
+          <Parameter Name="UpdateDate" Type="nvarchar" Mode="In" />
+          <Parameter Name="UpdateUser" Type="nvarchar" Mode="In" />
+          <Parameter Name="action" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="PBVendorMasterRetrieve" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="action" Type="nvarchar" Mode="In" />
+          <Parameter Name="companycode" Type="nvarchar" Mode="In" />
+          <Parameter Name="VendorId" Type="nvarchar" Mode="In" />
         </Function>
         <Function Name="PBYearMasterInsUpd" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="YearId" Type="nvarchar" Mode="In" />
@@ -494,25 +580,6 @@
             <Parameter Name="action" Mode="In" Type="String" />
             <Parameter Name="pageid" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="PBProductMasterInsUpd" ReturnType="Collection(String)">
-            <Parameter Name="ProductId" Mode="In" Type="String" />
-            <Parameter Name="ProductCode" Mode="In" Type="String" />
-            <Parameter Name="ProductName" Mode="In" Type="String" />
-            <Parameter Name="NumberOfPerson" Mode="In" Type="String" />
-            <Parameter Name="ProductTypeId" Mode="In" Type="String" />
-            <Parameter Name="Isactive" Mode="In" Type="String" />
-            <Parameter Name="CompanyCode" Mode="In" Type="String" />
-            <Parameter Name="CreateDate" Mode="In" Type="String" />
-            <Parameter Name="Updatedate" Mode="In" Type="String" />
-            <Parameter Name="CreateUser" Mode="In" Type="String" />
-            <Parameter Name="UpdateUser" Mode="In" Type="String" />
-            <Parameter Name="action" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="PBProductMasterRtr" ReturnType="Collection(parulbeautycareModel.PBProductMasterRtr_Result)">
-            <Parameter Name="CompanyCode" Mode="In" Type="String" />
-            <Parameter Name="action" Mode="In" Type="String" />
-            <Parameter Name="ProductId" Mode="In" Type="String" />
-          </FunctionImport>
           <FunctionImport Name="PBProductTypeMasterInsUpd" ReturnType="Collection(String)">
             <Parameter Name="ProductTypeId" Mode="In" Type="String" />
             <Parameter Name="ProductName" Mode="In" Type="String" />
@@ -616,28 +683,6 @@
             <Parameter Name="companycode" Mode="In" Type="String" />
             <Parameter Name="id" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="PBStockPurchaseMasterInsUpd" ReturnType="Collection(String)">
-            <Parameter Name="PurchaseId" Mode="In" Type="String" />
-            <Parameter Name="CompanyCode" Mode="In" Type="String" />
-            <Parameter Name="CreateDate" Mode="In" Type="String" />
-            <Parameter Name="CreateUser" Mode="In" Type="String" />
-            <Parameter Name="UpdateDate" Mode="In" Type="String" />
-            <Parameter Name="UpdateUser" Mode="In" Type="String" />
-            <Parameter Name="ProductId" Mode="In" Type="String" />
-            <Parameter Name="ProductTypeId" Mode="In" Type="String" />
-            <Parameter Name="Quantity" Mode="In" Type="String" />
-            <Parameter Name="MfgDate" Mode="In" Type="String" />
-            <Parameter Name="ExpDate" Mode="In" Type="String" />
-            <Parameter Name="PurchaseDate" Mode="In" Type="String" />
-            <Parameter Name="Vendor" Mode="In" Type="String" />
-            <Parameter Name="DeptId" Mode="In" Type="String" />
-            <Parameter Name="action" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="PBStockPurchaseRetrieve" ReturnType="Collection(parulbeautycareModel.PBStockPurchaseRetrieve_Result)">
-            <Parameter Name="action" Mode="In" Type="String" />
-            <Parameter Name="companycode" Mode="In" Type="String" />
-            <Parameter Name="purchaseid" Mode="In" Type="String" />
-          </FunctionImport>
           <FunctionImport Name="PBDepartmentMasterInsUpd" ReturnType="Collection(String)">
             <Parameter Name="DepartmentId" Mode="In" Type="String" />
             <Parameter Name="Departmentname" Mode="In" Type="String" />
@@ -647,10 +692,6 @@
             <Parameter Name="updatedate" Mode="In" Type="String" />
             <Parameter Name="createuser" Mode="In" Type="String" />
             <Parameter Name="action" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="PBStockAllocationRetrieve" ReturnType="Collection(parulbeautycareModel.PBStockAllocationRetrieve_Result)">
-            <Parameter Name="action" Mode="In" Type="String" />
-            <Parameter Name="StockAllocationId" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="PBStockAllocationMasterInsUpd" ReturnType="Collection(String)">
             <Parameter Name="StockAllocationId" Mode="In" Type="String" />
@@ -706,14 +747,116 @@
             <Parameter Name="UpdateUser" Mode="In" Type="String" />
             <Parameter Name="action" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="PBProductMasterInsUpd" ReturnType="Collection(String)">
+            <Parameter Name="ProductId" Mode="In" Type="String" />
+            <Parameter Name="ProductCode" Mode="In" Type="String" />
+            <Parameter Name="ProductName" Mode="In" Type="String" />
+            <Parameter Name="ProductImage" Mode="In" Type="String" />
+            <Parameter Name="NumberOfPerson" Mode="In" Type="String" />
+            <Parameter Name="ProductTypeId" Mode="In" Type="String" />
+            <Parameter Name="Isactive" Mode="In" Type="String" />
+            <Parameter Name="CompanyCode" Mode="In" Type="String" />
+            <Parameter Name="CreateDate" Mode="In" Type="String" />
+            <Parameter Name="Updatedate" Mode="In" Type="String" />
+            <Parameter Name="CreateUser" Mode="In" Type="String" />
+            <Parameter Name="UpdateUser" Mode="In" Type="String" />
+            <Parameter Name="action" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="PBProductMasterRtr" ReturnType="Collection(parulbeautycareModel.PBProductMasterRtr_Result)">
+            <Parameter Name="CompanyCode" Mode="In" Type="String" />
+            <Parameter Name="action" Mode="In" Type="String" />
+            <Parameter Name="ProductId" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="PBStockAllocationRetrieve" ReturnType="Collection(parulbeautycareModel.PBStockAllocationRetrieve_Result)">
+            <Parameter Name="action" Mode="In" Type="String" />
+            <Parameter Name="StockAllocationId" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="PBVendorMasterInsUpd" ReturnType="Collection(String)">
+            <Parameter Name="VendorId" Mode="In" Type="String" />
+            <Parameter Name="VendorCode" Mode="In" Type="String" />
+            <Parameter Name="VendorName" Mode="In" Type="String" />
+            <Parameter Name="Email" Mode="In" Type="String" />
+            <Parameter Name="Phone" Mode="In" Type="String" />
+            <Parameter Name="Address" Mode="In" Type="String" />
+            <Parameter Name="IsActive" Mode="In" Type="String" />
+            <Parameter Name="CompanyCode" Mode="In" Type="String" />
+            <Parameter Name="CreateDate" Mode="In" Type="String" />
+            <Parameter Name="CreateUser" Mode="In" Type="String" />
+            <Parameter Name="UpdateDate" Mode="In" Type="String" />
+            <Parameter Name="UpdateUser" Mode="In" Type="String" />
+            <Parameter Name="action" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="PBVendorMasterRetrieve" ReturnType="Collection(parulbeautycareModel.PBVendorMasterRetrieve_Result)">
+            <Parameter Name="action" Mode="In" Type="String" />
+            <Parameter Name="companycode" Mode="In" Type="String" />
+            <Parameter Name="VendorId" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="PBStockPurchaseRetrieve" ReturnType="Collection(parulbeautycareModel.PBStockPurchaseRetrieve_Result)">
+            <Parameter Name="action" Mode="In" Type="String" />
+            <Parameter Name="companycode" Mode="In" Type="String" />
+            <Parameter Name="purchaseid" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="PBStockPurchaseMasterInsUpd" ReturnType="Collection(String)">
+            <Parameter Name="PurchaseId" Mode="In" Type="String" />
+            <Parameter Name="CompanyCode" Mode="In" Type="String" />
+            <Parameter Name="CreateDate" Mode="In" Type="String" />
+            <Parameter Name="CreateUser" Mode="In" Type="String" />
+            <Parameter Name="UpdateDate" Mode="In" Type="String" />
+            <Parameter Name="UpdateUser" Mode="In" Type="String" />
+            <Parameter Name="ProductId" Mode="In" Type="String" />
+            <Parameter Name="ProductTypeId" Mode="In" Type="String" />
+            <Parameter Name="Quantity" Mode="In" Type="String" />
+            <Parameter Name="MfgDate" Mode="In" Type="String" />
+            <Parameter Name="ExpDate" Mode="In" Type="String" />
+            <Parameter Name="PurchaseDate" Mode="In" Type="String" />
+            <Parameter Name="VendorId" Mode="In" Type="String" />
+            <Parameter Name="DeptId" Mode="In" Type="String" />
+            <Parameter Name="action" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="PBIntePackageServiceMasterInsUpd" ReturnType="Collection(String)">
+            <Parameter Name="IntePackageServiceId" Mode="In" Type="String" />
+            <Parameter Name="PackageId" Mode="In" Type="String" />
+            <Parameter Name="ProductId" Mode="In" Type="String" />
+            <Parameter Name="ServiceId" Mode="In" Type="String" />
+            <Parameter Name="activestatus" Mode="In" Type="String" />
+            <Parameter Name="CompanyCode" Mode="In" Type="String" />
+            <Parameter Name="CreateUser" Mode="In" Type="String" />
+            <Parameter Name="CreateDate" Mode="In" Type="String" />
+            <Parameter Name="UpdateUser" Mode="In" Type="String" />
+            <Parameter Name="UpdateDate" Mode="In" Type="String" />
+            <Parameter Name="action" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="PBIntePackageServiceMasterRetrieve" ReturnType="Collection(parulbeautycareModel.PBIntePackageServiceMasterRetrieve_Result)">
+            <Parameter Name="action" Mode="In" Type="String" />
+            <Parameter Name="companycode" Mode="In" Type="String" />
+            <Parameter Name="IntePackageServiceId" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="PBPackageMasterInsUpd" ReturnType="Collection(String)">
+            <Parameter Name="PackageId" Mode="In" Type="String" />
+            <Parameter Name="PackageName" Mode="In" Type="String" />
+            <Parameter Name="PackageAmount" Mode="In" Type="String" />
+            <Parameter Name="IsActive" Mode="In" Type="String" />
+            <Parameter Name="CompanyCode" Mode="In" Type="String" />
+            <Parameter Name="CreateUser" Mode="In" Type="String" />
+            <Parameter Name="CreateDate" Mode="In" Type="String" />
+            <Parameter Name="UpdateUser" Mode="In" Type="String" />
+            <Parameter Name="UpdateDate" Mode="In" Type="String" />
+            <Parameter Name="action" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="PBPackageMasterRtr" ReturnType="Collection(parulbeautycareModel.PBPackageMasterRtr_Result)">
+            <Parameter Name="action" Mode="In" Type="String" />
+            <Parameter Name="companycode" Mode="In" Type="String" />
+            <Parameter Name="PackageId" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="PBIntePackageServiceRtr" ReturnType="Collection(parulbeautycareModel.PBIntePackageServiceRtr_Result)">
+            <Parameter Name="action" Mode="In" Type="String" />
+            <Parameter Name="PackageId" Mode="In" Type="String" />
+          </FunctionImport>
           <FunctionImport Name="PBCheckInCheckOutIns" ReturnType="Collection(String)">
             <Parameter Name="CheckId" Mode="In" Type="String" />
             <Parameter Name="CustomerName" Mode="In" Type="String" />
             <Parameter Name="ContactNo" Mode="In" Type="String" />
-            <Parameter Name="HouseNoSociety" Mode="In" Type="String" />
-            <Parameter Name="Landmark" Mode="In" Type="String" />
-            <Parameter Name="City" Mode="In" Type="String" />
-            <Parameter Name="Pincode" Mode="In" Type="String" />
+            <Parameter Name="Address" Mode="In" Type="String" />
             <Parameter Name="CheckinDateTime" Mode="In" Type="String" />
             <Parameter Name="CheckoutDateTime" Mode="In" Type="String" />
             <Parameter Name="WaitingTime" Mode="In" Type="String" />
@@ -727,6 +870,28 @@
             <Parameter Name="Action" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="PBCheckInCheckOutRetrieve" ReturnType="Collection(parulbeautycareModel.PBCheckInCheckOutRetrieve_Result)">
+            <Parameter Name="action" Mode="In" Type="String" />
+            <Parameter Name="companycode" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="PBInteServiceProductMasterInsUpd" ReturnType="Collection(String)">
+            <Parameter Name="InteServiceProductId" Mode="In" Type="String" />
+            <Parameter Name="ServiceId" Mode="In" Type="String" />
+            <Parameter Name="ProductId" Mode="In" Type="String" />
+            <Parameter Name="activestatus" Mode="In" Type="String" />
+            <Parameter Name="CompanyCode" Mode="In" Type="String" />
+            <Parameter Name="CreateUser" Mode="In" Type="String" />
+            <Parameter Name="CreateDate" Mode="In" Type="String" />
+            <Parameter Name="UpdateUser" Mode="In" Type="String" />
+            <Parameter Name="UpdateDate" Mode="In" Type="String" />
+            <Parameter Name="action" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="PBInteServiceProductMasterRetrieve" ReturnType="Collection(parulbeautycareModel.PBInteServiceProductMasterRetrieve_Result)">
+            <Parameter Name="action" Mode="In" Type="String" />
+            <Parameter Name="companycode" Mode="In" Type="String" />
+            <Parameter Name="InteServiceProductId" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="PBBookingDetailRtr" ReturnType="Collection(parulbeautycareModel.PBBookingDetailRtr_Result)">
+            <Parameter Name="BookingId" Mode="In" Type="String" />
             <Parameter Name="action" Mode="In" Type="String" />
             <Parameter Name="companycode" Mode="In" Type="String" />
           </FunctionImport>
@@ -746,6 +911,8 @@
             <Parameter Name="updatedate" Mode="In" Type="String" />
             <Parameter Name="createuser" Mode="In" Type="String" />
             <Parameter Name="dayinterval" Mode="In" Type="String" />
+            <Parameter Name="Incentive" Mode="In" Type="String" />
+            <Parameter Name="GSTPercentage" Mode="In" Type="String" />
             <Parameter Name="action" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="PBSubCategoryMasterRetrieve" ReturnType="Collection(parulbeautycareModel.PBSubCategoryMasterRetrieve_Result)">
@@ -775,15 +942,20 @@
             <Parameter Name="CustomerName" Mode="In" Type="String" />
             <Parameter Name="Action" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="PBBookingDetailRtr" ReturnType="Collection(parulbeautycareModel.PBBookingDetailRtr_Result)">
-            <Parameter Name="BookingId" Mode="In" Type="String" />
-            <Parameter Name="action" Mode="In" Type="String" />
-            <Parameter Name="companycode" Mode="In" Type="String" />
-          </FunctionImport>
           <FunctionImport Name="PBBookingHeaderRtr" ReturnType="Collection(parulbeautycareModel.PBBookingHeaderRtr_Result)">
             <Parameter Name="BookingId" Mode="In" Type="String" />
             <Parameter Name="action" Mode="In" Type="String" />
             <Parameter Name="companycode" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="PBEnquiryIns" ReturnType="Collection(String)">
+            <Parameter Name="personname" Mode="In" Type="String" />
+            <Parameter Name="personemail" Mode="In" Type="String" />
+            <Parameter Name="personcontactno" Mode="In" Type="String" />
+            <Parameter Name="personaddress" Mode="In" Type="String" />
+            <Parameter Name="personenquiryfor" Mode="In" Type="String" />
+            <Parameter Name="createdate" Mode="In" Type="String" />
+            <Parameter Name="createuser" Mode="In" Type="String" />
+            <Parameter Name="action" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="PBCategoryMasterRetrieve_Result">
@@ -878,22 +1050,6 @@
           <Property Type="String" Name="cdate" Nullable="true" MaxLength="10" />
           <Property Type="String" Name="actStatus" Nullable="false" MaxLength="7" />
         </ComplexType>
-        <ComplexType Name="PBProductMasterRtr_Result">
-          <Property Type="Int32" Name="ProductId" Nullable="false" />
-          <Property Type="String" Name="ProductCode" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="ProductName" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="NumberOfPerson" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="CompanyCode" Nullable="true" MaxLength="50" />
-          <Property Type="Boolean" Name="IsActive" Nullable="true" />
-          <Property Type="String" Name="actstatus" Nullable="false" MaxLength="7" />
-          <Property Type="DateTime" Name="CreateDate" Nullable="true" Precision="23" />
-          <Property Type="String" Name="CreateUser" Nullable="true" MaxLength="50" />
-          <Property Type="Int32" Name="ProductTypeId" Nullable="false" />
-          <Property Type="String" Name="ProductTName" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="cdate" Nullable="true" MaxLength="10" />
-          <Property Type="String" Name="udate" Nullable="true" MaxLength="10" />
-          <Property Type="String" Name="UpdateUser" Nullable="true" MaxLength="50" />
-        </ComplexType>
         <ComplexType Name="PBProductTypeMasterRetrieve_Result">
           <Property Type="Int32" Name="ProductTypeId" Nullable="false" />
           <Property Type="String" Name="ProductTName" Nullable="true" MaxLength="50" />
@@ -971,6 +1127,60 @@
           <Property Type="String" Name="UpdateUser" Nullable="true" MaxLength="50" />
           <Property Type="Boolean" Name="IsActive" Nullable="true" />
         </ComplexType>
+        <ComplexType Name="PBAvailableStockRtr_Result">
+          <Property Type="Int32" Name="StockDetailId" Nullable="false" />
+          <Property Type="Int32" Name="ProductId" Nullable="true" />
+          <Property Type="String" Name="ProductName" Nullable="true" MaxLength="50" />
+          <Property Type="Decimal" Name="availstock" Nullable="false" Precision="19" Scale="2" />
+          <Property Type="String" Name="AutoSrNo" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Barcode" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="NoOfPerson" Nullable="false" />
+          <Property Type="Int32" Name="availperson" Nullable="false" />
+          <Property Type="Int32" Name="StockAllocationId" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="PBProductMasterRtr_Result">
+          <Property Type="Int32" Name="ProductId" Nullable="false" />
+          <Property Type="String" Name="ProductCode" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="ProductName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="ProductImage" Nullable="true" />
+          <Property Type="String" Name="NumberOfPerson" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="CompanyCode" Nullable="true" MaxLength="50" />
+          <Property Type="Boolean" Name="IsActive" Nullable="true" />
+          <Property Type="String" Name="actstatus" Nullable="false" MaxLength="7" />
+          <Property Type="DateTime" Name="CreateDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="CreateUser" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="ProductTypeId" Nullable="false" />
+          <Property Type="String" Name="ProductTName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="cdate" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="udate" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="UpdateUser" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="PBStockAllocationRetrieve_Result">
+          <Property Type="Int32" Name="StockAllocationId" Nullable="false" />
+          <Property Type="Int32" Name="ProductId" Nullable="true" />
+          <Property Type="Int32" Name="StaffId" Nullable="true" />
+          <Property Type="String" Name="AllocateUser" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="ProductName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="ProductImage" Nullable="true" />
+          <Property Type="Decimal" Name="Qty" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="String" Name="AllocationDate" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="StaffName" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="PBVendorMasterRetrieve_Result">
+          <Property Type="Int32" Name="VendorId" Nullable="false" />
+          <Property Type="String" Name="VendorCode" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="VendorName" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Email" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Phone" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Address" Nullable="true" MaxLength="200" />
+          <Property Type="Boolean" Name="IsActive" Nullable="true" />
+          <Property Type="String" Name="CompanyCode" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="CreateDate" Nullable="true" MaxLength="4000" />
+          <Property Type="String" Name="CreateUser" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="UpdateDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="UpdateUser" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="cdate" Nullable="true" MaxLength="10" />
+        </ComplexType>
         <ComplexType Name="PBStockPurchaseRetrieve_Result">
           <Property Type="Int32" Name="PurchaseId" Nullable="false" />
           <Property Type="String" Name="CompanyCode" Nullable="true" MaxLength="50" />
@@ -984,8 +1194,10 @@
           <Property Type="DateTime" Name="MfgDate" Nullable="true" />
           <Property Type="DateTime" Name="ExpDate" Nullable="true" />
           <Property Type="DateTime" Name="PurchaseDate" Nullable="true" Precision="23" />
-          <Property Type="String" Name="Vendor" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="VendorId" Nullable="false" />
+          <Property Type="String" Name="VendorName" Nullable="true" MaxLength="100" />
           <Property Type="String" Name="ProductName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="ProductImage" Nullable="true" />
           <Property Type="String" Name="ProductTName" Nullable="true" MaxLength="50" />
           <Property Type="String" Name="pDate" Nullable="true" MaxLength="10" />
           <Property Type="String" Name="manufactureDate" Nullable="true" MaxLength="10" />
@@ -993,35 +1205,54 @@
           <Property Type="Int32" Name="DepartmentId" Nullable="true" />
           <Property Type="String" Name="DepartmentName" Nullable="true" MaxLength="50" />
         </ComplexType>
-        <ComplexType Name="PBStockAllocationRetrieve_Result">
-          <Property Type="Int32" Name="StockAllocationId" Nullable="false" />
+        <ComplexType Name="PBIntePackageServiceMasterRetrieve_Result">
+          <Property Type="Int32" Name="IntePackageServiceId" Nullable="false" />
+          <Property Type="Int32" Name="PackageId" Nullable="true" />
           <Property Type="Int32" Name="ProductId" Nullable="true" />
-          <Property Type="Int32" Name="StaffId" Nullable="true" />
-          <Property Type="String" Name="AllocateUser" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="ServiceId" Nullable="true" />
+          <Property Type="Boolean" Name="IsActive" Nullable="true" />
+          <Property Type="String" Name="CompanyCode" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="CreateUser" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="CreateDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="UpdateUser" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="UpdateDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="PackageName" Nullable="true" MaxLength="50" />
           <Property Type="String" Name="ProductName" Nullable="true" MaxLength="50" />
-          <Property Type="Decimal" Name="Qty" Nullable="true" Precision="18" Scale="2" />
-          <Property Type="String" Name="AllocationDate" Nullable="true" MaxLength="10" />
-          <Property Type="String" Name="StaffName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="SubCategoryName" Nullable="true" />
+          <Property Type="String" Name="cdate" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="udate" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="activeStatus1" Nullable="false" MaxLength="7" />
         </ComplexType>
-        <ComplexType Name="PBAvailableStockRtr_Result">
-          <Property Type="Int32" Name="StockDetailId" Nullable="false" />
-          <Property Type="Int32" Name="ProductId" Nullable="true" />
-          <Property Type="String" Name="ProductName" Nullable="true" MaxLength="50" />
-          <Property Type="Decimal" Name="availstock" Nullable="false" Precision="19" Scale="2" />
-          <Property Type="String" Name="AutoSrNo" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="Barcode" Nullable="true" MaxLength="50" />
-          <Property Type="Int32" Name="NoOfPerson" Nullable="false" />
-          <Property Type="Int32" Name="availperson" Nullable="false" />
-          <Property Type="Int32" Name="StockAllocationId" Nullable="true" />
+        <ComplexType Name="PBPackageMasterRtr_Result">
+          <Property Type="Int32" Name="PackageId" Nullable="false" />
+          <Property Type="String" Name="PackageName" Nullable="true" MaxLength="50" />
+          <Property Type="Decimal" Name="PackageAmount" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="Boolean" Name="IsActive" Nullable="true" />
+          <Property Type="String" Name="CompanyCode" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="CreateUser" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="CreateDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="UpdateUser" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="UpdateDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="cdate" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="udate" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="activeStatus1" Nullable="false" MaxLength="7" />
+        </ComplexType>
+        <ComplexType Name="PBIntePackageServiceRtr_Result">
+          <Property Type="Int32" Name="IntePackageServiceId" Nullable="false" />
+          <Property Type="Int32" Name="PackageId" Nullable="true" />
+          <Property Type="Int32" Name="CategoryId" Nullable="true" />
+          <Property Type="String" Name="CategoryName" Nullable="true" MaxLength="250" />
+          <Property Type="Int32" Name="ServiceId" Nullable="true" />
+          <Property Type="String" Name="SubCategoryName" Nullable="true" />
+          <Property Type="Boolean" Name="IsActive" Nullable="true" />
+          <Property Type="Int32" Name="NoOfSitting" Nullable="true" />
+          <Property Type="String" Name="DayInterval" Nullable="true" MaxLength="50" />
         </ComplexType>
         <ComplexType Name="PBCheckInCheckOutRetrieve_Result">
           <Property Type="Int32" Name="CheckId" Nullable="false" />
           <Property Type="String" Name="CustomerName" Nullable="true" MaxLength="50" />
           <Property Type="String" Name="ContactNo" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="HouseNoSociety" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="Landmark" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="City" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="Pincode" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Address" Nullable="true" MaxLength="50" />
           <Property Type="DateTime" Name="CheckinDateTime" Nullable="true" Precision="23" />
           <Property Type="DateTime" Name="CheckoutDateTime" Nullable="true" Precision="23" />
           <Property Type="String" Name="WaitingTime" Nullable="true" MaxLength="50" />
@@ -1031,6 +1262,48 @@
           <Property Type="String" Name="CreateUser" Nullable="true" MaxLength="50" />
           <Property Type="DateTime" Name="UpdateDate" Nullable="true" Precision="23" />
           <Property Type="String" Name="UpdateUser" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="PBInteServiceProductMasterRetrieve_Result">
+          <Property Type="Int32" Name="InteServiceProductId" Nullable="false" />
+          <Property Type="Int32" Name="ServiceId" Nullable="true" />
+          <Property Type="Int32" Name="ProductId" Nullable="true" />
+          <Property Type="Boolean" Name="IsActive" Nullable="true" />
+          <Property Type="String" Name="CompanyCode" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="CreateUser" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="CreateDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="UpdateUser" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="UpdateDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="ProductName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="SubCategoryName" Nullable="true" />
+          <Property Type="String" Name="cdate" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="udate" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="activeStatus1" Nullable="false" MaxLength="7" />
+        </ComplexType>
+        <ComplexType Name="PBBookingDetailRtr_Result">
+          <Property Type="Int32" Name="BookingDetailId" Nullable="false" />
+          <Property Type="Int32" Name="BookingId" Nullable="true" />
+          <Property Type="Int32" Name="CategoryId" Nullable="true" />
+          <Property Type="String" Name="CategoryName" Nullable="true" MaxLength="250" />
+          <Property Type="Int32" Name="SubCategoryId" Nullable="true" />
+          <Property Type="String" Name="SubCategoryName" Nullable="true" />
+          <Property Type="Int32" Name="AllocatedTo" Nullable="true" />
+          <Property Type="String" Name="StaffCode" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="StaffName" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="AllocationDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="AppointmentDate" Nullable="true" MaxLength="4000" />
+          <Property Type="Int32" Name="AppointmentTime" Nullable="true" />
+          <Property Type="String" Name="SlotName" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="DoneBy" Nullable="true" />
+          <Property Type="DateTime" Name="DoneDate" Nullable="true" Precision="23" />
+          <Property Type="Decimal" Name="Amount" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="Discount" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="FinalAmount" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="Int32" Name="Status" Nullable="true" />
+          <Property Type="String" Name="UpdateDate" Nullable="true" MaxLength="4000" />
+          <Property Type="String" Name="UpdateUser" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="CustomerName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="CreateDate" Nullable="true" MaxLength="4000" />
+          <Property Type="String" Name="CreateUser" Nullable="true" MaxLength="50" />
         </ComplexType>
         <ComplexType Name="PBSubCategoryMasterRetrieve_Result">
           <Property Type="Int32" Name="SubCategoryId" Nullable="false" />
@@ -1049,29 +1322,8 @@
           <Property Type="String" Name="CreateUser" Nullable="true" MaxLength="50" />
           <Property Type="String" Name="yearperiod" Nullable="true" MaxLength="50" />
           <Property Type="String" Name="DayInterval" Nullable="true" MaxLength="50" />
-        </ComplexType>
-        <ComplexType Name="PBBookingDetailRtr_Result">
-          <Property Type="Int32" Name="BookingDetailId" Nullable="false" />
-          <Property Type="Int32" Name="BookingId" Nullable="true" />
-          <Property Type="Int32" Name="CategoryId" Nullable="true" />
-          <Property Type="String" Name="CategoryName" Nullable="true" MaxLength="250" />
-          <Property Type="Int32" Name="SubCategoryId" Nullable="true" />
-          <Property Type="String" Name="SubCategoryName" Nullable="true" />
-          <Property Type="Int32" Name="AllocatedTo" Nullable="true" />
-          <Property Type="DateTime" Name="AllocationDate" Nullable="true" Precision="23" />
-          <Property Type="String" Name="AppointmentDate" Nullable="true" MaxLength="4000" />
-          <Property Type="String" Name="AppointmentTime" Nullable="true" MaxLength="50" />
-          <Property Type="Int32" Name="DoneBy" Nullable="true" />
-          <Property Type="DateTime" Name="DoneDate" Nullable="true" Precision="23" />
-          <Property Type="Decimal" Name="Amount" Nullable="true" Precision="18" Scale="2" />
-          <Property Type="Decimal" Name="Discount" Nullable="true" Precision="18" Scale="2" />
-          <Property Type="Decimal" Name="FinalAmount" Nullable="true" Precision="18" Scale="2" />
-          <Property Type="Int32" Name="Status" Nullable="true" />
-          <Property Type="String" Name="UpdateDate" Nullable="true" MaxLength="4000" />
-          <Property Type="String" Name="UpdateUser" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="CustomerName" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="CreateDate" Nullable="true" MaxLength="4000" />
-          <Property Type="String" Name="CreateUser" Nullable="true" MaxLength="50" />
+          <Property Type="Decimal" Name="Incentive" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="GSTPercentage" Nullable="true" Precision="18" Scale="2" />
         </ComplexType>
         <ComplexType Name="PBBookingHeaderRtr_Result">
           <Property Type="Int32" Name="BookingId" Nullable="false" />
@@ -1081,6 +1333,7 @@
           <Property Type="String" Name="CustomerName" Nullable="true" />
           <Property Type="String" Name="Address" Nullable="true" />
           <Property Type="DateTime" Name="BookDate" Nullable="true" />
+          <Property Type="String" Name="bookingdate" Nullable="true" MaxLength="4000" />
           <Property Type="Int32" Name="NoOfPerson" Nullable="true" />
           <Property Type="Decimal" Name="TotalAmount" Nullable="true" Precision="18" Scale="2" />
           <Property Type="Decimal" Name="DiscountPerc" Nullable="true" Precision="18" Scale="2" />
@@ -1233,27 +1486,6 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="PBProductMasterInsUpd" FunctionName="parulbeautycareModel.Store.PBProductMasterInsUpd" />
-          <FunctionImportMapping FunctionImportName="PBProductMasterRtr" FunctionName="parulbeautycareModel.Store.PBProductMasterRtr">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="parulbeautycareModel.PBProductMasterRtr_Result">
-                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
-                <ScalarProperty Name="ProductCode" ColumnName="ProductCode" />
-                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
-                <ScalarProperty Name="NumberOfPerson" ColumnName="NumberOfPerson" />
-                <ScalarProperty Name="CompanyCode" ColumnName="CompanyCode" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="actstatus" ColumnName="actstatus" />
-                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
-                <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
-                <ScalarProperty Name="ProductTypeId" ColumnName="ProductTypeId" />
-                <ScalarProperty Name="ProductTName" ColumnName="ProductTName" />
-                <ScalarProperty Name="cdate" ColumnName="cdate" />
-                <ScalarProperty Name="udate" ColumnName="udate" />
-                <ScalarProperty Name="UpdateUser" ColumnName="UpdateUser" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="PBProductTypeMasterInsUpd" FunctionName="parulbeautycareModel.Store.PBProductTypeMasterInsUpd" />
           <FunctionImportMapping FunctionImportName="PBProductTypeMasterRetrieve" FunctionName="parulbeautycareModel.Store.PBProductTypeMasterRetrieve">
             <ResultMapping>
@@ -1365,48 +1597,7 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="PBStockPurchaseMasterInsUpd" FunctionName="parulbeautycareModel.Store.PBStockPurchaseMasterInsUpd" />
-          <FunctionImportMapping FunctionImportName="PBStockPurchaseRetrieve" FunctionName="parulbeautycareModel.Store.PBStockPurchaseRetrieve">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="parulbeautycareModel.PBStockPurchaseRetrieve_Result">
-                <ScalarProperty Name="PurchaseId" ColumnName="PurchaseId" />
-                <ScalarProperty Name="CompanyCode" ColumnName="CompanyCode" />
-                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
-                <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
-                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
-                <ScalarProperty Name="UpdateUser" ColumnName="UpdateUser" />
-                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
-                <ScalarProperty Name="ProductTypeId" ColumnName="ProductTypeId" />
-                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
-                <ScalarProperty Name="MfgDate" ColumnName="MfgDate" />
-                <ScalarProperty Name="ExpDate" ColumnName="ExpDate" />
-                <ScalarProperty Name="PurchaseDate" ColumnName="PurchaseDate" />
-                <ScalarProperty Name="Vendor" ColumnName="Vendor" />
-                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
-                <ScalarProperty Name="ProductTName" ColumnName="ProductTName" />
-                <ScalarProperty Name="pDate" ColumnName="pDate" />
-                <ScalarProperty Name="manufactureDate" ColumnName="manufactureDate" />
-                <ScalarProperty Name="expiryDate" ColumnName="expiryDate" />
-                <ScalarProperty Name="DepartmentId" ColumnName="DepartmentId" />
-                <ScalarProperty Name="DepartmentName" ColumnName="DepartmentName" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="PBDepartmentMasterInsUpd" FunctionName="parulbeautycareModel.Store.PBDepartmentMasterInsUpd" />
-          <FunctionImportMapping FunctionImportName="PBStockAllocationRetrieve" FunctionName="parulbeautycareModel.Store.PBStockAllocationRetrieve">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="parulbeautycareModel.PBStockAllocationRetrieve_Result">
-                <ScalarProperty Name="StockAllocationId" ColumnName="StockAllocationId" />
-                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
-                <ScalarProperty Name="StaffId" ColumnName="StaffId" />
-                <ScalarProperty Name="AllocateUser" ColumnName="AllocateUser" />
-                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
-                <ScalarProperty Name="Qty" ColumnName="Qty" />
-                <ScalarProperty Name="AllocationDate" ColumnName="AllocationDate" />
-                <ScalarProperty Name="StaffName" ColumnName="StaffName" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="PBStockAllocationMasterInsUpd" FunctionName="parulbeautycareModel.Store.PBStockAllocationMasterInsUpd" />
           <FunctionImportMapping FunctionImportName="PBBookingInsert" FunctionName="parulbeautycareModel.Store.PBBookingInsert" />
           <FunctionImportMapping FunctionImportName="PBAvailableStockRtr" FunctionName="parulbeautycareModel.Store.PBAvailableStockRtr">
@@ -1425,6 +1616,149 @@
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="PBStockTransferInsert" FunctionName="parulbeautycareModel.Store.PBStockTransferInsert" />
+          <FunctionImportMapping FunctionImportName="PBProductMasterInsUpd" FunctionName="parulbeautycareModel.Store.PBProductMasterInsUpd" />
+          <FunctionImportMapping FunctionImportName="PBProductMasterRtr" FunctionName="parulbeautycareModel.Store.PBProductMasterRtr">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="parulbeautycareModel.PBProductMasterRtr_Result">
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="ProductCode" ColumnName="ProductCode" />
+                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+                <ScalarProperty Name="ProductImage" ColumnName="ProductImage" />
+                <ScalarProperty Name="NumberOfPerson" ColumnName="NumberOfPerson" />
+                <ScalarProperty Name="CompanyCode" ColumnName="CompanyCode" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="actstatus" ColumnName="actstatus" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+                <ScalarProperty Name="ProductTypeId" ColumnName="ProductTypeId" />
+                <ScalarProperty Name="ProductTName" ColumnName="ProductTName" />
+                <ScalarProperty Name="cdate" ColumnName="cdate" />
+                <ScalarProperty Name="udate" ColumnName="udate" />
+                <ScalarProperty Name="UpdateUser" ColumnName="UpdateUser" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="PBStockAllocationRetrieve" FunctionName="parulbeautycareModel.Store.PBStockAllocationRetrieve">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="parulbeautycareModel.PBStockAllocationRetrieve_Result">
+                <ScalarProperty Name="StockAllocationId" ColumnName="StockAllocationId" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="StaffId" ColumnName="StaffId" />
+                <ScalarProperty Name="AllocateUser" ColumnName="AllocateUser" />
+                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+                <ScalarProperty Name="ProductImage" ColumnName="ProductImage" />
+                <ScalarProperty Name="Qty" ColumnName="Qty" />
+                <ScalarProperty Name="AllocationDate" ColumnName="AllocationDate" />
+                <ScalarProperty Name="StaffName" ColumnName="StaffName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="PBVendorMasterInsUpd" FunctionName="parulbeautycareModel.Store.PBVendorMasterInsUpd" />
+          <FunctionImportMapping FunctionImportName="PBVendorMasterRetrieve" FunctionName="parulbeautycareModel.Store.PBVendorMasterRetrieve">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="parulbeautycareModel.PBVendorMasterRetrieve_Result">
+                <ScalarProperty Name="VendorId" ColumnName="VendorId" />
+                <ScalarProperty Name="VendorCode" ColumnName="VendorCode" />
+                <ScalarProperty Name="VendorName" ColumnName="VendorName" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="CompanyCode" ColumnName="CompanyCode" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="UpdateUser" ColumnName="UpdateUser" />
+                <ScalarProperty Name="cdate" ColumnName="cdate" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="PBStockPurchaseRetrieve" FunctionName="parulbeautycareModel.Store.PBStockPurchaseRetrieve">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="parulbeautycareModel.PBStockPurchaseRetrieve_Result">
+                <ScalarProperty Name="PurchaseId" ColumnName="PurchaseId" />
+                <ScalarProperty Name="CompanyCode" ColumnName="CompanyCode" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="UpdateUser" ColumnName="UpdateUser" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="ProductTypeId" ColumnName="ProductTypeId" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="MfgDate" ColumnName="MfgDate" />
+                <ScalarProperty Name="ExpDate" ColumnName="ExpDate" />
+                <ScalarProperty Name="PurchaseDate" ColumnName="PurchaseDate" />
+                <ScalarProperty Name="VendorId" ColumnName="VendorId" />
+                <ScalarProperty Name="VendorName" ColumnName="VendorName" />
+                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+                <ScalarProperty Name="ProductImage" ColumnName="ProductImage" />
+                <ScalarProperty Name="ProductTName" ColumnName="ProductTName" />
+                <ScalarProperty Name="pDate" ColumnName="pDate" />
+                <ScalarProperty Name="manufactureDate" ColumnName="manufactureDate" />
+                <ScalarProperty Name="expiryDate" ColumnName="expiryDate" />
+                <ScalarProperty Name="DepartmentId" ColumnName="DepartmentId" />
+                <ScalarProperty Name="DepartmentName" ColumnName="DepartmentName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="PBStockPurchaseMasterInsUpd" FunctionName="parulbeautycareModel.Store.PBStockPurchaseMasterInsUpd" />
+          <FunctionImportMapping FunctionImportName="PBIntePackageServiceMasterInsUpd" FunctionName="parulbeautycareModel.Store.PBIntePackageServiceMasterInsUpd" />
+          <FunctionImportMapping FunctionImportName="PBIntePackageServiceMasterRetrieve" FunctionName="parulbeautycareModel.Store.PBIntePackageServiceMasterRetrieve">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="parulbeautycareModel.PBIntePackageServiceMasterRetrieve_Result">
+                <ScalarProperty Name="IntePackageServiceId" ColumnName="IntePackageServiceId" />
+                <ScalarProperty Name="PackageId" ColumnName="PackageId" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="ServiceId" ColumnName="ServiceId" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="CompanyCode" ColumnName="CompanyCode" />
+                <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="UpdateUser" ColumnName="UpdateUser" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="PackageName" ColumnName="PackageName" />
+                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+                <ScalarProperty Name="SubCategoryName" ColumnName="SubCategoryName" />
+                <ScalarProperty Name="cdate" ColumnName="cdate" />
+                <ScalarProperty Name="udate" ColumnName="udate" />
+                <ScalarProperty Name="activeStatus1" ColumnName="activeStatus1" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="PBPackageMasterInsUpd" FunctionName="parulbeautycareModel.Store.PBPackageMasterInsUpd" />
+          <FunctionImportMapping FunctionImportName="PBPackageMasterRtr" FunctionName="parulbeautycareModel.Store.PBPackageMasterRtr">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="parulbeautycareModel.PBPackageMasterRtr_Result">
+                <ScalarProperty Name="PackageId" ColumnName="PackageId" />
+                <ScalarProperty Name="PackageName" ColumnName="PackageName" />
+                <ScalarProperty Name="PackageAmount" ColumnName="PackageAmount" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="CompanyCode" ColumnName="CompanyCode" />
+                <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="UpdateUser" ColumnName="UpdateUser" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="cdate" ColumnName="cdate" />
+                <ScalarProperty Name="udate" ColumnName="udate" />
+                <ScalarProperty Name="activeStatus1" ColumnName="activeStatus1" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="PBIntePackageServiceRtr" FunctionName="parulbeautycareModel.Store.PBIntePackageServiceRtr">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="parulbeautycareModel.PBIntePackageServiceRtr_Result">
+                <ScalarProperty Name="IntePackageServiceId" ColumnName="IntePackageServiceId" />
+                <ScalarProperty Name="PackageId" ColumnName="PackageId" />
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+                <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+                <ScalarProperty Name="ServiceId" ColumnName="ServiceId" />
+                <ScalarProperty Name="SubCategoryName" ColumnName="SubCategoryName" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="NoOfSitting" ColumnName="NoOfSitting" />
+                <ScalarProperty Name="DayInterval" ColumnName="DayInterval" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="PBCheckInCheckOutIns" FunctionName="parulbeautycareModel.Store.PBCheckInCheckOutIns" />
           <FunctionImportMapping FunctionImportName="PBCheckInCheckOutRetrieve" FunctionName="parulbeautycareModel.Store.PBCheckInCheckOutRetrieve">
             <ResultMapping>
@@ -1432,10 +1766,7 @@
                 <ScalarProperty Name="CheckId" ColumnName="CheckId" />
                 <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
                 <ScalarProperty Name="ContactNo" ColumnName="ContactNo" />
-                <ScalarProperty Name="HouseNoSociety" ColumnName="HouseNoSociety" />
-                <ScalarProperty Name="Landmark" ColumnName="Landmark" />
-                <ScalarProperty Name="City" ColumnName="City" />
-                <ScalarProperty Name="Pincode" ColumnName="Pincode" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
                 <ScalarProperty Name="CheckinDateTime" ColumnName="CheckinDateTime" />
                 <ScalarProperty Name="CheckoutDateTime" ColumnName="CheckoutDateTime" />
                 <ScalarProperty Name="WaitingTime" ColumnName="WaitingTime" />
@@ -1445,6 +1776,57 @@
                 <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
                 <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
                 <ScalarProperty Name="UpdateUser" ColumnName="UpdateUser" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="PBInteServiceProductMasterInsUpd" FunctionName="parulbeautycareModel.Store.PBInteServiceProductMasterInsUpd" />
+          <FunctionImportMapping FunctionImportName="PBInteServiceProductMasterRetrieve" FunctionName="parulbeautycareModel.Store.PBInteServiceProductMasterRetrieve">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="parulbeautycareModel.PBInteServiceProductMasterRetrieve_Result">
+                <ScalarProperty Name="InteServiceProductId" ColumnName="InteServiceProductId" />
+                <ScalarProperty Name="ServiceId" ColumnName="ServiceId" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="CompanyCode" ColumnName="CompanyCode" />
+                <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="UpdateUser" ColumnName="UpdateUser" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+                <ScalarProperty Name="SubCategoryName" ColumnName="SubCategoryName" />
+                <ScalarProperty Name="cdate" ColumnName="cdate" />
+                <ScalarProperty Name="udate" ColumnName="udate" />
+                <ScalarProperty Name="activeStatus1" ColumnName="activeStatus1" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="PBBookingDetailRtr" FunctionName="parulbeautycareModel.Store.PBBookingDetailRtr">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="parulbeautycareModel.PBBookingDetailRtr_Result">
+                <ScalarProperty Name="BookingDetailId" ColumnName="BookingDetailId" />
+                <ScalarProperty Name="BookingId" ColumnName="BookingId" />
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+                <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+                <ScalarProperty Name="SubCategoryId" ColumnName="SubCategoryId" />
+                <ScalarProperty Name="SubCategoryName" ColumnName="SubCategoryName" />
+                <ScalarProperty Name="AllocatedTo" ColumnName="AllocatedTo" />
+                <ScalarProperty Name="StaffCode" ColumnName="StaffCode" />
+                <ScalarProperty Name="StaffName" ColumnName="StaffName" />
+                <ScalarProperty Name="AllocationDate" ColumnName="AllocationDate" />
+                <ScalarProperty Name="AppointmentDate" ColumnName="AppointmentDate" />
+                <ScalarProperty Name="AppointmentTime" ColumnName="AppointmentTime" />
+                <ScalarProperty Name="SlotName" ColumnName="SlotName" />
+                <ScalarProperty Name="DoneBy" ColumnName="DoneBy" />
+                <ScalarProperty Name="DoneDate" ColumnName="DoneDate" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="Discount" ColumnName="Discount" />
+                <ScalarProperty Name="FinalAmount" ColumnName="FinalAmount" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="UpdateUser" ColumnName="UpdateUser" />
+                <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -1468,37 +1850,12 @@
                 <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
                 <ScalarProperty Name="yearperiod" ColumnName="yearperiod" />
                 <ScalarProperty Name="DayInterval" ColumnName="DayInterval" />
+                <ScalarProperty Name="Incentive" ColumnName="Incentive" />
+                <ScalarProperty Name="GSTPercentage" ColumnName="GSTPercentage" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="PBBookingDetailInsUpd" FunctionName="parulbeautycareModel.Store.PBBookingDetailInsUpd" />
-          <FunctionImportMapping FunctionImportName="PBBookingDetailRtr" FunctionName="parulbeautycareModel.Store.PBBookingDetailRtr">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="parulbeautycareModel.PBBookingDetailRtr_Result">
-                <ScalarProperty Name="BookingDetailId" ColumnName="BookingDetailId" />
-                <ScalarProperty Name="BookingId" ColumnName="BookingId" />
-                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
-                <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
-                <ScalarProperty Name="SubCategoryId" ColumnName="SubCategoryId" />
-                <ScalarProperty Name="SubCategoryName" ColumnName="SubCategoryName" />
-                <ScalarProperty Name="AllocatedTo" ColumnName="AllocatedTo" />
-                <ScalarProperty Name="AllocationDate" ColumnName="AllocationDate" />
-                <ScalarProperty Name="AppointmentDate" ColumnName="AppointmentDate" />
-                <ScalarProperty Name="AppointmentTime" ColumnName="AppointmentTime" />
-                <ScalarProperty Name="DoneBy" ColumnName="DoneBy" />
-                <ScalarProperty Name="DoneDate" ColumnName="DoneDate" />
-                <ScalarProperty Name="Amount" ColumnName="Amount" />
-                <ScalarProperty Name="Discount" ColumnName="Discount" />
-                <ScalarProperty Name="FinalAmount" ColumnName="FinalAmount" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
-                <ScalarProperty Name="UpdateUser" ColumnName="UpdateUser" />
-                <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
-                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
-                <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="PBBookingHeaderRtr" FunctionName="parulbeautycareModel.Store.PBBookingHeaderRtr">
             <ResultMapping>
               <ComplexTypeMapping TypeName="parulbeautycareModel.PBBookingHeaderRtr_Result">
@@ -1509,6 +1866,7 @@
                 <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
                 <ScalarProperty Name="Address" ColumnName="Address" />
                 <ScalarProperty Name="BookDate" ColumnName="BookDate" />
+                <ScalarProperty Name="bookingdate" ColumnName="bookingdate" />
                 <ScalarProperty Name="NoOfPerson" ColumnName="NoOfPerson" />
                 <ScalarProperty Name="TotalAmount" ColumnName="TotalAmount" />
                 <ScalarProperty Name="DiscountPerc" ColumnName="DiscountPerc" />
@@ -1527,6 +1885,7 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="PBEnquiryIns" FunctionName="parulbeautycareModel.Store.PBEnquiryIns" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

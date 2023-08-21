@@ -6,6 +6,7 @@ using ParulBeautyCareViewModel.ViewModel.Master;
 using ParulBeautyCareViewModel.ViewModel.StockMgmtViewModel;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -132,11 +133,59 @@ namespace ParulBeautyCare.Controllers
                     sm = JsonConvert.DeserializeObject<SubCategoryMasterViewModel>(emplog);
                     msg = sm.result;
                 }
+                if (Type == "VendorMaster")
+                {
+                    VendorMasterViewModel vnd = new VendorMasterViewModel();
+                    vnd.Action = "Active";
+                    vnd.UpdateDate = generalFunctions.getTimeZoneDatetimedb();
+                    vnd.UpdateUser = User.Identity.Name;
+                    vnd.VendorId = Code;
+                    vnd.IsActive = status.Equals("true") ? "1" : "0";
+                    var emplog = ApiCall.PostApi("VendorMasterInsUpd", Newtonsoft.Json.JsonConvert.SerializeObject(vnd));
+                    vnd = JsonConvert.DeserializeObject<VendorMasterViewModel>(emplog);
+                    msg = vnd.result;
+                }
+                else if (Type == "PackageMaster")
+                {
+                    PackageMasterViewModel sm = new PackageMasterViewModel();
+                    sm.Action = "Active";
+                    sm.UpdateDate = generalFunctions.getTimeZoneDatetimedb();
+                    sm.UpdateUser = User.Identity.Name;
+                    sm.PackageId = Code;
+                    sm.IsActive = status.Equals("true") ? "1" : "0";
+                    var emplog = ApiCall.PostApi("PackageMasterInsUpd", Newtonsoft.Json.JsonConvert.SerializeObject(sm));
+                    sm = JsonConvert.DeserializeObject<PackageMasterViewModel>(emplog);
+                    msg = sm.result;
+                }
+                else if (Type == "IntePackageServiceMaster")
+                {
+                    IntePackageServiceMasterViewModel sm = new IntePackageServiceMasterViewModel();
+                    sm.Action = "Active";
+                    sm.UpdateDate = generalFunctions.getTimeZoneDatetimedb();
+                    sm.UpdateUser = User.Identity.Name;
+                    sm.IntePackageServiceId = Code;
+                    sm.IsActive = status.Equals("true") ? "1" : "0";
+                    var emplog = ApiCall.PostApi("IntePackageServiceMasterInsUpd", Newtonsoft.Json.JsonConvert.SerializeObject(sm));
+                    sm = JsonConvert.DeserializeObject<IntePackageServiceMasterViewModel>(emplog);
+                    msg = sm.result;
+                }
+                else if (Type == "InteServiceProductMaster")
+                {
+                    InteServiceProductMasterViewModel sm = new InteServiceProductMasterViewModel();
+                    sm.Action = "Active";
+                    sm.UpdateDate = generalFunctions.getTimeZoneDatetimedb();
+                    sm.UpdateUser = User.Identity.Name;
+                    sm.InteServiceProductId = Code;
+                    sm.IsActive = status.Equals("true") ? "1" : "0";
+                    var emplog = ApiCall.PostApi("InteServiceProductMasterInsUpd", Newtonsoft.Json.JsonConvert.SerializeObject(sm));
+                    sm = JsonConvert.DeserializeObject<InteServiceProductMasterViewModel>(emplog);
+                    msg = sm.result;
+                }
                 else
                 {
                     msg = "Did not have method";
                 }
-               
+
             }
             catch (Exception ex)
             {
@@ -164,7 +213,7 @@ namespace ParulBeautyCare.Controllers
                 mv1.PageName = url;
                 var MenuRtr = ApiCall.PostApi("MenuRightsRtr", Newtonsoft.Json.JsonConvert.SerializeObject(mv1));
                 mv1 = JsonConvert.DeserializeObject<MenuRightsViewModel>(MenuRtr);
-                if (mv1.MenuRightsList.Count>0)
+                if (mv1.MenuRightsList.Count > 0)
                 {
                     //ViewBag.ViewRight = mv1.MenuRightsList.FirstOrDefault().ViewRight;
                     //ViewBag.InsertRight = mv1.MenuRightsList.FirstOrDefault().InsertRight;
@@ -326,7 +375,7 @@ namespace ParulBeautyCare.Controllers
                 mv1.PageName = url;
                 var MenuRtr = ApiCall.PostApi("MenuRightsRtr", Newtonsoft.Json.JsonConvert.SerializeObject(mv1));
                 mv1 = JsonConvert.DeserializeObject<MenuRightsViewModel>(MenuRtr);
-                if (mv1.MenuRightsList.Count>0)
+                if (mv1.MenuRightsList.Count > 0)
                 {
                     //ViewBag.ViewRight = mv1.MenuRightsList.FirstOrDefault().ViewRight;
                     //ViewBag.InsertRight = mv1.MenuRightsList.FirstOrDefault().InsertRight;
@@ -336,7 +385,7 @@ namespace ParulBeautyCare.Controllers
                     TempData["InsertRight"] = mv1.MenuRightsList.FirstOrDefault().InsertRight;
                     TempData["UpdateRight"] = mv1.MenuRightsList.FirstOrDefault().UpdateRight;
                     TempData["DeleteRight"] = mv1.MenuRightsList.FirstOrDefault().DeleteRight;
-                } 
+                }
                 else
                 {
                     var data = new { Message = "Sorry,You have no rights to access this page", Type = "error" };
@@ -449,7 +498,7 @@ namespace ParulBeautyCare.Controllers
             {
                 if (!User.Identity.IsAuthenticated)
                 {
-                                        return RedirectToAction("Login", "Home");
+                    return RedirectToAction("Login", "Home");
                 }
                 StatusMasterViewModel sb = new StatusMasterViewModel();
                 sb.CompanyCode = LoggedUserDetails.CompanyCode;
@@ -482,7 +531,7 @@ namespace ParulBeautyCare.Controllers
                 //Rights checking
                 if (!User.Identity.IsAuthenticated)
                 {
-                                        return RedirectToAction("Login", "Home");
+                    return RedirectToAction("Login", "Home");
                 }
                 MenuRightsViewModel mv1 = new MenuRightsViewModel();
                 mv1.Usercode = LoggedUserDetails.UserName;
@@ -490,12 +539,12 @@ namespace ParulBeautyCare.Controllers
                 mv1.PageName = url;
                 var MenuRtr = ApiCall.PostApi("MenuRightsRtr", Newtonsoft.Json.JsonConvert.SerializeObject(mv1));
                 mv1 = JsonConvert.DeserializeObject<MenuRightsViewModel>(MenuRtr);
-                if (mv1.MenuRightsList.Count>0)
+                if (mv1.MenuRightsList.Count > 0)
                 {
-                   // ViewBag.ViewRight = mv1.MenuRightsList.FirstOrDefault().ViewRight;
-                   // ViewBag.InsertRight = mv1.MenuRightsList.FirstOrDefault().InsertRight;
-                   // ViewBag.UpdateRight = mv1.MenuRightsList.FirstOrDefault().UpdateRight;
-                  //  ViewBag.DeleteRight = mv1.MenuRightsList.FirstOrDefault().DeleteRight;
+                    // ViewBag.ViewRight = mv1.MenuRightsList.FirstOrDefault().ViewRight;
+                    // ViewBag.InsertRight = mv1.MenuRightsList.FirstOrDefault().InsertRight;
+                    // ViewBag.UpdateRight = mv1.MenuRightsList.FirstOrDefault().UpdateRight;
+                    //  ViewBag.DeleteRight = mv1.MenuRightsList.FirstOrDefault().DeleteRight;
                     TempData["ViewRight"] = mv1.MenuRightsList.FirstOrDefault().ViewRight;
                     TempData["InsertRight"] = mv1.MenuRightsList.FirstOrDefault().InsertRight;
                     TempData["UpdateRight"] = mv1.MenuRightsList.FirstOrDefault().UpdateRight;
@@ -609,7 +658,7 @@ namespace ParulBeautyCare.Controllers
             {
                 if (!User.Identity.IsAuthenticated)
                 {
-                                        return RedirectToAction("Login", "Home");
+                    return RedirectToAction("Login", "Home");
                 }
                 TimeSlotMasterViewModel sb = new TimeSlotMasterViewModel();
                 sb.CompanyCode = LoggedUserDetails.CompanyCode;
@@ -641,7 +690,7 @@ namespace ParulBeautyCare.Controllers
                 //Rights checking
                 if (!User.Identity.IsAuthenticated)
                 {
-                                        return RedirectToAction("Login", "Home");
+                    return RedirectToAction("Login", "Home");
                 }
                 MenuRightsViewModel mv1 = new MenuRightsViewModel();
                 mv1.Usercode = LoggedUserDetails.UserName;
@@ -649,12 +698,8 @@ namespace ParulBeautyCare.Controllers
                 mv1.PageName = url;
                 var MenuRtr = ApiCall.PostApi("MenuRightsRtr", Newtonsoft.Json.JsonConvert.SerializeObject(mv1));
                 mv1 = JsonConvert.DeserializeObject<MenuRightsViewModel>(MenuRtr);
-                if (mv1.MenuRightsList.Count>0)
+                if (mv1.MenuRightsList.Count > 0)
                 {
-                    //ViewBag.ViewRight = mv1.MenuRightsList.FirstOrDefault().ViewRight;
-                    //ViewBag.InsertRight = mv1.MenuRightsList.FirstOrDefault().InsertRight;
-                    //ViewBag.UpdateRight = mv1.MenuRightsList.FirstOrDefault().UpdateRight;
-                    //ViewBag.DeleteRight = mv1.MenuRightsList.FirstOrDefault().DeleteRight;
                     TempData["ViewRight"] = mv1.MenuRightsList.FirstOrDefault().ViewRight;
                     TempData["InsertRight"] = mv1.MenuRightsList.FirstOrDefault().InsertRight;
                     TempData["UpdateRight"] = mv1.MenuRightsList.FirstOrDefault().UpdateRight;
@@ -673,6 +718,8 @@ namespace ParulBeautyCare.Controllers
 
                 var emplog = ApiCall.PostApi("CategoryMasterRetrieve", Newtonsoft.Json.JsonConvert.SerializeObject(mv));
                 mv = JsonConvert.DeserializeObject<CategoryMasterViewModel>(emplog);
+
+               
                 return View(mv.CategoryMasterList);
 
             }
@@ -768,7 +815,7 @@ namespace ParulBeautyCare.Controllers
             {
                 if (!User.Identity.IsAuthenticated)
                 {
-                                        return RedirectToAction("Login", "Home");
+                    return RedirectToAction("Login", "Home");
                 }
                 CategoryMasterViewModel sb = new CategoryMasterViewModel();
                 sb.CompanyCode = LoggedUserDetails.CompanyCode;
@@ -803,7 +850,7 @@ namespace ParulBeautyCare.Controllers
                 //Rights checking
                 if (!User.Identity.IsAuthenticated)
                 {
-                                        return RedirectToAction("Login", "Home");
+                    return RedirectToAction("Login", "Home");
                 }
                 MenuRightsViewModel mv1 = new MenuRightsViewModel();
                 mv1.Usercode = LoggedUserDetails.UserName;
@@ -811,7 +858,7 @@ namespace ParulBeautyCare.Controllers
                 mv1.PageName = url;
                 var MenuRtr = ApiCall.PostApi("MenuRightsRtr", Newtonsoft.Json.JsonConvert.SerializeObject(mv1));
                 mv1 = JsonConvert.DeserializeObject<MenuRightsViewModel>(MenuRtr);
-                if (mv1.MenuRightsList.Count>0)
+                if (mv1.MenuRightsList.Count > 0)
                 {
                     //ViewBag.ViewRight = mv1.MenuRightsList.FirstOrDefault().ViewRight;
                     //ViewBag.InsertRight = mv1.MenuRightsList.FirstOrDefault().InsertRight;
@@ -1000,7 +1047,7 @@ namespace ParulBeautyCare.Controllers
                 mv1.PageName = url;
                 var MenuRtr = ApiCall.PostApi("MenuRightsRtr", Newtonsoft.Json.JsonConvert.SerializeObject(mv1));
                 mv1 = JsonConvert.DeserializeObject<MenuRightsViewModel>(MenuRtr);
-                if (mv1.MenuRightsList.Count>0)
+                if (mv1.MenuRightsList.Count > 0)
                 {
                     //ViewBag.ViewRight = mv1.MenuRightsList.FirstOrDefault().ViewRight;
                     //ViewBag.InsertRight = mv1.MenuRightsList.FirstOrDefault().InsertRight;
@@ -1161,7 +1208,7 @@ namespace ParulBeautyCare.Controllers
                 mv1.PageName = url;
                 var MenuRtr = ApiCall.PostApi("MenuRightsRtr", Newtonsoft.Json.JsonConvert.SerializeObject(mv1));
                 mv1 = JsonConvert.DeserializeObject<MenuRightsViewModel>(MenuRtr);
-                if (mv1.MenuRightsList.Count>0)
+                if (mv1.MenuRightsList.Count > 0)
                 {
                     //ViewBag.ViewRight = mv1.MenuRightsList.FirstOrDefault().ViewRight;
                     //ViewBag.InsertRight = mv1.MenuRightsList.FirstOrDefault().InsertRight;
@@ -1225,7 +1272,7 @@ namespace ParulBeautyCare.Controllers
             }
         }
         [HttpPost]
-        public ActionResult AddProductMaster(ProductMasterViewModel sm)
+        public ActionResult AddProductMaster(ProductMasterViewModel sm, HttpPostedFileBase ProductImage)
         {
             try
             {
@@ -1236,9 +1283,22 @@ namespace ParulBeautyCare.Controllers
                 pm = JsonConvert.DeserializeObject<ProductTypeMasterViewModel>(ProdList);
                 sm.ProductTypeMasterList = pm.ProductTypeMasterList;
                 //
+
                 if (sm.ProductId == null)
                 {
-                    
+                    if (ProductImage != null)
+                    {
+                        string path = Server.MapPath("~/Uploads/ProductImages/");
+                        string ImagePath = "Uploads/ProductImages/";
+                        string extension = Path.GetExtension(ProductImage.FileName);
+
+                        var newfilename = string.Concat(sm.ProductCode, extension);
+                        newfilename = newfilename.Replace(" ", ""); // Remove spaces from the filename
+
+                        ProductImage.SaveAs(path + Path.GetFileName(newfilename));
+                        sm.ProductImage = string.Concat(ImagePath, newfilename);
+                    }
+
                     sm.CreateDate = generalFunctions.getTimeZoneDatetimedb();
                     sm.Action = "insert";
                     sm.CreateUser = User.Identity.Name;
@@ -1262,6 +1322,19 @@ namespace ParulBeautyCare.Controllers
                 }
                 else
                 {
+                    if (ProductImage != null)
+                    {
+
+                        string path = Server.MapPath("~/Uploads/ProductImages/");
+                        string ImagePath = "Uploads/ProductImages/";
+                        string extension = Path.GetExtension(ProductImage.FileName);
+
+                        var newfilename = string.Concat(sm.ProductName, extension);
+                        newfilename = newfilename.Replace(" ", ""); // Remove spaces from the filename
+
+                        ProductImage.SaveAs(path + Path.GetFileName(newfilename));
+                        sm.ProductImage = string.Concat(ImagePath, newfilename);
+                    }
                     sm.Action = "Update";
                     sm.CreateDate = generalFunctions.DateTimeConvert(sm.CreateDate);
                     sm.CreateUser = User.Identity.Name;
@@ -1321,6 +1394,7 @@ namespace ParulBeautyCare.Controllers
                 sb.CreateDate = sb.ProductMasterList.FirstOrDefault().CreateDate.ToString();
                 sb.CreateUser = sb.ProductMasterList.FirstOrDefault().CreateUser;
                 sb.IsActive = sb.ProductMasterList.FirstOrDefault().IsActive.ToString();
+                sb.ProductImage = sb.ProductMasterList.FirstOrDefault().ProductImage;
                 ViewBag.action = "Update";
                 sb.Action = "Update";
                 return View("AddProductMaster", sb);
@@ -1350,12 +1424,8 @@ namespace ParulBeautyCare.Controllers
                 mv1.PageName = url;
                 var MenuRtr = ApiCall.PostApi("MenuRightsRtr", Newtonsoft.Json.JsonConvert.SerializeObject(mv1));
                 mv1 = JsonConvert.DeserializeObject<MenuRightsViewModel>(MenuRtr);
-                if (mv1.MenuRightsList.Count>0)
+                if (mv1.MenuRightsList.Count > 0)
                 {
-                    //ViewBag.ViewRight = mv1.MenuRightsList.FirstOrDefault().ViewRight;
-                    //ViewBag.InsertRight = mv1.MenuRightsList.FirstOrDefault().InsertRight;
-                    //ViewBag.UpdateRight = mv1.MenuRightsList.FirstOrDefault().UpdateRight;
-                    //ViewBag.DeleteRight = mv1.MenuRightsList.FirstOrDefault().DeleteRight;
                     TempData["ViewRight"] = mv1.MenuRightsList.FirstOrDefault().ViewRight;
                     TempData["InsertRight"] = mv1.MenuRightsList.FirstOrDefault().InsertRight;
                     TempData["UpdateRight"] = mv1.MenuRightsList.FirstOrDefault().UpdateRight;
@@ -1428,10 +1498,10 @@ namespace ParulBeautyCare.Controllers
                     ym = JsonConvert.DeserializeObject<YearMasterViewModel>(Yearlist);
                     sm.YearMasterList = ym.YearMasterList;
                     //
-                    if (sm.DayInterval != null)
-                    {
-                        sm.DayInterval = sm.DayInterval + " Day";
-                    }
+                    //if (sm.DayInterval != null)
+                    //{
+                    //    sm.DayInterval = sm.DayInterval + " Day";
+                    //}
                     sm.CreateDate = generalFunctions.getTimeZoneDatetimedb();
                     sm.UpdateDate = generalFunctions.getTimeZoneDatetimedb();
                     sm.Action = "insert";
@@ -1503,6 +1573,7 @@ namespace ParulBeautyCare.Controllers
                 ym = JsonConvert.DeserializeObject<YearMasterViewModel>(Yearlist);
                 sb.YearMasterList = ym.YearMasterList;
                 //
+
                 //Category List Bind
                 sb.Action = "Active";
                 CategoryMasterViewModel pm = new CategoryMasterViewModel();
@@ -1510,11 +1581,12 @@ namespace ParulBeautyCare.Controllers
                 pm = JsonConvert.DeserializeObject<CategoryMasterViewModel>(ProdList);
                 sb.CategoryMasterList = pm.CategoryMasterList;
                 //
-               
-                sb.Action = "details";
+
+                sb.Action = "Detail";
                 sb.SubCategoryId = ID.ToString();
                 var emplog = ApiCall.PostApi("SubCategoryMasterRetrieve", Newtonsoft.Json.JsonConvert.SerializeObject(sb));
                 sb = JsonConvert.DeserializeObject<SubCategoryMasterViewModel>(emplog);
+
                 sb.CategoryId = sb.SubCategoryMasterList.FirstOrDefault().CategoryId.ToString();
                 sb.SubCategoryId = sb.SubCategoryMasterList.FirstOrDefault().SubCategoryId.ToString();
                 sb.SubCategoryName = sb.SubCategoryMasterList.FirstOrDefault().SubCategoryName.ToString();
@@ -1525,6 +1597,9 @@ namespace ParulBeautyCare.Controllers
                 sb.NoOfSitting = sb.SubCategoryMasterList.FirstOrDefault().NoOfSitting.ToString();
                 sb.TimeDuraion = sb.SubCategoryMasterList.FirstOrDefault().TimeDuraion.ToString();
                 sb.Amount = sb.SubCategoryMasterList.FirstOrDefault().Amount.ToString();
+                sb.DayInterval = sb.SubCategoryMasterList.FirstOrDefault()?.DayInterval?.ToString() ?? "0";
+                sb.Incentive = sb.SubCategoryMasterList.FirstOrDefault()?.Incentive.ToString() ?? "0";
+                sb.GSTPercentage = sb.SubCategoryMasterList.FirstOrDefault()?.GSTPercentage.ToString() ?? "0";
                 sb.CreateDate = sb.SubCategoryMasterList.FirstOrDefault().CreateDate.ToString();
                 sb.CreateUser = sb.SubCategoryMasterList.FirstOrDefault().CreateUser;
                 ViewBag.action = "Update";
@@ -1556,7 +1631,7 @@ namespace ParulBeautyCare.Controllers
                 mv1.PageName = url;
                 var MenuRtr = ApiCall.PostApi("MenuRightsRtr", Newtonsoft.Json.JsonConvert.SerializeObject(mv1));
                 mv1 = JsonConvert.DeserializeObject<MenuRightsViewModel>(MenuRtr);
-                if (mv1.MenuRightsList.Count>0)
+                if (mv1.MenuRightsList.Count > 0)
                 {
                     //ViewBag.ViewRight = mv1.MenuRightsList.FirstOrDefault().ViewRight;
                     //ViewBag.InsertRight = mv1.MenuRightsList.FirstOrDefault().InsertRight;
@@ -1598,7 +1673,7 @@ namespace ParulBeautyCare.Controllers
                 {
                     return RedirectToAction("Login", "Home");
                 }
-               
+
                 YearMasterViewModel model = new YearMasterViewModel();
                 model.Action = "Save";
                 return View(model);
@@ -1725,7 +1800,7 @@ namespace ParulBeautyCare.Controllers
                 mv1.PageName = url;
                 var MenuRtr = ApiCall.PostApi("MenuRightsRtr", Newtonsoft.Json.JsonConvert.SerializeObject(mv1));
                 mv1 = JsonConvert.DeserializeObject<MenuRightsViewModel>(MenuRtr);
-                if (mv1.MenuRightsList.Count>0)
+                if (mv1.MenuRightsList.Count > 0)
                 {
                     //ViewBag.ViewRight = mv1.MenuRightsList.FirstOrDefault().ViewRight;
                     //ViewBag.InsertRight = mv1.MenuRightsList.FirstOrDefault().InsertRight;
@@ -1871,6 +1946,767 @@ namespace ParulBeautyCare.Controllers
 
         #endregion
 
+        #region==> VendorMaster
+        public ActionResult ViewVendorMaster()
+        {
+            try
+            {
+                //Rights checking
+                if (!User.Identity.IsAuthenticated)
+                {
+                    FormsAuthentication.RedirectToLoginPage();
+                }
+                MenuRightsViewModel mv1 = new MenuRightsViewModel();
+                mv1.Usercode = LoggedUserDetails.UserName;
+                string url = generalFunctions.getCommon(Request.Url.AbsoluteUri);
+                mv1.PageName = url;
+                var MenuRtr = ApiCall.PostApi("MenuRightsRtr", Newtonsoft.Json.JsonConvert.SerializeObject(mv1));
+                mv1 = JsonConvert.DeserializeObject<MenuRightsViewModel>(MenuRtr);
+                if (mv1.MenuRightsList.Count > 0)
+                {
+                    TempData["ViewRight"] = mv1.MenuRightsList.FirstOrDefault().ViewRight;
+                    TempData["InsertRight"] = mv1.MenuRightsList.FirstOrDefault().InsertRight;
+                    TempData["UpdateRight"] = mv1.MenuRightsList.FirstOrDefault().UpdateRight;
+                    TempData["DeleteRight"] = mv1.MenuRightsList.FirstOrDefault().DeleteRight;
+                }
+                else
+                {
+                    var data = new { Message = "Sorry,You have no rights to access this page", Type = "error" };
+                    TempData["SweetAlert"] = data;
+                    return RedirectToAction("Dashboard", "Home");
+                }
+                //
+
+                VendorMasterViewModel vnd = new VendorMasterViewModel();
+                vnd.CompanyCode = LoggedUserDetails.CompanyCode;
+                vnd.Action = "all";
+
+                //Vendor Purchase List 
+                var vendorlist = ApiCall.PostApi("VendorMasterRetrieve", Newtonsoft.Json.JsonConvert.SerializeObject(vnd));
+                vnd = JsonConvert.DeserializeObject<VendorMasterViewModel>(vendorlist);
+                //
+                return View(vnd);
+
+            }
+            catch (Exception ex)
+            {
+                var data = new { Message = ex.Message.ToString(), Type = "error" };
+                TempData["SweetAlert"] = data;
+                return RedirectToAction("Dashboard", "Home");
+            }
+        }
+
+        public ActionResult AddVendorMaster()
+        {
+            try
+            {
+                VendorMasterViewModel vnd = new VendorMasterViewModel();
+                vnd.CompanyCode = LoggedUserDetails.CompanyCode;
+                vnd.Action = "all";
+
+                if (!User.Identity.IsAuthenticated)
+                {
+                    FormsAuthentication.RedirectToLoginPage();
+                }
+                string url = generalFunctions.getCommon(Request.Url.AbsoluteUri);
+
+                return View(vnd);
+            }
+            catch (Exception ex)
+            {
+                var data = new { Message = ex.Message.ToString(), Type = "error" };
+                TempData["SweetAlert"] = data;
+                return RedirectToAction("Dashboard", "Home");
+            }
+        }
+
+        [HttpPost]
+        public ActionResult AddVendorMaster(VendorMasterViewModel vnd)
+        {
+            try
+            {
+
+                if (vnd.VendorId == null)
+                {
+                    vnd.CompanyCode = LoggedUserDetails.CompanyCode;
+                    vnd.Action = "Active";
+                    vnd.CreateUser = User.Identity.Name;
+                    vnd.CreateDate = generalFunctions.getTimeZoneDatetimedb();
+
+                    if (!User.Identity.IsAuthenticated)
+                    {
+                        FormsAuthentication.RedirectToLoginPage();
+                    }
+                    string url = generalFunctions.getCommon(Request.Url.AbsoluteUri);
+
+
+                    vnd.Action = "insert";
+                    var apiResponse = ApiCall.PostApi("VendorMasterInsUpd", Newtonsoft.Json.JsonConvert.SerializeObject(vnd));
+                    vnd = JsonConvert.DeserializeObject<VendorMasterViewModel>(apiResponse);
+                    string msg = vnd.result;
+
+                    if (msg.Contains("successfully"))
+                    {
+                        var data = new { Message = msg, Type = "success" };
+                        TempData["SweetAlert"] = data;
+                        return RedirectToAction("AddVendorMaster", "Master");
+                    }
+                    else
+                    {
+                        var data = new { Message = msg, Type = "error" };
+                        TempData["SweetAlert"] = data;
+                        return RedirectToAction("AddVendorMaster", "Master");
+                    }
+
+                }
+                else
+                {
+                    vnd.Action = "update";
+                    vnd.UpdateDate = generalFunctions.getTimeZoneDatetimedb();
+                    vnd.CompanyCode = LoggedUserDetails.CompanyCode;
+
+                    var apiResponse = ApiCall.PostApi("VendorMasterInsUpd", Newtonsoft.Json.JsonConvert.SerializeObject(vnd));
+                    vnd = JsonConvert.DeserializeObject<VendorMasterViewModel>(apiResponse);
+                    string msg = vnd.result;
+                    if (msg.Contains("successfully"))
+                    {
+                        var data = new { Message = msg, Type = "success" };
+                        TempData["SweetAlert"] = data;
+                        return RedirectToAction("ViewVendorMaster", "Master");
+                    }
+                    else
+                    {
+                        var data = new { Message = msg, Type = "error" };
+                        TempData["SweetAlert"] = data;
+                        return RedirectToAction("ViewVendorMaster", "Master");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                //Danger(ex.Message.ToString(), true);
+                var data = new { Message = ex.Message.ToString(), Type = "error" };
+
+                TempData["SweetAlert"] = data;
+                return RedirectToAction("ViewVendorMaster", "Master");
+            }
+        }
+
+        public ActionResult EditVendorMaster(int vendorid)
+        {
+
+            try
+            {
+                if (!User.Identity.IsAuthenticated)
+                {
+                    FormsAuthentication.RedirectToLoginPage();
+                }
+                VendorMasterViewModel vnd = new VendorMasterViewModel();
+                vnd.Action = "details";
+                vnd.VendorId = vendorid.ToString();
+                vnd.CompanyCode = LoggedUserDetails.CompanyCode;
+                var VendorList = ApiCall.PostApi("VendorMasterRetrieve", Newtonsoft.Json.JsonConvert.SerializeObject(vnd));
+                vnd = JsonConvert.DeserializeObject<VendorMasterViewModel>(VendorList);
+
+
+                vnd.VendorId = vnd.VendorList.FirstOrDefault().VendorId.ToString();
+                vnd.VendorCode = vnd.VendorList.FirstOrDefault().VendorCode.ToString();
+                vnd.VendorName = vnd.VendorList.FirstOrDefault().VendorName.ToString();
+                vnd.Phone = vnd.VendorList.FirstOrDefault().Phone.ToString();
+                vnd.Email = vnd.VendorList.FirstOrDefault().Email.ToString();
+                vnd.Address = vnd.VendorList.FirstOrDefault().Address.ToString();
+                vnd.CompanyCode = vnd.VendorList.FirstOrDefault().CompanyCode.ToString();
+                vnd.CreateDate = vnd.VendorList.FirstOrDefault().CreateDate.ToString();
+                vnd.CreateUser = vnd.VendorList.FirstOrDefault().CreateUser.ToString();
+
+                ViewBag.action = "Update";
+                vnd.Action = "Update";
+                return View("AddVendorMaster", vnd);
+            }
+            catch (Exception ex)
+            {
+                //Danger(ex.Message.ToString(), true);
+                //return RedirectToAction("Dashboard", "Home");
+                var data = new { Message = ex.Message.ToString(), Type = "error" };
+                TempData["SweetAlert"] = data;
+                return RedirectToAction("ViewPageMaster", "UserManagement");
+            }
+
+        }
+        #endregion
+
+        #region==> Package Master
+        public ActionResult ViewPackageMaster()
+        {
+            try
+            {
+                if (!User.Identity.IsAuthenticated)
+                {
+                    return RedirectToAction("Login", "Home");
+                }
+                MenuRightsViewModel mv1 = new MenuRightsViewModel();
+                mv1.Usercode = LoggedUserDetails.UserName;
+                string url = generalFunctions.getCommon(Request.Url.AbsoluteUri);
+                mv1.PageName = url;
+                var MenuRtr = ApiCall.PostApi("MenuRightsRtr", Newtonsoft.Json.JsonConvert.SerializeObject(mv1));
+                mv1 = JsonConvert.DeserializeObject<MenuRightsViewModel>(MenuRtr);
+                if (mv1.MenuRightsList.Count > 0)
+                {
+                    //ViewBag.ViewRight = mv1.MenuRightsList.FirstOrDefault().ViewRight;
+                    //ViewBag.InsertRight = mv1.MenuRightsList.FirstOrDefault().InsertRight;
+                    //ViewBag.UpdateRight = mv1.MenuRightsList.FirstOrDefault().UpdateRight;
+                    //ViewBag.DeleteRight = mv1.MenuRightsList.FirstOrDefault().DeleteRight;
+                    TempData["ViewRight"] = mv1.MenuRightsList.FirstOrDefault().ViewRight;
+                    TempData["InsertRight"] = mv1.MenuRightsList.FirstOrDefault().InsertRight;
+                    TempData["UpdateRight"] = mv1.MenuRightsList.FirstOrDefault().UpdateRight;
+                    TempData["DeleteRight"] = mv1.MenuRightsList.FirstOrDefault().DeleteRight;
+                }
+                else
+                {
+                    var data = new { Message = "Sorry,You have no rights to access this page", Type = "error" };
+                    TempData["SweetAlert"] = data;
+                    return RedirectToAction("Dashboard", "Home");
+                }
+                //
+                PackageMasterViewModel mv = new PackageMasterViewModel();
+                mv.Action = "all";
+                mv.CompanyCode = LoggedUserDetails.CompanyCode;
+
+                var emplog = ApiCall.PostApi("PackageMasterRtr", Newtonsoft.Json.JsonConvert.SerializeObject(mv));
+                mv = JsonConvert.DeserializeObject<PackageMasterViewModel>(emplog);
+                return View(mv.PackageList);
+
+            }
+            catch (Exception ex)
+            {
+                var data = new { Message = ex.Message.ToString(), Type = "error" };
+                TempData["SweetAlert"] = data;
+                return RedirectToAction("Dashboard", "Home");
+            }
+        }
+        public ActionResult AddPackageMaster()
+        {
+            try
+            {
+                if (!User.Identity.IsAuthenticated)
+                {
+                    return RedirectToAction("Login", "Home");
+                }
+                PackageMasterViewModel model = new PackageMasterViewModel();
+                model.CompanyCode = LoggedUserDetails.CompanyCode;
+                model.Action = "Save";
+                return View(model);
+            }
+            catch (Exception ex)
+            {
+                var data = new { Message = ex.Message.ToString(), Type = "error" };
+                TempData["SweetAlert"] = data;
+                return RedirectToAction("Dashboard", "Home");
+            }
+        }
+        [HttpPost]
+        public ActionResult AddPackageMaster(PackageMasterViewModel sm)
+        {
+            try
+            {
+                if (sm.PackageId == null)
+                {
+                    sm.CreateDate = generalFunctions.getTimeZoneDatetimedb();
+                    sm.Action = "insert";
+                    sm.CreateUser = User.Identity.Name;
+                    sm.UpdateUser = User.Identity.Name;
+                    sm.CompanyCode = LoggedUserDetails.CompanyCode;
+                    var emplog = ApiCall.PostApi("PackageMasterInsUpd", Newtonsoft.Json.JsonConvert.SerializeObject(sm));
+                    sm = JsonConvert.DeserializeObject<PackageMasterViewModel>(emplog);
+                    string msg = sm.result;
+                    if (msg.Contains("successfully"))
+                    {
+                        var data = new { Message = msg, Type = "success" };
+                        TempData["SweetAlert"] = data;
+                        return RedirectToAction("AddPackageMaster", "Master");
+                    }
+                    else
+                    {
+                        var data = new { Message = msg, Type = "error" };
+                        TempData["SweetAlert"] = data;
+                        return RedirectToAction("AddPackageMaster", "Master");
+                    }
+                }
+                else
+                {
+                    sm.Action = "update";
+                    sm.CreateDate = generalFunctions.DateTimeConvert(sm.CreateDate);
+                    sm.CreateUser = User.Identity.Name;
+                    sm.UpdateDate = generalFunctions.getTimeZoneDatetimedb();
+                    sm.UpdateUser = User.Identity.Name;
+                    sm.CompanyCode = LoggedUserDetails.CompanyCode;
+                    var emplog = ApiCall.PostApi("PackageMasterInsUpd", Newtonsoft.Json.JsonConvert.SerializeObject(sm));
+                    sm = JsonConvert.DeserializeObject<PackageMasterViewModel>(emplog);
+                    string msg = sm.result;
+                    if (msg.Contains("successfully"))
+                    {
+                        var data = new { Message = msg, Type = "success" };
+                        TempData["SweetAlert"] = data;
+                        return RedirectToAction("AddPackageMaster", "Master");
+                    }
+                    else
+                    {
+                        var data = new { Message = msg, Type = "error" };
+                        TempData["SweetAlert"] = data;
+                        return RedirectToAction("AddPackageMaster", "Master");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                var data = new { Message = ex.Message.ToString(), Type = "error" };
+                TempData["SweetAlert"] = data;
+                return RedirectToAction("AddPackageMaster", "Master");
+            }
+        }
+        public ActionResult EditPackageMaster(int id)
+        {
+            try
+            {
+                if (!User.Identity.IsAuthenticated)
+                {
+                    return RedirectToAction("Login", "Home");
+                }
+                PackageMasterViewModel sb = new PackageMasterViewModel();
+                sb.CompanyCode = LoggedUserDetails.CompanyCode;
+                sb.Action = "Details";
+                sb.PackageId = id.ToString();
+                var emplog = ApiCall.PostApi("PackageMasterRtr", Newtonsoft.Json.JsonConvert.SerializeObject(sb));
+                sb = JsonConvert.DeserializeObject<PackageMasterViewModel>(emplog);
+                sb.PackageId = sb.PackageList.FirstOrDefault().PackageId.ToString();
+                sb.PackageName = sb.PackageList.FirstOrDefault().PackageName;
+                sb.PackageAmount = sb.PackageList.FirstOrDefault().PackageAmount.ToString();
+                sb.CreateDate = sb.PackageList.FirstOrDefault().CreateDate.ToString();
+                sb.CreateUser = sb.PackageList.FirstOrDefault().CreateUser;
+                sb.IsActive = sb.PackageList.FirstOrDefault().IsActive.ToString();
+                ViewBag.action = "Update";
+                sb.Action = "Update";
+                return View("AddPackageMaster", sb);
+            }
+            catch (Exception ex)
+            {
+                var data = new { Message = ex.Message.ToString(), Type = "error" };
+                TempData["SweetAlert"] = data;
+                return RedirectToAction("AddPackageMaster", "Master");
+            }
+        }
+        #endregion
+
+        #region==> Integration Package Service Master
+        public ActionResult ViewIntePackageServiceMaster()
+        {
+            try
+            {
+                if (!User.Identity.IsAuthenticated)
+                {
+                    return RedirectToAction("Login", "Home");
+                }
+                MenuRightsViewModel mv1 = new MenuRightsViewModel();
+                mv1.Usercode = LoggedUserDetails.UserName;
+                string url = generalFunctions.getCommon(Request.Url.AbsoluteUri);
+                mv1.PageName = url;
+                var MenuRtr = ApiCall.PostApi("MenuRightsRtr", Newtonsoft.Json.JsonConvert.SerializeObject(mv1));
+                mv1 = JsonConvert.DeserializeObject<MenuRightsViewModel>(MenuRtr);
+                if (mv1.MenuRightsList.Count > 0)
+                {
+                    //ViewBag.ViewRight = mv1.MenuRightsList.FirstOrDefault().ViewRight;
+                    //ViewBag.InsertRight = mv1.MenuRightsList.FirstOrDefault().InsertRight;
+                    //ViewBag.UpdateRight = mv1.MenuRightsList.FirstOrDefault().UpdateRight;
+                    //ViewBag.DeleteRight = mv1.MenuRightsList.FirstOrDefault().DeleteRight;
+                    TempData["ViewRight"] = mv1.MenuRightsList.FirstOrDefault().ViewRight;
+                    TempData["InsertRight"] = mv1.MenuRightsList.FirstOrDefault().InsertRight;
+                    TempData["UpdateRight"] = mv1.MenuRightsList.FirstOrDefault().UpdateRight;
+                    TempData["DeleteRight"] = mv1.MenuRightsList.FirstOrDefault().DeleteRight;
+                }
+                else
+                {
+                    var data = new { Message = "Sorry,You have no rights to access this page", Type = "error" };
+                    TempData["SweetAlert"] = data;
+                    return RedirectToAction("Dashboard", "Home");
+                }
+
+                IntePackageServiceMasterViewModel mv = new IntePackageServiceMasterViewModel();
+                mv.Action = "All";
+                mv.CompanyCode = LoggedUserDetails.CompanyCode;
+                var emplog = ApiCall.PostApi("IntePackageServiceMasterRetrieve", Newtonsoft.Json.JsonConvert.SerializeObject(mv));
+                mv = JsonConvert.DeserializeObject<IntePackageServiceMasterViewModel>(emplog);
+                return View(mv.IntePackageServiceMasterList);
+
+            }
+            catch (Exception ex)
+            {
+                //Danger(ex.Message.ToString(), true);
+                var data = new { Message = ex.Message.ToString(), Type = "error" };
+                TempData["SweetAlert"] = data;
+                return RedirectToAction("Dashboard", "Home");
+            }
+        }
+        public ActionResult AddIntePackageServiceMaster()
+        {
+            try
+            {
+                if (!User.Identity.IsAuthenticated)
+                {
+                    return RedirectToAction("Login", "Home");
+                }
+                IntePackageServiceMasterViewModel model = new IntePackageServiceMasterViewModel();
+                model.Action = "Add";
+
+                SubCategoryMasterViewModel mv = new SubCategoryMasterViewModel();
+                mv.Action = "active";
+                mv.CompanyCode = LoggedUserDetails.CompanyCode;
+                var emplog = ApiCall.PostApi("SubCategoryMasterRetrieve", Newtonsoft.Json.JsonConvert.SerializeObject(mv));
+                mv = JsonConvert.DeserializeObject<SubCategoryMasterViewModel>(emplog);
+                model.SubCategoryMasterList = mv.SubCategoryMasterList;
+
+                PackageMasterViewModel pmv = new PackageMasterViewModel();
+                pmv.Action = "active";
+                pmv.CompanyCode = LoggedUserDetails.CompanyCode;
+                var package = ApiCall.PostApi("PackageMasterRtr", Newtonsoft.Json.JsonConvert.SerializeObject(pmv));
+                pmv = JsonConvert.DeserializeObject<PackageMasterViewModel>(package);
+                model.PackageMasterList = pmv.PackageList;
+
+                ProductMasterViewModel pv = new ProductMasterViewModel();
+                pv.Action = "active";
+                pv.CompanyCode = LoggedUserDetails.CompanyCode;
+                var product = ApiCall.PostApi("ProductMasterRetrieve", Newtonsoft.Json.JsonConvert.SerializeObject(pv));
+                pv = JsonConvert.DeserializeObject<ProductMasterViewModel>(product);
+                model.ProductMasterList = pv.ProductMasterList;
+
+                return View(model);
+            }
+            catch (Exception ex)
+            {
+                var data = new { Message = ex.Message.ToString(), Type = "error" };
+                TempData["SweetAlert"] = data;
+                return RedirectToAction("Dashboard", "Home");
+            }
+        }
+        [HttpPost]
+        public ActionResult AddIntePackageServiceMaster(IntePackageServiceMasterViewModel sm)
+        {
+            try
+            {
+                if (sm.IntePackageServiceId == null)
+                {
+                    sm.CreateDate = generalFunctions.getTimeZoneDatetimedb();
+                    sm.Action = "insert";
+                    sm.CreateUser = User.Identity.Name;
+                    sm.UpdateUser = User.Identity.Name;
+                    sm.CompanyCode = LoggedUserDetails.CompanyCode;
+                    var emplog = ApiCall.PostApi("IntePackageServiceMasterInsUpd", Newtonsoft.Json.JsonConvert.SerializeObject(sm));
+                    sm = JsonConvert.DeserializeObject<IntePackageServiceMasterViewModel>(emplog);
+                    string msg = sm.result;
+                    if (msg.Contains("successfully"))
+                    {
+                        var data = new { Message = msg, Type = "success" };
+                        TempData["SweetAlert"] = data;
+                        return RedirectToAction("AddIntePackageServiceMaster", "Master");
+                    }
+                    else
+                    {
+                        var data = new { Message = msg, Type = "error" };
+                        TempData["SweetAlert"] = data;
+                        return RedirectToAction("AddIntePackageServiceMaster", "Master");
+                    }
+                }
+                else
+                {
+                    sm.Action = "Update";
+                    sm.CreateDate = generalFunctions.DateTimeConvert(sm.CreateDate);
+                    sm.CreateUser = User.Identity.Name;
+                    sm.UpdateDate = generalFunctions.getTimeZoneDatetimedb();
+                    sm.UpdateUser = User.Identity.Name;
+                    sm.CompanyCode = LoggedUserDetails.CompanyCode;
+                    var emplog = ApiCall.PostApi("IntePackageServiceMasterInsUpd", Newtonsoft.Json.JsonConvert.SerializeObject(sm));
+                    sm = JsonConvert.DeserializeObject<IntePackageServiceMasterViewModel>(emplog);
+                    string msg = sm.result;
+                    if (msg.Contains("successfully"))
+                    {
+                        var data = new { Message = msg, Type = "success" };
+                        TempData["SweetAlert"] = data;
+                        return RedirectToAction("ViewIntePackageServiceMaster", "Master");
+                    }
+                    else
+                    {
+                        var data = new { Message = msg, Type = "error" };
+                        TempData["SweetAlert"] = data;
+                        return RedirectToAction("ViewIntePackageServiceMaster", "Master");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                //  Danger(ex.Message.ToString(), true);
+                var data = new { Message = ex.Message.ToString(), Type = "error" };
+                TempData["SweetAlert"] = data;
+                return RedirectToAction("AddIntePackageServiceMaster", "Master");
+            }
+        }
+        public ActionResult EditIntePackageServiceMaster(int id)
+        {
+            try
+            {
+                if (!User.Identity.IsAuthenticated)
+                {
+                    return RedirectToAction("Login", "Home");
+                }
+                IntePackageServiceMasterViewModel sb = new IntePackageServiceMasterViewModel();
+                //Product List Bind
+                sb.Action = "Active";
+
+                IntePackageServiceMasterViewModel mv = new IntePackageServiceMasterViewModel();
+                mv.Action = "All";
+                mv.CompanyCode = LoggedUserDetails.CompanyCode;
+                var emplog = ApiCall.PostApi("IntePackageServiceMasterRetrieve", Newtonsoft.Json.JsonConvert.SerializeObject(mv));
+                mv = JsonConvert.DeserializeObject<IntePackageServiceMasterViewModel>(emplog);
+                sb.IntePackageServiceMasterList = mv.IntePackageServiceMasterList;
+
+                SubCategoryMasterViewModel SCV = new SubCategoryMasterViewModel();
+                SCV.Action = "active";
+                SCV.CompanyCode = LoggedUserDetails.CompanyCode;
+                var emplog3 = ApiCall.PostApi("SubCategoryMasterRetrieve", Newtonsoft.Json.JsonConvert.SerializeObject(SCV));
+                SCV = JsonConvert.DeserializeObject<SubCategoryMasterViewModel>(emplog3);
+                sb.SubCategoryMasterList = SCV.SubCategoryMasterList;
+
+                PackageMasterViewModel pmv = new PackageMasterViewModel();
+                pmv.Action = "active";
+                pmv.CompanyCode = LoggedUserDetails.CompanyCode;
+                var package = ApiCall.PostApi("PackageMasterRtr", Newtonsoft.Json.JsonConvert.SerializeObject(pmv));
+                pmv = JsonConvert.DeserializeObject<PackageMasterViewModel>(package);
+                sb.PackageMasterList = pmv.PackageList;
+
+                ProductMasterViewModel pv = new ProductMasterViewModel();
+                pv.Action = "active";
+                pv.CompanyCode = LoggedUserDetails.CompanyCode;
+                var product = ApiCall.PostApi("ProductMasterRetrieve", Newtonsoft.Json.JsonConvert.SerializeObject(pv));
+                pv = JsonConvert.DeserializeObject<ProductMasterViewModel>(product);
+                sb.ProductMasterList = pv.ProductMasterList;
+
+                //
+                sb.CompanyCode = LoggedUserDetails.CompanyCode;
+                sb.Action = "details";
+                sb.IntePackageServiceId = id.ToString();
+                var emplog2 = ApiCall.PostApi("IntePackageServiceMasterRetrieve", Newtonsoft.Json.JsonConvert.SerializeObject(sb));
+                sb = JsonConvert.DeserializeObject<IntePackageServiceMasterViewModel>(emplog2);
+                sb.ProductId = sb.IntePackageServiceMasterList.FirstOrDefault().ProductId.ToString();
+                sb.ServiceId = sb.IntePackageServiceMasterList.FirstOrDefault().ServiceId.ToString();
+                sb.PackageId = sb.IntePackageServiceMasterList.FirstOrDefault().PackageId.ToString();
+                sb.CreateDate = sb.ProductMasterList.FirstOrDefault().CreateDate.ToString();
+                sb.CreateUser = sb.ProductMasterList.FirstOrDefault().CreateUser;
+                sb.IsActive = sb.ProductMasterList.FirstOrDefault().IsActive.ToString();
+                ViewBag.action = "Update";
+                sb.Action = "Update";
+                return View("AddIntePackageServiceMaster", sb);
+            }
+            catch (Exception ex)
+            {
+                var data = new { Message = ex.Message.ToString(), Type = "error" };
+                TempData["SweetAlert"] = data;
+                return RedirectToAction("ViewIntePackageServiceMaster", "Master");
+            }
+        }
+        #endregion
+
+        #region==> Integration Service Product Master
+        public ActionResult ViewInteServiceProductMaster()
+        {
+            try
+            {
+                if (!User.Identity.IsAuthenticated)
+                {
+                    return RedirectToAction("Login", "Home");
+                }
+                MenuRightsViewModel mv1 = new MenuRightsViewModel();
+                mv1.Usercode = LoggedUserDetails.UserName;
+                string url = generalFunctions.getCommon(Request.Url.AbsoluteUri);
+                mv1.PageName = url;
+                var MenuRtr = ApiCall.PostApi("MenuRightsRtr", Newtonsoft.Json.JsonConvert.SerializeObject(mv1));
+                mv1 = JsonConvert.DeserializeObject<MenuRightsViewModel>(MenuRtr);
+                if (mv1.MenuRightsList.Count > 0)
+                {
+                    TempData["ViewRight"] = mv1.MenuRightsList.FirstOrDefault().ViewRight;
+                    TempData["InsertRight"] = mv1.MenuRightsList.FirstOrDefault().InsertRight;
+                    TempData["UpdateRight"] = mv1.MenuRightsList.FirstOrDefault().UpdateRight;
+                    TempData["DeleteRight"] = mv1.MenuRightsList.FirstOrDefault().DeleteRight;
+                }
+                else
+                {
+                    var data = new { Message = "Sorry,You have no rights to access this page", Type = "error" };
+                    TempData["SweetAlert"] = data;
+                    return RedirectToAction("Dashboard", "Home");
+                }
+
+                InteServiceProductMasterViewModel mv = new InteServiceProductMasterViewModel();
+                mv.Action = "All";
+                mv.CompanyCode = LoggedUserDetails.CompanyCode;
+                var emplog = ApiCall.PostApi("InteServiceProductMasterRetrieve", Newtonsoft.Json.JsonConvert.SerializeObject(mv));
+                mv = JsonConvert.DeserializeObject<InteServiceProductMasterViewModel>(emplog);
+                return View(mv.InteServiceProductMasterList);
+
+            }
+            catch (Exception ex)
+            {
+                //Danger(ex.Message.ToString(), true);
+                var data = new { Message = ex.Message.ToString(), Type = "error" };
+                TempData["SweetAlert"] = data;
+                return RedirectToAction("Dashboard", "Home");
+            }
+        }
+        public ActionResult AddInteServiceProductMaster()
+        {
+            try
+            {
+                if (!User.Identity.IsAuthenticated)
+                {
+                    return RedirectToAction("Login", "Home");
+                }
+                InteServiceProductMasterViewModel model = new InteServiceProductMasterViewModel();
+                model.Action = "Add";
+
+                SubCategoryMasterViewModel mv = new SubCategoryMasterViewModel();
+                mv.Action = "active";
+                mv.CompanyCode = LoggedUserDetails.CompanyCode;
+                var emplog = ApiCall.PostApi("SubCategoryMasterRetrieve", Newtonsoft.Json.JsonConvert.SerializeObject(mv));
+                mv = JsonConvert.DeserializeObject<SubCategoryMasterViewModel>(emplog);
+                model.SubCategoryMasterList = mv.SubCategoryMasterList;
+
+                ProductMasterViewModel pv = new ProductMasterViewModel();
+                pv.Action = "active";
+                pv.CompanyCode = LoggedUserDetails.CompanyCode;
+                var product = ApiCall.PostApi("ProductMasterRetrieve", Newtonsoft.Json.JsonConvert.SerializeObject(pv));
+                pv = JsonConvert.DeserializeObject<ProductMasterViewModel>(product);
+                model.ProductMasterList = pv.ProductMasterList;
+
+                return View(model);
+            }
+            catch (Exception ex)
+            {
+                var data = new { Message = ex.Message.ToString(), Type = "error" };
+                TempData["SweetAlert"] = data;
+                return RedirectToAction("Dashboard", "Home");
+            }
+        }
+        [HttpPost]
+        public ActionResult AddInteServiceProductMaster(InteServiceProductMasterViewModel sm)
+        {
+            try
+            {
+                if (sm.InteServiceProductId == null)
+                {
+                    sm.CreateDate = generalFunctions.getTimeZoneDatetimedb();
+                    sm.Action = "insert";
+                    sm.CreateUser = User.Identity.Name;
+                    sm.UpdateUser = User.Identity.Name;
+                    sm.CompanyCode = LoggedUserDetails.CompanyCode;
+                    var emplog = ApiCall.PostApi("InteServiceProductMasterInsUpd", Newtonsoft.Json.JsonConvert.SerializeObject(sm));
+                    sm = JsonConvert.DeserializeObject<InteServiceProductMasterViewModel>(emplog);
+                    string msg = sm.result;
+                    if (msg.Contains("successfully"))
+                    {
+                        var data = new { Message = msg, Type = "success" };
+                        TempData["SweetAlert"] = data;
+                        return RedirectToAction("AddInteServiceProductMaster", "Master");
+                    }
+                    else
+                    {
+                        var data = new { Message = msg, Type = "error" };
+                        TempData["SweetAlert"] = data;
+                        return RedirectToAction("AddInteServiceProductMaster", "Master");
+                    }
+                }
+                else
+                {
+                    sm.Action = "Update";
+                    sm.CreateDate = generalFunctions.DateTimeConvert(sm.CreateDate);
+                    sm.CreateUser = User.Identity.Name;
+                    sm.UpdateDate = generalFunctions.getTimeZoneDatetimedb();
+                    sm.UpdateUser = User.Identity.Name;
+                    sm.CompanyCode = LoggedUserDetails.CompanyCode;
+                    var emplog = ApiCall.PostApi("InteServiceProductMasterInsUpd", Newtonsoft.Json.JsonConvert.SerializeObject(sm));
+                    sm = JsonConvert.DeserializeObject<InteServiceProductMasterViewModel>(emplog);
+                    string msg = sm.result;
+                    if (msg.Contains("successfully"))
+                    {
+                        var data = new { Message = msg, Type = "success" };
+                        TempData["SweetAlert"] = data;
+                        return RedirectToAction("ViewInteServiceProductMaster", "Master");
+                    }
+                    else
+                    {
+                        var data = new { Message = msg, Type = "error" };
+                        TempData["SweetAlert"] = data;
+                        return RedirectToAction("ViewInteServiceProductMaster", "Master");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                //  Danger(ex.Message.ToString(), true);
+                var data = new { Message = ex.Message.ToString(), Type = "error" };
+                TempData["SweetAlert"] = data;
+                return RedirectToAction("AddInteServiceProductMaster", "Master");
+            }
+        }
+        public ActionResult EditInteServiceProductMaster(int id)
+        {
+            try
+            {
+                if (!User.Identity.IsAuthenticated)
+                {
+                    return RedirectToAction("Login", "Home");
+                }
+                InteServiceProductMasterViewModel sb = new InteServiceProductMasterViewModel();
+
+                InteServiceProductMasterViewModel mv = new InteServiceProductMasterViewModel();
+                mv.Action = "All";
+                mv.CompanyCode = LoggedUserDetails.CompanyCode;
+                var emplog = ApiCall.PostApi("InteServiceProductMasterRetrieve", Newtonsoft.Json.JsonConvert.SerializeObject(mv));
+                mv = JsonConvert.DeserializeObject<InteServiceProductMasterViewModel>(emplog);
+                sb.InteServiceProductMasterList = mv.InteServiceProductMasterList;
+
+                SubCategoryMasterViewModel SCV = new SubCategoryMasterViewModel();
+                SCV.Action = "active";
+                SCV.CompanyCode = LoggedUserDetails.CompanyCode;
+                var emplog3 = ApiCall.PostApi("SubCategoryMasterRetrieve", Newtonsoft.Json.JsonConvert.SerializeObject(SCV));
+                SCV = JsonConvert.DeserializeObject<SubCategoryMasterViewModel>(emplog3);
+                sb.SubCategoryMasterList = SCV.SubCategoryMasterList;
+
+                ProductMasterViewModel pv = new ProductMasterViewModel();
+                pv.Action = "active";
+                pv.CompanyCode = LoggedUserDetails.CompanyCode;
+                var product = ApiCall.PostApi("ProductMasterRetrieve", Newtonsoft.Json.JsonConvert.SerializeObject(pv));
+                pv = JsonConvert.DeserializeObject<ProductMasterViewModel>(product);
+                sb.ProductMasterList = pv.ProductMasterList;
+
+                //
+                sb.CompanyCode = LoggedUserDetails.CompanyCode;
+                sb.Action = "details";
+                sb.InteServiceProductId = id.ToString();
+                var emplog2 = ApiCall.PostApi("InteServiceProductMasterRetrieve", Newtonsoft.Json.JsonConvert.SerializeObject(sb));
+                sb = JsonConvert.DeserializeObject<InteServiceProductMasterViewModel>(emplog2);
+                sb.ProductId = sb.InteServiceProductMasterList.FirstOrDefault().ProductId.ToString();
+                sb.ServiceId = sb.InteServiceProductMasterList.FirstOrDefault().ServiceId.ToString();
+                sb.CreateDate = sb.ProductMasterList.FirstOrDefault().CreateDate.ToString();
+                sb.CreateUser = sb.ProductMasterList.FirstOrDefault().CreateUser;
+                sb.IsActive = sb.ProductMasterList.FirstOrDefault().IsActive.ToString();
+                ViewBag.action = "Update";
+                sb.Action = "Update";
+                return View("AddInteServiceProductMaster", sb);
+            }
+            catch (Exception ex)
+            {
+                var data = new { Message = ex.Message.ToString(), Type = "error" };
+                TempData["SweetAlert"] = data;
+                return RedirectToAction("ViewInteServiceProductMaster", "Master");
+            }
+        }
+        #endregion
         #endregion
     }
 }

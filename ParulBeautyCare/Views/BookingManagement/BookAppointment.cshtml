@@ -1,7 +1,7 @@
 ﻿@model ParulBeautyCareViewModel.ViewModel.BookAppointmentViewModel
 @{
-    ViewBag.Title = "BookAppointment";
-    ViewBag.Module = "BookingManagement";
+    ViewBag.Title = "Book Appointment";
+    ViewBag.Module = "Booking Management";
 }
 <style>
     .field-icon {
@@ -11,6 +11,9 @@
         right: 15px;
         z-index: 2;
     }
+    /* .select2 {
+        width: 100% !important;
+    }*/
 </style>
 <div class="content-wrapper">
     <div class="row">
@@ -26,10 +29,11 @@
                     {
                         @Html.AntiForgeryToken()
                         @Html.HiddenFor(x => x.Action)
+                        @Html.Hidden("BookAppointment", null, new { id = "BookAppointmentInput", @class = "BookAppointmentInput" })
                         <div class="row form-group">
                             <div class="col-sm-12 col-md-4 col-lg-3">
-                                <label for="exampleInputUsername2" class="col-form-label">
-                                    StaffCode
+                                <label class="col-form-label">
+                                    Customer Name
                                     @Html.ValidationMessageFor(m => m.CustomerName, "", new { @class = "text-danger h3" })
                                 </label>
                                 @Html.TextBoxFor(m => m.CustomerName, new Dictionary<string, object>() {
@@ -41,7 +45,7 @@
                                                                             })
                             </div>
                             <div class="col-sm-12 col-md-4 col-lg-3">
-                                <label for="exampleInputUsername2" class="col-form-label">
+                                <label class="col-form-label">
                                     Contact No
                                     @Html.ValidationMessageFor(m => m.ContactNo, "", new { @class = "text-danger h3" })
                                 </label>
@@ -54,7 +58,7 @@
                                                                             })
                             </div>
                             <div class="col-sm-12 col-md-4 col-lg-3">
-                                <label for="exampleInputUsername2" class="col-form-label">
+                                <label class="col-form-label">
                                     Address
                                     @Html.ValidationMessageFor(m => m.Address, "", new { @class = "text-danger h3" })
                                 </label>
@@ -92,8 +96,9 @@
                                                                             {"readonly","readonly" }
                                                                             })
                             </div>
+
                             <div class="col-sm-12 col-md-4 col-lg-3">
-                                <label class="col-form-label">
+                                <label class="col-form-label">  
                                     Function Date
                                     @Html.ValidationMessageFor(m => m.FunctionDate, "", new { @class = "text-danger h3" })
                                 </label>
@@ -115,7 +120,7 @@
                             </div>
                             <div class="col-sm-12 col-md-4 col-lg-3">
                                 <label class="col-form-label">
-                                    Ready Time
+                                    Function Time
                                     @Html.ValidationMessageFor(m => m.ReadyTime, "", new { @class = "text-danger h3" })
                                 </label>
                                 <div class="input-group">
@@ -135,17 +140,38 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="col-sm-12 col-md-4 col-lg-3">
+                                <label class="col-form-label">Service Type</label>
+                                @Html.DropDownListFor(x => x.AppointmentType, new List<SelectListItem>
+                                       {
+                                           new SelectListItem{ Text="Select Appointment Type", Value = "",Selected=true  },
+                                           new SelectListItem{ Text="Package", Value = "1"},
+                                           new SelectListItem{ Text="Individual", Value = "2" }
+                                        }, new { @class = "form-control form-select js-example-basic-single", @id = "AppointmentType", @onchange = "SetAppointmentType()" })
+                            </div>
+                            <div class="col-sm-12 col-md-4 col-lg-3" id="packageDropdownContainer" style="display: none;">
+                                <label class="col-form-label">
+                                    Package
+                                    @Html.ValidationMessageFor(m => m.PackageId, "", new { @class = "text-danger h3" })
+                                </label>
+                                @Html.DropDownListFor(model => model.PackageId, new SelectList(Model.PackageList, "PackageId", "PackageName"), "Select Package",
+                                      new Dictionary<string, object>
+                                          () {
+                                          {"id","ddlPackage"},
+                                          {"class","form-control form-select js-example-basic-single"},
+                                          {"onchange", "javascript:GetPackageId(this.value)"},
+                                          })
+                            </div>
                         </div>
                     }
                 </div>
                 <br />
-                <fieldset class="ml-2 mr-2 m-1 table-responsive">
+                <fieldset id="individualFieldset" class="ml-2 mr-2 m-1 table-responsive" style="display:none">
                     <table id="Maintable" class="table table-bordered ">
                         <thead>
                             <tr>
                                 <td>Select CateGory</td>
                                 <td>Select Services</td>
-                                <td>Price</td>
                                 <td>Select Date & Time</td>
                                 <td style="min-width:130px;max-width:150px !important">Action</td>
                             </tr>
@@ -173,9 +199,9 @@
                                          {"onchange", "javascript:GetSubCategoryId(this.value)"}
                                          })
                                 </td>
-                                <td>
-                                    @Html.EditorFor(model => model.BookingAmount, new { htmlAttributes = new { @class = "form-control total", @readonly = "readonly", @id = "Price", autocomplete = "off" } })
-                                </td>
+                                @*<td>
+                                        @Html.EditorFor(model => model.BookingAmount, new { htmlAttributes = new { @class = "form-control total", @readonly = "readonly", @id = "Price", autocomplete = "off" } })
+                                    </td>*@
                                 @*<td>
                                         <div class="input-group">
                                             @Html.EditorFor(model => model.AppointmentDateTime, new { htmlAttributes = new { @class = "form-control datetime", @id = "AppointmentDateTime", autocomplete = "off", style = "width: 174px; !important" } })
@@ -198,6 +224,75 @@
                                 <td>
                                     @*<button type="button" class="btn btn-primary trashbtn" onclick="removeTr(0);">Delete</button>*@
                                     <button type="button" id="btnAdd" class="btn btn-sm btn-primary classAdd"><i class="fa fa-plus-square" aria-hidden="true"></i></button>
+                                </td>
+                            </tr>
+                        </tbody>
+
+                    </table>
+                    @*<p>
+                            <button id="add" type="button" class="btn btn-primary">Add Assets</button>
+                        </p>
+                        <hr />*@
+                </fieldset>
+                <fieldset id="individualFieldset1" class="ml-2 mr-2 m-1 table-responsive" style="display:none;">
+                    <table id="PackageTable" class="table table-bordered ">
+                        <thead>
+                            <tr>
+                                <td>Select CateGory</td>
+                                <td>Select Services</td>
+                                @*<td>Price</td>*@
+                                <td>Select Date & Time</td>
+                                <td style="min-width:130px;max-width:150px !important">Action</td>
+                            </tr>
+                        </thead>
+                        <tbody id="PackageBody">
+                            <tr class="data-contact-person2">
+                                <td>
+                                    @Html.DropDownListFor(model => model.CategoryId, new SelectList(Model.CategoryList, "CategoryId", "CategoryName"), "Select Category",
+                                       new Dictionary<string, object>
+                                           () {
+                                           {"id","ddlCategory"},
+                                           {"class","form-control form-select js-example-basic-single w-100"},
+                                           { "style", "width: 200px; !important" },
+                                           {"onchange", "javascript:GetSelectedSubCategory(this.value)"},
+                                           })
+
+                                </td>
+                                <td>
+                                    @Html.DropDownListFor(model => model.SubCategoryId, new SelectList(Model.SubCategoryList, "SubCategoryId", "SubCategoryName"), "Select Services",
+                                     new Dictionary<string, object>
+                                         () {
+                                         {"id","ddlSubCategory"},
+                                         {"class","form-control form-select js-example-basic-single w-100"},
+                                         { "style", "width: 250px; !important" },
+                                         {"onchange", "javascript:GetSubCategoryId(this.value)"}
+                                         })
+                                </td>
+                                @*<td>
+                                        @Html.EditorFor(model => model.BookingAmount, new { htmlAttributes = new { @class = "form-control total", @readonly = "readonly", @id = "Price", autocomplete = "off" } })
+                                    </td>*@
+                                @*<td>
+                                        <div class="input-group">
+                                            @Html.EditorFor(model => model.AppointmentDateTime, new { htmlAttributes = new { @class = "form-control datetime", @id = "AppointmentDateTime", autocomplete = "off", style = "width: 174px; !important" } })
+                                            <div class="input-group-append d-flex">
+                                                <span class="input-group-text" id="AppointmentDateTime1">
+                                                    <i class="fa fa-calendar"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </td>*@
+                                <td>
+                                    <div class="input-group">
+                                        @Html.EditorFor(model => model.AppointmentDateTime, new { htmlAttributes = new { @class = "form-control datetime", @id = "servicedatetime", autocomplete = "off" } })<div class="input-group-append">
+                                            <span class="input-group-text" id="appointmentIcon">
+                                                <i class="fa fa-calendar"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    @*<button type="button" class="btn btn-primary trashbtn" onclick="removeTr(0);">Delete</button>*@
+                                    <button type="button" id="btnAdd" class="btn btn-sm btn-primary classAdd2"><i class="fa fa-plus-square" aria-hidden="true"></i></button>
                                 </td>
                             </tr>
                         </tbody>
@@ -234,7 +329,44 @@
             $("#servicedatetime").click();
         });
     });
+    //set hide and show view of services
+    function SetAppointmentType() {
+        var appointmentTypeDropdown = document.getElementById("AppointmentType");
+        var individualFieldset = document.getElementById("individualFieldset");
+        var individualFieldset1 = document.getElementById("individualFieldset1");
+        var packageDropdownContainer = document.getElementById("packageDropdownContainer");
 
+        if (appointmentTypeDropdown.value === "2") {
+            individualFieldset.style.display = "block";
+            packageDropdownContainer.style.display = "none";
+            individualFieldset1.style.display = "none";
+        } else if (appointmentTypeDropdown.value === "1") {
+            individualFieldset.style.display = "none";
+            packageDropdownContainer.style.display = "block";
+            individualFieldset1.style.display = "block";
+        }
+        else {
+            individualFieldset.style.display = "none";
+            packageDropdownContainer.style.display = "none";
+            individualFieldset1.style.display = "none";
+        }
+    }
+    $(".samplechange").change(function () {
+        debugger
+        var text = $(".samplechange :selected").val();
+        if (text == "2") {
+            $("#individualFieldset").hide();
+            $("#packageDropdownContainer").show();
+        }
+        else if (text == "1") {
+            $("#individualFieldset").show();
+            $("#packageDropdownContainer").hide();
+        }
+        else {
+            $("#individualFieldset").hide();
+            $("#").hide();
+        }
+    });
 </script>
 <script>
 
@@ -291,7 +423,8 @@
 </script>
 <script>
     var rowCount = $('.data-contact-person').length;
-    $(document).ready(function () {
+    $(document).ready(function ()
+    {
         var flatpickrInput = document.getElementById('servicedatetime');
         var appointmentIcon = document.getElementById('appointmentIcon');
 
@@ -342,6 +475,9 @@
             //    '</td>' +
             //    '</tr>';
 
+            //'<td> <input type="text" name="Price" id="Price' + rowCount + '" class="form-control total" readonly="readonly" autocomplete="off"  /> </td> ' +
+
+
                     var contactdiv = '<tr class="data-contact-person newRow' + rowCount + '">' +
                         '<td>' +
                         '<select name="CategoryId" id="CategoryDropdown' + rowCount + '" onchange="javascript:GetRowSubCategory(this.value,' + rowCount + ')" class="form-control form-select js-example-basic-single w-100" style="width: 200px; !important" >' +
@@ -351,7 +487,6 @@
                         '<select name="SubCategoryId" id="SubCategoryDropdown' + rowCount + '" onchange="javascript:GetRowSubCategoryId(this.value,' + rowCount + ')" class="form-control form-select js-example-basic-single w-100" style="width: 250px; !important">' +
                         SubCategoryOptions +
                         '</select></td>' +
-                        '<td> <input type="text" name="Price" id="Price' + rowCount + '" class="form-control total" readonly="readonly" autocomplete="off"  /> </td> ' +
                         '<td>' +
                         '<div class="input-group">' +
                         '<input type="text" name="AppointmentDateTime" id="servicedatetime' + rowCount + '" class="form-control datetime" autocomplete="off" />' +
@@ -583,3 +718,258 @@
         }
     }
 </script>
+<script>
+    function GetPackageId(_PackageId)
+    {
+        debugger
+        if (_PackageId == "") { _PackageId = 0; }
+        if (_PackageId != 0) {
+            var url = "@System.Configuration.ConfigurationManager.AppSettings["notifyKey"]" + "/BookingManagement/SelectPackages";
+            $.ajax({
+                url: url,
+                data: { PackageId: _PackageId },
+                cache: false,
+                type: "POST",
+                datatype: "json",
+                traditional: true,
+                success:
+                    function (data)
+                    {
+                        debugger
+                        var tableBody = $('#PackageBody');
+                        tableBody.empty();
+                        if (data.length === 0)
+                        {
+                            // If no rows fetched, add a new empty row
+                            addEmptyRow();
+                        }
+                        else
+                        {
+                            //'<td><input type="text" name="BookingAmount" id="BookingAmount" class="form-control total" value="' + item.BookingAmount + '" readonly="readonly" autocomplete="off"/> </td> ' +
+
+                            CategoryList = JSON.parse('@Html.Raw(Json.Encode(Model.CategoryList))');
+                            SubCategoryList = JSON.parse('@Html.Raw(Json.Encode(Model.SubCategoryList))');
+                            var CategoryOptions = '';
+                            var SubCategoryOptions = '';
+
+                            CategoryOptions += '<option value="">Select Category</option>';
+                            for (var i = 0; i < CategoryList.length; i++)
+                            {
+                                CategoryOptions += '<option value="' + CategoryList[i].CategoryId + '">' + CategoryList[i].CategoryName + '</option>';
+                            }
+
+                            SubCategoryOptions += '<option value="">Select SubCategory</option>';
+                            for (var i = 0; i < SubCategoryList.length; i++)
+                            {
+                                SubCategoryOptions += '<option value="' + SubCategoryList[i].SubcategoryId + '">' + SubCategoryList[i].SubcategoryName + '</option>';
+                            }
+
+                            $.each(data.sittingList, function (index, item)
+                            {
+                                debugger
+                                var contactdiv = '<tr class="data-contact-person2 newRow' + rowCount + '">' +
+                                    '<td><input type="text" name="CategoryName" class="form-control" value="' + item.CategoryName + '" readonly="readonly" autocomplete="off" /><input type="text" name="CategoryId" id="CategoryDropdown" class="form-control text-center" value="' + item.CategoryId + '" hidden/> </td> ' +
+                                    '<td><input type="text" name="SubCategoryName" class="form-control" value="' + item.SubCategoryName + '" readonly="readonly" autocomplete="off" /><input type="text" name="SubCategoryId" id="SubCategoryDropdown" class="form-control text-center" value="' + item.SubCategoryId + '" hidden/> </td> ' +
+                                '<td>' +
+                                '<div class="input-group">' +
+                                    '<input type="text" name="AppointmentDateTime" id="servicedatetime2' + rowCount + '" class="form-control datetime" autocomplete="off" />' +
+                                    '<div class="input-group-append">' +
+                                    '<span class="input-group-text"  onclick="javascript:FlatPickerOpen(\'#servicedatetime2\',' + rowCount + ')" id="appointmentIcon2' + rowCount + '">' +
+                                    '<i class="fa fa-calendar"></i>' +
+                                '</span>' +
+                                '</div>' +
+                                '</div>' +
+                                '</td>' +
+                                '<td>' +
+                                '<button type="button" class="btn btn-sm btn-primary classAdd2 mx-1"><i class="fa fa-plus-square" aria-hidden="true"></i></button>' +
+                                '<button type="button" class="btn btn-sm btn-danger deleteContact"><i class="fa fa-trash" aria-hidden="true"></i></button>' +
+                                '</td>' +
+                                '</tr>';
+
+                                $('#PackageBody').append(contactdiv);
+                                $('.js-example-basic-single').select2();
+                                var flatpickrInput = document.getElementById('servicedatetime2' + rowCount);
+                                var appointmentIcon = document.getElementById('appointmentIcon2' + rowCount);
+
+                                flatpickr(flatpickrInput, {
+                                    enableTime: true,
+                                    dateFormat: "d-m-Y H:i"
+                                });
+
+                                flatpickrInput.parentNode.insertBefore(appointmentIcon, flatpickrInput.nextSibling);
+
+                                rowCount++;
+                            });
+                            $(document).on("click", ".deleteContact", function () {
+                                    debugger
+                                    var $row = $(this).closest("tr");
+                                    var rowJson = getRowJson(this);
+                                    if (!rowJson) {
+                                        // If the JSON data is empty or not well-formed, simply remove the row and return
+                                        $row.remove();
+                                        calculateTotal();
+                                        return;
+                                    }
+                           });
+                        }
+
+                    },
+                    error: function (reponse)
+                    {
+                        var page = "Select Service"; $('#Price').html(page);
+                    }
+            });
+        }
+        else
+        {
+            var page = "Select Service"; $('#Price').html(page);
+        }
+    }
+    //$('#Maintable').on('change', '.total', function () {
+    //    debugger
+    //    calculateTotal();
+    //});
+</script>
+<script>
+//For Package to bind data
+    var rowCount = $('.data-contact-person2').length;
+    $(document).ready(function ()
+    {
+        var flatpickrInput = document.getElementById('servicedatetime');
+        var appointmentIcon = document.getElementById('appointmentIcon');
+
+        flatpickr(flatpickrInput, {
+            enableTime: true,
+            dateFormat: "d-m-Y H:i"
+        });
+
+        flatpickrInput.parentNode.insertBefore(appointmentIcon, flatpickrInput.nextSibling);
+
+
+        $(document).on("click", ".classAdd2", function () {
+            debugger
+            // Fill Up Dropdown
+            CategoryList = JSON.parse('@Html.Raw(Json.Encode(Model.CategoryList))');
+            SubCategoryList = JSON.parse('@Html.Raw(Json.Encode(Model.SubCategoryList))');
+            var CategoryOptions = '';
+            var SubCategoryOptions = '';
+
+                    CategoryOptions += '<option value="">Select Category</option>';
+                    for (var i = 0; i < CategoryList.length; i++) {
+                        CategoryOptions += '<option value="' + CategoryList[i].CategoryId + '">' +
+                            CategoryList[i].CategoryName +
+                    '</option>';
+            }
+
+            SubCategoryOptions += '<option value="">Select SubCategory</option>';
+                    for (var i = 0; i < SubCategoryList.length; i++) {
+                        SubCategoryOptions += '<option value="' + SubCategoryList[i].SubcategoryId + '">' +
+                            SubCategoryList[i].SubcategoryName +
+                    '</option>';
+            }
+
+
+
+                    var contactdiv = '<tr class="data-contact-person newRow' + rowCount + '">' +
+                        '<td>' +
+                        '<select name="CategoryId" id="CategoryDropdown' + rowCount + '" onchange="javascript:GetRowSubCategory(this.value,' + rowCount + ')" class="form-control form-select js-example-basic-single w-100" style="width: 200px; !important" >' +
+                        CategoryOptions +
+                        '</select></td>' +
+                        '<td>' +
+                        '<select name="SubCategoryId" id="SubCategoryDropdown' + rowCount + '" onchange="javascript:GetRowSubCategoryId(this.value,' + rowCount + ')" class="form-control form-select js-example-basic-single w-100" style="width: 250px; !important">' +
+                        SubCategoryOptions +
+                        '</select></td>' +
+                        '<td>' +
+                        '<div class="input-group">' +
+                        '<input type="text" name="AppointmentDateTime" id="servicedatetime' + rowCount + '" class="form-control datetime" autocomplete="off" />' +
+                        '<div class="input-group-append">' +
+                        '<span class="input-group-text"  onclick="javascript:FlatPickerOpen(\'#servicedatetime\',' + rowCount + ')" id="appointmentIcon' + rowCount + '">' +
+                        '<i class="fa fa-calendar"></i>' +
+                        '</span>' +
+                        '</div>' +
+                        '</div>' +
+                        '</td>'+
+                        '<td>' +
+                        '<button type="button" class="btn btn-sm btn-primary classAdd2 mx-1"> <i class="fa fa-plus-square" aria-hidden="true"></i> </button>' +
+                        '<button type="button" class="btn btn-sm btn-danger deleteContact2"><i class="fa fa-trash" aria-hidden="true"></i></button>' +
+                        '</td>' +
+                        '</tr>';
+
+            $('#PackageBody').append(contactdiv);
+                    $('.js-example-basic-single').select2();
+                    var flatpickrInput = document.getElementById('servicedatetime' + rowCount);
+                    var appointmentIcon = document.getElementById('appointmentIcon' + rowCount);
+
+                    flatpickr(flatpickrInput, {
+                        enableTime: true,
+                        dateFormat: "d-m-Y H:i"
+                    });
+
+                    flatpickrInput.parentNode.insertBefore(appointmentIcon, flatpickrInput.nextSibling);
+
+
+                    $(document).on("click", ".deleteContact2", function () {
+                        debugger
+                        var $row = $(this).closest("tr");
+                        var rowJson = getRowJson(this);
+                        if (!rowJson) {
+                            // If the JSON data is empty or not well-formed, simply remove the row and return
+                            $row.remove();
+                            calculateTotal();
+                            return;
+                        }
+                    });
+            rowCount++;
+
+        });
+    });
+    function FlatPickerOpen(_Textbox,_RowCount) {
+        debugger
+        $(_Textbox + _RowCount).click();
+    }
+</script>
+<script>
+    // For Store Data
+    function StoreAllValues() {
+        debugger
+        var BookAppointment = [];
+        var tableSelectorMain = "#Maintable";
+        var tableSelectorPackage = "#PackageTable";
+
+        $(tableSelectorMain + " TBODY TR").each(function () {
+            var row = $(this);
+            var MainData = {};
+
+            debugger
+            //MainData.CategoryId = row.find("td:eq(0) input[name='CategoryId']").val();
+            //MainData.SubCategoryId = row.find("td:eq(0) input[name='SubCategoryId']").val();
+
+            // Check if ShopId is stored in an input field or a dropdown
+            var CategoryIdInput = row.find("td:eq(0) input[name='CategoryId']");
+            var CategoryIdDropdown = row.find("td:eq(0) select[name='CategoryId']");
+            if (CategoryIdInput.length) {
+                MainData.CategoryId = CategoryIdInput.val();
+            }
+            else if (CategoryIdDropdown.length) {
+                MainData.CategoryId = CategoryIdDropdown.val();
+            }
+
+            var SubCategoryIdInput = row.find("td:eq(1) input[name='SubCategoryId']");
+            var SubCategoryIdDropdown = row.find("td:eq(1) select[name='SubCategoryId']");
+            if (SubCategoryIdInput.length) {
+                MainData.SubCategoryId = SubCategoryIdInput.val();
+            }
+            else if (SubCategoryIdDropdown.length) {
+                MainData.SubCategoryId = SubCategoryIdDropdown.val();
+            }
+
+            MainData.AppointmentDateTime = row.find("td:eq(2) input[name='AppointmentDateTime']").val();
+            BookAppointment.push(MainData);
+        });
+
+        var serializedData = JSON.stringify(BookAppointment);
+        $('input[name="BookAppointment"]').val(serializedData);
+        $('#myForm').submit();
+    }
+</script>
+

@@ -1,0 +1,89 @@
+﻿@model ParulBeautyCareViewModel.ViewModel.EnquiryViewModel
+@{
+    ViewBag.Title = "Enquiry";
+    ViewBag.Module = "Parul Beauty Care";
+   
+}
+
+<style>
+    .form-check {
+        margin-top: 74px !important;
+    }
+
+    .input-group, .asColorPicker-wrap {
+        display: grid !important;
+    }
+</style>
+<div class="content-wrapper">
+    <div class="row">
+        <div class="col-12 grid-margin">
+            <div class="card">
+                <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+                    <div class="bg-gradient-pinkHeader shadow-primary border-radius-lg pt-3 d-flex justify-content-between row">
+                        <h2 class="text-white text-capitalize ps-3 title_margin col-md-6"><b>Add Enquiry</b></h2>
+
+
+                        @*<a class="dedcription-btn anc col-md-6" href="@Url.Action("CheckOut","BookingManagement")">
+                                <span class="name-descripeion"> <b>Check Out</b> </span>
+                                <div class="btn-icon brain">
+                                    <i class="fa-solid fa-right-from-bracket"></i>
+                                </div>
+                            </a>*@
+                    </div>
+                </div>
+                <div class="card-body">
+
+                    @using (Html.BeginForm("Enquiry", "Home", FormMethod.Post, new { @class = "forms-sample", autocomplete = "off" }))
+                    {
+                        @Html.AntiForgeryToken();
+
+                    <div class="row form-group">
+                        <div class="col-sm-3">
+                            <label class="col-form-label">Person Name @Html.ValidationMessageFor(m => m.PersonName, "", new { @class = "text-danger h3" })</label>
+                            @Html.TextBoxFor(model => model.PersonName, new { @class = "form-control text-capitalize", id = "CustomerName", placeholder = "Enter Customer Name", required = "required" })
+                        </div>
+
+                        <div class="col-sm-3">
+                            <label class="col-form-label">Contact No @Html.ValidationMessageFor(m => m.PersonContactNo, "", new { @class = "text-danger h3" })</label>
+                            @Html.TextBoxFor(model => model.PersonContactNo, new { @class = "form-control contacterror", id = "ContactNo", placeholder = "Enter Contact Number", required = "required" })
+                        </div>
+
+                        <div class="col-sm-3">
+                            <label class="col-form-label">Email Id</label>
+                            @Html.TextBoxFor(model => model.PersonEmailId, new { @class = "form-control", id = "email", placeholder = "Enter Email Id" })
+                        </div>
+                        <div class="col-sm-3">
+                            <label class="col-form-label">Address</label>
+                            @Html.TextBoxFor(model => model.PersonAddress, new { @class = "form-control", id = "email", placeholder = "Enter Address" })
+                        </div>
+                        <div class="col-sm-3">
+                            <label class="col-form-label">Enquiry For</label>
+                            @Html.TextAreaFor(model => model.PersonEnquiryFor, new { @class = "form-control", id = "email", placeholder = "Enter Enquiry" })
+                        </div>
+                    </div>
+                        @*<button type="submit" class="btn btn-primary mr-2 mt-3" onclick="return confirm('Are You sure you want to save data?')">Submit</button>*@
+                        <button type="submit" class="btn btn-primary mr-2 mt-3" onclick="return formSubmit('Are You sure you want to save data?')">Submit</button>
+
+                    }
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    // Get a reference to the checkbox element
+    var checkbox = document.getElementById('IsBooking');
+
+    // Get a reference to the ddlDivBooking div
+    var ddlDivBooking = document.getElementById('ddlDivBooking');
+
+    // Initially hide the ddlDivBooking div on page load
+    ddlDivBooking.style.display = 'none';
+
+    // Add an event listener to the checkbox
+    checkbox.addEventListener('change', function () {
+        // Show the ddlDivBooking div when the checkbox is checked, otherwise hide it
+        ddlDivBooking.style.display = this.checked ? 'block' : 'none';
+    });
+</script>

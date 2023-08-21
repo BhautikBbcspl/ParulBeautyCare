@@ -3,19 +3,18 @@
     ViewBag.Title = "Sub-Category Master";
     ViewBag.Module = "Master";
 }
-
-<div class="content-wrapper">
+<div class="content-wrapper" style="overflow:unset !important">
     <div class="row">
         <div class="col-12 grid-margin">
             <div class="card">
                 <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
                     <div class="bg-gradient-pinkHeader shadow-primary border-radius-lg pt-3 d-flex justify-content-between row">
-                        <h2 class="text-white text-capitalize ps-3 title_margin col-md-6"><b>Sub Category Master</b></h2>
+                        <h2 class="text-white text-capitalize ps-3 title_margin col-md-6"><b>Create Sub Category</b></h2>
                         @*@if (Convert.ToInt32(TempData["ViewRight"]) == 1)
-        {*@
+                            {*@
                         @*<a class="btn btn-light btn-icon mb-2 mx-2 title_a" href="@Url.Action("ViewSubCategoryMaster", "Master")">
-            <i class="fa-solid fa-list-check mx-2 text-black"></i><b>View</b>
-        </a>*@
+                                <i class="fa-solid fa-list-check mx-2 text-black"></i><b>View</b>
+                            </a>*@
                         <a class="dedcription-btn anc col-md-6" href="@Url.Action("ViewSubCategoryMaster","Master")">
                             <span class="name-descripeion"> <b> VIEW RECORDS</b> </span>
                             <div class="btn-icon brain">
@@ -27,13 +26,13 @@
                 </div>
                 <div class="card-body">
                     @*<div class="row">
-            <div class="d-xl-flex justify-content-between align-items-center">
-                <h1 class="pink"><b>@ViewBag.action Subcategory Master </b></h1>
-                <a class="btn btn-outline-primary btn-round" href="@Url.Action("ViewSubCategoryMaster","Master")">
-                    <i class="fa fa-eye mx-2"></i>View
-                </a>
-            </div>
-        </div>*@
+                            <div class="d-xl-flex justify-content-between align-items-center">
+                                <h1 class="pink"><b>@ViewBag.action Subcategory Master </b></h1>
+                                <a class="btn btn-outline-primary btn-round" href="@Url.Action("ViewSubCategoryMaster","Master")">
+                                    <i class="fa fa-eye mx-2"></i>View
+                                </a>
+                            </div>
+                        </div>*@
                     @using (Html.BeginForm("AddSubCategoryMaster", "Master", FormMethod.Post, new { @class = "forms-sample" }))
                     {
                         @Html.AntiForgeryToken()
@@ -41,89 +40,89 @@
                         @Html.HiddenFor(x => x.SubCategoryId)
                         @Html.HiddenFor(x => x.CreateUser)
                         @Html.HiddenFor(x => x.CreateDate)
-                    <div class="row form-group">
-                        <div class="col-sm-3">
-                            <label for="exampleInputUsername2" class="col-form-label">
-                                Category
-                                @Html.ValidationMessageFor(m => m.CategoryId, "", new { @class = "text-danger" })
-                            </label>
-                            @Html.DropDownListFor(model => model.CategoryId, new SelectList(Model.CategoryMasterList, "CategoryId", "CategoryName"), "Select Category", new Dictionary<string, object>
-                                      () {
-                                      {"id","ddlCategory"},
-                                      { "class","js-example-basic-single  w-100"},
-                                      {"autocomplete","off"},
-                                      {"required","required"},
-                                      {"placeholder","Enter category"}
-                                       })
-                        </div>
-                        <div class="col-sm-3">
-                            <label for="exampleInputUsername2" class="col-form-label">
-                                Sub Category Name
-                                @Html.ValidationMessageFor(m => m.SubCategoryName, "", new { @class = "text-danger" })
-                            </label>
+                        <div class="row form-group">
+                            <div class="col-sm-3">
+                                <label for="exampleInputUsername2" class="col-form-label">
+                                    Category
+                                    @Html.ValidationMessageFor(m => m.CategoryId, "", new { @class = "text-danger" })
+                                </label>
+                                @Html.DropDownListFor(model => model.CategoryId, new SelectList(Model.CategoryMasterList, "CategoryId", "CategoryName"), "Select Category", new Dictionary<string, object>
+                                          () {
+                                          {"id","ddlCategory"},
+                                          { "class","js-example-basic-single  w-100"},
+                                          {"autocomplete","off"},
+                                          {"required","required"},
+                                          {"placeholder","Enter category"}
+                                           })
+                            </div>
+                            <div class="col-sm-3">
+                                <label for="exampleInputUsername2" class="col-form-label">
+                                    Sub Category Name
+                                    @Html.ValidationMessageFor(m => m.SubCategoryName, "", new { @class = "text-danger" })
+                                </label>
 
-                            @Html.TextBoxFor(m => m.SubCategoryName, new Dictionary<string, object>() {
-                                                                        {"id","txtSubCategoryName"},
-                                                                        {"class","form-control text-capitalize"},
-                                                                           {"autocomplete","off"},
-                                                                        {"required","required"},
-                                                                        {"placeholder","Enter SubCategory Name"}
-                                                                        })
-                        </div>
-                        @*<div class="col-sm-3">
-            <label for="exampleInputPassword2" class="col-form-label">
-                Is Multiple Person Can Use ?
-            </label>
-            <div class="input-group input-group-outline mb-3">
-                @Html.DropDownListFor(x => x.IsMultiPerson, new List<SelectListItem>
-                     {
-                           new SelectListItem{ Text="Yes", Value = "true",Selected=true },
-                           new SelectListItem{ Text="No", Value = "false" }
-                        }, new { @class = "js-example-basic-single  w-100", @id = "IsMultiPerson" })
-            </div>
-        </div>
-        <div class="col-sm-3" id="divtxtNumberOfPerson">
-            <label for="exampleInputUsername2" class="col-form-label">
-                Number Of Person
-                @Html.ValidationMessageFor(m => m.NumberOfPerson, "", new { @class = "text-danger" })
-            </label>
-            @Html.TextBoxFor(m => m.NumberOfPerson, new Dictionary<string, object>() {
-                                                        {"id","txtNumberOfPerson"},
-                                                        {"class","form-control text-capitalize"},
-                                                           {"autocomplete","off"},
-                                                        {"placeholder","Enter How Many NUmber Of Person Can Use"}
-                                                        })
-        </div>*@
-                        <div class="col-sm-3">
-                            <label for="exampleInputUsername2" class="col-form-label">
-                                No Of Sitting
-                                @Html.ValidationMessageFor(m => m.NoOfSitting, "", new { @class = "text-danger" })
-                            </label>
-                            @Html.TextBoxFor(m => m.NoOfSitting, new Dictionary<string, object>() {
-                                                               {"id","txtNumberOfSitting"},
-                                                               {"class","form-control text-capitalize"},
-                                                                  {"autocomplete","off"},
-                                                               {"required","required"},
-                                                               {"placeholder","Enter Sitting Number"}
-                                                               })
-                        </div>
-                   
-                       
+                                @Html.TextBoxFor(m => m.SubCategoryName, new Dictionary<string, object>() {
+                                                                            {"id","txtSubCategoryName"},
+                                                                            {"class","form-control text-capitalize"},
+                                                                               {"autocomplete","off"},
+                                                                            {"required","required"},
+                                                                            {"placeholder","Enter SubCategory Name"}
+                                                                            })
+                            </div>
                             @*<div class="col-sm-3">
-            <label for="exampleInputUsername2" class="col-form-label">
-                Yearperiod
-                @Html.ValidationMessageFor(m => m.YearId, "", new { @class = "text-danger" })
-            </label>
-            @Html.DropDownListFor(model => model.YearId, new SelectList(Model.YearMasterList, "YearId", "yearperiod"), "Select Yearperiod", new Dictionary<string, object>
-                      () {
-                      {"id","ddlYearperiod"},
-                      { "class","js-example-basic-single  w-100"},
-                      {"autocomplete","off"},
-                      {"required","required"},
-                      {"placeholder","Enter Yearperiod"}
-                       })
-        </div>*@
-                            
+                                    <label for="exampleInputPassword2" class="col-form-label">
+                                        Is Multiple Person Can Use ?
+                                    </label>
+                                    <div class="input-group input-group-outline mb-3">
+                                        @Html.DropDownListFor(x => x.IsMultiPerson, new List<SelectListItem>
+                                             {
+                                                   new SelectListItem{ Text="Yes", Value = "true",Selected=true },
+                                                   new SelectListItem{ Text="No", Value = "false" }
+                                                }, new { @class = "js-example-basic-single  w-100", @id = "IsMultiPerson" })
+                                    </div>
+                                </div>
+                                <div class="col-sm-3" id="divtxtNumberOfPerson">
+                                    <label for="exampleInputUsername2" class="col-form-label">
+                                        Number Of Person
+                                        @Html.ValidationMessageFor(m => m.NumberOfPerson, "", new { @class = "text-danger" })
+                                    </label>
+                                    @Html.TextBoxFor(m => m.NumberOfPerson, new Dictionary<string, object>() {
+                                                                                {"id","txtNumberOfPerson"},
+                                                                                {"class","form-control text-capitalize"},
+                                                                                   {"autocomplete","off"},
+                                                                                {"placeholder","Enter How Many NUmber Of Person Can Use"}
+                                                                                })
+                                </div>*@
+                            <div class="col-sm-3">
+                                <label for="exampleInputUsername2" class="col-form-label">
+                                    No Of Sitting
+                                    @Html.ValidationMessageFor(m => m.NoOfSitting, "", new { @class = "text-danger" })
+                                </label>
+                                @Html.TextBoxFor(m => m.NoOfSitting, new Dictionary<string, object>() {
+                                                                   {"id","txtNumberOfSitting"},
+                                                                   {"class","form-control text-capitalize"},
+                                                                      {"autocomplete","off"},
+                                                                   {"required","required"},
+                                                                   {"placeholder","Enter Sitting Number"}
+                                                                   })
+                            </div>
+
+
+                            @*<div class="col-sm-3">
+                                    <label for="exampleInputUsername2" class="col-form-label">
+                                        Yearperiod
+                                        @Html.ValidationMessageFor(m => m.YearId, "", new { @class = "text-danger" })
+                                    </label>
+                                    @Html.DropDownListFor(model => model.YearId, new SelectList(Model.YearMasterList, "YearId", "yearperiod"), "Select Yearperiod", new Dictionary<string, object>
+                                              () {
+                                              {"id","ddlYearperiod"},
+                                              { "class","js-example-basic-single  w-100"},
+                                              {"autocomplete","off"},
+                                              {"required","required"},
+                                              {"placeholder","Enter Yearperiod"}
+                                               })
+                                </div>*@
+
                             <div class="col-sm-3">
                                 <label for="exampleInputUsername2" class="col-form-label">
                                     Time Duration
@@ -141,7 +140,7 @@
                                 <label class="col-form-label">Appointment Day Interval</label>
                                 <div class="d-inline-flex">
                                     @Html.TextBoxFor(model => model.DayInterval, new { @class = "form-control text-capitalize twonumberonly", id = "WaitingTime", placeholder = "Enter Day Interval" })
-                                    @Html.TextBoxFor(model => model.DayInterval, new { @class = "form-control text-capitalize twonumberonly", id = "WaitingTime", placeholder = "Day", disabled = "disabled" })
+                                    @Html.TextBoxFor(model => model.DayPlaceholder, new { @class = "form-control text-capitalize", id = "WaitingTime2", placeholder = "Day", disabled = "disabled" })
                                 </div>
 
                             </div>
@@ -152,13 +151,38 @@
                                 </label>
                                 @Html.TextBoxFor(m => m.Amount, new Dictionary<string, object>() {
                                                                    {"id","txtAmount"},
-                                                                   {"class","form-control numberonly"},
+                                                                   {"class","form-control numberdecimal"},
                                                                       {"autocomplete","off"},
                                                                    {"required","required"},
                                                                    {"placeholder","Enter Amount"}
                                                                    })
                             </div>
-                     
+                            <div class="col-sm-3">
+                                <label class="col-form-label">
+                                    Incentive
+                                    @Html.ValidationMessageFor(m => m.Incentive, "", new { @class = "text-danger" })
+                                </label>
+                                @Html.TextBoxFor(m => m.Incentive, new Dictionary<string, object>() {
+                                                                   {"id","txtIncentive"},
+                                                                   {"class","form-control numberdecimal"},
+                                                                      {"autocomplete","off"},
+                                                                   {"required","required"},
+                                                                   {"placeholder","Enter Incentive"}
+                                                                   })
+                            </div>
+                            <div class="col-sm-3">
+                                <label class="col-form-label">
+                                    GST %
+                                    @Html.ValidationMessageFor(m => m.GSTPercentage, "", new { @class = "text-danger" })
+                                </label>
+                                @Html.TextBoxFor(m => m.GSTPercentage, new Dictionary<string, object>() {
+                                                                   {"id","txtGSTPercentage"},
+                                                                   {"class","form-control numberdecimal"},
+                                                                      {"autocomplete","off"},
+                                                                   {"required","required"},
+                                                                   {"placeholder","Enter GST %"}
+                                                                   })
+                            </div>
                             <div class="col-sm-3">
                                 <label for="exampleInputPassword2" class="col-form-label">IsActive</label>
                                 <div class="input-group input-group-outline mb-3">
