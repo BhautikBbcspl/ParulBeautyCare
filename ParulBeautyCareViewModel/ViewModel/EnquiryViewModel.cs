@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ParulBeautyCareDbClasses.DataModels;
 
 namespace ParulBeautyCareViewModel.ViewModel
 {
@@ -29,5 +30,6 @@ namespace ParulBeautyCareViewModel.ViewModel
         public string success { get; set; }
         public string message { get; set; }
         public string result { get; set; }
+        public List<PBEnquiryRtr_Result> EnquiryList { get; set; }
     }
 }

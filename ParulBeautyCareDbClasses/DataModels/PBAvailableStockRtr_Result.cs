@@ -22,5 +22,7 @@ namespace ParulBeautyCareDbClasses.DataModels
         public int NoOfPerson { get; set; }
         public int availperson { get; set; }
         public Nullable<int> StockAllocationId { get; set; }
+        public Nullable<decimal> Price { get; set; }
+        public string ExpDate { get; set; }
     }
 }

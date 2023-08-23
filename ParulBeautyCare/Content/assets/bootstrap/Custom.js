@@ -111,6 +111,95 @@ $(document).ready(function () {
 	// Wrap the table with the new div element
 	tableElement.wrap(divElement);
 
+
+    var table = $('#Mybase-style2').DataTable({
+        "bJQueryUI": true,
+        'dom': '<"top"flB>rtip',
+
+        language: {
+            paginate: {
+                next: '<i class="fa-solid fa-angle-right"></i>',
+                previous: '<i class="fa-solid fa-angle-left"></i>'
+            }
+        },
+        buttons: [
+            {
+                extend: 'excelHtml5',
+                text: '<span class="fa fa-file-excel" style="font-size:1.5em;"></span>',
+                footer: true,
+                className: 'btn border-0',
+                customizeData: function (data) {
+                    var table = $('#Mybase-style2').DataTable();
+                    var rows = table.rows({ search: 'applied' }).nodes().to$();
+
+                    var actionIndex = -1; // Store the index of the "Action" column header
+
+                    for (var i = 0; i < data.header.length; i++) {
+                        if (data.header[i] === 'Action') {
+                            actionIndex = i;
+                            break;
+                        }
+                    }
+
+                    if (actionIndex !== -1) {
+                        // Remove the "Action" column from the exported data
+                        data.header.splice(actionIndex, 1);
+                        data.body.forEach(function (row) {
+                            row.splice(actionIndex, 1);
+                        });
+                    }
+
+                    var isActiveIndex = -1; // Store the index of the "IsActive" column header
+
+                    for (var i = 0; i < data.header.length; i++) {
+                        if (data.header[i] === 'IsActive') {
+                            isActiveIndex = i;
+                            break;
+                        }
+                    }
+
+                    if (isActiveIndex !== -1) {
+                        for (var i = 0; i < rows.length; i++) {
+                            var rowData = data.body[i];
+                            var checkboxElement = $(rows[i]).find('input[type="checkbox"]');
+                            var isActiveValue = checkboxElement.prop('checked') ? 'Yes' : 'No';
+                            rowData[isActiveIndex] = isActiveValue; // Set "IsActive" value to the corresponding column
+                        }
+                    }
+                }
+            }
+        ],
+        columnDefs: [
+            { orderable: false, targets: [0] }, // Add other column indexes to remove
+        ],
+        sort: false,
+        initComplete: function () {
+            var filterWrapper = $('.dataTables_filter');
+            var buttonsContainer = $('<div class="buttons-container float-end d-flex"></div>').insertAfter(filterWrapper);
+            $('.buttons-container').append($('.dt-buttons'));
+        }
+    });
+
+    $('#Mybase-style2 thead tr:eq(0) th').each(function (i) {
+        var title = $(this).text();
+        var column = table.column(i);
+        var select = $('<select class="form-control js-example-basic-single" style="margin-top: 15px;"><option value="">' + title + '</option></select>')
+            .appendTo($(this))
+            .on('change', function () {
+                var val = $.fn.dataTable.util.escapeRegex($(this).val());
+                column.search(val ? '^' + val + '$' : '', true, false).draw();
+            });
+
+        column.data().unique().sort().each(function (d) {
+            select.append($('<option value="' + d + '">' + d + '</option>'));
+        });
+        $(".js-example-basic-single").select2();
+    });
+
+    var divElement2 = $('<div>').addClass('table-responsive');
+
+    var tableElement2 = $('#Mybase-style');
+    tableElement2.wrap(divElement2);
 });
 
 /**/

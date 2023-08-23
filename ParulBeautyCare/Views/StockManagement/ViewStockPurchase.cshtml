@@ -57,6 +57,9 @@
                                         @Html.DisplayName("Quantity")
                                     </th>
                                     <th>
+                                        @Html.DisplayName("Price")
+                                    </th>
+                                    <th>
                                         @Html.DisplayName("Purchase Date")
                                     </th>
                                     <th>
@@ -107,6 +110,9 @@
                                     </td>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.Quantity)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Price)
                                     </td>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.pDate)

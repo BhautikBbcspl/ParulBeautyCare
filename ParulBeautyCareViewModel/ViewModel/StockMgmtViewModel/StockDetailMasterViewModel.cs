@@ -37,5 +37,7 @@ namespace ParulBeautyCareViewModel.ViewModel.StockMgmtViewModel
         public List<PBAvailableStockRtr_Result> AvailableStockList { get; set; }
 
         public List<PBStaffMasterRtr_Result> StaffList { get; set; }
+        public string ExpDate { get; set; }
+        public string Price { get; set; }
     }
 }

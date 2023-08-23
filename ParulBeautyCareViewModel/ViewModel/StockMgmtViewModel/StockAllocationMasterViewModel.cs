@@ -43,6 +43,11 @@ namespace ParulBeautyCareViewModel.ViewModel.StockMgmtViewModel
 
         public List<PBStaffMasterRtr_Result> StaffList { get; set; }
         public List<PBProductMasterRtr_Result> ProductList { get; set; }
+        public List<PBStockPurchaseRetrieve_Result> ProdListfromPurchaseMaster { get; set; }
         public List<PBStockAllocationRetrieve_Result> StockAllocationList { get; set; }
+
+        public string ExpDate { get; set; }
+        public string Price { get; set; }
+        public string PurchaseId { get; set; }
     }
 }

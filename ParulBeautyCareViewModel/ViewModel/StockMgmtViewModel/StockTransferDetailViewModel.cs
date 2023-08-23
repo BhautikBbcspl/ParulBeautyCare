@@ -27,6 +27,8 @@ namespace ParulBeautyCareViewModel.ViewModel.StockMgmtViewModel
         public string result { get; set; }
         public string success { get; set; }
         public string message { get; set; }
+        public string ExpDate { get; set; }
+        public string Price { get; set; }
 
 
     }

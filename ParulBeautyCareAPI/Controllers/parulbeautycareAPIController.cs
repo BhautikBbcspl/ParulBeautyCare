@@ -1009,7 +1009,7 @@ namespace ParulBeautyCareAPI.Controllers
                 using (parulbeautycareEntities db = new parulbeautycareEntities())
                 {
 
-                    spvm.result = db.PBStockPurchaseMasterInsUpd(spvm.PurchaseId, spvm.CompanyCode, spvm.CreateDate, spvm.CreateUser, spvm.UpdateDate, spvm.UpdateUser, spvm.ProductId, spvm.ProductTypeId, spvm.Quantity, spvm.MfgDate, spvm.ExpDate, spvm.PurchaseDate, spvm.VendorId, spvm.DepartmentId, spvm.Action).FirstOrDefault();
+                    spvm.result = db.PBStockPurchaseMasterInsUpd(spvm.PurchaseId, spvm.CompanyCode, spvm.CreateDate, spvm.CreateUser, spvm.UpdateDate, spvm.UpdateUser, spvm.ProductId, spvm.ProductTypeId, spvm.Quantity, spvm.MfgDate, spvm.ExpDate, spvm.PurchaseDate, spvm.VendorId, spvm.DepartmentId,spvm.Price, spvm.Action).FirstOrDefault();
                     var response = Request.CreateResponse(HttpStatusCode.OK, spvm);
                     spvm.success = "true";
                 }
@@ -1067,7 +1067,7 @@ namespace ParulBeautyCareAPI.Controllers
                     sdmv.CreateDate = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
                     sdmv.CreateUser = spvm.AllocateUser;
 
-                    spvm.result = db.PBStockAllocationMasterInsUpd(spvm.StockAllocationId, spvm.ProductId, spvm.Qty.ToString(), spvm.AllocationDate, spvm.AllocateUser, spvm.StaffId, spvm.UpdateDate, spvm.UpdateUser, sdmv.StockUsed, sdmv.CreateDate, sdmv.CreateUser, sdmv.NoOfPerson, sdmv.PersonUsed, spvm.Action).FirstOrDefault();
+                    spvm.result = db.PBStockAllocationMasterInsUpd(spvm.StockAllocationId, spvm.PurchaseId, spvm.Qty.ToString(), spvm.AllocationDate, spvm.AllocateUser, spvm.StaffId, spvm.UpdateDate, spvm.UpdateUser, sdmv.StockUsed, sdmv.CreateDate, sdmv.CreateUser, sdmv.NoOfPerson, sdmv.PersonUsed,spvm.ExpDate, spvm.Price, spvm.Action).FirstOrDefault();
                     var response = Request.CreateResponse(HttpStatusCode.OK, spvm);
                     spvm.success = "true";
                 }
@@ -1115,38 +1115,9 @@ namespace ParulBeautyCareAPI.Controllers
 
             try
             {
-                //        DataTable dt = new DataTable();
-                //        dt.Columns.AddRange(
-                //            new DataColumn[8] {
-                //new DataColumn("StockDetailId", typeof(string)),
-                //new DataColumn("StockHeaderId", typeof(string)),
-                //new DataColumn("ProductId", typeof(string)),
-                //new DataColumn("Qty", typeof(string)),
-                //new DataColumn("TotalPerson", typeof(string)),
-                //new DataColumn("PersonAvailable", typeof(string)),
-                //new DataColumn("AutoSrNo", typeof(string)),
-                //new DataColumn("Barcode", typeof(string))
-                //            });
-
-                //        if (sthvm.StockTransferTypeTable != null && sthvm.StockTransferTypeTable.Any())
-                //        {
-                //            foreach (var item in sthvm.StockTransferTypeTable)
-                //            {
-                //                dt.Rows.Add(
-                //                    item.StockDetailId,
-                //                    item.StockHeaderId,
-                //                    item.ProductId,
-                //                    item.Qty,
-                //                    item.TotalPerson,
-                //                    item.PersonAvailable,
-                //                    item.AutoSrNo,
-                //                    item.Barcode
-                //                );
-                //            }
-                //        }
                 DataTable dt = new DataTable();
                 dt.Columns.AddRange(
-                       new DataColumn[8] {
+                       new DataColumn[10] {
                 new DataColumn("StockDetailId", typeof(string)),
                 new DataColumn("StockHeaderId", typeof(string)),
                 new DataColumn("ProductId", typeof(string)),
@@ -1154,7 +1125,9 @@ namespace ParulBeautyCareAPI.Controllers
                 new DataColumn("TotalPerson", typeof(string)),
                 new DataColumn("PersonAvailable", typeof(string)),
                 new DataColumn("AutoSrNo", typeof(string)),
-                new DataColumn("Barcode", typeof(string))
+                new DataColumn("Barcode", typeof(string)),
+                new DataColumn("ExpDate", typeof(string)),
+                new DataColumn("Price", typeof(string))
                        });
                 if (sthvm.StockTransferTypeTable != null)
                 {
@@ -1168,7 +1141,9 @@ namespace ParulBeautyCareAPI.Controllers
                         string PersonAvailable = item.PersonAvailable;
                         string AutoSrNo = item.AutoSrNo;
                         string Barcode = item.Barcode;
-                        dt.Rows.Add(StockDetailId, StockHeaderId, ProductId, Qty, TotalPerson, PersonAvailable, AutoSrNo, Barcode);
+                        string ExpDate = item.ExpDate;
+                        string Price = item.Price;
+                        dt.Rows.Add(StockDetailId, StockHeaderId, ProductId, Qty, TotalPerson, PersonAvailable, AutoSrNo, Barcode,ExpDate,Price);
                     }
                 }
 
@@ -1185,6 +1160,32 @@ namespace ParulBeautyCareAPI.Controllers
                 obj.LogMessage("APIController", "StockPurchaseInsUpd", e.Message, iNotifyLogger.LogType.Exception);
             }
             return Json(sthvm);
+        }
+        #endregion
+
+        #region==> Stock Allocated to Staff Report
+        [HttpPost]
+        [Route("api/parulbeautycareAPI/StockAllocatedToStaffRetrieve")]
+        public IHttpActionResult StockAllocatedToStaffRetrieve([FromBody] StockTransferHeaderViewModel savm)
+        {
+            iNotifyLogger obj = new iNotifyLogger();
+            try
+            {
+
+                using (parulbeautycareEntities db = new parulbeautycareEntities())
+                {
+                    savm.StockAllocatedToStaffList = db.PBAllocatedStockToStaffRtr(savm.Action, savm.StaffId, savm.ProductId).ToList();
+                    var response = Request.CreateResponse(HttpStatusCode.OK, savm);
+                    savm.success = "true";
+                }
+            }
+            catch (Exception e)
+            {
+                savm.success = "false";
+                savm.message = e.Message;
+                obj.LogMessage("APIController", "StockAllocatedToStaffRetrieve", e.Message, iNotifyLogger.LogType.Exception);
+            }
+            return Json(savm);
         }
         #endregion
 
@@ -1372,6 +1373,29 @@ namespace ParulBeautyCareAPI.Controllers
                 obj.LogMessage("APIController", "EnquiryIns", e.Message, iNotifyLogger.LogType.Exception);
             }
             return Json(enqvm);
+        }
+
+        [HttpPost]
+        [Route("api/parulbeautycareAPI/EnquiryRetrieve")]
+        public IHttpActionResult EnquiryRetrieve([FromBody] EnquiryViewModel envm)
+        {
+            iNotifyLogger obj = new iNotifyLogger();
+            try
+            {
+                using (parulbeautycareEntities db = new parulbeautycareEntities())
+                {
+                    envm.EnquiryList = db.PBEnquiryRtr(envm.Action).ToList();
+                    var response = Request.CreateResponse(HttpStatusCode.OK, envm);
+                    envm.success = "true";
+                }
+            }
+            catch (Exception e)
+            {
+                envm.success = "false";
+                envm.message = e.Message;
+                obj.LogMessage("APIController", "EnquiryRetrieve", e.Message, iNotifyLogger.LogType.Exception);
+            }
+            return Json(envm);
         }
         #endregion
     }

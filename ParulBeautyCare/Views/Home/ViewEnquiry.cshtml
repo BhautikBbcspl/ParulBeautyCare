@@ -1,0 +1,94 @@
+﻿@model ParulBeautyCareViewModel.ViewModel.EnquiryViewModel
+
+@{
+    ViewBag.Title = "View Enquiries";
+    ViewBag.Module = "Enquiry";
+}
+
+<div class="content-wrapper">
+    <div class="card">
+        <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+            <div class="bg-gradient-pinkHeader shadow-primary border-radius-lg pt-3 d-flex justify-content-between row">
+                <h2 class="text-white text-capitalize ps-3 title_margin col-md-6"><b>Stock Purchase</b></h2>
+
+                @if (Convert.ToInt32(TempData["InsertRight"]) == 1)
+                {
+                   
+                    <a class="dedcription-btn anc col-md-6" href="@Url.Action("Enquiry","Home")">
+                        <span class="name-descripeion text-uppercase"> <b> Add Enquiry</b> </span>
+                        <div class="btn-icon brain">
+                            <i class="fas fa-plus"> </i>
+                        </div>
+                    </a>
+                }
+            </div>
+        </div>
+        <div class="card-body">
+
+            @*<div class="row">
+                    <div class="d-xl-flex justify-content-end align-items-end">
+                        <a class="btn btn-sm btn-outline-primary btn-round mb-3" href="@Url.Action("AddStockPurchase","StockManagement")">
+                            <i class="fa fa-plus mx-2 "></i>Add
+                        </a>
+                    </div>
+                </div>*@
+            <div class="row">
+                <div class="col-12">
+                    <table id="Mybase-style" class="table table-striped">
+                        <thead>
+                            <tr>
+                                
+                                <th>
+                                    @Html.DisplayName("Name")
+                                </th>
+                                <th>
+                                    @Html.DisplayName("Contact No")
+                                </th>
+                                <th>
+                                    @Html.DisplayName("Email Id")
+                                </th>
+                                <th>
+                                    @Html.DisplayName("Address")
+                                </th>
+                                <th>
+                                    @Html.DisplayName("Enquiry For")
+                                </th>
+                                <th>
+                                    @Html.DisplayName("Create Date")
+                                </th>
+                                
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.EnquiryList)
+                            {
+                                <tr>
+                                    
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.PersonName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.PersonContactNo)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.PersonEmailId)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.PersonAddress)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.PersonEnquiryFor)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.cdate)
+                                    </td>
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

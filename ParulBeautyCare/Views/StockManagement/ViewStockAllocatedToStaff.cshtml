@@ -1,0 +1,67 @@
+﻿@model IEnumerable<ParulBeautyCareDbClasses.DataModels.PBAllocatedStockToStaffRtr_Result>
+@{
+    ViewBag.Title = "Stock Allocated to Staff";
+    ViewBag.Module = "Master";
+}
+
+<div class="content-wrapper">
+    <div class="card">
+        <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+            <div class="bg-gradient-pinkHeader shadow-primary border-radius-lg pt-3 d-flex justify-content-between row">
+                <h2 class="text-white text-capitalize ps-3 title_margin col-md-6"><b>Total Stock Allocated to Staff Member</b></h2>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-12">
+                    <table id="Mybase-style2" class="table table-striped">
+                        <thead class=" text-center" style="background-color: #e6a1ba;">
+                            <tr>
+                                <th>
+                                    @Html.DisplayName("Staff Member")
+                                </th>
+                                <th>
+                                    @Html.DisplayName("Product")
+                                </th>
+                                <th>
+                                    @Html.DisplayName("Stock Allocated")
+                                </th>
+                                <th>
+                                    @Html.DisplayName("Stock Used")
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody class=" text-center">
+                            @if (Convert.ToInt32(TempData["ViewRight"]) == 1)
+                            {
+                                foreach (var item in Model)
+                                {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.StaffName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.ProductName)
+                                    </td>
+                                    <td> @Html.DisplayFor(modelItem => item.TotalStockAllocated)</td>
+                                    <td> @Html.DisplayFor(modelItem => item.TotalStockUsed)</td>
+                                </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td>You have no rights to view data</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

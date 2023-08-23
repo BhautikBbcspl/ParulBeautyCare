@@ -282,7 +282,7 @@
                         BookingDetailId: bookingDetailId,
                         SubCategoryName: subCategoryName,
                         SubCategoryId: subCategoryID,
-                        AllocatedTo: staffId,
+                        StaffId: staffId,
                         BookingId: bookingid
                     };
 
@@ -293,7 +293,7 @@
             
 
             $.ajax({
-                url: "@System.Configuration.ConfigurationManager.AppSettings["myKey"]" + "/BookingManagement/ServiceCompletion",
+                url: "@System.Configuration.ConfigurationManager.AppSettings["myKey"]" + "/BookingManagement/ServiceComplition",
                 type: "POST",
                 contentType: "application/json",
                 data: JSON.stringify(formDataArray),

@@ -33089,7 +33089,8 @@ div.tagsinput {
 /**/
 
 /*Customized*/
-#Mybase-style_wrapper .dt-buttons .dt-button {
+/*Customized*/
+#Mybase-style_wrapper .dt-buttons .dt-button, #Mybase-style2_wrapper .dt-buttons .dt-button {
     position: absolute;
     right: 28px;
     font-size: 15px !important;
@@ -33100,7 +33101,7 @@ div.tagsinput {
     background: #d9e3f194 !important;
 }
 
-    #Mybase-style_wrapper .dt-buttons .dt-button:hover {
+    #Mybase-style_wrapper .dt-buttons .dt-button:hover, #Mybase-style2_wrapper .dt-buttons .dt-button:hover {
         background: #f2125e !important;
         color: #fff;
     }
@@ -33314,6 +33315,9 @@ a.lightbox-close {
         top: 0;
     }
 
+#Mybase-style2 .select2-container {
+    margin-top: 15px;
+}
 /**/
 .disabled-row {
     opacity: 0.5;

@@ -11,18 +11,13 @@ namespace ParulBeautyCareDbClasses.DataModels
 {
     using System;
     
-    public partial class PBStockAllocationRetrieve_Result
+    public partial class PBAllocatedStockToStaffRtr_Result
     {
-        public int StockAllocationId { get; set; }
-        public Nullable<int> ProductId { get; set; }
         public Nullable<int> StaffId { get; set; }
-        public string AllocateUser { get; set; }
-        public string ProductName { get; set; }
-        public string ProductImage { get; set; }
-        public Nullable<decimal> Qty { get; set; }
-        public string AllocationDate { get; set; }
         public string StaffName { get; set; }
-        public Nullable<System.DateTime> ExpDate { get; set; }
-        public Nullable<decimal> Price { get; set; }
+        public Nullable<int> ProductId { get; set; }
+        public string ProductName { get; set; }
+        public Nullable<int> TotalStockAllocated { get; set; }
+        public Nullable<int> TotalStockUsed { get; set; }
     }
 }

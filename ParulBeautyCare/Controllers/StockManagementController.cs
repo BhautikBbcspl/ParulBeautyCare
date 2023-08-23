@@ -372,11 +372,19 @@ namespace ParulBeautyCare.Controllers
                 sam.Action = "Active";
                 sam.CompanyCode = LoggedUserDetails.CompanyCode;
 
-                //Product List Bind
-                ProductMasterViewModel pm = new ProductMasterViewModel();
-                var ProdList = ApiCall.PostApi("ProductMasterRetrieve", Newtonsoft.Json.JsonConvert.SerializeObject(sam));
-                pm = JsonConvert.DeserializeObject<ProductMasterViewModel>(ProdList);
-                sam.ProductList = pm.ProductMasterList;
+                ////Product List Bind
+                //ProductMasterViewModel pm = new ProductMasterViewModel();
+                //var ProdList = ApiCall.PostApi("ProductMasterRetrieve", Newtonsoft.Json.JsonConvert.SerializeObject(sam));
+                //pm = JsonConvert.DeserializeObject<ProductMasterViewModel>(ProdList);
+                //sam.ProductList = pm.ProductMasterList;
+                ////
+             
+                //Product List Bind from PurchaseMaster
+                sam.Action = "all";
+                StockPurchaseViewModel pm = new StockPurchaseViewModel();
+                var ProdList = ApiCall.PostApi("StockPurchaseRetrieve", Newtonsoft.Json.JsonConvert.SerializeObject(sam));
+                pm = JsonConvert.DeserializeObject<StockPurchaseViewModel>(ProdList);
+                sam.ProdListfromPurchaseMaster = pm.StockPurchaseList;
                 //
 
                 //Staff List Bind
@@ -498,12 +506,19 @@ namespace ParulBeautyCare.Controllers
                 samv.StaffList = sm.StaffMasterList;
                 //
 
-                //Product List Bind
-                samv.Action = "Active";
-                ProductMasterViewModel pm = new ProductMasterViewModel();
-                var ProdList = ApiCall.PostApi("ProductMasterRetrieve", Newtonsoft.Json.JsonConvert.SerializeObject(samv));
-                pm = JsonConvert.DeserializeObject<ProductMasterViewModel>(ProdList);
-                samv.ProductList = pm.ProductMasterList;
+                ////Product List Bind
+                //samv.Action = "Active";
+                //ProductMasterViewModel pm = new ProductMasterViewModel();
+                //var ProdList = ApiCall.PostApi("ProductMasterRetrieve", Newtonsoft.Json.JsonConvert.SerializeObject(samv));
+                //pm = JsonConvert.DeserializeObject<ProductMasterViewModel>(ProdList);
+                //samv.ProductList = pm.ProductMasterList;
+                ////
+                //Product List Bind from PurchaseMaster
+                samv.Action = "all";
+                StockPurchaseViewModel pm = new StockPurchaseViewModel();
+                var ProdList = ApiCall.PostApi("StockPurchaseRetrieve", Newtonsoft.Json.JsonConvert.SerializeObject(samv));
+                pm = JsonConvert.DeserializeObject<StockPurchaseViewModel>(ProdList);
+                samv.ProdListfromPurchaseMaster = pm.StockPurchaseList;
                 //
 
                 samv.StockAllocationId = samv.StockAllocationList.FirstOrDefault().StockAllocationId.ToString();
@@ -673,7 +688,9 @@ namespace ParulBeautyCare.Controllers
                             TotalPerson = selectedItem.NoOfPerson.ToString(),
                             PersonAvailable = selectedItem.availperson.ToString(),
                             AutoSrNo = selectedItem.AutoSrNo,
-                            Barcode = selectedItem.Barcode
+                            Barcode = selectedItem.Barcode,
+                            Price = selectedItem.Price.ToString(),
+                            ExpDate = selectedItem.ExpDate
                         };
 
                         sthvm.StockTransferTypeTable.Add(newTransferItem);
@@ -912,6 +929,60 @@ namespace ParulBeautyCare.Controllers
 
         //}
 
+        #endregion
+
+
+        #region==> Stock Allocated to Staff Report
+        public ActionResult ViewStockAllocatedToStaff()
+        {
+            try
+            {
+                if (!User.Identity.IsAuthenticated)
+                {
+                    FormsAuthentication.RedirectToLoginPage();
+                }
+                MenuRightsViewModel mv1 = new MenuRightsViewModel();
+                mv1.Usercode = LoggedUserDetails.UserName;
+                string url = generalFunctions.getCommon(Request.Url.AbsoluteUri);
+                mv1.PageName = url;
+                var MenuRtr = ApiCall.PostApi("MenuRightsRtr", Newtonsoft.Json.JsonConvert.SerializeObject(mv1));
+                mv1 = JsonConvert.DeserializeObject<MenuRightsViewModel>(MenuRtr);
+                if (mv1.MenuRightsList.Count > 0)
+                {
+                    //ViewBag.ViewRight = mv1.MenuRightsList.FirstOrDefault().ViewRight;
+                    //ViewBag.InsertRight = mv1.MenuRightsList.FirstOrDefault().InsertRight;
+                    //ViewBag.UpdateRight = mv1.MenuRightsList.FirstOrDefault().UpdateRight;
+                    //ViewBag.DeleteRight = mv1.MenuRightsList.FirstOrDefault().DeleteRight;
+                    TempData["ViewRight"] = mv1.MenuRightsList.FirstOrDefault().ViewRight;
+                    TempData["InsertRight"] = mv1.MenuRightsList.FirstOrDefault().InsertRight;
+                    TempData["UpdateRight"] = mv1.MenuRightsList.FirstOrDefault().UpdateRight;
+                    TempData["DeleteRight"] = mv1.MenuRightsList.FirstOrDefault().DeleteRight;
+                }
+                else
+                {
+                    var data = new { Message = "Sorry,You have no rights to access this page", Type = "error" };
+                    TempData["SweetAlert"] = data;
+                    return RedirectToAction("Dashboard", "Home");
+                }
+                //
+
+                StockTransferHeaderViewModel sdmvm = new StockTransferHeaderViewModel();
+                sdmvm.Action = "All";
+                sdmvm.CompanyCode = LoggedUserDetails.CompanyCode;
+                var StockAllocatedToStaffList = ApiCall.PostApi("StockAllocatedToStaffRetrieve", Newtonsoft.Json.JsonConvert.SerializeObject(sdmvm));
+                sdmvm = JsonConvert.DeserializeObject<StockTransferHeaderViewModel>(StockAllocatedToStaffList);
+                return View(sdmvm.StockAllocatedToStaffList);
+
+            }
+            catch (Exception ex)
+            {
+                //Danger(ex.Message.ToString(), true);
+                //return RedirectToAction("Dashboard", "Home");
+                var data = new { Message = ex.Message.ToString(), Type = "error" };
+                TempData["SweetAlert"] = data;
+                return RedirectToAction("Dashboard", "Home");
+            }
+        }
         #endregion
     }
 }

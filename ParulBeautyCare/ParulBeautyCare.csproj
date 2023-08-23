@@ -2834,6 +2834,8 @@
     <Content Include="Views\Master\ViewInteServiceProductMaster.cshtml" />
     <Content Include="Views\Master\ViewSubCategoryMaster.cshtml" />
     <Content Include="Views\Home\Enquiry.cshtml" />
+    <Content Include="Views\Home\ViewEnquiry.cshtml" />
+    <Content Include="Views\StockManagement\ViewStockAllocatedToStaff.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -75,6 +75,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ParulBeautyCaredb.edmx</DependentUpon>
     </Compile>
+    <Compile Include="DataModels\PBAllocatedStockToStaffRtr_Result.cs">
+      <DependentUpon>ParulBeautyCaredb.tt</DependentUpon>
+    </Compile>
     <Compile Include="DataModels\PBAvailableStockRtr_Result.cs">
       <DependentUpon>ParulBeautyCaredb.tt</DependentUpon>
     </Compile>
@@ -91,6 +94,9 @@
       <DependentUpon>ParulBeautyCaredb.tt</DependentUpon>
     </Compile>
     <Compile Include="DataModels\PBDepartmentMasterRetrieve_Result.cs">
+      <DependentUpon>ParulBeautyCaredb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModels\PBEnquiryRtr_Result.cs">
       <DependentUpon>ParulBeautyCaredb.tt</DependentUpon>
     </Compile>
     <Compile Include="DataModels\PBIntePackageServiceMasterRetrieve_Result.cs">

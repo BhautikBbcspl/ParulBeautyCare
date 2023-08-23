@@ -13,6 +13,7 @@ namespace ParulBeautyCareDbClasses.DataModels
     
     public partial class PBStockPurchaseRetrieve_Result
     {
+        public string ProductExpDate { get; set; }
         public int PurchaseId { get; set; }
         public string CompanyCode { get; set; }
         public Nullable<System.DateTime> CreateDate { get; set; }
@@ -35,5 +36,6 @@ namespace ParulBeautyCareDbClasses.DataModels
         public string expiryDate { get; set; }
         public Nullable<int> DepartmentId { get; set; }
         public string DepartmentName { get; set; }
+        public Nullable<decimal> Price { get; set; }
     }
 }

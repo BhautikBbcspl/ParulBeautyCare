@@ -45,5 +45,7 @@ namespace ParulBeautyCareViewModel.ViewModel.StockMgmtViewModel
         public List<PBStockPurchaseRetrieve_Result> StockPurchaseList { get; set; }
         public List<PBDepartmentMasterRetrieve_Result> DeptList { get; set; }
         public List<PBVendorMasterRetrieve_Result> VendorList { get; set; }
+        [Required(ErrorMessage = "*")]
+        public string Price { get; set; }
     }
 }

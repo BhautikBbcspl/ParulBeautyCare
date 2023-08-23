@@ -35,44 +35,9 @@ namespace ParulBeautyCareViewModel.ViewModel.StockMgmtViewModel
         public string ProductName { get; set; }
         public List<PBAvailableStockRtr_Result> AvailableStockList { get; set; }
         public List<StockTransferTypeViewModel> StockTransferTypeTable { get; set; }
-
-        //public DataTable StockTransferTypeDataTable
-        //{
-        //    get
-        //    {
-        //        DataTable dt = new DataTable();
-        //        dt.Columns.AddRange(
-        //            new DataColumn[8] {
-        //            new DataColumn("StockDetailId", typeof(string)),
-        //            new DataColumn("StockHeaderId", typeof(string)),
-        //            new DataColumn("ProductId", typeof(string)),
-        //            new DataColumn("Qty", typeof(string)),
-        //            new DataColumn("TotalPerson", typeof(string)),
-        //            new DataColumn("PersonAvailable", typeof(string)),
-        //            new DataColumn("AutoSrNo", typeof(string)),
-        //            new DataColumn("Barcode", typeof(string))
-        //            });
-
-        //        if (StockTransferTypeTable != null)
-        //        {
-        //            foreach (var item in StockTransferTypeTable)
-        //            {
-        //                dt.Rows.Add(
-        //                    item.StockDetailId,
-        //                    item.StockHeaderId,
-        //                    item.ProductId,
-        //                    item.Qty,
-        //                    item.TotalPerson,
-        //                    item.PersonAvailable,
-        //                    item.AutoSrNo,
-        //                    item.Barcode
-        //                );
-        //            }
-        //        }
-
-        //        return dt;
-        //    }
-        //}
+        public string StaffId { get; set; }
+        public string ProductId { get; set; }
+        public List<PBAllocatedStockToStaffRtr_Result> StockAllocatedToStaffList { get; set; }
     }
 
     public class StockTransferTypeViewModel
@@ -85,5 +50,7 @@ namespace ParulBeautyCareViewModel.ViewModel.StockMgmtViewModel
         public string PersonAvailable { get; set; }
         public string AutoSrNo { get; set; }
         public string Barcode { get; set; }
+        public string ExpDate { get; set; }
+        public string Price { get; set; }
     }
 }

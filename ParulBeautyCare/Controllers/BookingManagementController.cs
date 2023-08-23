@@ -721,7 +721,7 @@ namespace ParulBeautyCare.Controllers
         //}
         #endregion
 
-        #region ==> Service Completion
+        #region ==> Service Complition
 
         public ActionResult ServiceCompletion()
         {

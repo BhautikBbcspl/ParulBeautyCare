@@ -225,6 +225,52 @@ namespace ParulBeautyCare.Controllers
                 return RedirectToAction("Login", "Home");
             }
         }
+
+        public ActionResult ViewEnquiry()
+        {
+            try
+            {
+                //Rights checking
+                if (!User.Identity.IsAuthenticated)
+                {
+                    return RedirectToAction("Login", "Home");
+                }
+                //MenuRightsViewModel mv1 = new MenuRightsViewModel();
+                //mv1.Usercode = LoggedUserDetails.UserName;
+                //string url = generalFunctions.getCommon(Request.Url.AbsoluteUri);
+                //mv1.PageName = url;
+                //var MenuRtr = ApiCall.PostApi("MenuRightsRtr", Newtonsoft.Json.JsonConvert.SerializeObject(mv1));
+                //mv1 = JsonConvert.DeserializeObject<MenuRightsViewModel>(MenuRtr);
+                //if (mv1.MenuRightsList.Count > 0)
+                //{
+                //    TempData["ViewRight"] = mv1.MenuRightsList.FirstOrDefault().ViewRight;
+                //    TempData["InsertRight"] = mv1.MenuRightsList.FirstOrDefault().InsertRight;
+                //    TempData["UpdateRight"] = mv1.MenuRightsList.FirstOrDefault().UpdateRight;
+                //    TempData["DeleteRight"] = mv1.MenuRightsList.FirstOrDefault().DeleteRight;
+                //}
+                //else
+                //{
+                //    var data = new { Message = "Sorry,You have no rights to access this page", Type = "error" };
+                //    TempData["SweetAlert"] = data;
+                //    return RedirectToAction("Dashboard", "Home");
+                //}
+                //
+                EnquiryViewModel mv = new EnquiryViewModel();
+                mv.Action = "All";
+
+                var emplog = ApiCall.PostApi("EnquiryRetrieve", Newtonsoft.Json.JsonConvert.SerializeObject(mv));
+                mv = JsonConvert.DeserializeObject<EnquiryViewModel>(emplog);
+                return View(mv);
+
+            }
+            catch (Exception ex)
+            {
+                //Danger(ex.Message.ToString(), true);
+                var data = new { Message = ex.Message.ToString(), Type = "error" };
+                TempData["SweetAlert"] = data;
+                return RedirectToAction("Dashboard", "Home");
+            }
+        }
         #endregion
     }
 }
