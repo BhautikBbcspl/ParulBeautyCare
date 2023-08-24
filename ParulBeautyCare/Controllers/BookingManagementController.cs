@@ -24,17 +24,24 @@ namespace ParulBeautyCare.Controllers
             ViewBag.list = list;
             return View(em);
         }
+
         public ActionResult BookAppointment()
         {
             BookAppointmentViewModel mv = new BookAppointmentViewModel();
             mv.Action = "active";
             mv.CompanyCode = LoggedUserDetails.CompanyCode;
+            mv.DayInterval = null;
+            mv.NoOfSitting = null;
             PackageMasterViewModel am = new PackageMasterViewModel();
             am.Action = mv.Action;
             am.CompanyCode = mv.CompanyCode;
             var PackageList = ApiCall.PostApi("PackageMasterRtr", Newtonsoft.Json.JsonConvert.SerializeObject(mv));
             am = JsonConvert.DeserializeObject<PackageMasterViewModel>(PackageList);
-            mv.PackageList = am.PackageList;
+            mv.PackageList = am.PackageList.Select(c => new BookPackageViewModel()
+            {
+                PackageId = c.PackageId.ToString(),
+                PackageName = c.PackageName
+            }).ToList();
             CategoryMasterViewModel pm = new CategoryMasterViewModel();
             pm.Action = mv.Action;
             pm.CompanyCode = mv.CompanyCode;
@@ -52,48 +59,233 @@ namespace ParulBeautyCare.Controllers
             }).ToList();
             mv.SubCategoryList = sm.SubCategoryMasterList.Select(c => new BookSubCategoryViewModel()
             {
-                SubcategoryId = c.SubCategoryId.ToString(),
-                SubcategoryName = c.SubCategoryName
+                SubCategoryId = c.SubCategoryId.ToString(),
+                SubCategoryName = c.SubCategoryName
             }).ToList();
             return View(mv);
         }
-
         [HttpPost]
-        public ActionResult BookAppointment(BookAppointmentViewModel mv, string BookAppointment)
+        public ActionResult AddBookAppointment(BookAppointmentViewModel mv, string BookAppointment)
         {
-            DataTable dt = new DataTable();
-            dt.Columns.AddRange(
-                     new DataColumn[10] {
-                       new DataColumn("CategoryId", typeof(string)),
-                         new DataColumn("IntePackageServiceId", typeof(string)),
-                          new DataColumn("SubCategoryId", typeof(string)),
-                          new DataColumn("AppointmentDate", typeof(string)),
-                          new DataColumn("DoneBy", typeof(string)),
-                          new DataColumn("DoneDate", typeof(string)),
-                          new DataColumn("Amount", typeof(string)),
-                          new DataColumn("Discount", typeof(string)),
-                          new DataColumn("FinalAmount", typeof(string)),
-                          new DataColumn("CustomerName", typeof(string))
-                       });
-            foreach (var item in mv.BookAppointmentTable)
-            {
-                string CategoryId = item.CategoryId;
-                string IntePackageServiceId = item.IntePackageServiceId;
-                string SubCategoryId = item.SubcategoryId;
-                string AppointmentDateTime = item.AppointmentDateTime;
-                string DoneBy = "Test";
-                string DoneDate = "Test";
-                string Amount = "Test";
-                string Discount = "Test";
-                string FinalAmount = "Test";
-                string CustomerName = "Test";
-                dt.Rows.Add(CategoryId, IntePackageServiceId, SubCategoryId, AppointmentDateTime, DoneBy, DoneDate, Amount, Discount, FinalAmount, CustomerName);
+            //List<BookAppointmentDetailViewModel> appointmentData = JsonConvert.DeserializeObject<List<BookAppointmentDetailViewModel>>(BookAppointment);
+            //DataTable dt = new DataTable();
+            //dt.Columns.AddRange(
+            //         new DataColumn[10] {
+            //              new DataColumn("CategoryId", typeof(string)),
+            //              new DataColumn("IntePackageServiceId", typeof(string)) { AllowDBNull = true },
+            //              new DataColumn("SubCategoryId", typeof(string)),
+            //              new DataColumn("AppointmentDateTime", typeof(string)),
+            //              new DataColumn("DoneBy", typeof(string)){ AllowDBNull = true },
+            //              new DataColumn("DoneDate", typeof(string)){ AllowDBNull = true },
+            //              new DataColumn("Amount", typeof(string)){ AllowDBNull = true },
+            //              new DataColumn("Discount", typeof(string)){ AllowDBNull = true },
+            //              new DataColumn("FinalAmount", typeof(string)){ AllowDBNull = true },
+            //              new DataColumn("CustomerName", typeof(string)){ AllowDBNull = true }
+            //           });
+            //foreach (var item in appointmentData)
+            //{
+            //    string CategoryId = item.CategoryId;
+            //    string IntePackageServiceId = item.IntePackageServiceId;
+            //    string SubCategoryId = item.SubCategoryId;
+            //    string AppointmentDateTimeString = item.AppointmentDateTime;
+            //    string DoneBy = item.DoneBy;
+            //    string DoneDate =item.DoneDate ;
+            //    string Amount = item.Amount;
+            //    string Discount = item.Discount;
+            //    string FinalAmount = item.FinalAmount;
+            //    string CustomerName = item.CustomerName;
+            //    DateTime AppointmentDateTime = DateTime.ParseExact(AppointmentDateTimeString, "dd-MM-yyyy HH:mm", CultureInfo.InvariantCulture);
+            //    string AppointmentDateFormatted = AppointmentDateTime.ToString("yyyy-MM-dd HH:mm");
+            //    dt.Rows.Add(CategoryId, IntePackageServiceId, SubCategoryId, AppointmentDateFormatted, DoneBy, DoneDate, Amount, Discount, FinalAmount, CustomerName);
 
-            }
-            return View();
+            //}
+            ////dt.Columns.AddRange(new DataColumn[]
+            ////{
+            ////    new DataColumn("CategoryId", typeof(string)),
+            ////    new DataColumn("SubCategoryId", typeof(string)),
+            ////    new DataColumn("AppointmentDateTime", typeof(string)) // Assuming you want to store it as DateTime
+            ////});
+
+            ////foreach (var item in appointmentData)
+            ////{
+            ////    string CategoryId = item.CategoryId;
+            ////    string SubCategoryId = item.SubCategoryId;
+            ////    string AppointmentDateTimeString = item.AppointmentDateTime;
+            ////    DateTime AppointmentDateTime = DateTime.ParseExact(AppointmentDateTimeString, "dd-MM-yyyy HH:mm", CultureInfo.InvariantCulture);
+            ////    string AppointmentDateFormatted = AppointmentDateTime.ToString("yyyy-MM-dd HH:mm");
+            ////    dt.Rows.Add(CategoryId, SubCategoryId, AppointmentDateFormatted);
+            ////}
+
+            //ViewBag.AppointmentDataTable = dt;
+            //mv.CreateDate = generalFunctions.getTimeZoneDatetimedb();
+            //mv.CreateUser = LoggedUserDetails.UserName;
+            //mv.CompanyCode = LoggedUserDetails.CompanyCode;
+            //mv.mytable = dt;
+            //mv.Action = "insert";
+            //mv.FunctionDate = generalFunctions.dateconvert(mv.FunctionDate);
+            //var book = ApiCall.PostApi("BookingAppointmentInsert", Newtonsoft.Json.JsonConvert.SerializeObject(mv));
+            //mv = JsonConvert.DeserializeObject<BookAppointmentViewModel>(book);
+
+            //TempData code
+            mv.Action = "active";
+            mv.CompanyCode = LoggedUserDetails.CompanyCode;
+            PackageMasterViewModel am = new PackageMasterViewModel();
+            am.Action = mv.Action;
+            am.CompanyCode = mv.CompanyCode;
+            var PackageList = ApiCall.PostApi("PackageMasterRtr", Newtonsoft.Json.JsonConvert.SerializeObject(mv));
+            am = JsonConvert.DeserializeObject<PackageMasterViewModel>(PackageList);
+            mv.PackageList = am.PackageList.Select(c => new BookPackageViewModel()
+            {
+                PackageId = c.PackageId.ToString(),
+                PackageName = c.PackageName
+            }).ToList();
+            CategoryMasterViewModel pm = new CategoryMasterViewModel();
+            pm.Action = mv.Action;
+            pm.CompanyCode = mv.CompanyCode;
+            var CategoryList = ApiCall.PostApi("CategoryMasterRetrieve", Newtonsoft.Json.JsonConvert.SerializeObject(mv));
+            pm = JsonConvert.DeserializeObject<CategoryMasterViewModel>(CategoryList);
+            SubCategoryMasterViewModel sm = new SubCategoryMasterViewModel();
+            sm.Action = mv.Action;
+            sm.CompanyCode = mv.CompanyCode;
+            var SubCategoryList = ApiCall.PostApi("SubCategoryMasterRetrieve", Newtonsoft.Json.JsonConvert.SerializeObject(mv));
+            sm = JsonConvert.DeserializeObject<SubCategoryMasterViewModel>(SubCategoryList);
+            mv.CategoryList = pm.CategoryMasterList.Select(c => new BookCategoryViewModel()
+            {
+                CategoryId = c.CategoryId.ToString(),
+                CategoryName = c.CategoryName
+            }).ToList();
+            mv.SubCategoryList = sm.SubCategoryMasterList.Select(c => new BookSubCategoryViewModel()
+            {
+                SubCategoryId = c.SubCategoryId.ToString(),
+                SubCategoryName = c.SubCategoryName
+            }).ToList();
+            //from here
+            string msg = mv.Result;
+
+            return View("BookAppointment", mv);
 
         }
 
+        public ActionResult SelectPackages(string PackageId)
+        {
+            BookingPackageViewModel sm = new BookingPackageViewModel();
+            sm.Action = "services";
+            sm.PackageId = PackageId;
+            ViewBag.Amount = "0";
+            var BookingPackagelog = ApiCall.PostApi("BookingPackageRetrieve", Newtonsoft.Json.JsonConvert.SerializeObject(sm));
+            sm = JsonConvert.DeserializeObject<BookingPackageViewModel>(BookingPackagelog);
+
+            List<BookAppointmentDetailViewModel> sittingList = new List<BookAppointmentDetailViewModel>();
+            if (sm.PBIntePackageServiceList.Count > 0)
+            {
+                foreach (var serviceResult in sm.PBIntePackageServiceList)
+                {
+
+                    BookAppointmentDetailViewModel PackageDetail = new BookAppointmentDetailViewModel
+                    {
+                        NoOfSitting = serviceResult.NoOfSitting.ToString(),
+                        IntePackageServiceId = serviceResult.IntePackageServiceId.ToString(),
+                        CategoryId = serviceResult.CategoryId.ToString(),
+                        CategoryName = serviceResult.CategoryName.ToString(),
+                        DayInterval = serviceResult.DayInterval,
+                        PackageId = serviceResult.PackageId.ToString(),
+                        SubCategoryId = serviceResult.ServiceId.ToString(),
+                        SubCategoryName = serviceResult.SubCategoryName.ToString(),
+                        Amount = (int)(serviceResult.PackageAmount),
+                        Remark = ""
+                    };
+                    ViewBag.Amount = PackageDetail.Amount;
+                    //for (int i = 0; i < noOfSitting; i++)
+                    //{
+                    //    BookAppointmentDetailViewModel PackageDetail = new BookAppointmentDetailViewModel
+                    //    {
+                    //        IntePackageServiceId = IntePackageServiceId,
+                    //        CategoryId = CategoryId,
+                    //        CategoryName = CategoryName,
+                    //        DayInterval = DayInterval,
+                    //        PackageId = PackageId2.ToString(),
+                    //        SubCategoryId = ServiceId,
+                    //        SubCategoryName = SubCategoryName
+
+                    //    };
+
+                    // Add the current PackageDetail to the sittingList
+
+                    sittingList.Add(PackageDetail);
+                    // }
+                }
+            }
+            var obj = new { sittingList, amount = ViewBag.Amount };
+
+            return Json(obj, JsonRequestBehavior.AllowGet);
+
+        }
+       
+        //public ActionResult SelectPackageJson(string ddlCategoryDropdown)
+        //{
+        //    BookAppointmentViewModel mv = new BookAppointmentViewModel();
+
+        //    SubCategoryMasterViewModel sm = new SubCategoryMasterViewModel();
+        //    sm.Action = "GetList";
+        //    sm.CategoryId = ddlCategoryDropdown;
+        //    sm.CompanyCode = LoggedUserDetails.CompanyCode;
+        //    var emplog = ApiCall.PostApi("SubCategoryMasterRetrieve", Newtonsoft.Json.JsonConvert.SerializeObject(sm));
+        //    sm = JsonConvert.DeserializeObject<SubCategoryMasterViewModel>(emplog);
+        //    //var SubCateGory = mv.SubCategoryList.Select(c => new SubCategoryMasterViewModel() { SubCategoryId = c.SubCategoryId.ToString(), SubCategoryName= c.SubCategoryName, Amount = c.Amount.ToString() });
+        //    List<SubCategoryMasterViewModel> SubCateGory = new List<SubCategoryMasterViewModel>();
+        //    if (sm != null && sm.SubCategoryMasterList != null)
+        //    {
+        //        SubCateGory = sm.SubCategoryMasterList.Select(c => new SubCategoryMasterViewModel()
+        //        {
+        //            SubCategoryId = c.SubCategoryId.ToString(),
+        //            SubCategoryName = c.SubCategoryName
+        //        }).ToList();
+        //    }
+        //    var obj = new { SubCateGory };
+        //    return Json(obj, JsonRequestBehavior.AllowGet);
+        //}
+        public ActionResult SelectSubCategoryJson(string ddlCategoryDropdown)
+        {
+            BookAppointmentViewModel mv = new BookAppointmentViewModel();
+
+            SubCategoryMasterViewModel sm = new SubCategoryMasterViewModel();
+            sm.Action = "GetList";
+            sm.CategoryId = ddlCategoryDropdown;
+            sm.CompanyCode = LoggedUserDetails.CompanyCode;
+            var emplog = ApiCall.PostApi("SubCategoryMasterRetrieve", Newtonsoft.Json.JsonConvert.SerializeObject(sm));
+            sm = JsonConvert.DeserializeObject<SubCategoryMasterViewModel>(emplog);
+            //var SubCateGory = mv.SubCategoryList.Select(c => new SubCategoryMasterViewModel() { SubCategoryId = c.SubCategoryId.ToString(), SubCategoryName= c.SubCategoryName, Amount = c.Amount.ToString() });
+            List<SubCategoryMasterViewModel> SubCateGory = new List<SubCategoryMasterViewModel>();
+            if (sm != null && sm.SubCategoryMasterList != null)
+            {
+                SubCateGory = sm.SubCategoryMasterList.Select(c => new SubCategoryMasterViewModel()
+                {
+                    SubCategoryId = c.SubCategoryId.ToString(),
+                    SubCategoryName = c.SubCategoryName
+                }).ToList();
+            }
+            var obj = new { SubCateGory };
+            return Json(obj, JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult SelectSubCategoryDetails(string Subcateid)
+        {
+            SubCategoryMasterViewModel sm = new SubCategoryMasterViewModel();
+            sm.Action = "Detail";
+            sm.CategoryId = Subcateid;
+            sm.CompanyCode = LoggedUserDetails.CompanyCode;
+            var emplog = ApiCall.PostApi("SubCategoryMasterRetrieve", Newtonsoft.Json.JsonConvert.SerializeObject(sm));
+            sm = JsonConvert.DeserializeObject<SubCategoryMasterViewModel>(emplog);
+            var SubCateGory = sm.SubCategoryMasterList.Select(c => new SubCategoryMasterViewModel()
+            {
+                SubCategoryId = c.SubCategoryId.ToString(),
+                SubCategoryName = c.SubCategoryName,
+                Amount = c.Amount.ToString(),
+                NoOfSitting = c.NoOfSitting.ToString(),
+                DayInterval = c.DayInterval
+            }).ToList();
+            var obj = new { SubCateGory };
+            return Json(obj, JsonRequestBehavior.AllowGet);
+        }
         #region==> Booking Allocation
         public ActionResult BookingStaffAllocation()
         {
@@ -276,93 +468,6 @@ namespace ParulBeautyCare.Controllers
             }
         }
         #endregion
-
-        public ActionResult SelectSubCategoryJson(string ddlCategoryDropdown)
-        {
-            BookAppointmentViewModel mv = new BookAppointmentViewModel();
-
-            SubCategoryMasterViewModel sm = new SubCategoryMasterViewModel();
-            sm.Action = "GetList";
-            sm.CategoryId = ddlCategoryDropdown;
-            sm.CompanyCode = LoggedUserDetails.CompanyCode;
-            var emplog = ApiCall.PostApi("SubCategoryMasterRetrieve", Newtonsoft.Json.JsonConvert.SerializeObject(sm));
-            sm = JsonConvert.DeserializeObject<SubCategoryMasterViewModel>(emplog);
-            //var SubCateGory = mv.SubCategoryList.Select(c => new SubCategoryMasterViewModel() { SubCategoryId = c.SubCategoryId.ToString(), SubCategoryName= c.SubCategoryName, Amount = c.Amount.ToString() });
-            List<SubCategoryMasterViewModel> SubCateGory = new List<SubCategoryMasterViewModel>();
-            if (sm != null && sm.SubCategoryMasterList != null)
-            {
-                SubCateGory = sm.SubCategoryMasterList.Select(c => new SubCategoryMasterViewModel()
-                {
-                    SubCategoryId = c.SubCategoryId.ToString(),
-                    SubCategoryName = c.SubCategoryName
-                }).ToList();
-            }
-            var obj = new { SubCateGory };
-            return Json(obj, JsonRequestBehavior.AllowGet);
-        }
-        public ActionResult SelectSubCategoryDetails(string Subcateid)
-        {
-            SubCategoryMasterViewModel sm = new SubCategoryMasterViewModel();
-            sm.Action = "Detail";
-            sm.CategoryId = Subcateid;
-            sm.CompanyCode = LoggedUserDetails.CompanyCode;
-            var emplog = ApiCall.PostApi("SubCategoryMasterRetrieve", Newtonsoft.Json.JsonConvert.SerializeObject(sm));
-            sm = JsonConvert.DeserializeObject<SubCategoryMasterViewModel>(emplog);
-            var SubCateGory = sm.SubCategoryMasterList.Select(c => new SubCategoryMasterViewModel()
-            {
-                SubCategoryId = c.SubCategoryId.ToString(),
-                SubCategoryName = c.SubCategoryName,
-                Amount = c.Amount.ToString()
-            }).ToList();
-            var obj = new { SubCateGory };
-            return Json(obj, JsonRequestBehavior.AllowGet);
-        }
-
-        public ActionResult SelectPackages(string PackageId)
-        {
-            BookingPackageViewModel sm = new BookingPackageViewModel();
-            sm.Action = "services";
-            sm.PackageId = PackageId;
-            var BookingPackagelog = ApiCall.PostApi("BookingPackageRetrieve", Newtonsoft.Json.JsonConvert.SerializeObject(sm));
-            sm = JsonConvert.DeserializeObject<BookingPackageViewModel>(BookingPackagelog);
-
-            List<BookAppointmentDetailViewModel> sittingList = new List<BookAppointmentDetailViewModel>();
-
-            foreach (var serviceResult in sm.PBIntePackageServiceList)
-            {
-                int noOfSitting = (int)serviceResult.NoOfSitting; // Get the NoOfSitting value
-                string CategoryId = serviceResult.CategoryId.ToString();
-                string DayInterval = serviceResult.DayInterval;
-                string IntePackageServiceId = serviceResult.IntePackageServiceId.ToString();
-                string IsActive = serviceResult.IsActive.ToString();
-                string PackageId2 = serviceResult.PackageId.ToString();
-                string ServiceId = serviceResult.ServiceId.ToString();
-                string SubCategoryName = serviceResult.SubCategoryName.ToString();
-                string CategoryName = serviceResult.CategoryName.ToString();
-
-                for (int i = 0; i < noOfSitting; i++)
-                {
-                    BookAppointmentDetailViewModel PackageDetail = new BookAppointmentDetailViewModel
-                    {
-                        IntePackageServiceId = IntePackageServiceId,
-                        CategoryId = CategoryId,
-                        CategoryName = CategoryName,
-                        DayInterval = DayInterval,
-                        PackageId = PackageId2.ToString(),
-                        ServiceId = ServiceId,
-                        SubCategoryName = SubCategoryName
-
-                    };
-
-                    // Add the current PackageDetail to the sittingList
-
-                    sittingList.Add(PackageDetail);
-                }
-            }
-            var obj = new { sittingList };
-
-            return Json(obj, JsonRequestBehavior.AllowGet);
-        }
 
         #region ==> Check In/Out
         public ActionResult CheckIn()

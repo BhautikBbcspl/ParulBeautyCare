@@ -1153,19 +1153,6 @@ namespace ParulBeautyCareDbClasses.DataModels
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PBPackageMasterRtr_Result>("PBPackageMasterRtr", actionParameter, companycodeParameter, packageIdParameter);
         }
     
-        public virtual ObjectResult<PBIntePackageServiceRtr_Result> PBIntePackageServiceRtr(string action, string packageId)
-        {
-            var actionParameter = action != null ?
-                new ObjectParameter("action", action) :
-                new ObjectParameter("action", typeof(string));
-    
-            var packageIdParameter = packageId != null ?
-                new ObjectParameter("PackageId", packageId) :
-                new ObjectParameter("PackageId", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PBIntePackageServiceRtr_Result>("PBIntePackageServiceRtr", actionParameter, packageIdParameter);
-        }
-    
         public virtual ObjectResult<string> PBCheckInCheckOutIns(string checkId, string customerName, string contactNo, string address, string checkinDateTime, string checkoutDateTime, string waitingTime, string bookingId, string companyCode, string createDate, string createUser, string updateDate, string updateUser, string note, string action)
         {
             var checkIdParameter = checkId != null ?
@@ -1398,23 +1385,6 @@ namespace ParulBeautyCareDbClasses.DataModels
                 new ObjectParameter("action", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("PBSubCategoryMasterInsUpd", subCategoryIdParameter, subCategorynameParameter, categoryIdParameter, isMultiPersonParameter, numberOfPersonParameter, yearIdParameter, noOfSittingParameter, timeDuraionParameter, amountParameter, companyCodeParameter, activeStatusParameter, createdateParameter, updatedateParameter, createuserParameter, dayintervalParameter, incentiveParameter, gSTPercentageParameter, actionParameter);
-        }
-    
-        public virtual ObjectResult<PBSubCategoryMasterRetrieve_Result> PBSubCategoryMasterRetrieve(string action, string companycode, string subCategoryId)
-        {
-            var actionParameter = action != null ?
-                new ObjectParameter("action", action) :
-                new ObjectParameter("action", typeof(string));
-    
-            var companycodeParameter = companycode != null ?
-                new ObjectParameter("companycode", companycode) :
-                new ObjectParameter("companycode", typeof(string));
-    
-            var subCategoryIdParameter = subCategoryId != null ?
-                new ObjectParameter("SubCategoryId", subCategoryId) :
-                new ObjectParameter("SubCategoryId", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PBSubCategoryMasterRetrieve_Result>("PBSubCategoryMasterRetrieve", actionParameter, companycodeParameter, subCategoryIdParameter);
         }
     
         public virtual ObjectResult<string> PBBookingDetailInsUpd(string bookingDetailId, string bookingId, string categoryId, string subCategoryId, string allocatedTo, string allocationDate, string appointmentDate, string appointmentTime, string doneBy, string doneDate, string amount, string discount, string finalAmount, string status, string createDate, string createUser, string updateDate, string updateUser, string customerName, string action)
@@ -1798,6 +1768,36 @@ namespace ParulBeautyCareDbClasses.DataModels
                 new ObjectParameter("productid", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PBAllocatedStockToStaffRtr_Result>("PBAllocatedStockToStaffRtr", actionParameter, staffidParameter, productidParameter);
+        }
+    
+        public virtual ObjectResult<PBIntePackageServiceRtr_Result> PBIntePackageServiceRtr(string action, string packageId)
+        {
+            var actionParameter = action != null ?
+                new ObjectParameter("action", action) :
+                new ObjectParameter("action", typeof(string));
+    
+            var packageIdParameter = packageId != null ?
+                new ObjectParameter("PackageId", packageId) :
+                new ObjectParameter("PackageId", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PBIntePackageServiceRtr_Result>("PBIntePackageServiceRtr", actionParameter, packageIdParameter);
+        }
+    
+        public virtual ObjectResult<PBSubCategoryMasterRetrieve_Result> PBSubCategoryMasterRetrieve(string action, string companycode, string subCategoryId)
+        {
+            var actionParameter = action != null ?
+                new ObjectParameter("action", action) :
+                new ObjectParameter("action", typeof(string));
+    
+            var companycodeParameter = companycode != null ?
+                new ObjectParameter("companycode", companycode) :
+                new ObjectParameter("companycode", typeof(string));
+    
+            var subCategoryIdParameter = subCategoryId != null ?
+                new ObjectParameter("SubCategoryId", subCategoryId) :
+                new ObjectParameter("SubCategoryId", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PBSubCategoryMasterRetrieve_Result>("PBSubCategoryMasterRetrieve", actionParameter, companycodeParameter, subCategoryIdParameter);
         }
     }
 }

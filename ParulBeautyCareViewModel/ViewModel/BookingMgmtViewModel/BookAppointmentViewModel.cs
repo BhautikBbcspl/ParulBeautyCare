@@ -1,5 +1,5 @@
 ﻿using ParulBeautyCareDbClasses.DataModels;
-using ParulBeautyCareViewModel.ViewModel.BookingMgmtViewModel;
+using ParulBeautyCareViewModel.ViewModel.Master;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -18,32 +18,43 @@ namespace ParulBeautyCareViewModel.ViewModel
         [Required(ErrorMessage = "Please enter ContactNo.")]
         [RegularExpression(@"^\d{10}$", ErrorMessage = "Invalid Contact number.")]
         public string ContactNo { get; set; }
-       
+
         [Required(ErrorMessage = "Please enter Address.")]
         public string Address { get; set; }
-        [Required(ErrorMessage = "Please enter City.")]
+        [Required(ErrorMessage = "Please Select Function Date.")]
         public string FunctionDate { get; set; }
         public string BookingAmount { get; set; }
+        public string Amount { get; set; }
         public string CompanyCode { get; set; }
+        public string CreateDate { get; set; }
+        public string CreateUser { get; set; }
+        public string UpdateDate { get; set; }
+        public string UpdateUser { get; set; }
+        public string success { get; set; }
+        public string Message { get; set; }
         public string ReadyTime { get; set; }
         public string AppointmentType { get; set; }
         public string Action { get; set; }
+        public string Result { get; set; }
+        public string Remark { get; set; }
         public decimal DepositAmount { get; set; }
-        public int CategoryId { get; set;}
-        public int PackageId { get; set;}
-        public int SubCategoryId { get; set;}
+        public int CategoryId { get; set; }
+        public int? NoOfSitting { get; set; }
+        public int? DayInterval { get; set; }
+        public int PackageId { get; set; }
+        public int SubCategoryId { get; set; }
         public string AppointmentDateTime { get; set; }
         public string[] SelectedServices { get; set; }
         public List<BookCategoryViewModel> CategoryList { get; set; }
         public List<BookSubCategoryViewModel> SubCategoryList { get; set; }
-        public List<PBPackageMasterRtr_Result> PackageList { get; set; }
+        public List<BookPackageViewModel> PackageList { get; set; }
         public List<BookAppointmentDetailViewModel> BookAppointmentTable { get; set; }
-
+        public System.Data.DataTable mytable { get; set; }
     }
     public class BookSubCategoryViewModel
     {
-        public string SubcategoryId { get; set; }
-        public string SubcategoryName { get; set; }
+        public string SubCategoryId { get; set; }
+        public string SubCategoryName { get; set; }
         public string Amount { get; set; }
     }
     public class BookCategoryViewModel
@@ -51,17 +62,30 @@ namespace ParulBeautyCareViewModel.ViewModel
         public string CategoryId { get; set; }
         public string CategoryName { get; set; }
     }
+    public class BookPackageViewModel
+    {
+        public string PackageId { get; set; }
+        public string PackageName { get; set; }
+    }
     public class BookAppointmentDetailViewModel
     {
         public string IntePackageServiceId { get; set; }
         public string CategoryId { get; set; }
-        public string SubcategoryId { get; set; }
         public string PackageId { get; set; }
         public string AppointmentDateTime { get; set; }
+        public string NoOfSitting { get; set; }
         public string DayInterval { get; set; }
-        public string ServiceId { get; set; }
+        public string DoneBy { get; set; }
+        public string DoneDate { get; set; }
+        public int Amount { get; set; }
+        public string Discount { get; set; }
+        public string Remark { get; set; }
+        public string FinalAmount { get; set; }
+        public string CustomerName { get; set; }
+        public string SubCategoryId { get; set; }
         public string SubCategoryName { get; set; }
         public string CategoryName { get; set; }
+
 
     }
 }

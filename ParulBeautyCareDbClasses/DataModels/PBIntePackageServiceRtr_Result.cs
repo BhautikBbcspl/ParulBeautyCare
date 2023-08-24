@@ -22,5 +22,6 @@ namespace ParulBeautyCareDbClasses.DataModels
         public Nullable<bool> IsActive { get; set; }
         public Nullable<int> NoOfSitting { get; set; }
         public string DayInterval { get; set; }
+        public Nullable<decimal> PackageAmount { get; set; }
     }
 }
