@@ -866,28 +866,6 @@
             <Parameter Name="GSTPercentage" Mode="In" Type="String" />
             <Parameter Name="action" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="PBBookingDetailInsUpd" ReturnType="Collection(String)">
-            <Parameter Name="BookingDetailId" Mode="In" Type="String" />
-            <Parameter Name="BookingId" Mode="In" Type="String" />
-            <Parameter Name="CategoryId" Mode="In" Type="String" />
-            <Parameter Name="SubCategoryId" Mode="In" Type="String" />
-            <Parameter Name="AllocatedTo" Mode="In" Type="String" />
-            <Parameter Name="AllocationDate" Mode="In" Type="String" />
-            <Parameter Name="AppointmentDate" Mode="In" Type="String" />
-            <Parameter Name="AppointmentTime" Mode="In" Type="String" />
-            <Parameter Name="DoneBy" Mode="In" Type="String" />
-            <Parameter Name="DoneDate" Mode="In" Type="String" />
-            <Parameter Name="Amount" Mode="In" Type="String" />
-            <Parameter Name="Discount" Mode="In" Type="String" />
-            <Parameter Name="FinalAmount" Mode="In" Type="String" />
-            <Parameter Name="Status" Mode="In" Type="String" />
-            <Parameter Name="CreateDate" Mode="In" Type="String" />
-            <Parameter Name="CreateUser" Mode="In" Type="String" />
-            <Parameter Name="UpdateDate" Mode="In" Type="String" />
-            <Parameter Name="UpdateUser" Mode="In" Type="String" />
-            <Parameter Name="CustomerName" Mode="In" Type="String" />
-            <Parameter Name="Action" Mode="In" Type="String" />
-          </FunctionImport>
           <FunctionImport Name="PBBookingHeaderRtr" ReturnType="Collection(parulbeautycareModel.PBBookingHeaderRtr_Result)">
             <Parameter Name="BookingId" Mode="In" Type="String" />
             <Parameter Name="action" Mode="In" Type="String" />
@@ -978,6 +956,28 @@
             <Parameter Name="action" Mode="In" Type="String" />
             <Parameter Name="companycode" Mode="In" Type="String" />
             <Parameter Name="SubCategoryId" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="PBBookingDetailInsUpd" ReturnType="Collection(String)">
+            <Parameter Name="BookingDetailId" Mode="In" Type="String" />
+            <Parameter Name="BookingId" Mode="In" Type="String" />
+            <Parameter Name="CategoryId" Mode="In" Type="String" />
+            <Parameter Name="SubCategoryId" Mode="In" Type="String" />
+            <Parameter Name="AllocatedTo" Mode="In" Type="String" />
+            <Parameter Name="AllocationDate" Mode="In" Type="String" />
+            <Parameter Name="AppointmentDate" Mode="In" Type="String" />
+            <Parameter Name="AppointmentTime" Mode="In" Type="String" />
+            <Parameter Name="DoneBy" Mode="In" Type="String" />
+            <Parameter Name="DoneDate" Mode="In" Type="String" />
+            <Parameter Name="Amount" Mode="In" Type="String" />
+            <Parameter Name="Discount" Mode="In" Type="String" />
+            <Parameter Name="FinalAmount" Mode="In" Type="String" />
+            <Parameter Name="Status" Mode="In" Type="String" />
+            <Parameter Name="CreateDate" Mode="In" Type="String" />
+            <Parameter Name="CreateUser" Mode="In" Type="String" />
+            <Parameter Name="UpdateDate" Mode="In" Type="String" />
+            <Parameter Name="UpdateUser" Mode="In" Type="String" />
+            <Parameter Name="CustomerName" Mode="In" Type="String" />
+            <Parameter Name="Action" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="PBCategoryMasterRetrieve_Result">
@@ -1802,7 +1802,6 @@
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="PBSubCategoryMasterInsUpd" FunctionName="parulbeautycareModel.Store.PBSubCategoryMasterInsUpd" />
-          <FunctionImportMapping FunctionImportName="PBBookingDetailInsUpd" FunctionName="parulbeautycareModel.Store.PBBookingDetailInsUpd" />
           <FunctionImportMapping FunctionImportName="PBBookingHeaderRtr" FunctionName="parulbeautycareModel.Store.PBBookingHeaderRtr">
             <ResultMapping>
               <ComplexTypeMapping TypeName="parulbeautycareModel.PBBookingHeaderRtr_Result">
@@ -1966,6 +1965,7 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="PBBookingDetailInsUpd" FunctionName="parulbeautycareModel.Store.PBBookingDetailInsUpd" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

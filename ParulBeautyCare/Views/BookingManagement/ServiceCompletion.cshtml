@@ -212,7 +212,7 @@
                     tableBody.empty();
                     $.each(data.bdv, function (index, item) {
                         var row = $('<tr></tr>');
-                        if (item.Status == "2") {
+                        if (item.Status == "0") {
                             var BookingDetailCheckbox = $('<div class="form-check"><input type="checkbox" class="form-check-input booking-detail-checkbox" name="BookingDetailsId" value="' + item.BookingDetailId + '" checked disabled><label class="form-check-label"></label></div>');
                         } else {
                             var BookingDetailCheckbox = $('<div class="form-check"><input type="checkbox" class="form-check-input booking-detail-checkbox" name="BookingDetailsId" value="' + item.BookingDetailId + '"><label class="form-check-label"></label></div>');
@@ -230,7 +230,7 @@
                             var Status = $('<label class="badge badge-warning"></label>').text('Pending');
                         }
 
-                        else if (item.Status == "2"){
+                        else if (item.Status == "0"){
                             var Status = $('<label class="badge badge-success"></label>').text('Completed');
                         }
                       
@@ -263,6 +263,7 @@
             var formDataArray = [];
 
             $('#DetailTable tbody tr').each(function () {
+                debugger
                 var row = $(this);
                 var bookingDetailCheckbox = row.find('.booking-detail-checkbox');
                 var SubCategoryField = row.find('.sub-category');
@@ -282,7 +283,7 @@
                         BookingDetailId: bookingDetailId,
                         SubCategoryName: subCategoryName,
                         SubCategoryId: subCategoryID,
-                        StaffId: staffId,
+                        AllocatedTo: staffId,
                         BookingId: bookingid
                     };
 
@@ -293,7 +294,7 @@
             
 
             $.ajax({
-                url: "@System.Configuration.ConfigurationManager.AppSettings["myKey"]" + "/BookingManagement/ServiceComplition",
+                url: "@System.Configuration.ConfigurationManager.AppSettings["myKey"]" + "/BookingManagement/ServiceCompletion",
                 type: "POST",
                 contentType: "application/json",
                 data: JSON.stringify(formDataArray),

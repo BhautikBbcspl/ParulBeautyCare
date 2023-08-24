@@ -1387,91 +1387,6 @@ namespace ParulBeautyCareDbClasses.DataModels
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("PBSubCategoryMasterInsUpd", subCategoryIdParameter, subCategorynameParameter, categoryIdParameter, isMultiPersonParameter, numberOfPersonParameter, yearIdParameter, noOfSittingParameter, timeDuraionParameter, amountParameter, companyCodeParameter, activeStatusParameter, createdateParameter, updatedateParameter, createuserParameter, dayintervalParameter, incentiveParameter, gSTPercentageParameter, actionParameter);
         }
     
-        public virtual ObjectResult<string> PBBookingDetailInsUpd(string bookingDetailId, string bookingId, string categoryId, string subCategoryId, string allocatedTo, string allocationDate, string appointmentDate, string appointmentTime, string doneBy, string doneDate, string amount, string discount, string finalAmount, string status, string createDate, string createUser, string updateDate, string updateUser, string customerName, string action)
-        {
-            var bookingDetailIdParameter = bookingDetailId != null ?
-                new ObjectParameter("BookingDetailId", bookingDetailId) :
-                new ObjectParameter("BookingDetailId", typeof(string));
-    
-            var bookingIdParameter = bookingId != null ?
-                new ObjectParameter("BookingId", bookingId) :
-                new ObjectParameter("BookingId", typeof(string));
-    
-            var categoryIdParameter = categoryId != null ?
-                new ObjectParameter("CategoryId", categoryId) :
-                new ObjectParameter("CategoryId", typeof(string));
-    
-            var subCategoryIdParameter = subCategoryId != null ?
-                new ObjectParameter("SubCategoryId", subCategoryId) :
-                new ObjectParameter("SubCategoryId", typeof(string));
-    
-            var allocatedToParameter = allocatedTo != null ?
-                new ObjectParameter("AllocatedTo", allocatedTo) :
-                new ObjectParameter("AllocatedTo", typeof(string));
-    
-            var allocationDateParameter = allocationDate != null ?
-                new ObjectParameter("AllocationDate", allocationDate) :
-                new ObjectParameter("AllocationDate", typeof(string));
-    
-            var appointmentDateParameter = appointmentDate != null ?
-                new ObjectParameter("AppointmentDate", appointmentDate) :
-                new ObjectParameter("AppointmentDate", typeof(string));
-    
-            var appointmentTimeParameter = appointmentTime != null ?
-                new ObjectParameter("AppointmentTime", appointmentTime) :
-                new ObjectParameter("AppointmentTime", typeof(string));
-    
-            var doneByParameter = doneBy != null ?
-                new ObjectParameter("DoneBy", doneBy) :
-                new ObjectParameter("DoneBy", typeof(string));
-    
-            var doneDateParameter = doneDate != null ?
-                new ObjectParameter("DoneDate", doneDate) :
-                new ObjectParameter("DoneDate", typeof(string));
-    
-            var amountParameter = amount != null ?
-                new ObjectParameter("Amount", amount) :
-                new ObjectParameter("Amount", typeof(string));
-    
-            var discountParameter = discount != null ?
-                new ObjectParameter("Discount", discount) :
-                new ObjectParameter("Discount", typeof(string));
-    
-            var finalAmountParameter = finalAmount != null ?
-                new ObjectParameter("FinalAmount", finalAmount) :
-                new ObjectParameter("FinalAmount", typeof(string));
-    
-            var statusParameter = status != null ?
-                new ObjectParameter("Status", status) :
-                new ObjectParameter("Status", typeof(string));
-    
-            var createDateParameter = createDate != null ?
-                new ObjectParameter("CreateDate", createDate) :
-                new ObjectParameter("CreateDate", typeof(string));
-    
-            var createUserParameter = createUser != null ?
-                new ObjectParameter("CreateUser", createUser) :
-                new ObjectParameter("CreateUser", typeof(string));
-    
-            var updateDateParameter = updateDate != null ?
-                new ObjectParameter("UpdateDate", updateDate) :
-                new ObjectParameter("UpdateDate", typeof(string));
-    
-            var updateUserParameter = updateUser != null ?
-                new ObjectParameter("UpdateUser", updateUser) :
-                new ObjectParameter("UpdateUser", typeof(string));
-    
-            var customerNameParameter = customerName != null ?
-                new ObjectParameter("CustomerName", customerName) :
-                new ObjectParameter("CustomerName", typeof(string));
-    
-            var actionParameter = action != null ?
-                new ObjectParameter("Action", action) :
-                new ObjectParameter("Action", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("PBBookingDetailInsUpd", bookingDetailIdParameter, bookingIdParameter, categoryIdParameter, subCategoryIdParameter, allocatedToParameter, allocationDateParameter, appointmentDateParameter, appointmentTimeParameter, doneByParameter, doneDateParameter, amountParameter, discountParameter, finalAmountParameter, statusParameter, createDateParameter, createUserParameter, updateDateParameter, updateUserParameter, customerNameParameter, actionParameter);
-        }
-    
         public virtual ObjectResult<PBBookingHeaderRtr_Result> PBBookingHeaderRtr(string bookingId, string action, string companycode)
         {
             var bookingIdParameter = bookingId != null ?
@@ -1798,6 +1713,91 @@ namespace ParulBeautyCareDbClasses.DataModels
                 new ObjectParameter("SubCategoryId", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PBSubCategoryMasterRetrieve_Result>("PBSubCategoryMasterRetrieve", actionParameter, companycodeParameter, subCategoryIdParameter);
+        }
+    
+        public virtual ObjectResult<string> PBBookingDetailInsUpd(string bookingDetailId, string bookingId, string categoryId, string subCategoryId, string allocatedTo, string allocationDate, string appointmentDate, string appointmentTime, string doneBy, string doneDate, string amount, string discount, string finalAmount, string status, string createDate, string createUser, string updateDate, string updateUser, string customerName, string action)
+        {
+            var bookingDetailIdParameter = bookingDetailId != null ?
+                new ObjectParameter("BookingDetailId", bookingDetailId) :
+                new ObjectParameter("BookingDetailId", typeof(string));
+    
+            var bookingIdParameter = bookingId != null ?
+                new ObjectParameter("BookingId", bookingId) :
+                new ObjectParameter("BookingId", typeof(string));
+    
+            var categoryIdParameter = categoryId != null ?
+                new ObjectParameter("CategoryId", categoryId) :
+                new ObjectParameter("CategoryId", typeof(string));
+    
+            var subCategoryIdParameter = subCategoryId != null ?
+                new ObjectParameter("SubCategoryId", subCategoryId) :
+                new ObjectParameter("SubCategoryId", typeof(string));
+    
+            var allocatedToParameter = allocatedTo != null ?
+                new ObjectParameter("AllocatedTo", allocatedTo) :
+                new ObjectParameter("AllocatedTo", typeof(string));
+    
+            var allocationDateParameter = allocationDate != null ?
+                new ObjectParameter("AllocationDate", allocationDate) :
+                new ObjectParameter("AllocationDate", typeof(string));
+    
+            var appointmentDateParameter = appointmentDate != null ?
+                new ObjectParameter("AppointmentDate", appointmentDate) :
+                new ObjectParameter("AppointmentDate", typeof(string));
+    
+            var appointmentTimeParameter = appointmentTime != null ?
+                new ObjectParameter("AppointmentTime", appointmentTime) :
+                new ObjectParameter("AppointmentTime", typeof(string));
+    
+            var doneByParameter = doneBy != null ?
+                new ObjectParameter("DoneBy", doneBy) :
+                new ObjectParameter("DoneBy", typeof(string));
+    
+            var doneDateParameter = doneDate != null ?
+                new ObjectParameter("DoneDate", doneDate) :
+                new ObjectParameter("DoneDate", typeof(string));
+    
+            var amountParameter = amount != null ?
+                new ObjectParameter("Amount", amount) :
+                new ObjectParameter("Amount", typeof(string));
+    
+            var discountParameter = discount != null ?
+                new ObjectParameter("Discount", discount) :
+                new ObjectParameter("Discount", typeof(string));
+    
+            var finalAmountParameter = finalAmount != null ?
+                new ObjectParameter("FinalAmount", finalAmount) :
+                new ObjectParameter("FinalAmount", typeof(string));
+    
+            var statusParameter = status != null ?
+                new ObjectParameter("Status", status) :
+                new ObjectParameter("Status", typeof(string));
+    
+            var createDateParameter = createDate != null ?
+                new ObjectParameter("CreateDate", createDate) :
+                new ObjectParameter("CreateDate", typeof(string));
+    
+            var createUserParameter = createUser != null ?
+                new ObjectParameter("CreateUser", createUser) :
+                new ObjectParameter("CreateUser", typeof(string));
+    
+            var updateDateParameter = updateDate != null ?
+                new ObjectParameter("UpdateDate", updateDate) :
+                new ObjectParameter("UpdateDate", typeof(string));
+    
+            var updateUserParameter = updateUser != null ?
+                new ObjectParameter("UpdateUser", updateUser) :
+                new ObjectParameter("UpdateUser", typeof(string));
+    
+            var customerNameParameter = customerName != null ?
+                new ObjectParameter("CustomerName", customerName) :
+                new ObjectParameter("CustomerName", typeof(string));
+    
+            var actionParameter = action != null ?
+                new ObjectParameter("Action", action) :
+                new ObjectParameter("Action", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("PBBookingDetailInsUpd", bookingDetailIdParameter, bookingIdParameter, categoryIdParameter, subCategoryIdParameter, allocatedToParameter, allocationDateParameter, appointmentDateParameter, appointmentTimeParameter, doneByParameter, doneDateParameter, amountParameter, discountParameter, finalAmountParameter, statusParameter, createDateParameter, createUserParameter, updateDateParameter, updateUserParameter, customerNameParameter, actionParameter);
         }
     }
 }

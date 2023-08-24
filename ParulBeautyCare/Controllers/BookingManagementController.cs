@@ -854,7 +854,7 @@ namespace ParulBeautyCare.Controllers
 
                 BookingDetailViewModel bdv = new BookingDetailViewModel();
                 bdv.CompanyCode = LoggedUserDetails.CompanyCode;
-                bdv.Action = "all";
+                bdv.Action = "Pending";
                 BookingHeaderViewModel bhv = new BookingHeaderViewModel();
                 var BookingHeaderList = ApiCall.PostApi("BookingHeaderRetrieve", Newtonsoft.Json.JsonConvert.SerializeObject(bdv));
                 bhv = JsonConvert.DeserializeObject<BookingHeaderViewModel>(BookingHeaderList);
@@ -893,7 +893,7 @@ namespace ParulBeautyCare.Controllers
                 bdv.UpdateUser = LoggedUserDetails.UserName;
                 bdv.CompanyCode = LoggedUserDetails.CompanyCode;
                 bdv.Action = "serviceDone";
-                bdv.Status = "2";
+                bdv.Status = "0";
                 bdv.SubCategoryId = formDataItem.SubCategoryId;
                 var bookdetail = ApiCall.PostApi("BookingDetailInsUpd", Newtonsoft.Json.JsonConvert.SerializeObject(bdv));
                 bdv = JsonConvert.DeserializeObject<BookingDetailViewModel>(bookdetail);
