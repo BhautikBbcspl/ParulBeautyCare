@@ -72,41 +72,13 @@
                             </div>
                             <div class="col-sm-12 col-md-4 col-lg-3">
                                 <label class="col-form-label">
-                                    Deposit Amount
-                                    @Html.ValidationMessageFor(m => m.DepositAmount, "", new { @class = "text-danger h3" })
-                                </label>
-                                @Html.TextBoxFor(m => m.DepositAmount, new Dictionary<string, object>() {
-                                                                            {"id","txtDepositAmount"},
-                                                                            {"class","form-control"},
-                                                                            {"autocomplete","off"},
-                                                                            {"required","required"},
-                                                                            {"placeholder","Enter Deposit Amount"}
-                                                                            })
-                            </div>
-                            <div class="col-sm-12 col-md-4 col-lg-3">
-                                <label class="col-form-label">
-                                    Total Amount
-                                    @*@Html.ValidationMessageFor(m => m.BookingAmount, "", new { @class = "text-danger h3" })*@
-                                </label>
-                                @Html.TextBoxFor(m => m.BookingAmount, new Dictionary<string, object>() {
-                                                                            {"id","txtTotal"},
-                                                                            {"class","form-control"},
-                                                                            {"autocomplete","off"},
-                                                                            //{"required","required"},
-                                                                            {"readonly","readonly" }
-                                                                            })
-                            </div>
-
-                            <div class="col-sm-12 col-md-4 col-lg-3">
-                                <label class="col-form-label">
                                     Function Date
                                     @Html.ValidationMessageFor(m => m.FunctionDate, "", new { @class = "text-danger h3" })
                                 </label>
-                                <div class="input-group date">
+                                <div class="input-group">
                                     @Html.TextBoxFor(m => m.FunctionDate, new Dictionary<string, object>() {
                                                                                 {"id","txtFunctionDate"},
-                                                                                {"class","form-control dateflat"},
-                                                                                {"autocomplete","off"},
+                                                                                {"class","form-control"},
                                                                                 {"required","required"},
                                                                                 {"placeholder","Select Function Date"}
                                                                                 })
@@ -139,6 +111,41 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="col-sm-12 col-md-4 col-lg-3" style="margin-top: auto">
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input type="checkbox" name="selfPage" id="selfPage" value="true" class="form-check-input" @(Model.IsEMI ? "checked" : "")>
+                                        Is EMI
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4 col-lg-3">
+                                <label class="col-form-label">
+                                    Deposit Amount
+                                    @Html.ValidationMessageFor(m => m.DepositAmount, "", new { @class = "text-danger h3" })
+                                </label>
+                                @Html.TextBoxFor(m => m.DepositAmount, new Dictionary<string, object>() {
+                                                                            {"id","txtDepositAmount"},
+                                                                            {"class","form-control"},
+                                                                            {"autocomplete","off"},
+                                                                            {"required","required"},
+                                                                            {"placeholder","Enter Deposit Amount"}
+                                                                            })
+                            </div>
+                            <div class="col-sm-12 col-md-4 col-lg-3">
+                                <label class="col-form-label"> 
+                                    Total Amount
+                                    @*@Html.ValidationMessageFor(m => m.BookingAmount, "", new { @class = "text-danger h3" })*@
+                                </label>
+                                @Html.TextBoxFor(m => m.BookingAmount, new Dictionary<string, object>() {
+                                                                            {"id","txtTotal"},
+                                                                            {"class","form-control"},
+                                                                            {"autocomplete","off"},
+                                                                            //{"required","required"},
+                                                                            {"readonly","readonly" }
+                                                                            })
+                            </div>
+
                             <div class="col-sm-12 col-md-4 col-lg-3">
                                 <label class="col-form-label">Service Type</label>
                                 @Html.DropDownListFor(x => x.AppointmentType, new List<SelectListItem>
@@ -221,8 +228,9 @@
                                     </td>
                                     <td style="display:none">
                                         @Html.EditorFor(model => model.Amount, new { htmlAttributes = new { @class = "form-control total", @readonly = "readonly", @id = "Price", autocomplete = "off", required = "required" } })
-                                    </td>
+                                        @Html.HiddenFor(model => model.IntePackageServiceId, new { htmlAttributes = new { @class = "form-control total", @readonly = "readonly", @id = "Price" } })
 
+                                    </td>
                                     @*<td>
                                             @Html.EditorFor(model => model.BookingAmount, new { htmlAttributes = new { @class = "form-control total", @readonly = "readonly", @id = "Price", autocomplete = "off" } })
                                         </td>*@
@@ -415,6 +423,7 @@
                         $('#Price').val(page);
                         $('#NoOfSitting').val(sitting);
                         $('#DayInterval').val(Intervals);
+                        $('#IntePackageServiceId').val(0);
                         calculateTotal();
                     },
                     error: function (reponse)
@@ -422,6 +431,7 @@
                         $('#Price').val(0);
                         $('#NoOfSitting').val('');
                         $('#DayInterval').val('');
+                        $('#IntePackageServiceId').val(0);
                     }
             });
         }
@@ -430,6 +440,7 @@
             $('#Price').val(0);
             $('#NoOfSitting').val('');
             $('#DayInterval').val('');
+            $('#IntePackageServiceId').val(0);
             calculateTotal();
         }
     }
@@ -453,11 +464,14 @@
         //});
 
         //flatpickrInput.parentNode.insertBefore(appointmentIcon, flatpickrInput.nextSibling);
-
+        $("#txtFunctionDate").flatpickr({
+            dateFormat: "d-m-Y",
+            minDate: "today"
+        });
 
         $(document).on("click", ".classAdd", function () {
             debugger
-            // Fill Up Dropdown
+            // Fill Up Dropdown 
             CategoryList = JSON.parse('@Html.Raw(Json.Encode(Model.CategoryList))');
             SubCategoryList = JSON.parse('@Html.Raw(Json.Encode(Model.SubCategoryList))');
             var CategoryOptions = '';
@@ -505,7 +519,7 @@
                 '<select name="SubCategoryId" id="SubCategoryDropdown' + rowCount + '" onchange="javascript:GetRowSubCategoryId(this.value,' + rowCount + ')" class="form-control form-select selectDropdown w-100" style="width: 250px; !important" required>' +
                 SubCategoryOptions +
                 '</select></td>' +
-                '<td> <input type="text" name="NoOfSitting" id="NoOfSitting"' + rowCount + '" class="form-control" readonly="readonly" required/> </td> ' + '<td> <input type="text" name="DayInterval" id="DayInterval"' + rowCount + '" class="form-control" readonly="readonly" required/> </td> ' + '<td> <input type="text" name="Remark" id="Remark"' + rowCount + '" class="form-control"/><input type="text" name="Price" id="Price' + rowCount + '" class="form-control total" readonly="readonly"  hidden required/> </td> ' +
+                '<td> <input type="text" name="NoOfSitting" id="NoOfSitting"' + rowCount + '" class="form-control" readonly="readonly" required/> </td> ' + '<td> <input type="text" name="DayInterval" id="DayInterval"' + rowCount + '" class="form-control" readonly="readonly" required/> </td> ' + '<td> <input type="text" name="Remark" id="Remark"' + rowCount + '" class="form-control"/><input type="text" name="Price" id="Price' + rowCount + '" class="form-control total" readonly="readonly"  hidden required/><input type="text" name="IntePackageServiceId" id="IntePackageServiceId' + rowCount + '" class="form-control total" readonly="readonly"  hidden required/> </td> ' +
                 '<td>' +
                 '<button type="button" class="btn btn-sm btn-primary classAdd mx-1"> <i class="fa fa-plus-square" aria-hidden="true"></i> </button>' +
                 '<button type="button" class="btn btn-sm btn-danger deleteContact"><i class="fa fa-trash" aria-hidden="true"></i></button>' +
@@ -678,6 +692,7 @@
                         $row.find("input[name='Price']").val(selectedPrice);
                         $row.find("input[name='NoOfSitting']").val(NoOfSitting);
                         $row.find("input[name='DayInterval']").val(Intervals);
+                        $row.find("input[name='IntePackageServiceId']").val(0);
                         $row.find("select[name='SubCategoryId'] option:selected").text(selectedSubcategory);
                         calculateTotal();
                     }
@@ -749,6 +764,7 @@
                     $('#Price').val(0);
                     $('#NoOfSitting').val('');
                     $('#DayInterval').val('');
+                    $('#IntePackageServiceId').val(0);
                     calculateTotal();
                 },
                 error: function (reponse) {
@@ -844,8 +860,6 @@
                 success:
                     function (data)
                     {
-                        debugger
-
                         var tableBody = $('#PackageBody');
                         tableBody.empty();
                         if (data.length === 0)
@@ -873,11 +887,10 @@
 
                             $.each(data.sittingList, function (index, item)
                             {
-                                debugger
                                 var contactdiv = '<tr class="data-contact-person2 newRow' + rowCount + '">' +
                                     '<td><input type="text" name="CategoryName" class="form-control" value="' + item.CategoryName + '" readonly="readonly" autocomplete="off" /><input type="text" name="CategoryId" id="CategoryDropdown" class="form-control text-center" value="' + item.CategoryId + '" hidden/> </td> ' +
                                     '<td><input type="text" name="SubCategoryName" class="form-control" value="' + item.SubCategoryName + '" readonly="readonly" autocomplete="off" /><input type="text" name="SubCategoryId" id="SubCategoryDropdown" class="form-control text-center" value="' + item.SubCategoryId + '" hidden/> </td> ' +
-                                    '<td>' + '<input type="text" name="NoOfSitting" id="NoOfSitting" value="' + item.NoOfSitting + '" class="form-control" readonly = "readonly" />' + '</td>' + '<td>' + '<input type="text" name="DayInterval" id="DayInterval" value="' + item.DayInterval + '" class="form-control" readonly = "readonly" required/>' + '</td>' + '<td>' + '<input type="text" name="Remark" id="Remark" value="'+ item.Remark + '" class="form-control"  />' + '</td>'+
+                                    '<td>' + '<input type="text" name="NoOfSitting" id="NoOfSitting" value="' + item.NoOfSitting + '" class="form-control" readonly = "readonly" />' + '</td>' + '<td>' + '<input type="text" name="DayInterval" id="DayInterval" value="' + item.DayInterval + '" class="form-control" readonly = "readonly" required/>' + '</td>' + '<td>' + '<input type="text" name="Remark" id="Remark" value="' + item.Remark + '" class="form-control"  /><input type="text" name="IntePackageServiceId" id="IntePackageServiceId" value="' + item.IntePackageServiceId + '" class="form-control" readonly hidden/>' + '</td>'+
                                 '<td>' + '<button type="button" class="btn btn-sm btn-primary classAdd2 mx-1"><i class="fa fa-plus-square" aria-hidden="true"></i></button>' +
                                 '<button type="button" style="display:none" class="btn btn-sm btn-danger deleteContact2"><i class="fa fa-trash" aria-hidden="true"></i></button>' +
                                 '</td>' +
@@ -890,7 +903,6 @@
                                 rowCount++;
                             });
                             $(document).on("click", ".deleteContact2", function () {
-                                    debugger
                                 var $row = $(this).closest("tr");
                                 var rowJson = getRowJson(this);
                                 if (!rowJson) {
@@ -913,12 +925,17 @@
                     error: function (reponse)
                     {
                         var page = "Select Service"; $('#Price').html(page);
+                        individualFieldset1.style.display = "none";
+                        $('#txtTotal').val(0);
                     }
             });
         }
         else
         {
             var page = "Select Service"; $('#Price').html(page);
+            individualFieldset1.style.display = "none";
+            $('#txtTotal').val(0);
+
         }
     }
     //$('#Maintable').on('change', '.total', function () {
@@ -952,7 +969,6 @@
                             CategoryList[i].CategoryName +
                     '</option>';
             }
-
             SubCategoryOptions += '<option value="">Select SubCategory</option>';
                     for (var i = 0; i < SubCategoryList.length; i++) {
                         SubCategoryOptions += '<option value="' + SubCategoryList[i].SubCategoryId + '">' +
@@ -967,7 +983,7 @@
                         '<td>' +
                         '<select name="SubCategoryId" id="SubCategoryDropdown' + rowCount + '" onchange="javascript:GetRowSubCategoryId(this.value,' + rowCount + ')" class="form-control form-select js-example-basic-single w-100" style="width: 250px; !important" required>' +
                         SubCategoryOptions +
-                        '</select></td>' + '<td> <input type="text" name="NoOfSitting" id="NoOfSitting' + rowCount + '" class="form-control" readonly = "readonly" required/> </td> ' + '<td> <input type="text" name="DayInterval" id="DayInterval' + rowCount + '" class="form-control" readonly = "readonly" required/></td> ' + '<td> <input type="text" name="Remark" id="Remark' + rowCount + '" class="form-control"/><input type="text" name="Price" id="Price' + rowCount + '" class="form-control total1" readonly="readonly" hidden required/> </td>' +
+                        '</select></td>' + '<td> <input type="text" name="NoOfSitting" id="NoOfSitting' + rowCount + '" class="form-control" readonly = "readonly" required/> </td> ' + '<td> <input type="text" name="DayInterval" id="DayInterval' + rowCount + '" class="form-control" readonly = "readonly" required/></td> ' + '<td> <input type="text" name="Remark" id="Remark' + rowCount + '" class="form-control"/><input type="text" name="Price" id="Price' + rowCount + '" class="form-control total1" readonly="readonly" hidden required/><input type="text" name="IntePackageServiceId" id="IntePackageServiceId' + rowCount + '" class="form-control total1" readonly="readonly" hidden required/> </td>' +
                         '<td>' +
                         '<button type="button" class="btn btn-sm btn-primary classAdd2 mx-1"> <i class="fa fa-plus-square" aria-hidden="true"></i> </button>' +
                         '<button type="button" class="btn btn-sm btn-danger deleteContact2"><i class="fa fa-trash" aria-hidden="true"></i></button>' +
@@ -1134,6 +1150,7 @@
                     return false;  // Exit the loop
                 }
                 MainData.Remark = row.find("td:eq(4) input[name='Remark']").val();
+                MainData.IntePackageServiceId = row.find("td:eq(4) input[name='IntePackageServiceId']").val();
 
                 BookAppointment.push(MainData);
             });
@@ -1187,6 +1204,7 @@
                     return false;  // Exit the loop
                 }
                 MainData2.Remark = row.find("td:eq(4) input[name='Remark']").val();
+                MainData2.IntePackageServiceId = row.find("td:eq(4) input[name='IntePackageServiceId']").val();
 
                 BookAppointment.push(MainData2);
             });

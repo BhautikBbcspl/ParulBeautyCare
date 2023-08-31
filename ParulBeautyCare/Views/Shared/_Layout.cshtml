@@ -407,7 +407,8 @@
                 dateFormat: "d-m-Y H:i"
             });
             $(".dateflat").flatpickr({
-                dateFormat: "d-m-Y"
+                dateFormat: "d-m-Y",
+
             });
             $('.timepicker').flatpickr({
                 enableTime: true, // Set this to enable time selection
@@ -423,6 +424,7 @@
                 dateFormat: "d-m-Y",
                 maxDate: "today",
                 onClose: function (selectedDates, dateStr, instance) {
+                    debugger
                     if (selectedDates.length > 0) {
                         var selectedDate = selectedDates[0];
                         $(".rangeDates").not(instance.element).flatpickr({

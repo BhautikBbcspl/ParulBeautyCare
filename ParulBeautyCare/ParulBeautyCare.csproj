@@ -137,6 +137,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\BookingManagementController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\InvoiceController.cs" />
     <Compile Include="Controllers\MasterController.cs" />
     <Compile Include="Controllers\StaffManagementController.cs" />
     <Compile Include="Controllers\StockManagementController.cs" />
@@ -2836,6 +2837,7 @@
     <Content Include="Views\Home\Enquiry.cshtml" />
     <Content Include="Views\Home\ViewEnquiry.cshtml" />
     <Content Include="Views\StockManagement\ViewStockAllocatedToStaff.cshtml" />
+    <Content Include="Views\Invoice\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

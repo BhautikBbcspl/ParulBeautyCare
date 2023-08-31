@@ -50,6 +50,7 @@
     <Compile Include="ViewModel\BookingMgmtViewModel\BookingStaffAllocationViewModel.cs" />
     <Compile Include="ViewModel\BookingMgmtViewModel\CheckInCheckOutViewModel.cs" />
     <Compile Include="ViewModel\EnquiryViewModel.cs" />
+    <Compile Include="ViewModel\InvoiceMgmtViewModel\InvoiceDetailViewModel.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\Master\IntePackageServiceMasterViewModel.cs" />
     <Compile Include="ViewModel\Master\InteServiceProductMasterViewModel.cs" />

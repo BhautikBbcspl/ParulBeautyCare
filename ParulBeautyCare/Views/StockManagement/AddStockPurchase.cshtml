@@ -101,8 +101,6 @@
                         </div>
                         <div class="col-sm-3">
                             <label class="col-form-label">Expiry Date @Html.ValidationMessageFor(m => m.ExpDate, "", new { @class = "text-danger h3" })</label>
-
-
                             <div class="input-group date">
                                 @Html.TextBoxFor(model => model.ExpDate, new { @class = "form-control rangeDates", id = "ExpDate", placeholder = "Expiry Date", required = "required" })
                                 <div class="input-group-append d-flex">
@@ -115,7 +113,6 @@
                         </div>
                         <div class="col-sm-3">
                             <label class="col-form-label">Quantity @Html.ValidationMessageFor(m => m.Quantity, "", new { @class = "text-danger h3" })</label>
-
                             @Html.TextBoxFor(model => model.Quantity, new { @class = "form-control numberonly", id = "Quantity", placeholder = "Enter Quantity", required = "required" })
                         </div>
                         <div class="col-sm-3">

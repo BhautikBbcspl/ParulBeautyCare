@@ -1,0 +1,260 @@
+﻿@model ParulBeautyCareViewModel.ViewModel.InvoiceMgmtViewModel.InvoiceDetailViewModel
+@{
+    ViewBag.Title = "Invoice";
+    ViewBag.Module = "Parul Beauty Care";
+}
+<div class="content-wrapper">
+    <div class="row">
+        <div class="col-12 grid-margin">
+            <div class="card">
+                <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+                    <div class="bg-gradient-pinkHeader shadow-primary border-radius-lg pt-3 d-flex justify-content-between row">
+                        <h2 class="text-white text-capitalize ps-3 title_margin col-md-6 mb-3"><b>Invoice</b></h2>
+
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row form-group">
+                        <div class="col-sm-3">
+                            <label class="col-form-label">
+                                Select Department
+                                @Html.ValidationMessageFor(m => m.DepartmentId, "", new { @class = "text-danger h3" })
+                            </label>
+
+                            <div class="input-group input-group-outline mb-3">
+                                @Html.DropDownListFor(m => m.DepartmentId, new SelectList(Model.DeptList, "DepartmentId", "DepartmentName"), "Select Department",
+                                    new Dictionary<string, object>() {
+                                               {"id","ddlDeptId"},
+                                               { "class","form-control form-select js-example-basic-single w-100"}
+                                        })
+                            </div>
+                        </div>
+
+                        <div class="col-sm-3">
+                            <label class="col-form-label">Billing Date  @Html.ValidationMessageFor(m => m.BillDate, "", new { @class = "text-danger h3" })</label>
+
+                            <div class="input-group date">
+                                @Html.TextBoxFor(model => model.BillDate, new { @class = "form-control dateflat", id = "BillDate", placeholder = "Billing Date", required = "required" })
+                                <div class="input-group-append d-flex">
+                                    <!-- Use d-flex class for flexbox behavior -->
+                                    <span class="input-group-text" id="datepickerIcon" style="color: #212529 !important; border: 1px solid #ced4da !important; ">
+                                        <i class="fa fa-calendar"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-sm-3">
+                            <label class="col-form-label">Invoice Number @Html.ValidationMessageFor(m => m.BillingCode, "", new { @class = "text-danger h3" })</label>
+
+                            @Html.TextBoxFor(model => model.BillingCode, new { @class = "form-control", id = "BillingCode", placeholder = "Enter Billing Code", required = "required" })
+                        </div>
+
+                        <div class="col-sm-3">
+                            <label class="col-form-label">
+                                Select Booking
+                                @Html.ValidationMessageFor(m => m.BillingId, "", new { @class = "text-danger h3" })
+                            </label>
+
+                            <div class="input-group input-group-outline mb-3">
+                                @Html.DropDownListFor(m => m.BillingId, new SelectList(Model.DoneBookingsList, "BookingId", "CustomerName"), "Select Booking",
+                                    new Dictionary<string, object>() {
+                                               {"id","ddldonebookings"},
+                                               { "class","form-control form-select js-example-basic-single w-100"} ,
+                                        {"onchange" ,"javascript:GetDetailData(this.value)" }
+                                        })
+                            </div>
+                        </div>
+
+                        <div class="col-sm-3">
+                            <label class="col-form-label">Discount</label>
+
+
+                            <div class="input-group date">
+                                @Html.TextBoxFor(model => model.DiscountPerc, new { @class = "form-control numberonly", id = "Discount", placeholder = "Enter Discount in Percentage" })
+
+                                <div class="input-group-append d-flex">
+                                    <span class="input-group-text" style="color: #212529 !important; border: 1px solid #ced4da !important; ">
+                                        <i class="fa fa-percentage"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-3">
+                            <label class="col-form-label">Advance</label>
+                            @Html.TextBoxFor(model => model.PaidAmount, new { @class = "form-control numberonly", id = "PaidAmount", placeholder = "Enter Advance Amount" })
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card px-2">
+                <div class="card-body">
+                    <div class="container-fluid">
+                        <h3 class="text-end my-5">Invoice No : <span id="invNo"></span></h3>
+                        <hr>
+                    </div>
+                    <div class="container-fluid d-flex justify-content-between">
+                        <div class="col-lg-3 pl-0">
+                            <b><p id="billDept"></p></b>
+                            <p>A-201,<br>Nilkanth Residency, B/s. Patcon House,<br>Nr. Siddhi Vinayak Temple, 80 Feet Road,<br />Anand - 388001</p>
+                        </div>
+                        <div class="col-lg-3 pr-0">
+                            <p class="mt-5 mb-2 text-end"><b>Invoice to</b></p>
+                            <b><p class="text-end" id="custName">Name</p></b>
+                            <p class="text-end" id="custNo">Contact No</p>
+                            <p class="text-end" id="custAdd">Address</p>
+                        </div>
+                    </div>
+                    <div class="container-fluid d-flex justify-content-between">
+                        <div class="col-lg-3 pl-0">
+                            <p class="mb-0 mt-5">Invoice Date : <span id="invoiceDateDisplay"></span> </p>
+
+                        </div>
+                    </div>
+                    <div class="container-fluid mt-5 d-flex justify-content-center w-100">
+                        <div class="table-responsive w-100">
+
+                            <table class="table" id="billTable">
+                                <thead>
+                                    <tr class="bg-dark text-white">
+                                        <th>#</th>
+                                        <th>Particulars</th>
+                                        <th class="text-end">Quantity</th>
+                                        <th class="text-end">Rate</th>
+                                        <th class="text-end">Amount</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="container-fluid mt-5 w-100">
+                        <p class="text-end mb-2">Total : <span id="total">00.00</span></p>
+                        <p class="text-end">Discount :  <span id="discount">00.00</span></p>
+                        <p class="text-end">Advance :  <span id="advance">00.00</span></p>
+                        <span id="hdnGTotal"></span>
+                        <h4 class="text-end mb-5">Grand Total :  <span id="grandtotal">00.00</span></h4>
+                        <hr>
+                    </div>
+                    <div class="container-fluid w-100">
+                        <a href="#" class="btn btn-primary float-right mt-4 ms-2"><i class="typcn typcn-printer me-1"></i>Print</a>
+                        <a href="#" class="btn btn-success float-right mt-4"><i class="typcn typcn-social-tumbler me-1"></i>Send Invoice</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+    <script>
+        $(document).ready(function () {
+            var dropdown = $("#ddlDeptId");
+            var paragraph = $("#billDept");
+
+            dropdown.on("change", function () {
+                var selectedText = $(this).find("option:selected").text();
+                paragraph.text(selectedText);
+            });
+
+            //text reflect
+            $("#BillDate").on("input", function () {
+                var inputValue = $(this).val();
+                $("#invoiceDateDisplay").text(inputValue);
+            });
+
+            $("#BillingCode").on("input", function () {
+                var inputValue = $(this).val();
+                $("#invNo").text(inputValue);
+            });
+
+            $("#Discount").on("input", function () {
+                debugger
+                var discountPercentage = $(this).val();
+                var DiscValue = parseInt(discountPercentage);
+
+                var totalText = $("#total").text();
+                var totalValue = parseInt(totalText);
+
+                var discountAmount = (totalValue * DiscValue) / 100;
+                var discountedTotal = totalValue - discountAmount;
+
+                $("#grandtotal").text(discountedTotal);
+                $("#hdnGTotal").text(discountedTotal);
+            });
+
+            $("#PaidAmount").on("input", function () {
+                debugger
+                var paidamt = $(this).val();
+                var paidValue = parseInt(paidamt);
+
+                var totalText = $("#hdnGTotal").text();
+                var totalValue = parseInt(totalText);
+
+
+                var result = totalValue - paidValue;
+
+                $("#grandtotal").text(result);
+            });
+        });
+    </script>
+
+    <script>
+    function GetDetailData(_BookingHeaderId) {
+        $.ajax({
+            url: "@System.Configuration.ConfigurationManager.AppSettings["myKey"]" + "/Invoice/BookingDetailRTR",
+            data: { BookingHeaderId: _BookingHeaderId },
+            cache: false,
+            type: "POST",
+            datatype: "json",
+            traditional: true,
+            success:
+                function (data) {
+                    debugger
+                    $.each(data.bhv, function (index, item) {
+                        var customerName = item.CustomerName;
+                        var contactNo = item.ContactNo;
+                        var Address = item.Address;
+                        $('#custName').text(customerName);
+                        $('#custNo').text(contactNo);
+                        $('#custAdd').text(Address);
+                    })
+
+
+                    /**/
+                    var tableBody = $('#billTable tbody');
+                    tableBody.empty();
+                    var total = 0;
+                        $.each(data.bdv, function (index, item) {
+                            var row = $('<tr class="text-end"></tr>');
+                            var SrNo = $('<td class="text-left"></td>').append('1');
+                            var SubCategoryNameCell = $('<td></td>').append(item.SubCategoryName);
+                            var Quantity = $('<td class="text-left"></td>').append('-');
+                            var Rate = $('<td></td>').append(item.Amount);
+                            var Amount = $('<td></td>').append(item.Amount);
+
+                            total += item.Amount;
+                            row.append(SrNo, SubCategoryNameCell, Quantity, Rate, Amount);
+                            tableBody.append(row);
+
+                        });
+                    $('#total').text(total);
+                    $("#grandtotal").text(total);
+                    /**/
+
+
+                },
+            error: function (error) {
+                    SweetAlert(error.Message, error.Type);
+                }
+        })
+    }
+    </script>

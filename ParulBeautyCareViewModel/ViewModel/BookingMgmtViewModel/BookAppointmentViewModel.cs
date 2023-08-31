@@ -13,15 +13,15 @@ namespace ParulBeautyCareViewModel.ViewModel
         public int Id { get; set; }
         public string Number { get; set; }
         public string Date { get; set; }
-        [Required(ErrorMessage = "Please enter Customer Name.")]
+        [Required(ErrorMessage = "*")]
         public string CustomerName { get; set; }
-        [Required(ErrorMessage = "Please enter ContactNo.")]
-        [RegularExpression(@"^\d{10}$", ErrorMessage = "Invalid Contact number.")]
+        [Required(ErrorMessage = "*")]
+        [RegularExpression(@"^\d{10}$", ErrorMessage = "Invalid Contact.")]
         public string ContactNo { get; set; }
 
-        [Required(ErrorMessage = "Please enter Address.")]
+        [Required(ErrorMessage = "*")]
         public string Address { get; set; }
-        [Required(ErrorMessage = "Please Select Function Date.")]
+        [Required(ErrorMessage = "*")]
         public string FunctionDate { get; set; }
         public string BookingAmount { get; set; }
         public string Amount { get; set; }
@@ -42,6 +42,8 @@ namespace ParulBeautyCareViewModel.ViewModel
         public int? NoOfSitting { get; set; }
         public int? DayInterval { get; set; }
         public int PackageId { get; set; }
+        public bool IsEMI { get; set; }
+        public int IntePackageServiceId { get; set; }
         public int SubCategoryId { get; set; }
         public string AppointmentDateTime { get; set; }
         public string[] SelectedServices { get; set; }
