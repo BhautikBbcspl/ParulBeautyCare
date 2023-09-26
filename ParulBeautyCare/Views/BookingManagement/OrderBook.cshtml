@@ -12,15 +12,6 @@
         line-height: 0.75rem !important;
     }
 
-    .design_card {
-        border: 2px solid #f32a6e;
-        background-color: #f2125e00;
-        transform: perspective(1000px) rotateY(0deg);
-        transition: transform 0.5s ease;
-        border-radius: 10px;
-        box-shadow: 0 0 15px 15px #f2125e78;
-    }
-
     .content-wrapper {
         background-color: #f0f0f0;
         padding: 20px;
@@ -87,7 +78,7 @@
                                             <p><i class="fa-solid fa-envelope fa-xl mx-2"></i><span>paruls.beautycare@gmail.com</span></p>
                                         </div>
                                         <div class="col-lg-7 pr-0">
-                                            <img id="logoImage" style="float:right !important">
+                                            <img id="logoImage" src="~/Images/pb_logo.png" width="350" height="110" style="float:right !important">
                                         </div>
                                     </div>
                                     <hr />
@@ -121,7 +112,7 @@
                                         <p><b><span>૬. વાળ તથા બ્રોચને જુદા જુદા પરત કરવા.</span></b></p>
                                         <p><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Please pack hair extensions (wigs) and broached separately.</span></p>
                                         <p><b><span>૭. એસેસરીઝ તૈયાર થયાના બીજે દિવસે જ પરત કરવાની રહેશે નહી તો એકસ્ટ્રા ચાર્જ આપવાનો રહેશે.</span></b></p>
-                                        <p><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;We request you to return the accessories the very next day of your event. If you fail to do so,<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;we would be liable to take extra charges for delay.</span></p>
+                                        <p><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;We request you to return the accessories the very next day of your event. If you fail to do so,<br /><br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;we would be liable to take extra charges for delay.</span></p>
                                         <p><b><span>૮. એસેસરીઝ ખરાબ થતા અથવા તુટતા ચાર્જ આપવાનો રહેશે.</span></b></p>
                                         <p><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;In case of damage to the accessories you will be liable to pay extra charges.</span></p>
                                         <p><b><span>૯. તમારા કોઈપણ કિંમતી સામાનની જવાબદારી આમારી રહેશે નહીં.</span></b></p>
@@ -162,7 +153,7 @@
     </div>
 </div>
 <script>
-    $(document).ready(function () {
+    @*$(document).ready(function () {
         var logoImage = $('#logoImage');
         var width, height;
         var deptAbrv = "@Model.BookingHeaderList.FirstOrDefault().DeptAbrv";
@@ -183,7 +174,7 @@
             width: width + "px",
             height: height + "px"
         });
-    });
+    });*@
     function downloadPDF2() {
         var element = document.getElementById('pdfContainer');
         var currentDate = new Date();

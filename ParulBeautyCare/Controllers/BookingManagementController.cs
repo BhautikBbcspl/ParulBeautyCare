@@ -1285,12 +1285,12 @@ namespace ParulBeautyCare.Controllers
         }
         public ActionResult GetData(string id)
         {
-            BookingHeaderViewModel bvm = new BookingHeaderViewModel();
+            BookingDetailViewModel bvm = new BookingDetailViewModel();
             bvm.Action = "details";
             bvm.BookingId = id;
-            var BookingList = ApiCall.PostApi("BookingHeaderRetrieve", Newtonsoft.Json.JsonConvert.SerializeObject(bvm));
-            bvm = JsonConvert.DeserializeObject<BookingHeaderViewModel>(BookingList);
-            return Json(bvm.BookingHeaderList, JsonRequestBehavior.AllowGet);
+            var BookingList = ApiCall.PostApi("BookingDetailRetrieve", Newtonsoft.Json.JsonConvert.SerializeObject(bvm));
+            bvm = JsonConvert.DeserializeObject<BookingDetailViewModel>(BookingList);
+            return Json(bvm.BookingDetailList, JsonRequestBehavior.AllowGet);
         }
         #endregion
 

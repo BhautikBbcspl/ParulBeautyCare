@@ -9,6 +9,11 @@
         border: unset !important;
     }
 
+
+    .TextCenter {
+        text-align: center
+    }
+
     .tooltiptext {
         width: 220px;
         background-color: #273342;
@@ -267,17 +272,17 @@
                                         <td>
                                             @Html.EditorFor(model => model.Qty, new
                                        {
-                                           htmlAttributes = new { @class = "form-control", @id = "Qty", autocomplete = "off" }
+                                           htmlAttributes = new { @class = "form-control TextCenter", @id = "Qty", autocomplete = "off" }
                                        })
                                         </td>
                                         <td>
                                             @Html.EditorFor(model => model.Amount, new
                                        {
-                                           htmlAttributes = new { @class = "form-control", @id = "Amount", autocomplete = "off" }
+                                           htmlAttributes = new { @class = "form-control TextCenter", @id = "Amount", autocomplete = "off" }
                                        })
                                         </td>
                                         <td>
-                                            @Html.TextAreaFor(m => m.Remark, new { @id = "Remark", @class = "form-control w-100", autocomplete = "off" })
+                                            @Html.TextAreaFor(m => m.Remark, new { @id = "Remark TextCenter", @class = "form-control w-100", autocomplete = "off" })
                                         </td>
                                         <td>
                                             <button type="button" id="btnAdd" class="btn btn-sm btn-primary classAdd"><i class="fa fa-plus-square" aria-hidden="true"></i></button>
@@ -287,7 +292,7 @@
 
                             </table><br />
 
-                            <button id="removeAll" type="button" class="btn btn-outline-primary" style=" margin: auto;"><i class="fa fa-trash px-2" aria-hidden="true"></i>Remove All</button>
+                            <button id="removeAll" type="button" class="btn btn-outline-primary" style="margin: auto;float: right;"><i class="fa fa-trash px-2" aria-hidden="true"></i>Remove All</button>
 
                         </fieldset>
 
@@ -317,7 +322,7 @@
                     <hr />
                     <div class="container-fluid d-flex justify-content-between InfoDiv">
                         <div class="col-lg-6 col-md-6 col-sm-6 justify-content-center d-flex">
-                            <img id="logoImage" src="~/Images/LogoParulBeautyCare.png" width="280" height="175">
+                            <img id="logoImage" src="~/Images/pb_logo.png" width="420" height="140">
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-6 px-2">
                             <p class="d-flex"><i class="fa-solid fa-location-dot fa-xl mx-2 mt-3"></i><span id="Address">A-201,Nilkanth Residency, B/s. Patcon House,<br />Nr. Siddhi Vinayak Temple, 80 Feet Road,<br />Anand - 388001</span></p>
@@ -433,7 +438,7 @@
                 InvoiceForm.style.display = "block";
 
                 $.each(data.bhv, function (index, item) {
-                    debugger
+                     
                     var departmentId = item.DepartmentId;
                     GetDepartment(departmentId);
                     var departmentName = item.DepartmentName;
@@ -648,7 +653,7 @@
     }
 
     function updateFinalTotal() {
-        debugger
+         
         var gst = parseInt($('#GSTPerc').val() || 0);
         var BaseAmt = parseInt($('#BaseAmt').text());
         var discount = parseInt($('#Discount').val() || 0);
@@ -682,7 +687,7 @@
         var NewAmount = 0;
         $secondTableBody.find('.newRecords').remove();
         var totalOldRecords = $('.oldRecord').length;
-        debugger
+         
         $firstTableRows.each(function () {
 
             var $row = $(this);
@@ -715,7 +720,7 @@
                 NewAmount += amount; // Accumulate the amount for each row
             }
         });
-        debugger
+         
         totalAmount = HeaderAmt + NewAmount;
         $('#BaseAmt').text(totalAmount);
         $('#grandtotal').text(totalAmount);
@@ -1041,7 +1046,7 @@
                 '<select name="ItemId" id="ddlitemlist' + rowCount + '" class="form-control form-select selectDropdown w-100" style="width: 200px; !important" required>' +
                 ItemOptions +
                 '</select></td>' +
-                '<td> <input type="text" name="Qty" id="Qty"' + rowCount + '" class="form-control"  required/> </td> ' + '<td> <input type="text" name="Amount" id="Amount"' + rowCount + '" class="form-control" required/> </td> ' + '<td> <textarea  name="Remark" id="Remark"' + rowCount + '" class="form-control w-100" required> </textarea></td> ' +
+                '<td> <input type="text" name="Qty" id="Qty"' + rowCount + '" class="form-control TextCenter"  required/> </td> ' + '<td> <input type="text" name="Amount" id="Amount"' + rowCount + '" class="form-control TextCenter" required/> </td> ' + '<td> <textarea  name="Remark" id="Remark TextCenter"' + rowCount + '" class="form-control w-100" required> </textarea></td> ' +
                 '<td>' +
                 '<button type="button" class="btn btn-sm btn-primary classAdd mx-1"> <i class="fa fa-plus-square" aria-hidden="true"></i> </button>' +
                 '<button type="button" class="btn btn-sm btn-danger deleteContact"><i class="fa fa-trash" aria-hidden="true"></i></button>' +

@@ -154,70 +154,7 @@
                 </div>
             </div>
             <!-- partial -->
-            <!-- partial:partials/_sidebar.html -->
             @Html.Action("GetMenu", "Home")
-
-            @*<nav class="sidebar sidebar-offcanvas" id="sidebar">
-                    <ul class="nav">
-                        <li class="nav-item">
-                            <div class="d-flex sidebar-profile">
-                                <div class="sidebar-profile-image">
-                                    <img src="~/Images/Asset1.png" class="bg-white" alt="image" />
-                                    <span class="sidebar-status-indicator"></span>
-                                </div>
-                                <div class="sidebar-profile-name">
-                                    <p class="sidebar-name">
-                                        @User.Identity.Name
-                                    </p>
-                                    <p class="sidebar-designation">
-                                        Welcome
-                                    </p>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="@Url.Action("Dashboard","Home")">
-                                <i class="typcn typcn-device-desktop menu-icon"></i>
-                                <span class="menu-title">Dashboard</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="@Url.Action("Index","Appointment")">
-
-                                <i class="fa fa-check"></i>
-
-                                <span class="menu-title  mx-4">Book Appointment</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="@Url.Action("ViewStaffMgmt","StaffManagement")">
-                                <i class="fa fa-users"></i>
-                                <span class="menu-title mx-4">Staff Management </span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="@Url.Action("Stockmgmt","Home")">
-                                <i class="fa fa-th"></i>
-                                <span class="menu-title mx-4">Stock Management</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="@Url.Action("Invoice","Home")">
-                                <i class="fa fa-file"></i>
-                                <span class="menu-title mx-4">Invoice</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="@Url.Action("Profile","Home")">
-                                <i class="fa fa-user"></i>
-                                <span class="menu-title mx-4">Profile</span>
-                            </a>
-                        </li>
-
-                    </ul>
-
-                </nav>*@
-            <!-- partial -->
 
             <div class="main-panel">
 
@@ -256,7 +193,6 @@
     <script src="~/Content/assets/vendors/chart.js/Chart.min.js"></script>
     <script src="~/Content/assets/vendors/progressbar.js/progressbar.min.js"></script>
     <script src="~/Content/assets/vendors/select2/select2.min.js"></script>
-    @*<script src="~/Content/assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>*@
     <script src="~/Content/assets/js/hoverable-collapse.js"></script>
     <script src="~/Content/assets/js/settings.js"></script>
     <script src="~/Content/assets/js/jquery.cookie.js"></script>
@@ -278,26 +214,15 @@
     <script src="~/Content/assets/vendors/datatables.net-bs4/dataTables.bootstrap4.js"></script>
     <script src="~/Content/assets/js/data-table.js"></script>
     <script src="~/Content/assets/datatables/js/datatables.init.js"></script>
-    @*<script src="~/Content/assets/bootstrap/cdn.datatables.net_1.13.5_js_jquery.dataTables.js"></script>*@
-    <!---->
-    @*<script src="~/Content/assets/vendors/progressbar.js/progressbar.min.js"></script>*@
-    @*<script src="~/Content/assets/vendors/chart.js/Chart.min.js"></script>*@
-    @*<script src="~/Content/assets/js/jquery.cookie.js"></script>*@
-    @*<script src="~/Content/assets/js/code.jquery.com_ui_1.12.1_jquery-ui.js"></script>*@
-
 
     <script src="~/Content/assets/bootstrap/Custom.js"></script>
     <script src="~/Content/assets/bootstrap/flatpickr.js"></script>
 
     <!--File Upload JS-->
     <script src="~/Content/assets/vendors/dropify/dropify.min.js"></script>
-    @*<script src="~/Content/assets/vendors/jquery-file-upload/jquery.uploadfile.min.js"></script>*@
     <script src="~/Content/assets/js/dropify.js"></script>
     <!---->
    
-    <!-- End custom js for this page-->
-    <!-- Custom js for this page-->
-    <!-- End custom js for this page-->
     @if (TempData["SweetAlert"] != null)
     {
         <script>
@@ -359,7 +284,6 @@
 
     <script>
         function formSubmit(confirmMessage) {
-            debugger
             Swal.fire({
                 title: confirmMessage,
                 showDenyButton: false,
@@ -375,13 +299,11 @@
                 }
             });
 
-            // Prevent the default button behavior
             return false;
         }
     </script>
     <script>
         $(".toggle-password").click(function () {
-            debugger
             $(this).toggleClass("fas fa-eye-slash");
             input = $(this).parent().find("input");
             if (input.attr("type") == "password") {
@@ -436,7 +358,7 @@
         });
     </script>
     <script>
-          function ActiveDeactiveStatusChange(status, Code, Type) {
+ function ActiveDeactiveStatusChange(status, Code, Type) {
     $('#AjaxLoader').show();
     if (Code != null) {
         var Value = status.checked;

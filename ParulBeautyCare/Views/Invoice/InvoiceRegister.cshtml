@@ -235,7 +235,7 @@
 
                             </table><br />
 
-                            <button id="removeAll" type="button" class="btn btn-outline-primary" style=" margin: auto;"><i class="fa fa-trash px-2" aria-hidden="true"></i>Remove All</button>
+                            <button id="removeAll" type="button" class="btn btn-outline-primary" style=" margin: auto; float: right;"><i class="fa fa-trash px-2" aria-hidden="true"></i>Remove All</button>
 
                         </fieldset>
 
@@ -264,7 +264,7 @@
                     <hr />
                     <div class="container-fluid d-flex justify-content-between InfoDiv">
                         <div class="col-lg-6 col-md-6 col-sm-6 justify-content-center d-flex">
-                            <img id="logoImage" src="~/Images/LogoParulBeautyCare.png" width="280" height="175">
+                            <img id="logoImage" src="~/Images/pb_logo.png" width="420" height="140">
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-6 px-2">
                             <p class="d-flex"><i class="fa-solid fa-location-dot fa-xl mx-2 mt-3"></i><span id="Address">A-201,Nilkanth Residency, B/s. Patcon House,<br />Nr. Siddhi Vinayak Temple, 80 Feet Road,<br />Anand - 388001</span></p>
@@ -489,7 +489,6 @@
     }
 
     function updateFinalTotal() {
-        debugger
         var gst = parseInt($('#GSTPerc').val() || 0);
         var BaseAmt = parseInt($('#BaseAmt').text());
         var discount = parseInt($('#Discount').val() || 0);
@@ -1202,24 +1201,34 @@
         });
 
         $(document).on("click", ".deleteContact", function () {
-
-            var $row = $(this).closest("tr");
-            if (rowCount === 1) {
-                var rowJson = getRowJson(this);
-                if (!rowJson) {
-                    debugger
-                    $row.remove();
-                    addEmptyRow(); // Add a new empty row
-                    return;
+            Swal.fire({
+                title: 'Are you sure you want to delete data?',
+                showDenyButton: false,
+                showCancelButton: true,
+                confirmButtonText: 'Save',
+                denyButtonText: `Don't save`,
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    var $row = $(this).closest("tr");
+                    if (rowCount === 1) {
+                        var rowJson = getRowJson(this);
+                        if (!rowJson) {
+                            $row.remove();
+                            addEmptyRow(); // Add a new empty row
+                            return;
+                        }
+                    }
+                    if (rowJson) {
+                        deleteBillingDetail(JSON.stringify(rowJson), this); // Pass the button element itself
+                    }
+                    else {
+                        deleteBillingDetail(null, this); // Pass null for rowJson and the button element itself
+                    }
+                } else if (result.isDenied) {
+                    Swal.fire('Data is not delete.', '', 'info');
                 }
-            }
-
-            if (rowJson) {
-                deleteBillingDetail(JSON.stringify(rowJson), this); // Pass the button element itself
-            }
-            else {
-                deleteBillingDetail(null, this); // Pass null for rowJson and the button element itself
-            }
+            })
+            return false;
         });
 
 
