@@ -31,6 +31,8 @@ namespace ParulBeautyCareViewModel.ViewModel.StockMgmtViewModel
 
         [Required(ErrorMessage = "*")]
         public string VendorId { get; set; }
+        [Required(ErrorMessage = "*")]
+        public string GSTId { get; set; }
         public string VendorName { get; set; }
         public string CompanyCode { get; set; }
         public string CreateDate { get; set; }
@@ -45,6 +47,7 @@ namespace ParulBeautyCareViewModel.ViewModel.StockMgmtViewModel
         public List<PBStockPurchaseRetrieve_Result> StockPurchaseList { get; set; }
         public List<PBDepartmentMasterRetrieve_Result> DeptList { get; set; }
         public List<PBVendorMasterRetrieve_Result> VendorList { get; set; }
+        public List<PBGSTMasterRetrieve_Result> GSTMasterList { get; set; }
         [Required(ErrorMessage = "*")]
         public string Price { get; set; }
     }

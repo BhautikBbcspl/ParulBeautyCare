@@ -181,13 +181,26 @@ namespace ParulBeautyCare.Controllers
                     sm = JsonConvert.DeserializeObject<InteServiceProductMasterViewModel>(emplog);
                     msg = sm.result;
                 }
+                else if (Type == "ItemMaster")
+                {
+                    ItemMasterViewModel sm = new ItemMasterViewModel();
+                    sm.Action = "Active";
+                    sm.UpdateDate = generalFunctions.getTimeZoneDatetimedb();
+                    sm.UpdateUser = User.Identity.Name;
+                    sm.CreateUser = User.Identity.Name;
+                    sm.ItemId = Code;
+                    sm.IsActive = status.Equals("true") ? "1" : "0";
+                    var emplog = ApiCall.PostApi("ItemMasterInsUpd", Newtonsoft.Json.JsonConvert.SerializeObject(sm));
+                    sm = JsonConvert.DeserializeObject<ItemMasterViewModel>(emplog);
+                    msg = sm.result;
+                }
                 else
                 {
                     msg = "Did not have method";
                 }
 
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 //Danger(ex.Message.ToString(), true);
                 TempData["SweetAlert"] = new { Message = "An error occurred while updating the status.", Type = "error" };
@@ -1467,6 +1480,15 @@ namespace ParulBeautyCare.Controllers
                 var CategoryList = db.PBCategoryMasterRetrieve("active", "", "").ToList();
                 ViewBag.categorylist = CategoryList;
 
+                //GST Master List Bind
+                GSTMasterViewModel gvm = new GSTMasterViewModel();
+                gvm.CompanyCode = LoggedUserDetails.CompanyCode;
+                gvm.Action = "active";
+                var GSTList = ApiCall.PostApi("GSTMasterRtr", Newtonsoft.Json.JsonConvert.SerializeObject(gvm));
+                gvm = JsonConvert.DeserializeObject<GSTMasterViewModel>(GSTList);
+                model.GSTMasterList = gvm.GSTMasterList;
+                //
+
                 model.CategoryMasterList = db.PBCategoryMasterRetrieve("active", "", "").ToList();
                 model.YearMasterList = db.PBYearMasterRetrieve("active", "PBC01", "").ToList();
                 model.Action = "Save";
@@ -1582,6 +1604,15 @@ namespace ParulBeautyCare.Controllers
                 sb.CategoryMasterList = pm.CategoryMasterList;
                 //
 
+                //GST Master List Bind
+                GSTMasterViewModel gvm = new GSTMasterViewModel();
+                gvm.CompanyCode = LoggedUserDetails.CompanyCode;
+                gvm.Action = "active";
+                var GSTList = ApiCall.PostApi("GSTMasterRtr", Newtonsoft.Json.JsonConvert.SerializeObject(gvm));
+                gvm = JsonConvert.DeserializeObject<GSTMasterViewModel>(GSTList);
+                sb.GSTMasterList = gvm.GSTMasterList;
+                //
+
                 sb.Action = "Detail";
                 sb.SubCategoryId = ID.ToString();
                 var emplog = ApiCall.PostApi("SubCategoryMasterRetrieve", Newtonsoft.Json.JsonConvert.SerializeObject(sb));
@@ -1599,7 +1630,7 @@ namespace ParulBeautyCare.Controllers
                 sb.Amount = sb.SubCategoryMasterList.FirstOrDefault().Amount.ToString();
                 sb.DayInterval = sb.SubCategoryMasterList.FirstOrDefault()?.DayInterval?.ToString() ?? "0";
                 sb.Incentive = sb.SubCategoryMasterList.FirstOrDefault()?.Incentive.ToString() ?? "0";
-                sb.GSTPercentage = sb.SubCategoryMasterList.FirstOrDefault()?.GSTPercentage.ToString() ?? "0";
+                sb.GSTPercentage = sb.SubCategoryMasterList.FirstOrDefault().GSTPercentage.ToString();
                 sb.CreateDate = sb.SubCategoryMasterList.FirstOrDefault().CreateDate.ToString();
                 sb.CreateUser = sb.SubCategoryMasterList.FirstOrDefault().CreateUser;
                 ViewBag.action = "Update";
@@ -2707,6 +2738,361 @@ namespace ParulBeautyCare.Controllers
             }
         }
         #endregion
+
+        #region==> Item Master
+        public ActionResult ViewItemMaster()
+        {
+            try
+            {
+                if (!User.Identity.IsAuthenticated)
+                {
+                    return RedirectToAction("Login", "Home");
+                }
+                MenuRightsViewModel mv1 = new MenuRightsViewModel();
+                mv1.Usercode = LoggedUserDetails.UserName;
+                string url = generalFunctions.getCommon(Request.Url.AbsoluteUri);
+                mv1.PageName = url;
+                var MenuRtr = ApiCall.PostApi("MenuRightsRtr", Newtonsoft.Json.JsonConvert.SerializeObject(mv1));
+                mv1 = JsonConvert.DeserializeObject<MenuRightsViewModel>(MenuRtr);
+                if (mv1.MenuRightsList.Count > 0)
+                {
+                    //ViewBag.ViewRight = mv1.MenuRightsList.FirstOrDefault().ViewRight;
+                    //ViewBag.InsertRight = mv1.MenuRightsList.FirstOrDefault().InsertRight;
+                    //ViewBag.UpdateRight = mv1.MenuRightsList.FirstOrDefault().UpdateRight;
+                    //ViewBag.DeleteRight = mv1.MenuRightsList.FirstOrDefault().DeleteRight;
+                    TempData["ViewRight"] = mv1.MenuRightsList.FirstOrDefault().ViewRight;
+                    TempData["InsertRight"] = mv1.MenuRightsList.FirstOrDefault().InsertRight;
+                    TempData["UpdateRight"] = mv1.MenuRightsList.FirstOrDefault().UpdateRight;
+                    TempData["DeleteRight"] = mv1.MenuRightsList.FirstOrDefault().DeleteRight;
+                }
+                else
+                {
+                    var data = new { Message = "Sorry,You have no rights to access this page", Type = "error" };
+                    TempData["SweetAlert"] = data;
+                    return RedirectToAction("Dashboard", "Home");
+                }
+                //
+                ItemMasterViewModel mv = new ItemMasterViewModel();
+                mv.Action = "all";
+                mv.CompanyCode = LoggedUserDetails.CompanyCode;
+
+                var emplog = ApiCall.PostApi("ItemMasterRtr", Newtonsoft.Json.JsonConvert.SerializeObject(mv));
+                mv = JsonConvert.DeserializeObject<ItemMasterViewModel>(emplog);
+                return View(mv.ItemMasterList);
+
+            }
+            catch (Exception ex)
+            {
+                var data = new { Message = ex.Message.ToString(), Type = "error" };
+                TempData["SweetAlert"] = data;
+                return RedirectToAction("Dashboard", "Home");
+            }
+        }
+        public ActionResult AddItemMaster()
+        {
+            try
+            {
+                if (!User.Identity.IsAuthenticated)
+                {
+                    return RedirectToAction("Login", "Home");
+                }
+                ItemMasterViewModel model = new ItemMasterViewModel();
+                model.CompanyCode = LoggedUserDetails.CompanyCode;
+                model.Action = "Save";
+                return View(model);
+            }
+            catch (Exception ex)
+            {
+                var data = new { Message = ex.Message.ToString(), Type = "error" };
+                TempData["SweetAlert"] = data;
+                return RedirectToAction("Dashboard", "Home");
+            }
+        }
+        [HttpPost]
+        public ActionResult AddItemMaster(ItemMasterViewModel sm)
+        {
+            try
+            {
+                if (sm.ItemId == null)
+                {
+                    sm.CreateDate = generalFunctions.getTimeZoneDatetimedb();
+                    sm.Action = "insert";
+                    sm.CreateUser = User.Identity.Name;
+                    sm.UpdateUser = User.Identity.Name;
+                    sm.CompanyCode = LoggedUserDetails.CompanyCode;
+                    var emplog = ApiCall.PostApi("ItemMasterInsUpd", Newtonsoft.Json.JsonConvert.SerializeObject(sm));
+                    sm = JsonConvert.DeserializeObject<ItemMasterViewModel>(emplog);
+                    string msg = sm.result;
+                    if (msg.Contains("successfully"))
+                    {
+                        var data = new { Message = msg, Type = "success" };
+                        TempData["SweetAlert"] = data;
+                        return RedirectToAction("AddItemMaster", "Master");
+                    }
+                    else
+                    {
+                        var data = new { Message = msg, Type = "error" };
+                        TempData["SweetAlert"] = data;
+                        return RedirectToAction("AddItemMaster", "Master");
+                    }
+                }
+                else
+                {
+                    sm.Action = "update";
+                    sm.CreateDate = generalFunctions.DateTimeConvert(sm.CreateDate);
+                    sm.CreateUser = User.Identity.Name;
+                    sm.UpdateDate = generalFunctions.getTimeZoneDatetimedb();
+                    sm.UpdateUser = User.Identity.Name;
+                    sm.CompanyCode = LoggedUserDetails.CompanyCode;
+                    var emplog = ApiCall.PostApi("ItemMasterInsUpd", Newtonsoft.Json.JsonConvert.SerializeObject(sm));
+                    sm = JsonConvert.DeserializeObject<ItemMasterViewModel>(emplog);
+                    string msg = sm.result;
+                    if (msg.Contains("successfully"))
+                    {
+                        var data = new { Message = msg, Type = "success" };
+                        TempData["SweetAlert"] = data;
+                        return RedirectToAction("AddItemMaster", "Master");
+                    }
+                    else
+                    {
+                        var data = new { Message = msg, Type = "error" };
+                        TempData["SweetAlert"] = data;
+                        return RedirectToAction("AddItemMaster", "Master");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                var data = new { Message = ex.Message.ToString(), Type = "error" };
+                TempData["SweetAlert"] = data;
+                return RedirectToAction("AddItemMaster", "Master");
+            }
+        }
+        public ActionResult EditItemMaster(int id)
+        {
+            try
+            {
+                if (!User.Identity.IsAuthenticated)
+                {
+                    return RedirectToAction("Login", "Home");
+                }
+                ItemMasterViewModel sb = new ItemMasterViewModel();
+                sb.CompanyCode = LoggedUserDetails.CompanyCode;
+                sb.Action = "details";
+                sb.ItemId = id.ToString();
+                var emplog = ApiCall.PostApi("ItemMasterRtr", Newtonsoft.Json.JsonConvert.SerializeObject(sb));
+                sb = JsonConvert.DeserializeObject<ItemMasterViewModel>(emplog);
+                sb.ItemId = sb.ItemMasterList.FirstOrDefault().ItemId.ToString();
+                sb.ItemName = sb.ItemMasterList.FirstOrDefault().ItemName;
+                sb.CreateDate = sb.ItemMasterList.FirstOrDefault().CreateDate.ToString();
+                sb.CreateUser = sb.ItemMasterList.FirstOrDefault().CreateUser;
+                sb.IsActive = sb.ItemMasterList.FirstOrDefault().IsActive.ToString();
+                ViewBag.action = "Update";
+                sb.Action = "Update";
+                return View("AddItemMaster", sb);
+            }
+            catch (Exception ex)
+            {
+                var data = new { Message = ex.Message.ToString(), Type = "error" };
+                TempData["SweetAlert"] = data;
+                return RedirectToAction("AddItemMaster", "Master");
+            }
+        }
+        #endregion
+
+        #region==> GST Master
+        public ActionResult ViewGSTMaster()
+        {
+            try
+            {
+                if (!User.Identity.IsAuthenticated)
+                {
+                    return RedirectToAction("Login", "Home");
+                }
+                MenuRightsViewModel mv1 = new MenuRightsViewModel();
+                mv1.Usercode = LoggedUserDetails.UserName;
+                string url = generalFunctions.getCommon(Request.Url.AbsoluteUri);
+                mv1.PageName = url;
+                var MenuRtr = ApiCall.PostApi("MenuRightsRtr", Newtonsoft.Json.JsonConvert.SerializeObject(mv1));
+                mv1 = JsonConvert.DeserializeObject<MenuRightsViewModel>(MenuRtr);
+                if (mv1.MenuRightsList.Count > 0)
+                {
+                    //ViewBag.ViewRight = mv1.MenuRightsList.FirstOrDefault().ViewRight;
+                    //ViewBag.InsertRight = mv1.MenuRightsList.FirstOrDefault().InsertRight;
+                    //ViewBag.UpdateRight = mv1.MenuRightsList.FirstOrDefault().UpdateRight;
+                    //ViewBag.DeleteRight = mv1.MenuRightsList.FirstOrDefault().DeleteRight;
+                    TempData["ViewRight"] = mv1.MenuRightsList.FirstOrDefault().ViewRight;
+                    TempData["InsertRight"] = mv1.MenuRightsList.FirstOrDefault().InsertRight;
+                    TempData["UpdateRight"] = mv1.MenuRightsList.FirstOrDefault().UpdateRight;
+                    TempData["DeleteRight"] = mv1.MenuRightsList.FirstOrDefault().DeleteRight;
+                }
+                else
+                {
+                    var data = new { Message = "Sorry,You have no rights to access this page", Type = "error" };
+                    TempData["SweetAlert"] = data;
+                    return RedirectToAction("Dashboard", "Home");
+                }
+                //
+                GSTMasterViewModel mv = new GSTMasterViewModel();
+                mv.Action = "all";
+                mv.CompanyCode = LoggedUserDetails.CompanyCode;
+                var GSTMasterList = ApiCall.PostApi("GSTMasterRtr", Newtonsoft.Json.JsonConvert.SerializeObject(mv));
+                mv = JsonConvert.DeserializeObject<GSTMasterViewModel>(GSTMasterList);
+                return View(mv.GSTMasterList);
+
+            }
+            catch (Exception ex)
+            {
+                var data = new { Message = ex.Message.ToString(), Type = "error" };
+                TempData["SweetAlert"] = data;
+                return RedirectToAction("Dashboard", "Home");
+            }
+        }
+        public ActionResult AddGSTMaster()
+        {
+            try
+            {
+                if (!User.Identity.IsAuthenticated)
+                {
+                    return RedirectToAction("Login", "Home");
+                }
+                GSTMasterViewModel model = new GSTMasterViewModel();
+                model.CompanyCode = LoggedUserDetails.CompanyCode;
+                model.Action = "Save";
+                return View(model);
+            }
+            catch (Exception ex)
+            {
+                var data = new { Message = ex.Message.ToString(), Type = "error" };
+                TempData["SweetAlert"] = data;
+                return RedirectToAction("Dashboard", "Home");
+            }
+        }
+        [HttpPost]
+        public ActionResult AddGSTMaster(GSTMasterViewModel sm)
+        {
+            try
+            {
+                if (sm.GSTId == null)
+                {
+                    sm.CreateDate = generalFunctions.getTimeZoneDatetimedb();
+                    sm.Action = "insert";
+                    sm.CreateUser = User.Identity.Name;
+                    sm.CompanyCode = LoggedUserDetails.CompanyCode;
+                    sm.FromDate = generalFunctions.dateconvert(sm.FromDate);
+                    sm.ToDate = generalFunctions.dateconvert(sm.ToDate);
+                    var GSTMasterList = ApiCall.PostApi("GSTMasterInsUpd", Newtonsoft.Json.JsonConvert.SerializeObject(sm));
+                    sm = JsonConvert.DeserializeObject<GSTMasterViewModel>(GSTMasterList);
+
+                    string msg = sm.result;
+                    if (msg.Contains("successfully"))
+                    {
+                        var data = new { Message = msg, Type = "success" };
+                        TempData["SweetAlert"] = data;
+                        return RedirectToAction("AddGSTMaster", "Master");
+                    }
+                    else
+                    {
+                        var data = new { Message = msg, Type = "error" };
+                        TempData["SweetAlert"] = data;
+                        return RedirectToAction("AddGSTMaster", "Master");
+                    }
+                }
+                else
+                {
+                    sm.Action = "active";
+                    sm.CreateDate = generalFunctions.DateTimeConvert(sm.CreateDate);
+                    sm.CreateUser = User.Identity.Name;
+                    sm.updatedate = generalFunctions.getTimeZoneDatetimedb();
+                    sm.UpdateUser = User.Identity.Name;
+                    sm.CompanyCode = LoggedUserDetails.CompanyCode;
+                    var GSTMasterList = ApiCall.PostApi("GSTMasterInsUpd", Newtonsoft.Json.JsonConvert.SerializeObject(sm));
+                    sm = JsonConvert.DeserializeObject<GSTMasterViewModel>(GSTMasterList);
+                    string msg = sm.result;
+                    if (msg.Contains("successfully"))
+                    {
+                        var data = new { Message = msg, Type = "success" };
+                        TempData["SweetAlert"] = data;
+                        return RedirectToAction("AddGSTMaster", "Master");
+                    }
+                    else
+                    {
+                        var data = new { Message = msg, Type = "error" };
+                        TempData["SweetAlert"] = data;
+                        return RedirectToAction("AddGSTMaster", "Master");
+                    }
+                }
+                //    sm.Action = "update";
+                //    sm.CreateDate = generalFunctions.DateTimeConvert(sm.CreateDate);
+                //    sm.CreateUser = User.Identity.Name;                   
+                //    sm.CompanyCode = LoggedUserDetails.CompanyCode;
+                //    //sm.FromDate = generalFunctions.dateconvert(sm.FromDate);
+                //    //sm.ToDate = generalFunctions.dateconvert(sm.ToDate);
+                //    var GSTMasterList = ApiCall.PostApi("GSTMasterInsUpd", Newtonsoft.Json.JsonConvert.SerializeObject(sm));
+                //    sm = JsonConvert.DeserializeObject<GSTMasterViewModel>(GSTMasterList);
+                //    //sm.FromDate = generalFunctions.dateconvert(sm.FromDate);
+                //    //sm.ToDate = generalFunctions.dateconvert(sm.ToDate);
+                //    string msg = sm.result;
+                //    //if (msg.Contains("successfully"))
+                //    //{
+                //    //    var data = new { Message = msg, Type = "success" };
+                //    //    TempData["SweetAlert"] = data;
+                //    //    return RedirectToAction("AddGSTMaster", "Master");
+                //    //}
+                //    //else
+                //    //{
+                //    //    var data = new { Message = msg, Type = "error" };
+                //    //    TempData["SweetAlert"] = data;
+                //    //    return RedirectToAction("AddGSTMaster", "Master");
+                //    //}
+                //    return RedirectToAction("AddGSTMaster", "Master");
+                //}
+            }
+            catch (Exception ex)
+            {
+                var data = new { Message = ex.Message.ToString(), Type = "error" };
+                TempData["SweetAlert"] = data;
+                return RedirectToAction("AddGSTMaster", "Master");
+            }
+        }
+        public ActionResult EditGSTMaster(int id)
+        {
+            try
+            {
+                if (!User.Identity.IsAuthenticated)
+                {
+                    return RedirectToAction("Login", "Home");
+                }
+                GSTMasterViewModel sb = new GSTMasterViewModel();
+                sb.CompanyCode = LoggedUserDetails.CompanyCode;
+                sb.Action = "Details";
+                sb.GSTId = id.ToString();
+                var GSTMasterList = ApiCall.PostApi("GSTMasterRtr", Newtonsoft.Json.JsonConvert.SerializeObject(sb));
+                sb = JsonConvert.DeserializeObject<GSTMasterViewModel>(GSTMasterList);
+                sb.GSTId = sb.GSTMasterList.FirstOrDefault().GSTId.ToString();
+                sb.GSTName = sb.GSTMasterList.FirstOrDefault().GSTName;
+                sb.GSTPerc = sb.GSTMasterList.FirstOrDefault().GSTPerc.ToString();
+                sb.IsActive = sb.GSTMasterList.FirstOrDefault().IsActive.ToString();
+                sb.FromDate = sb.GSTMasterList.FirstOrDefault().FromDate.ToString();
+                sb.ToDate = sb.GSTMasterList.FirstOrDefault().ToDate.ToString();
+                //sb.FromDate = generalFunctions.dateconvert(sb.FromDate);
+                //sb.ToDate = generalFunctions.dateconvert(sb.ToDate);
+                sb.CreateDate = sb.GSTMasterList.FirstOrDefault().CreateDate.ToString();
+                sb.CreateUser = sb.GSTMasterList.FirstOrDefault().CreateUser;
+
+                ViewBag.action = "Update";
+                sb.Action = "Update";
+                return View("AddGSTMaster", sb);
+            }
+            catch (Exception ex)
+            {
+                var data = new { Message = ex.Message.ToString(), Type = "error" };
+                TempData["SweetAlert"] = data;
+                return RedirectToAction("AddGSTMaster", "Master");
+            }
+        }
+        #endregion
+
         #endregion
     }
 }

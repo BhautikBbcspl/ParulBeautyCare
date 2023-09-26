@@ -81,10 +81,19 @@
     <Compile Include="DataModels\PBAvailableStockRtr_Result.cs">
       <DependentUpon>ParulBeautyCaredb.tt</DependentUpon>
     </Compile>
+    <Compile Include="DataModels\PBBillingDetailRetrieve_Result.cs">
+      <DependentUpon>ParulBeautyCaredb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModels\PBBillingRetrieve_Result.cs">
+      <DependentUpon>ParulBeautyCaredb.tt</DependentUpon>
+    </Compile>
     <Compile Include="DataModels\PBBookingDetailRtr_Result.cs">
       <DependentUpon>ParulBeautyCaredb.tt</DependentUpon>
     </Compile>
     <Compile Include="DataModels\PBBookingHeaderRtr_Result.cs">
+      <DependentUpon>ParulBeautyCaredb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModels\PBBookingServicesRtr_Result.cs">
       <DependentUpon>ParulBeautyCaredb.tt</DependentUpon>
     </Compile>
     <Compile Include="DataModels\PBCategoryMasterRetrieve_Result.cs">
@@ -97,6 +106,9 @@
       <DependentUpon>ParulBeautyCaredb.tt</DependentUpon>
     </Compile>
     <Compile Include="DataModels\PBEnquiryRtr_Result.cs">
+      <DependentUpon>ParulBeautyCaredb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModels\PBGSTMasterRetrieve_Result.cs">
       <DependentUpon>ParulBeautyCaredb.tt</DependentUpon>
     </Compile>
     <Compile Include="DataModels\PBIntePackageServiceMasterRetrieve_Result.cs">
@@ -112,6 +124,9 @@
       <DependentUpon>ParulBeautyCaredb.tt</DependentUpon>
     </Compile>
     <Compile Include="DataModels\PBInteServiceProductMasterRetrieve_Result.cs">
+      <DependentUpon>ParulBeautyCaredb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModels\PBItemMasterRetrieve_Result.cs">
       <DependentUpon>ParulBeautyCaredb.tt</DependentUpon>
     </Compile>
     <Compile Include="DataModels\PBLoginRtr_Result.cs">
@@ -163,6 +178,12 @@
       <DependentUpon>ParulBeautyCaredb.tt</DependentUpon>
     </Compile>
     <Compile Include="DataModels\PBYearMasterRetrieve_Result.cs">
+      <DependentUpon>ParulBeautyCaredb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModels\PB_AdvanceBookingRtr_Result.cs">
+      <DependentUpon>ParulBeautyCaredb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModels\PB_DateWiseBillReportRtr_Result.cs">
       <DependentUpon>ParulBeautyCaredb.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />

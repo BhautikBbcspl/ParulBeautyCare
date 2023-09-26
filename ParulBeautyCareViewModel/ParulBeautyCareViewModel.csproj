@@ -43,23 +43,29 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModel\BookingMgmtViewModel\AdvanceBookingViewModel.cs" />
     <Compile Include="ViewModel\BookingMgmtViewModel\BookAppointmentViewModel.cs" />
     <Compile Include="ViewModel\BookingMgmtViewModel\BookingDetailViewModel.cs" />
     <Compile Include="ViewModel\BookingMgmtViewModel\BookingHeaderViewModel.cs" />
     <Compile Include="ViewModel\BookingMgmtViewModel\BookingPackageViewModel.cs" />
+    <Compile Include="ViewModel\BookingMgmtViewModel\BookingServicesViewModel.cs" />
     <Compile Include="ViewModel\BookingMgmtViewModel\BookingStaffAllocationViewModel.cs" />
     <Compile Include="ViewModel\BookingMgmtViewModel\CheckInCheckOutViewModel.cs" />
     <Compile Include="ViewModel\EnquiryViewModel.cs" />
+    <Compile Include="ViewModel\InvoiceMgmtViewModel\BillReportViewModel.cs" />
     <Compile Include="ViewModel\InvoiceMgmtViewModel\InvoiceDetailViewModel.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
+    <Compile Include="ViewModel\Master\GSTMasterViewModel.cs" />
     <Compile Include="ViewModel\Master\IntePackageServiceMasterViewModel.cs" />
     <Compile Include="ViewModel\Master\InteServiceProductMasterViewModel.cs" />
+    <Compile Include="ViewModel\Master\ItemMasterViewModel.cs" />
     <Compile Include="ViewModel\Master\PackageMasterViewModel.cs" />
     <Compile Include="ViewModel\Master\SubCategoryMasterViewModel.cs" />
     <Compile Include="ViewModel\Master\VendorMasterViewModel.cs" />
     <Compile Include="ViewModel\Master\DepartmentMasterViewModel.cs" />
     <Compile Include="ViewModel\Master\CategoryMasterViewModel.cs" />
     <Compile Include="ViewModel\Master\YearMasterViewModel.cs" />
+    <Compile Include="ViewModel\PaymentHistoryViewModel.cs" />
     <Compile Include="ViewModel\StockMgmtViewModel\ProductTypeMasterViewModel.cs" />
     <Compile Include="ViewModel\Master\RoleMasterViewModel.cs" />
     <Compile Include="ViewModel\Master\StaffMasterViewModel.cs" />

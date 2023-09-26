@@ -30993,7 +30993,7 @@ div.tagsinput {
         vertical-align: middle;*/
         height: 47px;
         /* width: 71px;*/
-        margin-left: 100px;
+        margin-left: 60px;
     }
 
 .navbar .navbar-brand-wrapper .brand-logo-mini {
@@ -33301,7 +33301,7 @@ a.lightbox-close {
 .lightbox-target:target {
     opacity: 1;
     top: 0px;
-    bottom: 35px;
+    bottom: 50px;
     overflow: scroll;
     z-index: 3;
 }
@@ -33327,4 +33327,9 @@ a.lightbox-close {
     .dedcription-btn {
         margin-top: 10px;
     }
+}
+.datepicker-icon, .timepicker-icon {
+    color: #212529 !important;
+    border: 1px solid #ced4da !important;
+    cursor: pointer;
 }

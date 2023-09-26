@@ -3,7 +3,7 @@
     ViewBag.Title = "Staff Master";
     ViewBag.Module = "Master";
 }
-<div class="content-wrapper">
+<div class="content-wrapper" style="overflow: hidden !important">
     <div class="row">
         <div class="col-12 grid-margin">
             <div class="card">
@@ -33,7 +33,7 @@
                 </a>
             </div>
         </div>*@
-                    @using (Html.BeginForm("AddStaffMaster", "Master", FormMethod.Post, new { @class = "forms-sample" }))
+                    @using (Html.BeginForm("AddStaffMaster", "Master", FormMethod.Post, new { @class = "forms-sample", autocomplete = "off" }))
                     {
                         @Html.AntiForgeryToken()
                         @Html.HiddenFor(x => x.Action)
@@ -70,7 +70,7 @@
                                                                             })
                             </div>
                             <div class="col-sm-3">
-                                <label for="exampleInputUsername2" class="col-form-label">
+                                <label  class="col-form-label">
                                     Contact No
                                     @Html.ValidationMessageFor(m => m.Contact, "", new { @class = "text-danger" })
                                 </label>
@@ -95,7 +95,7 @@
                         <div class="row form-group">
 
                             <div class="col-sm-3">
-                                <label for="exampleInputUsername2" class="col-form-label">
+                                <label class="col-form-label">
                                     Password
                                     @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
                                 </label>

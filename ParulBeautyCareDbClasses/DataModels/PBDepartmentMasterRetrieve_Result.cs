@@ -15,6 +15,9 @@ namespace ParulBeautyCareDbClasses.DataModels
     {
         public int DepartmentId { get; set; }
         public string DepartmentName { get; set; }
+        public string DeptAbrv { get; set; }
+        public string GSTNo { get; set; }
+        public string DeptAddress { get; set; }
         public string CompanyCode { get; set; }
         public Nullable<System.DateTime> CreateDate { get; set; }
         public string CreateUser { get; set; }

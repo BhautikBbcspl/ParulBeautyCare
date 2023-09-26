@@ -74,13 +74,21 @@
                                         }
                                     </td>
                                     <td>
-                                        <a class="lightbox" href="#@item.ProductImage">
-                                            <img src="../@item.ProductImage" />
-                                        </a>
-                                        <div class="lightbox-target" id="@item.ProductImage">
-                                            <img src="../@item.ProductImage" />
-                                            <a class="lightbox-close" href="#"></a>
-                                        </div>
+
+                                        @if (!string.IsNullOrEmpty(item.ProductImage))
+                                        {
+                                            <a class="lightbox" href="#@item.ProductImage">
+                                                <img src="../@item.ProductImage" />
+                                            </a>
+                                            <div class="lightbox-target" id="@item.ProductImage">
+                                                <img src="../@item.ProductImage" />
+                                                <a class="lightbox-close" href="#"></a>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <img src="../Uploads/ProductImages/default-image.jpg" width="150" height="150" />
+                                        }
                                     </td>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.StaffName)

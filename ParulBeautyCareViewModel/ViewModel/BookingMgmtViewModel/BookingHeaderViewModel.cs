@@ -10,6 +10,7 @@ namespace ParulBeautyCareViewModel.ViewModel.BookingMgmtViewModel
     public class BookingHeaderViewModel
     {
         public string BookingId { get; set; }
+        public string DepartmentId { get; set; }
         public string BookingCode { get; set; }
         public string CustomerName { get; set; }
         public string CompanyCode { get; set; }

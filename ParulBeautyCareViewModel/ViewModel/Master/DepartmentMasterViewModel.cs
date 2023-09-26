@@ -14,6 +14,9 @@ namespace ParulBeautyCareViewModel.ViewModel.Master
 
         [Required(ErrorMessage = "*")]
         public string DepartmentName { get; set; }
+        public string DeptAbrv { get; set; }
+        public string GSTNo { get; set; }
+        public string DeptAddress { get; set; }
         public string IsActive { get; set; }
         public string CompanyCode { get; set; }
         public string CreateDate { get; set; }

@@ -33,7 +33,7 @@
                 </div>
                 <div class="card-body">
 
-                    @using (Html.BeginForm("AddStockTransfer", "StockManagement", FormMethod.Post, new { @class = "forms-sample", id = "myForm" }))
+                    @using (Html.BeginForm("AddStockTransfer", "StockManagement", FormMethod.Post, new { @class = "forms-sample", autocomplete = "off", id = "myForm" }))
                     {
                         @Html.AntiForgeryToken();
                         @*@Html.HiddenFor(m => m.StockAllocationId)*@

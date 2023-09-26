@@ -39,7 +39,7 @@
                     </a>
                 </div>
             </div>*@
-                    @using (Html.BeginForm("AddModuleMaster", "UserManagement", FormMethod.Post, new { @class = "forms-sample" }))
+                    @using (Html.BeginForm("AddModuleMaster", "UserManagement", FormMethod.Post, new { @class = "forms-sample", autocomplete = "off" }))
                     {
                         @Html.HiddenFor(m => m.ModuleId)
                         @Html.AntiForgeryToken()

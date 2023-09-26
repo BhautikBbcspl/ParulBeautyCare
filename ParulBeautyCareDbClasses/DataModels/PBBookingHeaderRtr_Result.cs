@@ -15,12 +15,18 @@ namespace ParulBeautyCareDbClasses.DataModels
     {
         public int BookingId { get; set; }
         public string BookingCode { get; set; }
+        public Nullable<int> DepartmentId { get; set; }
+        public string DepartmentName { get; set; }
+        public string DeptAbrv { get; set; }
+        public string DeptAddress { get; set; }
+        public string GSTNo { get; set; }
         public Nullable<int> CustomerId { get; set; }
         public string ContactNo { get; set; }
         public string CustomerName { get; set; }
         public string Address { get; set; }
         public Nullable<System.DateTime> BookDate { get; set; }
         public string bookingdate { get; set; }
+        public string BDate { get; set; }
         public Nullable<int> NoOfPerson { get; set; }
         public Nullable<decimal> TotalAmount { get; set; }
         public Nullable<decimal> DiscountPerc { get; set; }

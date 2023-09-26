@@ -12,10 +12,10 @@
                         <h2 class="text-white text-capitalize ps-3 title_margin col-md-6"><b>Stock Purchase</b></h2>
 
                         @*@if (Convert.ToInt32(TempData["ViewRight"]) == 1)
-        {*@
+                            {*@
                         @*<a class="btn btn-light btn-icon mb-2 mx-2 title_a" href="@Url.Action("ViewStockPurchase","StockManagement")">
-            <i class="fa-solid fa-list-check mx-2 text-black"></i><b>View</b>
-        </a>*@
+                                <i class="fa-solid fa-list-check mx-2 text-black"></i><b>View</b>
+                            </a>*@
                         <a class="dedcription-btn anc col-md-6" href="@Url.Action("ViewStockPurchase","StockManagement")">
                             <span class="name-descripeion text-uppercase"> <b>View Records</b> </span>
                             <div class="btn-icon brain">
@@ -27,13 +27,13 @@
                 </div>
                 <div class="card-body">
                     @*<div class="row">
-                        <div class="d-xl-flex justify-content-end align-items-end">
-                            <a class="btn btn-sm btn-outline-primary btn-round mb-3" href="@Url.Action("ViewStockPurchase","StockManagement")">
-                                <i class="fa fa-eye mx-2"></i>View
-                            </a>
-                        </div>
-                    </div>*@
-                    @using (Html.BeginForm("AddStockPurchase", "StockManagement", FormMethod.Post, new { @class = "forms-sample" }))
+                            <div class="d-xl-flex justify-content-end align-items-end">
+                                <a class="btn btn-sm btn-outline-primary btn-round mb-3" href="@Url.Action("ViewStockPurchase","StockManagement")">
+                                    <i class="fa fa-eye mx-2"></i>View
+                                </a>
+                            </div>
+                        </div>*@
+                    @using (Html.BeginForm("AddStockPurchase", "StockManagement", FormMethod.Post, new { @class = "forms-sample", autocomplete = "off" }))
                     {
                         @Html.AntiForgeryToken();
                         @Html.HiddenFor(m => m.PurchaseId)
@@ -43,12 +43,12 @@
                     <div class="row form-group">
                         <div class="col-sm-3">
                             <label class="col-form-label">
-                                Select Department
+                                Select Company
                                 @Html.ValidationMessageFor(m => m.DepartmentId, "", new { @class = "text-danger h3" })
                             </label>
 
                             <div class="input-group input-group-outline mb-3">
-                                @Html.DropDownListFor(m => m.DepartmentId, new SelectList(Model.DeptList, "DepartmentId", "DepartmentName"), "Select Department",
+                                @Html.DropDownListFor(m => m.DepartmentId, new SelectList(Model.DeptList, "DepartmentId", "DepartmentName"), "Select Company",
                                     new Dictionary<string, object>() {
                                                {"id","ddlDeptId"},
                                                { "class","form-control form-select js-example-basic-single w-100"}
@@ -78,7 +78,7 @@
                                 @Html.TextBoxFor(model => model.PurchaseDate, new { @class = "form-control dateflat", id = "PurchaseDate", placeholder = "Purchase Date", required = "required" })
                                 <div class="input-group-append d-flex">
                                     <!-- Use d-flex class for flexbox behavior -->
-                                    <span class="input-group-text" id="datepickerIcon" style="color: #212529 !important; border: 1px solid #ced4da !important; ">
+                                    <span class="input-group-text datepicker-icon" id="datepickerIcon">
                                         <i class="fa fa-calendar"></i>
                                     </span>
                                 </div>
@@ -93,7 +93,7 @@
                                 @Html.TextBoxFor(model => model.MfgDate, new { @class = "form-control rangeDates", id = "MfgDate", placeholder = "Manufacturing Date", required = "required" })
                                 <div class="input-group-append d-flex">
                                     <!-- Use d-flex class for flexbox behavior -->
-                                    <span class="input-group-text" id="datepickerIcon" style="color: #212529 !important; border: 1px solid #ced4da !important; ">
+                                    <span class="input-group-text datepicker-icon" id="datepickerIcon">
                                         <i class="fa fa-calendar"></i>
                                     </span>
                                 </div>
@@ -101,11 +101,13 @@
                         </div>
                         <div class="col-sm-3">
                             <label class="col-form-label">Expiry Date @Html.ValidationMessageFor(m => m.ExpDate, "", new { @class = "text-danger h3" })</label>
+
+
                             <div class="input-group date">
                                 @Html.TextBoxFor(model => model.ExpDate, new { @class = "form-control rangeDates", id = "ExpDate", placeholder = "Expiry Date", required = "required" })
                                 <div class="input-group-append d-flex">
                                     <!-- Use d-flex class for flexbox behavior -->
-                                    <span class="input-group-text" id="datepickerIcon" style="color: #212529 !important; border: 1px solid #ced4da !important; ">
+                                    <span class="input-group-text datepicker-icon" id="datepickerIcon">
                                         <i class="fa fa-calendar"></i>
                                     </span>
                                 </div>
@@ -113,6 +115,7 @@
                         </div>
                         <div class="col-sm-3">
                             <label class="col-form-label">Quantity @Html.ValidationMessageFor(m => m.Quantity, "", new { @class = "text-danger h3" })</label>
+
                             @Html.TextBoxFor(model => model.Quantity, new { @class = "form-control numberonly", id = "Quantity", placeholder = "Enter Quantity", required = "required" })
                         </div>
                         <div class="col-sm-3">
@@ -134,6 +137,21 @@
                                         })
                             </div>
                         </div>
+
+                        <div class="col-sm-3">
+                            <label class="col-form-label">
+                                Select GST %
+                                @Html.ValidationMessageFor(m => m.GSTId, "", new { @class = "text-danger h3" })
+                            </label>
+
+                            <div class="input-group input-group-outline mb-3">
+                                @Html.DropDownListFor(m => m.GSTId, new SelectList(Model.GSTMasterList, "GSTId", "GSTPerc"), "Select GST %",
+                                    new Dictionary<string, object>() {
+                                               {"id","ddlGstId"},
+                                               { "class","form-control form-select js-example-basic-single w-100"}
+                                        })
+                            </div>
+                        </div>
                     </div>
                         @*<button type="submit" class="btn btn-primary mr-2 mt-3" onclick="return confirm('Are You sure you want to save data?')">Submit</button>*@
                         <button type="submit" class="btn btn-primary mr-2 mt-3" onclick="return formSubmit('Are You sure you want to save data?')">Submit</button>
@@ -145,3 +163,11 @@
         </div>
     </div>
 </div>
+<script>
+    $(document).ready(function () {
+        $('.datepicker-icon').click(function () {
+            var associatedTextbox = $(this).closest('.input-group').find('input[type="text"]');
+            associatedTextbox.focus();
+        });
+    });
+</script>

@@ -1,0 +1,331 @@
+﻿@model ParulBeautyCareViewModel.ViewModel.InvoiceMgmtViewModel.InvoiceDetailViewModel
+@{
+    ViewBag.Title = "Invoice Report";
+    ViewBag.Module = "Parul Beauty Care";
+}
+<style>
+    div#MyReport-Table_wrapper div#MyReport-Table_filter {
+        float: right !important;
+        text-align: left !important;
+        margin-top: 5px !important;
+        margin-right: 0px !important;
+    }
+    .toggle-button {
+        cursor: pointer;
+        background-color: #d81b60;
+        color: white;
+        border: none;
+        padding: 5px 10px;
+        border-radius: 5px;
+    }
+
+        .toggle-button:hover {
+            background-color: #ef6094;
+        }
+
+        .toggle-button:focus {
+            outline: none !important;
+        }
+
+    .bg-row {
+        background-color: #ffb5d0 !important;
+    }
+
+    .btn-outline-success:hover{
+        color: #fff !important
+    }
+</style>
+<div class="content-wrapper">
+    <div class="row">
+        <div class="col-12 grid-margin">
+            <div class="card">
+                <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+                    <div class="bg-gradient-pinkHeader shadow-primary border-radius-lg pt-3 d-flex justify-content-between row">
+                        <h2 class="text-white text-capitalize ps-3 title_margin col-md-6 mb-3"><b>Invoice</b></h2>
+
+                    </div>
+                </div>
+                <div class="card-body">
+                    @using (Html.BeginForm("BillReport", "Invoice", FormMethod.Post, new { @class = "forms-sample", id = "ReportForm", autocomplete = "off" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.HiddenFor(x => x.Action)
+                        @Html.HiddenFor(x => x.CreateUser)
+                        @Html.HiddenFor(x => x.CreateDate)
+                        <div class="row form-group">
+                            <div class="col-sm-3">
+                                <label class="col-form-label">
+                                    Select Company
+                                </label>
+
+                                <div class="input-group input-group-outline mb-3">
+                                    @Html.DropDownListFor(m => m.ReportDepartmentId, new SelectList(Model.DeptList, "DepartmentId", "DepartmentName"), "Select Company",
+                                 new Dictionary<string, object>() {
+                                                   {"id","ddlDeptId"},
+                                                   { "class","form-control form-select js-example-basic-single w-100"}
+                                     })
+                                </div>
+                            </div>
+
+                            <div class="col-sm-3">
+                                <label class="col-form-label">
+                                    Select Booking
+                                </label>
+
+                                <div class="input-group input-group-outline mb-3">
+                                    @Html.DropDownListFor(m => m.ReportBookingId, new SelectList(Model.DoneBookingsList, "BookingId", "CustomerName"), "Select Booking",
+                                 new Dictionary<string, object>() {
+                                                   {"id","ddldonebookings"},
+                                                   { "class","form-control form-select js-example-basic-single w-100"} 
+                                     })
+                                </div>
+                            </div>
+
+                            <div class="col-sm-3">
+                                <label class="col-form-label">From Date  @Html.ValidationMessageFor(m => m.FromDate, "", new { @class = "text-danger h3" })</label>
+
+                                <div class="input-group date">
+                                    @Html.TextBoxFor(model => model.FromDate, new { @class = "form-control billReportDates", id = "FromDate", placeholder = "From Date", required = "required" })
+                                    <div class="input-group-append d-flex">
+                                        <span class="input-group-text datepicker-icon" id="FromDateIcon" style="color: #212529 !important; border: 1px solid #ced4da !important; ">
+                                            <i class="fa fa-calendar"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-3">
+                                <label class="col-form-label">To Date  @Html.ValidationMessageFor(m => m.ToDate, "", new { @class = "text-danger h3" })</label>
+
+                                <div class="input-group date">
+                                    @Html.TextBoxFor(model => model.ToDate, new { @class = "form-control billReportDates", id = "ToDate", placeholder = "To Date", required = "required" })
+                                    <div class="input-group-append d-flex">
+                                        <span class="input-group-text datepicker-icon" id="ToDateIcon" style="color: #212529 !important; border: 1px solid #ced4da !important; ">
+                                            <i class="fa fa-calendar"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-3 mt-2">
+                                <div class="input-group input-group-outline mt-2">
+                                    <input type="submit" class="btn btn-primary float-left " onclick="changeFormAction('BillReport')" value="View" />
+
+                                    <button  type="submit"  class="btn btn-outline-success float-left mx-2" onclick="changeFormAction('ExportBillReport')"><i class="fa fa-file-excel px-2" aria-hidden="true"></i>Export Excel</button>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    <div class="row">
+                        <div class="col-12">
+                            <table id="MyReport-Table" class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            @Html.DisplayName("Action")
+                                        </th>
+                                        <th>
+                                            @Html.DisplayName("Company")
+                                        </th>
+                                        <th>
+                                            @Html.DisplayName("Bill Code")
+                                        </th>
+                                        <th>
+                                            @Html.DisplayName("Bill Date")
+                                        </th>
+                                        <th>
+                                            @Html.DisplayName("Customer")
+                                        </th>
+                                        <th>
+                                            @Html.DisplayName("Customer Contact No")
+                                        </th>
+                                        <th>
+                                            @Html.DisplayName("Total Amount")
+                                        </th>
+                                        <th>
+                                            @Html.DisplayName("Discount(%)")
+                                        </th>
+                                        <th>
+                                            @Html.DisplayName("Discount(Rs)")
+                                        </th>
+                                        <th>
+                                            @Html.DisplayName("Final Amount")
+                                        </th>
+                                        <th>
+                                            @Html.DisplayName("Paid Amount")
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (Convert.ToInt32(TempData["ViewRight"]) == 1)
+                                    {
+                                        foreach (var item in Model.DateWiseBillReportList)
+                                        {
+                                    <tr>
+                                        <td>
+                                            <button class="toggle-button" data-bill-id="@item.BillId"><i class="fa-solid fa-plus"></i></button>
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.DepartmentName)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.BillCode)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.BillDate)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.CustomerName)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.ContactNo)
+                                        </td>
+                                        <td> @Html.DisplayFor(modelItem => item.TotalAmount)</td>
+                                        <td> @Html.DisplayFor(modelItem => item.DiscountPerc)</td>
+                                        <td> @Html.DisplayFor(modelItem => item.Discount)</td>
+                                        <td> @Html.DisplayFor(modelItem => item.FinalAmount)</td>
+                                        <td> @Html.DisplayFor(modelItem => item.PaidAmount)</td>
+                                    </tr>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <tr>
+                                            <td>You have no rights to view data</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function changeFormAction(action) {
+        var form = document.getElementById("ReportForm");
+        if (action == "ExportBillReport") {
+            form.action = action;
+        }
+    }
+
+    $(document).ready(function () {
+        $(".billReportDates").flatpickr({
+            dateFormat: "d-m-Y",
+            maxDate: "today",
+            onClose: function (selectedDates, dateStr, instance) {
+                if (selectedDates.length > 0) {
+                    var selectedDate = selectedDates[0];
+                    $(".billReportDates").not(instance.element).flatpickr({
+                        dateFormat: "d-m-Y",
+                        minDate: selectedDate,
+                        maxDate: "today"
+                    });
+                }
+            }
+        });
+
+        $("#FromDateIcon").on('click', function () {
+            $("#FromDate").click();
+        });
+
+        $("#ToDateIcon").on('click', function () {
+            $("#ToDate").click();
+        });
+
+        var table= $('#MyReport-Table').DataTable({
+
+            "bJQueryUI": true,
+            "columnDefs": [{ "orderable": false, "targets": 0 }],
+            "aaSorting": [[0]]
+        });
+
+        var divElement = $('<div>').addClass('table-responsive');
+        
+        var tableElement = $('#MyReport-Table');
+
+        tableElement.wrap(divElement);
+
+        function format(data) {
+            var additionalRows = '';
+            if (data.BillDetailList.length != 0) {
+                data.BillDetailList.forEach(function (rowData) {
+                    additionalRows += '<tr>';
+                    additionalRows += '<td>' + rowData.ItemName + '</td>';
+                    additionalRows += '<td>' + rowData.Amount + '</td>';
+                    additionalRows += '<td>' + (rowData.Qty !== 0 ? rowData.Qty : '-') +'</td>';
+                    additionalRows += '<td>' + rowData.FinalAmount + '</td>';
+                    additionalRows += '<td>' + (rowData.Remark !== null ? rowData.Remark : '') + '</td>';
+                    additionalRows += '<td>' + rowData.CreateDate + '</td>';
+                    additionalRows += '<td>' + rowData.CreateUser + '</td>';
+                    additionalRows += '</tr>';
+                });
+            } else {
+                additionalRows = '<tr><td colspan="9" class="text-center">No data found</td></tr>';
+            }
+            var tableHtml = '<table class="table table-hover table-bordered nowrap">' +
+                '<thead>' +
+                '<tr>' +
+                '<th>Particulars</th>' +
+                '<th>Rate</th>' +
+                '<th>Qty</th>' +
+                '<th>Final Amount</th>' +
+                '<th>Remark</th>' +
+                '<th>CreateDate</th>' +
+                '<th>CreateUser</th>' +
+                '</tr>' +
+                '</thead><tbody>' +
+                additionalRows +
+                '</tbody></table>';
+
+            return tableHtml;
+
+        }
+
+        $('#MyReport-Table tbody').on('click', '.toggle-button', function () {
+            var tr = $(this).closest('tr');
+            var row = table.row(tr);
+            var billId = $(this).data("bill-id");
+
+            var url = "@System.Configuration.ConfigurationManager.AppSettings["myKey"]" + "/Invoice/SelectBillIdWiseDetailJson";
+            $.ajax({
+                url: url,
+                data: { billId: billId },
+                cache: false,
+                type: "POST",
+                datatype: "json",
+                traditional: true,
+
+                success: function (response) {
+                    if (row.child.isShown()) {
+                        row.child.hide();
+                        tr.removeClass('shown');
+                        tr.removeClass('bg-row');  
+                    } else {
+                        var tableContent = format(response);
+
+                        row.child(tableContent).show();
+                        tr.addClass('shown');
+                        tr.addClass('bg-row');
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error:", error);
+                }
+            });
+        });
+    });
+</script>

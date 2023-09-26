@@ -3,6 +3,7 @@ using ParulBeautyCareDbClasses.DataModels;
 using ParulBeautyCareDbClasses.DataModels.ParulBeautyCareDatasetTableAdapters;
 using ParulBeautyCareViewModel.ViewModel;
 using ParulBeautyCareViewModel.ViewModel.BookingMgmtViewModel;
+using ParulBeautyCareViewModel.ViewModel.InvoiceMgmtViewModel;
 using ParulBeautyCareViewModel.ViewModel.Master;
 using ParulBeautyCareViewModel.ViewModel.StockMgmtViewModel;
 using System;
@@ -758,7 +759,7 @@ namespace ParulBeautyCareAPI.Controllers
             {
                 using (parulbeautycareEntities db = new parulbeautycareEntities())
                 {
-                    sm.result = db.PBDepartmentMasterInsUpd(sm.DepartmentId, sm.DepartmentName, sm.CompanyCode, sm.IsActive, sm.CreateDate, sm.UpdateDate, sm.CreateUser, sm.Action).FirstOrDefault();
+                    sm.result = db.PBDepartmentMasterInsUpd(sm.DepartmentId, sm.DepartmentName,sm.DeptAbrv,sm.GSTNo,sm.DeptAddress, sm.CompanyCode, sm.IsActive, sm.CreateDate, sm.UpdateDate, sm.CreateUser, sm.Action).FirstOrDefault();
                     var response = Request.CreateResponse(HttpStatusCode.OK, sm);
                     sm.success = "true";
                 }
@@ -968,6 +969,106 @@ namespace ParulBeautyCareAPI.Controllers
             return Json(sm);
         }
         #endregion
+
+        #region==> Item Master
+        [HttpPost]
+        [Route("api/parulbeautycareAPI/ItemMasterRtr")]
+        public IHttpActionResult ItemMasterRtr([FromBody] ItemMasterViewModel itm)
+        {
+            iNotifyLogger obj = new iNotifyLogger();
+            try
+            {
+                using (parulbeautycareEntities db = new parulbeautycareEntities())
+                {
+                    itm.ItemMasterList = db.PBItemMasterRetrieve(itm.Action, itm.CompanyCode,itm.ItemId).ToList();
+                    var response = Request.CreateResponse(HttpStatusCode.OK, itm);
+                    itm.success = "true";
+                }
+            }
+            catch (Exception e)
+            {
+                itm.success = "false";
+                itm.message = e.Message;
+                obj.LogMessage("APIController", "ItemMasterRtr", e.Message, iNotifyLogger.LogType.Exception);
+            }
+            return Json(itm);
+        }
+
+        [HttpPost]
+        [Route("api/parulbeautycareAPI/ItemMasterInsUpd")]
+        public IHttpActionResult ItemMasterInsUpd([FromBody] ItemMasterViewModel sm)
+        {
+            iNotifyLogger obj = new iNotifyLogger();
+            try
+            {
+                using (parulbeautycareEntities db = new parulbeautycareEntities())
+                {
+                    sm.result = db.PBItemMasterInsUpd(sm.ItemId, sm.ItemName,  sm.CompanyCode, sm.IsActive,  sm.CreateDate, sm.UpdateDate, sm.CreateUser, sm.Action).FirstOrDefault();
+                    var response = Request.CreateResponse(HttpStatusCode.OK, sm);
+                    sm.success = "true";
+                }
+            }
+            catch (Exception e)
+            {
+                sm.success = "false";
+                sm.message = e.Message;
+                obj.LogMessage("APIController", "ItemMasterInsUpd", e.Message, iNotifyLogger.LogType.Exception);
+            }
+            return Json(sm);
+        }
+        #endregion
+
+        #region==> GST Master
+        [HttpPost]
+        [Route("api/parulbeautycareAPI/GSTMasterRtr")]
+        public IHttpActionResult GSTMasterRtr([FromBody] GSTMasterViewModel itm)
+        {
+            iNotifyLogger obj = new iNotifyLogger();
+            try
+            {
+                using (parulbeautycareEntities db = new parulbeautycareEntities())
+                {
+                    itm.GSTMasterList = db.PBGSTMasterRetrieve(itm.Action, itm.CompanyCode, itm.GSTId).ToList();
+                    var response = Request.CreateResponse(HttpStatusCode.OK, itm);
+                    itm.success = "true";
+                }
+            }
+            catch (Exception e)
+            {
+                itm.success = "false";
+                itm.message = e.Message;
+                obj.LogMessage("APIController", "GSTMasterRtr", e.Message, iNotifyLogger.LogType.Exception);
+            }
+            return Json(itm);
+        }
+
+
+
+        [HttpPost]
+        [Route("api/parulbeautycareAPI/GSTMasterInsUpd")]
+        public IHttpActionResult GSTMasterInsUpd([FromBody] GSTMasterViewModel sm)
+        {
+            iNotifyLogger obj = new iNotifyLogger();
+            try
+            {
+                using (parulbeautycareEntities db = new parulbeautycareEntities())
+                {
+
+                    sm.result = db.PBGSTMasterInsUpd(sm.GSTId, sm.GSTName, sm.GSTPerc, sm.FromDate, sm.ToDate, sm.CompanyCode, sm.IsActive, sm.CreateDate, sm.updatedate, sm.CreateUser, sm.Action).FirstOrDefault();
+                    var response = Request.CreateResponse(HttpStatusCode.OK, sm);
+                    sm.success = "true";
+                }
+            }
+            catch (Exception e)
+            {
+                sm.success = "false";
+                sm.message = e.Message;
+                obj.LogMessage("APIController", "GSTMasterInsUpd", e.Message, iNotifyLogger.LogType.Exception);
+            }
+            return Json(sm);
+        }
+        #endregion
+
         #endregion
 
         #region =====> Stock Management API
@@ -1009,7 +1110,7 @@ namespace ParulBeautyCareAPI.Controllers
                 using (parulbeautycareEntities db = new parulbeautycareEntities())
                 {
 
-                    spvm.result = db.PBStockPurchaseMasterInsUpd(spvm.PurchaseId, spvm.CompanyCode, spvm.CreateDate, spvm.CreateUser, spvm.UpdateDate, spvm.UpdateUser, spvm.ProductId, spvm.ProductTypeId, spvm.Quantity, spvm.MfgDate, spvm.ExpDate, spvm.PurchaseDate, spvm.VendorId, spvm.DepartmentId,spvm.Price, spvm.Action).FirstOrDefault();
+                    spvm.result = db.PBStockPurchaseMasterInsUpd(spvm.PurchaseId, spvm.CompanyCode, spvm.CreateDate, spvm.CreateUser, spvm.UpdateDate, spvm.UpdateUser, spvm.ProductId, spvm.ProductTypeId, spvm.Quantity, spvm.MfgDate, spvm.ExpDate, spvm.PurchaseDate, spvm.VendorId, spvm.DepartmentId,spvm.GSTId,spvm.Price, spvm.Action).FirstOrDefault();
                     var response = Request.CreateResponse(HttpStatusCode.OK, spvm);
                     spvm.success = "true";
                 }
@@ -1193,7 +1294,6 @@ namespace ParulBeautyCareAPI.Controllers
 
         #region=====> Booking Management API
 
-
         #region ==> Booking Staff Allocation
         [HttpPost]
         [Route("api/parulbeautycareAPI/BookingHeaderRetrieve")]
@@ -1218,6 +1318,31 @@ namespace ParulBeautyCareAPI.Controllers
             return Json(bhvm);
         }
 
+        #region==> Booking Services Retrieve
+        [HttpPost]
+        [Route("api/parulbeautycareAPI/BookingServicesRetrieve")]
+        public IHttpActionResult BookingServicesRetrieve([FromBody] BookingServicesViewModel bhvm)
+        {
+            iNotifyLogger obj = new iNotifyLogger();
+            try
+            {
+                using (parulbeautycareEntities db = new parulbeautycareEntities())
+                {
+                    bhvm.BookingServicesList = db.PBBookingServicesRtr(bhvm.BookingId, bhvm.Action, bhvm.CompanyCode).ToList();
+                    var response = Request.CreateResponse(HttpStatusCode.OK, bhvm);
+                    bhvm.success = "true";
+                }
+            }
+            catch (Exception e)
+            {
+                bhvm.success = "false";
+                bhvm.message = e.Message;
+                obj.LogMessage("APIController", "BookingServicesRetrieve", e.Message, iNotifyLogger.LogType.Exception);
+            }
+            return Json(bhvm);
+        }
+        #endregion
+
         #region ==> Booking Package Retrieve
         [HttpPost]
         [Route("api/parulbeautycareAPI/BookingPackageRetrieve")]
@@ -1240,6 +1365,29 @@ namespace ParulBeautyCareAPI.Controllers
                 obj.LogMessage("APIController", "BookingHeaderRetrieve", e.Message, iNotifyLogger.LogType.Exception);
             }
             return Json(bhvm);
+        }
+        #endregion
+
+        #region ==> Book Appointment Insert
+        [HttpPost]
+        [Route("api/parulbeautycareAPI/BookingAppointmentInsUpd")]
+        public IHttpActionResult BookingAppointmentInsUpd([FromBody] BookAppointmentViewModel mv)
+        {
+            iNotifyLogger obj = new iNotifyLogger();
+            QueriesTableAdapter db1 = new QueriesTableAdapter();
+            try
+            {
+                mv.Result = db1.PBBookingInsert_new(mv.BookingId.ToString(),mv.AdvanceBookingId.ToString(), mv.CustomerId.ToString(), mv.ContactNo, mv.CustomerName, mv.DepartmentId, mv.Address, mv.FunctionDate, mv.CreateDate, mv.CreateUser, "", "", "", mv.Amount, "", "", mv.BookingAmount, "", "", mv.CompanyCode, mv.FunctionDate, mv.ReadyTime, "1", mv.Action, mv.mytable, mv.mytable1).ToString();
+                var response = Request.CreateResponse(HttpStatusCode.OK, mv);
+                mv.success = "true";
+            }
+            catch (Exception e)
+            {
+                mv.success = "false";
+                mv.Message = e.Message;
+                obj.LogMessage("APIController", "BookingAppointmentInsUpd", e.Message, iNotifyLogger.LogType.Exception);
+            }
+            return Json(mv);
         }
         #endregion
 
@@ -1291,6 +1439,31 @@ namespace ParulBeautyCareAPI.Controllers
             return Json(sm);
         }
         #endregion
+        #endregion
+
+        #region==> ServiceComplition Master
+        [HttpPost]
+        [Route("api/parulbeautycareAPI/PaymentHistoryInsUpd")]
+        public IHttpActionResult PaymentHistoryInsUpd([FromBody] PaymentHistoryViewModel sm)
+        {
+            iNotifyLogger obj = new iNotifyLogger();
+            try
+            {
+                using (parulbeautycareEntities db = new parulbeautycareEntities())
+                {
+                    sm.result = db.PBPaymentHistoryInsUpd(sm.BookingId, sm.BookingCode, sm.PaymentRecievedDate, sm.PaymentType, sm.ChequeNo, sm.GPayNo, sm.ReceivedAmount, sm.PreviousAmount, sm.CompanyCode, sm.CreateDate, sm.CreateUser, sm.Action).FirstOrDefault();
+                    var response = Request.CreateResponse(HttpStatusCode.OK, sm);
+                    sm.success = "true";
+                }
+            }
+            catch (Exception e)
+            {
+                sm.success = "false";
+                sm.message = e.Message;
+                obj.LogMessage("APIController", "CategoryMasterInsUpd", e.Message, iNotifyLogger.LogType.Exception);
+            }
+            return Json(sm);
+        }
         #endregion
 
         #region ==> Check In Out
@@ -1396,6 +1569,233 @@ namespace ParulBeautyCareAPI.Controllers
                 obj.LogMessage("APIController", "EnquiryRetrieve", e.Message, iNotifyLogger.LogType.Exception);
             }
             return Json(envm);
+        }
+        #endregion
+
+        #region ==> Invoice (Billing)
+        [HttpPost]
+        [Route("api/parulbeautycareAPI/BillingRetrieve")]
+        public IHttpActionResult BillingRetrieve([FromBody] InvoiceDetailViewModel inm)
+        {
+            iNotifyLogger obj = new iNotifyLogger();
+            try
+            {
+                using (parulbeautycareEntities db = new parulbeautycareEntities())
+                {
+                    inm.BillRtr = db.PBBillingRetrieve(inm.Action, inm.CompanyCode).ToList();
+                    var response = Request.CreateResponse(HttpStatusCode.OK, inm);
+                    inm.success = "true";
+                }
+            }
+            catch (Exception e)
+            {
+                inm.success = "false";
+                inm.message = e.Message;
+                obj.LogMessage("APIController", "BillingRetrieve", e.Message, iNotifyLogger.LogType.Exception);
+            }
+            return Json(inm);
+        }
+
+        [HttpPost]
+        [Route("api/parulbeautycareAPI/BillingDetailRetrieve")]
+        public IHttpActionResult BillingDetailRetrieve([FromBody] BillDetailViewModel inm)
+        {
+            iNotifyLogger obj = new iNotifyLogger();
+            try
+            {
+                using (parulbeautycareEntities db = new parulbeautycareEntities())
+                {
+                    inm.BillDetailList = db.PBBillingDetailRetrieve(inm.Action,inm.BookingId).ToList();
+                    var response = Request.CreateResponse(HttpStatusCode.OK, inm);
+                    inm.success = "true";
+                }
+            }
+            catch (Exception e)
+            {
+                inm.success = "false";
+                inm.message = e.Message;
+                obj.LogMessage("APIController", "BillingDetailRetrieve", e.Message, iNotifyLogger.LogType.Exception);
+            }
+            return Json(inm);
+        }
+
+        [HttpPost]
+        [Route("api/parulbeautycareAPI/BillingDetailInsUpd")]
+        public IHttpActionResult BillingDetailInsUpd([FromBody] BillDetailViewModel sm)
+        {
+            iNotifyLogger obj = new iNotifyLogger();
+            try
+            {
+                using (parulbeautycareEntities db = new parulbeautycareEntities())
+                {
+                    sm.result = db.PBBillingDetailInsert(sm.BillingDetailId, sm.BookingId,sm.Action).FirstOrDefault();
+                    var response = Request.CreateResponse(HttpStatusCode.OK, sm);
+                    sm.success = "true";
+                }
+            }
+            catch (Exception e)
+            {
+                sm.success = "false";
+                sm.message = e.Message;
+                obj.LogMessage("APIController", "BillingDetailInsUpd", e.Message, iNotifyLogger.LogType.Exception);
+            }
+            return Json(sm);
+        }
+
+        [HttpPost]
+        [Route("api/parulbeautycareAPI/GenBillingCode")]
+        public IHttpActionResult GenBillingCode(InvoiceDetailViewModel inm)
+        {
+            iNotifyLogger obj = new iNotifyLogger();
+            try
+            {
+                using (parulbeautycareEntities db = new parulbeautycareEntities())
+                {
+                    inm.NewBillingCode = db.PBGenBillingCode(inm.DeptAbbr, inm.CompanyCode).FirstOrDefault();
+                    var response = Request.CreateResponse(HttpStatusCode.OK, inm);
+                    inm.success = "true";
+                }
+
+            }
+            catch (Exception e)
+            {
+                inm.success = "false";
+                inm.message = e.Message;
+                obj.LogMessage("APIController", "GenBillingCode", e.Message, iNotifyLogger.LogType.Exception);
+            }
+            return Json(inm);
+        }
+
+        [HttpPost]
+        [Route("api/parulbeautycareAPI/InvoiceInsUpd")]
+        public IHttpActionResult InvoiceInsUpd(InvoiceDetailViewModel inm)
+        {
+            iNotifyLogger obj = new iNotifyLogger();
+            try
+            {
+                using (QueriesTableAdapter hsb = new QueriesTableAdapter())
+                {
+                    DataTable dt = new DataTable();
+                    dt.Columns.AddRange(
+                      new DataColumn[8] {
+                            new DataColumn("BillingDetailId", typeof(string)),
+                            new DataColumn("CategoryId", typeof(string)),
+                            new DataColumn("SubCategoryId", typeof(string)),
+                            new DataColumn("ItemId", typeof(string)),
+                            new DataColumn("Qty", typeof(string)),
+                            new DataColumn("Remark", typeof(string)),
+                            new DataColumn("Amount", typeof(string)),
+                            new DataColumn("FinalAmount", typeof(string))
+
+                      });
+                    int cnt = 0;
+                    foreach (var item in inm.BillingDetailsTable)
+                    {
+                        string BillingDetailId = item.BillingDetailId;
+                        string CategoryId = item.CategoryId;
+                        string SubCategoryId = item.SubCategoryId;
+                        string ItemId = item.ItemId;
+                        string Qty = item.Qty;
+                        string Remark = item.Remark;
+                        string Amount = item.Amount != null ? item.Amount.ToString() : null;
+                        string FinalAmount = item.FinalAmount != null ? item.FinalAmount.ToString() : null;
+                        dt.Rows.Add(BillingDetailId,CategoryId, SubCategoryId, ItemId, Qty, Amount, FinalAmount, Remark);
+                        cnt++;
+                    }
+                    if(inm.Action== "insert")
+                    {
+                        inm.result = hsb.PBBillingInsertUpdate("", inm.BookingId, inm.BookingCode, inm.DepartmentId, inm.BillCode, inm.CustomerId, inm.ContactNo, inm.CustomerName, inm.Address, inm.BillDate, inm.CreateDate, inm.CreateUser, inm.UpdateDate, inm.UpdateUser, inm.BaseAmount != null ? inm.BaseAmount.ToString() : null, inm.DiscountPerc != null ? inm.DiscountPerc.ToString() : null, inm.Discount != null ? inm.Discount.ToString() : null, inm.GSTPerc != null ? inm.GSTPerc.ToString() : null, inm.GSTAmount != null ? inm.GSTAmount.ToString() : null, inm.FinalAmount != null ? inm.FinalAmount.ToString() : null, inm.CompanyCode, inm.Action, dt).ToString();
+                        var response = Request.CreateResponse(HttpStatusCode.OK, inm);
+                        inm.success = "true";
+                    }
+                    else
+                    {
+                        inm.result = hsb.PBBillingInsertUpdate(inm.BillId, "", "", "", inm.BillCode, "", "", "", "", "", "", "", inm.UpdateDate, inm.UpdateUser, inm.BaseAmount != null ? inm.BaseAmount.ToString() : null, inm.DiscountPerc != null ? inm.DiscountPerc.ToString() : null, inm.Discount != null ? inm.Discount.ToString() : null, inm.GSTPerc != null ? inm.GSTPerc.ToString() : null, inm.GSTAmount != null ? inm.GSTAmount.ToString() : null, inm.FinalAmount != null ? inm.FinalAmount.ToString() : null, "", inm.Action, dt).ToString();
+                        var response = Request.CreateResponse(HttpStatusCode.OK, inm);
+                        inm.success = "true";
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                inm.success = "false";
+                inm.message = e.Message;
+                obj.LogMessage("APIController", "InvoiceInsUpd", e.Message, iNotifyLogger.LogType.Exception);
+            }
+            return Json(inm);
+        }
+
+        [HttpPost]
+        [Route("api/parulbeautycareAPI/InvoiceReport")]
+        public IHttpActionResult InvoiceReport(BillReportViewModel inm)
+        {
+            iNotifyLogger obj = new iNotifyLogger();
+            try
+            {
+                using (parulbeautycareEntities db = new parulbeautycareEntities())
+                {
+                    inm.DateWiseBillReportList = db.PB_DateWiseBillReportRtr( inm.FromDate, inm.ToDate, string.IsNullOrEmpty(inm.BookingId) ? null : inm.BookingId, string.IsNullOrEmpty(inm.DepartmentId) ? null : inm.DepartmentId, inm.Action).ToList();
+                    var response = Request.CreateResponse(HttpStatusCode.OK, inm);
+                    inm.success = "true";
+                }
+            }
+            catch (Exception e)
+            {
+                inm.success = "false";
+                inm.message = e.Message;
+                obj.LogMessage("APIController", "InvoiceReport", e.Message, iNotifyLogger.LogType.Exception);
+            }
+            return Json(inm);
+        }
+        #endregion
+
+        #region ==> Advance Book
+
+        [HttpPost]
+        [Route("api/parulbeautycareAPI/AdvanceBookingRtr")]
+        public IHttpActionResult AdvanceBookingRtr([FromBody] AdvanceBookingViewModel itm)
+        {
+            iNotifyLogger obj = new iNotifyLogger();
+            try
+            {
+                using (parulbeautycareEntities db = new parulbeautycareEntities())
+                {
+                    itm.AdvanceBookingList = db.PB_AdvanceBookingRtr(itm.NewFromDate, itm.NewToDate, itm.AdvanceBookingId.ToString(), itm.DepartmentId, itm.Action).ToList();
+                    var response = Request.CreateResponse(HttpStatusCode.OK, itm);
+                    itm.Success = "true";
+                }
+            }
+            catch (Exception e)
+            {
+                itm.Success = "false";
+                itm.Message = e.Message;
+                obj.LogMessage("APIController", "AdvanceBookingRtr", e.Message, iNotifyLogger.LogType.Exception);
+            }
+            return Json(itm);
+        }
+
+
+        [HttpPost]
+        [Route("api/parulbeautycareAPI/AdvanceBookingInsUpd")]
+        public IHttpActionResult AdvanceBookingInsUpd([FromBody] AdvanceBookingViewModel sm)
+        {
+            iNotifyLogger obj = new iNotifyLogger();
+            try
+            {
+                using (parulbeautycareEntities db = new parulbeautycareEntities())
+                {
+                    sm.Result = db.PBAdvanceBookingInsUpd(sm.AdvanceBookingId.ToString(), sm.Name, sm.ContactNo, sm.Address, sm.SPersonName, sm.SPersonContact, sm.SPersonAddress, sm.BridalDeposit, sm.SidersDeposit, sm.TotalDeposit, sm.NumOfSiders, sm.FunctionDate, sm.DepartmentId, sm.BeforeRemark, sm.AfterRemark, sm.CompanyCode, sm.CreateDate, sm.UpdateDate, sm.CreateUser, sm.UpdateUser, sm.Action).FirstOrDefault();
+                    var response = Request.CreateResponse(HttpStatusCode.OK, sm);
+                    sm.Success = "true";
+                }
+            }
+            catch (Exception e)
+            {
+                sm.Success = "false";
+                sm.Message = e.Message;
+                obj.LogMessage("APIController", "AdvanceBookingInsUpd", e.Message, iNotifyLogger.LogType.Exception);
+            }
+            return Json(sm);
         }
         #endregion
     }

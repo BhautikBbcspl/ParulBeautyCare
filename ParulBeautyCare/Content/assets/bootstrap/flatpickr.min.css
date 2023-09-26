@@ -435,7 +435,7 @@
         }
 
         .flatpickr-current-month .flatpickr-monthDropdown-months .flatpickr-monthDropdown-month {
-            background-color: transparent;
+            background-color: #e35d8e;
             outline: none;
             padding: 0
         }

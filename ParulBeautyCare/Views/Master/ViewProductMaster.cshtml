@@ -4,7 +4,6 @@
     ViewBag.Module = "Master";
 }
 <style>
-   
 </style>
 <div class="content-wrapper">
     <div class="card">
@@ -14,8 +13,8 @@
                 @if (Convert.ToInt32(TempData["InsertRight"]) == 1)
                 {
                     @*<a class="btn btn-light btn-icon mb-2 mx-2 title_a" href="@Url.Action("AddProductMaster", "Master")">
-                        <i class="fa fa-plus mx-2 text-black"></i><b>Add</b>
-                    </a>*@
+                            <i class="fa fa-plus mx-2 text-black"></i><b>Add</b>
+                        </a>*@
                     <a class="dedcription-btn anc col-md-6" href="@Url.Action("AddProductMaster","Master")">
                         <span class="name-descripeion"> <b> ADD RECORDS</b> </span>
                         <div class="btn-icon brain">
@@ -28,13 +27,13 @@
         <div class="card-body">
             @*<h1 class="pink"><b>STAFF MANAGEMENT </b></h1>*@
             @*<div class="row">
-            <div class="d-xl-flex justify-content-between align-items-center">
-                <h1 class="pink"><b>Product Master</b></h1>
-                <a class="btn btn-sm btn-outline-primary btn-round mb-3" href="@Url.Action("AddProductMaster","Master")">
-                    <i class="fa fa-plus mx-2 "></i>Add
-                </a>
-            </div>
-        </div>*@
+                    <div class="d-xl-flex justify-content-between align-items-center">
+                        <h1 class="pink"><b>Product Master</b></h1>
+                        <a class="btn btn-sm btn-outline-primary btn-round mb-3" href="@Url.Action("AddProductMaster","Master")">
+                            <i class="fa fa-plus mx-2 "></i>Add
+                        </a>
+                    </div>
+                </div>*@
             <div class="row">
                 <div class="col-12">
                     <table id="Mybase-style" class="table table-striped">
@@ -74,74 +73,79 @@
                             {
                                 foreach (var item in Model)
                                 {
-                            <tr>
-                                <td>
-                                    @if (Convert.ToInt32(TempData["UpdateRight"]) == 1)
-                                    {
-                                        <a href="@Url.Action("EditProductMaster","Master",new { id = item.ProductId })" class="mx-3"><i class="fa fa-pencil"></i></a>
-                                    }
-                                    else
-                                    {
-                                        @*<img src="~/Images/edit_dis_2.png" style=" width: 13%;" />*@
-                                        <img src="~/Images/icons8-no-edit-16 (1).png" />
-                                    }
+                                    <tr>
+                                        <td>
+                                            @if (Convert.ToInt32(TempData["UpdateRight"]) == 1)
+                                            {
+                                                <a href="@Url.Action("EditProductMaster","Master",new { id = item.ProductId })" class="mx-3"><i class="fa fa-pencil"></i></a>
+                                            }
+                                            else
+                                            {
+                                                @*<img src="~/Images/edit_dis_2.png" style=" width: 13%;" />*@
+                                                <img src="~/Images/icons8-no-edit-16 (1).png" />
+                                            }
 
-                                </td>
-                                <td>
-                                    @*<img src="../@item.ProductImage" alt="Product Image" width="150" height="50">*@
-                                    @*<div class="wrapp">
+                                        </td>
+                                        <td>
+                                            @*<img src="../@item.ProductImage" alt="Product Image" width="150" height="50">*@
+                                            @*<div class="wrapp">
             <div class="box">
                 <img src="../@item.ProductImage" alt="Product Image">
             </div>
         </div>*@
 
-
-                                    <a class="lightbox" href="#@item.ProductCode">
-                                        <img src="../@item.ProductImage" />
-                                    </a>
-                                    <div class="lightbox-target" id="@item.ProductCode">
-                                        <img src="../@item.ProductImage" />
-                                        <a class="lightbox-close" href="#"></a>
-                                    </div>
-
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.ProductCode)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.ProductName)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.NumberOfPerson)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.ProductTName)
-                                </td>
-                                <td>
-                                    @*<label class="toggle">
-                <input class="toggle-checkbox" type="checkbox" onclick='ActiveDeactiveStatusChange(this,"@item.ProductId","ProductMaster")' @(item.IsActive == true ? "checked" : "")>
-                <span class="toggle-switch"></span>
-            </label>*@
-                                    @if (Convert.ToInt32(TempData["UpdateRight"]) == 1)
-                                    {
-                                        <div class="button r" id="button-2">
-                                            <input type="checkbox" class="checkbox" onclick='ActiveDeactiveStatusChange(this,"@item.ProductId","ProductMaster")' @(item.IsActive == true ? "checked" : "")>
-                                            <div class="knobs"></div>
-                                            <div class="layer"></div>
-                                        </div>
-                                    }
-                                    else
-                                    {
-                                        <div class="button r" id="button-2">
-                                            <input type="checkbox" class="checkbox" disabled="disabled" onclick='ActiveDeactiveStatusChange(this,"@item.ProductId","ProductMaster")' @(item.IsActive == true ? "checked" : "")>
-                                            <div class="knobs"></div>
-                                            <div class="layer"></div>
-                                        </div>
-                                    }
-                                </td>
-                                <td> @Html.DisplayFor(modelItem => item.cdate)</td>
-                                <td> @Html.DisplayFor(modelItem => item.CreateUser)</td>
-                            </tr>
+                                            @if (!string.IsNullOrEmpty(item.ProductImage))
+                                            {
+                                                <a class="lightbox" href="#@item.ProductCode">
+                                                    <img src="../@item.ProductImage" />
+                                                </a>
+                                                <div class="lightbox-target" id="@item.ProductCode">
+                                                    <img src="../@item.ProductImage" />
+                                                    <a class="lightbox-close" href="#"></a>
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <img src="../Uploads/ProductImages/default-image.jpg" width="150" height="150"/>
+                                            }
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.ProductCode)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.ProductName)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.NumberOfPerson)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.ProductTName)
+                                        </td>
+                                        <td>
+                                            @*<label class="toggle">
+                                                    <input class="toggle-checkbox" type="checkbox" onclick='ActiveDeactiveStatusChange(this,"@item.ProductId","ProductMaster")' @(item.IsActive == true ? "checked" : "")>
+                                                    <span class="toggle-switch"></span>
+                                                </label>*@
+                                            @if (Convert.ToInt32(TempData["UpdateRight"]) == 1)
+                                            {
+                                                <div class="button r" id="button-2">
+                                                    <input type="checkbox" class="checkbox" onclick='ActiveDeactiveStatusChange(this,"@item.ProductId","ProductMaster")' @(item.IsActive == true ? "checked" : "")>
+                                                    <div class="knobs"></div>
+                                                    <div class="layer"></div>
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <div class="button r" id="button-2">
+                                                    <input type="checkbox" class="checkbox" disabled="disabled" onclick='ActiveDeactiveStatusChange(this,"@item.ProductId","ProductMaster")' @(item.IsActive == true ? "checked" : "")>
+                                                    <div class="knobs"></div>
+                                                    <div class="layer"></div>
+                                                </div>
+                                            }
+                                        </td>
+                                        <td> @Html.DisplayFor(modelItem => item.cdate)</td>
+                                        <td> @Html.DisplayFor(modelItem => item.CreateUser)</td>
+                                    </tr>
                                 }
                             }
                             else

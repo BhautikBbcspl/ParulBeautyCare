@@ -21,7 +21,7 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    @using (Html.BeginForm("AddPackageMaster", "Master", FormMethod.Post, new { @class = "forms-sample" }))
+                    @using (Html.BeginForm("AddPackageMaster", "Master", FormMethod.Post, new { @class = "forms-sample", autocomplete = "off" }))
                     {
                         @Html.AntiForgeryToken()
                         @Html.HiddenFor(x => x.Action)

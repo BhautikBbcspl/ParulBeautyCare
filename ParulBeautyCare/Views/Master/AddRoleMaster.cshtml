@@ -34,7 +34,7 @@
                 </a>
             </div>
         </div>*@
-                    @using (Html.BeginForm("AddRoleMaster", "Master", FormMethod.Post, new { @class = "forms-sample" }))
+                    @using (Html.BeginForm("AddRoleMaster", "Master", FormMethod.Post, new { @class = "forms-sample", autocomplete = "off" }))
                     {
                         @Html.AntiForgeryToken()
                         @Html.HiddenFor(x => x.Action)

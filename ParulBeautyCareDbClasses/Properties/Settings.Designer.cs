@@ -26,8 +26,8 @@ namespace ParulBeautyCareDbClasses.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=13.200.51.29,1433;Initial Catalog=parulbeautycare;User ID=banaslab;Pa" +
-            "ssword=@@JULY2018@@")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=p3nwplsk12sql-v18.shr.prod.phx3.secureserver.net;Initial Catalog=paru" +
+            "lbeautycare;User ID=parulbeautycare;Password=@@JULY2018@@")]
         public string parulbeautycareConnectionString {
             get {
                 return ((string)(this["parulbeautycareConnectionString"]));

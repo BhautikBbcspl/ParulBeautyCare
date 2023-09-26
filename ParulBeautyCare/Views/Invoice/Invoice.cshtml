@@ -1,0 +1,1092 @@
+﻿@model ParulBeautyCareViewModel.ViewModel.InvoiceMgmtViewModel.InvoiceDetailViewModel
+@{
+    ViewBag.Title = "Invoice";
+    ViewBag.Module = "Parul Beauty Care";
+}
+<script src="~/Content/assets/css/html2pdf.bundle.min.js"></script>
+<style>
+    .card {
+        border: unset !important;
+    }
+
+    .tooltiptext {
+        width: 220px;
+        background-color: #273342;
+        color: #fff;
+        text-align: center;
+        border-radius: 6px;
+        padding: 5px 0;
+        position: absolute;
+        z-index: 1;
+        bottom: 150%;
+        left: 30%;
+        margin-left: -120px;
+    }
+
+    .doubleBorder {
+        border-bottom: 3px double;
+    }
+
+    .tooltiptext::after {
+        content: "";
+        position: absolute;
+        top: 100%;
+        left: 30%;
+        border-style: solid;
+        border-color: #273342 transparent transparent transparent;
+        margin-left: -5px;
+        border-width: 5px;
+        visibility: visible;
+    }
+
+    .table > :not(:last-child) > :last-child > * {
+        border-bottom-color: #d0d0da;
+    }
+
+    .AmtTbl .table > :not(caption) > * > * {
+        border: none !important;
+    }
+
+    .AmtTbl .table td {
+        padding: 0.25rem 0.5rem !important;
+    }
+
+    .AmtTbl hr {
+        margin: 0.5rem;
+    }
+
+    #exampleModal .InfoDiv p {
+        font-size: 0.900rem;
+        margin-bottom: 0.5rem;
+        line-height: 1rem;
+    }
+
+    #billTable td, #billTable th {
+        padding: 0.4rem 0.9375rem;
+    }
+
+    #billTable tbody, #billTable thead {
+        border: 1px solid #001737;
+    }
+</style>
+
+<div class="content-wrapper">
+    <div class="row">
+        <div class="col-12 grid-margin">
+            <div class="card">
+                <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+                    <div class="bg-gradient-pinkHeader shadow-primary border-radius-lg pt-3 d-flex justify-content-between row">
+                        <h2 class="text-white text-capitalize ps-3 title_margin col-md-6 mb-3"><b>Invoice</b></h2>
+
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row form-group">
+                        <div class="col-sm-3">
+                            <label class="col-form-label">Booking Contact No</label>
+                            <div class="input-group input-group-outline">
+                                @Html.TextBoxFor(model => model.BookingContactNo, new { @class = "form-control contacterror", id = "BookingContactNo", placeholder = "Enter Booking Contact No.", autocomplete = "off" })
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <label class="col-form-label">Booking Code</label>
+                            <div class="input-group input-group-outline">
+                                @Html.TextBoxFor(model => model.BookingCode, new { @class = "form-control", id = "BookingCode", placeholder = "Enter Booking Code", autocomplete = "off" })
+                            </div>
+                        </div>
+                        <div class="col-sm-3 mt-2">
+                            <div class="input-group input-group-outline mt-4">
+                                <button id="showBooking" type="button" class="btn btn-outline-primary float-left  mt-4"><i class="fa fa-search px-2" aria-hidden="true"></i>Search Booking</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <fieldset id="BookingFieldset" class="ml-2 mr-2 m-1 table-responsive" style="display: none; text-align: center;">
+                        <table id="BookingTable" class="table table-bordered" style="border-color: #d0d0da !important;">
+                            <thead>
+                                <tr>
+                                    <th>Booking Code</th>
+                                    <th>Booking Date</th>
+                                    <th>Company</th>
+                                    <th>Customer</th>
+                                    <th>Contact No</th>
+                                    <th>Amount</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+
+                        </table>
+                        <p class="h2 text-decoration-underline mt-4">Customer Previous Record</p>
+                        <br />
+                        <table id="PastRecordTable" class="table table-bordered" style="border-color: #d0d0da !important;">
+                            <thead>
+                                <tr>
+                                    <th>Booking Code</th>
+                                    <th>Booking Date</th>
+                                    <th>Company</th>
+                                    <th>Customer</th>
+                                    <th>Contact No</th>
+                                    <th>Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </fieldset><br />
+
+                    @using (Html.BeginForm("AddInvoice", "Invoice", FormMethod.Post, new { @class = "forms-sample", autocomplete = "off", id = "InvoiceForm", style = "display:none;" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.HiddenFor(x => x.Action)
+                        @Html.HiddenFor(x => x.CreateUser)
+                        @Html.HiddenFor(x => x.CreateDate)
+                        @Html.HiddenFor(x => x.DepartmentId, new { id = "DeptId" })
+                        @Html.HiddenFor(x => x.BookingId, new { id = "BookingId" })
+                        <div class="row form-group">
+                            @*<div class="col-sm-3">
+                                    <label class="col-form-label">
+                                        Select Department
+                                        @Html.ValidationMessageFor(m => m.DepartmentId, "", new { @class = "text-danger h3" })
+                                    </label>
+
+                                    <div class="input-group input-group-outline mb-3">
+                                        @Html.DropDownListFor(m => m.DepartmentId, new SelectList(Model.DeptList, "DepartmentId", "DepartmentName"), "Select Department",
+                                     new Dictionary<string, object>() {
+                                                       {"id","ddlDeptId"},
+                                                       { "class","form-control form-select js-example-basic-single w-100"},
+                                                         {"onchange" ,"javascript:GetDepartment(this.value)" }
+                                         })
+                                    </div>
+                                </div>*@
+
+                            <div class="col-sm-3">
+                                <label class="col-form-label">Billing Date  @Html.ValidationMessageFor(m => m.BillDate, "", new { @class = "text-danger h3" })</label>
+
+                                <div class="input-group date">
+                                    @Html.TextBoxFor(model => model.BillDate, new { @class = "form-control", id = "BillDate", placeholder = "Billing Date", required = "required" })
+                                    <div class="input-group-append d-flex">
+                                        <!-- Use d-flex class for flexbox behavior -->
+                                        <span class="input-group-text datepicker-icon" id="BillDateIcon" style="color: #212529 !important; border: 1px solid #ced4da !important; ">
+                                            <i class="fa fa-calendar"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="col-sm-3">
+                                <label class="col-form-label">Invoice Number @Html.ValidationMessageFor(m => m.BillCode, "", new { @class = "text-danger h3" })</label>
+
+                                @Html.TextBoxFor(model => model.BillCode, new { @class = "form-control", id = "BillingCode", placeholder = "Enter Billing Code", required = "required", @readonly = "readonly", tabindex = "-1" })
+                            </div>
+
+                            @*<div class="col-sm-3">
+                                    <label class="col-form-label">
+                                        Select Booking
+                                        @Html.ValidationMessageFor(m => m.BookingId, "", new { @class = "text-danger h3" })
+                                    </label>
+
+                                    <div class="input-group input-group-outline mb-3">
+                                        @Html.DropDownListFor(m => m.BookingId, new SelectList(Model.DoneBookingsList, "BookingId", "CustomerName"), "Select Booking",
+                                     new Dictionary<string, object>() {
+                                                       {"id","ddldonebookings"},
+                                                       { "class","form-control form-select js-example-basic-single w-100"} ,
+                                                {"onchange" ,"javascript:GetDetailData(this.value)" }
+                                         })
+                                    </div>
+                                </div>*@
+                            <div class="col-sm-3">
+                                <label class="col-form-label">Deposit Amount</label>
+                                @Html.TextBoxFor(model => model.AdvanceAmount, new { @class = "form-control numberonly", id = "AdvanceAmount", placeholder = "Enter Deposit Amount", @readonly = "readonly", tabindex = "-1" })
+                            </div>
+                            <div class="col-sm-3">
+                                <label class="col-form-label">Discount %</label>
+                                <div class="input-group date">
+                                    @Html.TextBoxFor(model => model.DiscountPerc, new { @class = "form-control numberonly", id = "DiscountPerc", placeholder = "Enter Discount in Percentage" })
+                                    <div class="input-group-append d-flex">
+                                        <span class="input-group-text" style="color: #212529 !important; border: 1px solid #ced4da !important; ">
+                                            <i class="fa fa-percentage"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <label class="col-form-label">Discount Amount</label>
+                                <div class="input-group date">
+                                    @Html.TextBoxFor(model => model.Discount, new { @class = "form-control numberonly", id = "Discount", placeholder = "Enter Discount Amount" })
+                                </div>
+                            </div>
+                            @*<div class="col-sm-3">
+                                <label class="col-form-label">Pay Amount</label>
+                                @Html.TextBoxFor(model => model.PaidAmount, new { @class = "form-control numberonly", id = "PayAmount", placeholder = "Enter Pay Amount" })
+                            </div>*@
+                        </div>
+
+                        <fieldset id="ServiceFieldset" class="ml-2 mr-2 m-1 table-responsive" style="display: none; text-align: center;">
+                            <table id="ServiceTable" class="table table-bordered" style="border-color: #d0d0da !important;">
+                                <thead>
+                                    <tr>
+                                        <th>Particulars</th>
+                                        <th>Quantity</th>
+                                        <th>Rate</th>
+                                        <th>Amount</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+
+                            <div class="button-container mt-2" style="display: flex; justify-content: flex-end;">
+                                <button type="button" class="btn btn-outline-primary AddNewItem"><i class="fa fa-plus px-2" aria-hidden="true"></i>Add New Item in Bill</button>
+                            </div>
+
+                        </fieldset>
+
+                        <fieldset id="individualFieldset" class="ml-2 mr-2 m-1 table-responsive" style="display: none; text-align: center;">
+                            <table id="Maintable" class="table table-bordered " style="border-color: #d0d0da !important;">
+                                <thead>
+                                    <tr>
+                                        <td>Select Item</td>
+                                        <td>Qty</td>
+                                        <td>Amount</td>
+                                        <td>Remark</td>
+                                        <td style="min-width:130px;max-width:150px !important">Action</td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="data-contact-person">
+                                        <td>
+                                            @Html.DropDownListFor(m => m.ItemId, new SelectList(Model.ItemRetrieve, "ItemId", "ItemName"), "Select Item",
+                                                new Dictionary<string, object>() {
+                                                                          {"id","ddlitemlist"},
+                                                                          { "class","form-control selectDropdown form-select js-example-basic-single w-100"}
+                                                    })
+                                        </td>
+                                        <td>
+                                            @Html.EditorFor(model => model.Qty, new
+                                       {
+                                           htmlAttributes = new { @class = "form-control", @id = "Qty", autocomplete = "off" }
+                                       })
+                                        </td>
+                                        <td>
+                                            @Html.EditorFor(model => model.Amount, new
+                                       {
+                                           htmlAttributes = new { @class = "form-control", @id = "Amount", autocomplete = "off" }
+                                       })
+                                        </td>
+                                        <td>
+                                            @Html.TextAreaFor(m => m.Remark, new { @id = "Remark", @class = "form-control w-100", autocomplete = "off" })
+                                        </td>
+                                        <td>
+                                            <button type="button" id="btnAdd" class="btn btn-sm btn-primary classAdd"><i class="fa fa-plus-square" aria-hidden="true"></i></button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+
+                            </table><br />
+
+                            <button id="removeAll" type="button" class="btn btn-outline-primary" style=" margin: auto;"><i class="fa fa-trash px-2" aria-hidden="true"></i>Remove All</button>
+
+                        </fieldset>
+
+                        <div class="row form-group">
+                            <div class="d-flex justify-content-center">
+                                @*<button id="StoreBill" class="btn btn-primary mb-3" onclick="return confirmAndSubmit()">Submit Bill</button>*@
+                                <button id="ViewBill" type="button" class="btn btn-primary ml-3 mb-3" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fa-solid fa-money-check-dollar mx-2"></i>Final Bill</button>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-modal="true">
+        <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="pdfContainer" style="padding:0px 26px !important">
+                    <div class="container-fluid d-flex justify-content-center mt-2">
+                        <b><span class="h2 link-underline-light doubleBorder" id="billDept"></span></b>
+                    </div>
+                    <hr />
+                    <div class="container-fluid d-flex justify-content-between InfoDiv">
+                        <div class="col-lg-6 col-md-6 col-sm-6 justify-content-center d-flex">
+                            <img id="logoImage" src="~/Images/LogoParulBeautyCare.png" width="280" height="175">
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 px-2">
+                            <p class="d-flex"><i class="fa-solid fa-location-dot fa-xl mx-2 mt-3"></i><span id="Address">A-201,Nilkanth Residency, B/s. Patcon House,<br />Nr. Siddhi Vinayak Temple, 80 Feet Road,<br />Anand - 388001</span></p>
+                            <p><i class="fa-brands fa-square-whatsapp fa-xl mx-2"></i><span>96242 51323 - 98257 17517</span></p>
+                            <p><i class="fa-brands fa-square-instagram fa-xl mx-2"></i><span>paruls_bridal</span> <i class="fa-brands fa-square-facebook fa-xl mx-2"></i><span>parul's beauty care</span></p>
+                            <p><i class="fa-solid fa-envelope fa-xl mx-2"></i><span>paruls.beautycare@gmail.com</span></p>
+                            <p><span><b>GST Number : </b></span><span id="gstNo"></span></p>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="container-fluid d-flex justify-content-between">
+                        <div class="col-lg-6 col-md-6 pl-0">
+                            <p id="custId" hidden>Id</p>
+                            <p><b>Name :</b><span class="h5 mx-2" id="custName"></span></p>
+                            <p><b>Contact No :</b><span class="h5 mx-2" id="custNo"></span></p>
+                            <p><b>Address :</b><span class="h5 mx-2" id="custAdd"></span></p>
+                        </div>
+                        <div class="col-lg-6 col-md-6 pr-0">
+                            <p><b>Invoice No : </b><span class="h5 mx-2" id="invNo"></span></p>
+                            <p><b>Invoice Date : </b><span class="h5 mx-2" id="invoiceDateDisplay"></span></p>
+                        </div>
+                    </div>
+                    <div class="container-fluid mt-2 d-flex justify-content-center w-100">
+                        <div class="table-responsive w-100">
+                            <table class="table table-bordered" id="billTable" style="border-color: black !important;">
+                                <thead>
+                                    <tr class="bg-dark text-white">
+                                        <th style="width:60%;text-align:center;">Particulars</th>
+                                        <th style="width:10%;text-align:center;">Quantity</th>
+                                        <th class="text-end" style="width:10%;text-align:center;">Rate</th>
+                                        <th class="text-end" style="width:20%">Amount</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="container-fluid mt-3 w-100 AmtTbl">
+                        <table class="table" style="border:none;border-color:none!important">
+                            <tbody>
+                                <tr>
+                                    <td colspan="2" class="text-end" style="width:95%"><b>Total :</b></td>
+                                    <td class="text-end"><span id="BaseAmt">00.00</span></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" class="text-end" style="width:95%">Discount :</td>
+                                    <td class="text-end"><span id="discountPerc">00.00</span></td>
+                                </tr>
+                                <tr hidden>
+                                    <td><span id="discount">00.00</span></td>
+                                    <td><span id="paidAmount">00.00</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <hr />
+                        <table class="table" style="border:none;border-color:none!important">
+                            <tbody>
+                                <tr hidden>
+                                    <td><span id="BookingHeaderAmt">00.00</span></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" class="text-end" style="width:95%">CGST<span id="CGSTPerc">00.00</span></td>
+                                    <td class="text-end"><span id="CGST">00.00</span></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" class="text-end" style="width:95%">SGST<span id="SGSTPerc">00.00</span></td>
+                                    <td class="text-end"><span id="SGST">00.00</span></td>
+                                </tr>
+                                <tr hidden>
+                                    <td><span id="GSTPerc">00.00</span></td>
+                                    <td><span id="GSTAmount">00.00</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <hr />
+                        <table class="table mb-2" style="border:none;border-color:none!important">
+                            <tbody>
+                                <tr>
+                                    <td colspan="2" class="text-end" style="width:95%"><b>Grand Total :</b></td>
+                                    <td class="text-end"><span id="finaltotal">00.00</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button id="downloadPDFButton2" onclick="confirmAndSubmit('print')" class="btn btn-primary float-right"><i class="fa-solid fa-save mx-2"></i>Submit</button>
+                    <button id="downloadPDFButton2" onclick="downloadPDF2()" class="btn btn-primary float-right"><i class="fa-solid fa-print mx-2"></i>Print</button>
+                    <button id="downloadPDFButton" onclick="confirmAndSubmit('download')" class="btn btn-primary float-right"><i class="fa-solid fa-download mx-2"></i>Submit and Download</button>
+                    <button type="button" class="btn btn-secondary" onclick="closeWindow()" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    function GetDetailData(_BookingHeaderId) {
+        $.ajax({
+            url: "@System.Configuration.ConfigurationManager.AppSettings["myKey"]" + "/Invoice/BookingDetailRTR",
+            data: { BookingHeaderId: _BookingHeaderId },
+            cache: false,
+            type: "POST",
+            datatype: "json",
+            traditional: true,
+            success: function (data) {
+                var InvoiceForm = document.getElementById("InvoiceForm");
+                InvoiceForm.style.display = "block";
+
+                $.each(data.bhv, function (index, item) {
+                    debugger
+                    var departmentId = item.DepartmentId;
+                    GetDepartment(departmentId);
+                    var departmentName = item.DepartmentName;
+                    var bookingId = item.BookingId;
+                    var customerId = item.CustomerId;
+                    var customerName = item.CustomerName;
+                    var contactNo = item.ContactNo;
+                    var Address = item.Address;
+                    var BookingHeaderAmt = item.FinalAmount;
+                    var AdvancePaidAmt = item.AdvanceBookingCharge;
+
+                    $('#DeptId').val(departmentId);
+                    $("#billDept").text(departmentName);
+                    $('#BookingId').val(bookingId);
+                    $('#custId').text(customerId);
+                    $('#custName').text(customerName);
+                    $('#custNo').text(contactNo);
+                    $('#custAdd').text(Address);
+                    $('#AdvanceAmount').val(AdvancePaidAmt);
+                    $('#BookingHeaderAmt').val(BookingHeaderAmt);
+                })
+
+                var tableBody = $('#billTable tbody');
+                tableBody.find('.oldRecord').remove();
+
+                var serviceFieldset = document.getElementById("ServiceFieldset");
+                serviceFieldset.style.display = "block";
+                var ServiceTableBody = $('#ServiceTable tbody');
+                ServiceTableBody.find('.oldRecord').remove();
+
+                var total = 0;
+                var inc = 0;
+                $.each(data.bdv, function (index, item) {
+
+                    var row = $('<tr class="oldRecord"></tr>');
+                    inc += 1;
+                    var CategoryId = $('<td hidden></td>').append(item.CategoryId);
+                    var SubCategoryId = $('<td hidden></td>').append(item.SubCategoryId);
+                    var ItemId = $('<td hidden></td>').append('');
+                    var Remark = $('<td hidden></td>').append('');
+                    var SubCategoryNameCell = $('<td style="width:60%;text-align:center;"></td>').append(item.CategoryName+' (' + item.SubCategoryName+')');
+                    var Quantity = $('<td style="width:10%;text-align:center;"></td>').append('-');
+                    var Rate = $('<td class="text-end" style="width:10%;text-align:center;"></td>').append(item.Amount);
+                    var Amount = $('<td class="text-end" style="width:20%"></td>').append(item.Amount);
+
+                    total += item.Amount;
+                    row.append(CategoryId, SubCategoryId, ItemId, Remark,SubCategoryNameCell, Quantity, Rate, Amount);
+                    tableBody.append(row);
+
+                });
+
+                $.each(data.bdv, function (index, item) {
+
+                    var ServiceTblrow = $('<tr class="oldRecord"></tr>');
+                    inc += 1;
+
+                    var SubCategoryNameCell = $('<td></td>').append(item.CategoryName + ' (' + item.SubCategoryName + ')');
+                    var Quantity = $('<td></td>').append('-');
+                    var Rate = $('<td></td>').append(item.Amount);
+                    var Amount = $('<td></td>').append(item.Amount);
+
+                    ServiceTblrow.append(SubCategoryNameCell, Quantity, Rate, Amount);
+                    ServiceTableBody.append(ServiceTblrow);
+                });
+                $('#GSTPerc').val(data.gsmv.GSTPerc);
+                /*$('#total').text(total);*/
+                //$("#grandtotal").text(total);
+            },
+            error: function (error) {
+                SweetAlert(error.Message, error.Type);
+            }
+        })
+    }
+
+    function GetDepartment(DeptID) {
+        $.ajax({
+            url: "@System.Configuration.ConfigurationManager.AppSettings["myKey"]" + "/Invoice/GetDepartment",
+            data: { DepartmentId: DeptID },
+            cache: false,
+            type: "POST",
+            datatype: "json",
+            traditional: true,
+            success:
+                function (data) {
+                    var deptAbrv = data.DepartmentList[0].DeptAbrv;
+
+                    //var logoImage = $('#logoImage');
+
+                    //if (deptAbrv === "PBC") {
+                    //    logoImage.attr('src', '../Images/PBC.png');
+                    //} else if (deptAbrv === "PBS") {
+                    //    logoImage.attr('src', '../Images/PBS.png');
+                    //} else if (deptAbrv === "PNS") {
+                    //    logoImage.attr('src', '../Images/PNS.png');
+                    //}
+
+                    $("#gstNo").text(data.DepartmentList[0].GSTNo);
+                    $("#Address").text(data.DepartmentList[0].DeptAddress);
+
+                    $('#BillingCode').val(data.NewBillingCode);
+                    $("#invNo").text(data.NewBillingCode);
+                },
+            error: function (error) {
+                    SweetAlert(error.Message, error.Type);
+                }
+        })
+    }
+
+    function downloadPDF() {
+        var element = document.getElementById('pdfContainer');
+        var currentDate = new Date();
+        var formattedDate = currentDate.getFullYear() + "-" + (currentDate.getMonth() + 1) + "-" + currentDate.getDate();
+        var invoicenum = $("#invNo").text();
+        var opt = {
+            margin: 5,
+            filename: invoicenum + '_' + formattedDate + '.pdf',
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { scale: 2 },
+            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+        };
+
+        // Create a PDF using html2pdf.js
+        html2pdf().from(element).set(opt).save();
+    }
+
+    function downloadPDF2() {
+        var element = document.getElementById('pdfContainer');
+        var currentDate = new Date();
+        var formattedDate = currentDate.getFullYear() + "-" + (currentDate.getMonth() + 1) + "-" + currentDate.getDate();
+        var invoicenum = $("#invNo").text();
+        var opt = {
+            margin: 5,
+            filename: invoicenum + '_' + formattedDate + '.pdf',
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { scale: 2 },
+            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+        };
+        html2pdf().from(element).set(opt).toPdf().get('pdf').then(function (pdf) {
+            window.open(pdf.output('bloburl'), '_blank');
+        });
+    }
+
+    // For Print
+    function printDiv(divName) {
+        var printContents = document.getElementById(divName).innerHTML;
+        var originalContents = document.body.innerHTML;
+
+        document.body.innerHTML = printContents;
+        window.print();
+        document.body.innerHTML = originalContents;
+
+    }
+    function closeWindow() {
+        $('#exampleModal').hide();
+        $('.modal-backdrop').remove();
+        $('body').removeClass();  // Remove all classes
+        $('body').removeAttr('style');
+    }
+
+    function updateTotalBasedOnDiscountPerc() {
+        var gst = parseInt($('#GSTPerc').val() || 0);
+        var BaseAmt = parseInt($('#BaseAmt').text());
+        var discount = parseInt($('#DiscountPerc').val() || 0);
+        //var payAMt = parseInt($('#PayAmount').val() || 0);
+        var discountAmount = BaseAmt * discount / 100;
+
+        var total = BaseAmt - discountAmount;
+        var gstAmt = (total * gst / 100);
+        var gstPerc = gst / 2;
+        var CGST = (total * gstPerc / 100);
+        var SGST = (total * gstPerc / 100);
+
+        var FinalTotal = total + CGST + SGST;
+
+
+        $('#CGSTPerc').text('(' + gstPerc + '%) :');
+        $('#SGSTPerc').text('(' + gstPerc + '%) :');
+        $('#CGST').text(CGST);
+        $('#SGST').text(SGST);
+        $('#GSTAmount').val(gstAmt); // Store In Table
+
+        $('#discountPerc').text(discount + '%'); // Store In Table
+        $('#discount').text(discountAmount); // Store In Table
+        $('#finaltotal').text(FinalTotal); // Store In Table
+       // $('#paidAmount').text(payAMt); // Store In Table
+    }
+
+    function updateTotalBasedOnDiscount() {
+        var gst = parseInt($('#GSTPerc').val() || 0);
+        var BaseAmt = parseInt($('#BaseAmt').text());
+        var discount = parseInt($('#Discount').val() || 0);
+       // var payAMt = parseInt($('#PayAmount').val() || 0);
+
+        var total = BaseAmt - discount;
+        var gstAmt = (total * gst / 100);
+        var gstPerc = gst / 2;
+        var CGST = (total * gstPerc / 100);
+        var SGST = (total * gstPerc / 100);
+
+        var FinalTotal = total + CGST + SGST;
+
+        $('#CGSTPerc').text('(' + gstPerc + '%) :');
+        $('#SGSTPerc').text('(' + gstPerc + '%) :');
+        $('#CGST').text(CGST);
+        $('#SGST').text(SGST);
+        $('#GSTAmount').val(gstAmt); // Store In Table
+
+        $('#discountPerc').text(discount); // Store In Table
+        $('#discount').text(discount); // Store In Table
+        $('#finaltotal').text(FinalTotal); // Store In Table
+       // $('#paidAmount').text(payAMt); // Store In Table
+    }
+
+    function updateFinalTotal() {
+        debugger
+        var gst = parseInt($('#GSTPerc').val() || 0);
+        var BaseAmt = parseInt($('#BaseAmt').text());
+        var discount = parseInt($('#Discount').val() || 0);
+       // var payAMt = parseInt($('#PayAmount').val() || 0);
+
+
+        var total = BaseAmt - discount;
+        var gstAmt = (total * gst / 100);
+        var gstPerc = gst / 2;
+        var CGST = (total * gstPerc / 100);
+        var SGST = (total * gstPerc / 100);
+
+        var FinalTotal = total + CGST + SGST;
+
+        $('#CGSTPerc').text('(' + gstPerc + '%) :');
+        $('#SGSTPerc').text('(' + gstPerc + '%) :');
+        $('#CGST').text(CGST);
+        $('#SGST').text(SGST);
+        $('#GSTAmount').val(gstAmt); // Store In Table
+
+        $('#discountPerc').text(discount); // Store In Table
+        $('#discount').text(discount); // Store In Table
+        $('#finaltotal').text(FinalTotal); // Store In Table
+       // $('#paidAmount').text(payAMt); // Store In Table
+    }
+
+    function billTableDataFill() {
+        var $firstTableRows = $('#Maintable tbody tr');
+        var $secondTableBody = $('#billTable tbody');
+        var totalAmount = 0;
+        var NewAmount = 0;
+        $secondTableBody.find('.newRecords').remove();
+        var totalOldRecords = $('.oldRecord').length;
+        debugger
+        $firstTableRows.each(function () {
+
+            var $row = $(this);
+            var rowData = getRowJson($row);
+            if (rowData) {
+                totalOldRecords += 1;
+                var newRow = '<tr class="newRecords">' +
+                    '<td hidden></td>' +
+                    '<td hidden></td>' +
+                    '<td hidden>' + rowData.ItemId + '</td>' +
+                    '<td hidden>' + rowData.Remark + '</td>' +
+                    '<td style="width:60%;text-align:center;">' + rowData.ItemName + '</td>' +
+                    '<td style="width:10%;text-align:center;">' + rowData.Qty + '</td>' +
+                    '<td class="text-end" style="width:10%;text-align:center;">' + rowData.Amount + '</td>' +
+                    '<td class="text-end" style="width:20%">' + (rowData.Qty * rowData.Amount) + '</td>' +
+                    '</tr>';
+
+                $secondTableBody.append(newRow);
+            }
+        });
+
+        var HeaderAmt = parseInt($('#BookingHeaderAmt').val());
+
+        var $billTableRows = $('#billTable TBODY .newRecords');
+        $billTableRows.each(function () {
+            var $row = $(this);
+            var amount = parseInt($row.find('td:nth-child(8)').text()); // Get the text content of the 6th column (Total Amount)
+
+            if (!isNaN(amount)) {
+                NewAmount += amount; // Accumulate the amount for each row
+            }
+        });
+        debugger
+        totalAmount = HeaderAmt + NewAmount;
+        $('#BaseAmt').text(totalAmount);
+        $('#grandtotal').text(totalAmount);
+
+        if ($('#Discount').val() !== '') {
+            updateTotalBasedOnDiscount();
+        } else if ($('#DiscountPerc').val() !== '') {
+            updateTotalBasedOnDiscountPerc();
+        } else {
+            updateFinalTotal();
+        }
+    }
+
+    function getRowJson($row) {
+        var ItemName = $row.find(".selectDropdown option:selected").text();
+        var ItemId = $row.find(".selectDropdown option:selected").val();
+        var Qty = $row.find("[name='Qty']").val();
+        var Amount = $row.find("[name='Amount']").val();
+        var Remark = $row.find("[name='Remark']").val();
+
+        if (ItemName && ItemId && Qty && Amount) {
+            return { ItemName: ItemName, ItemId: ItemId, Qty: Qty, Amount: Amount, Remark: Remark };
+        }
+        return null;
+    }
+
+    function confirmAndSubmit(action) {
+        Swal.fire({
+            title: 'Are you sure you want to save data?',
+            showDenyButton: false,
+            showCancelButton: true,
+            confirmButtonText: 'Save',
+            denyButtonText: `Don't save`,
+        }).then((result) => {
+            if (result.isConfirmed) {
+                StoreAllValues(action);
+            } else if (result.isDenied) {
+                Swal.fire('Changes are not saved', '', 'info');
+            }
+        })
+        return false;
+    }
+
+    function storeTblValues() {
+        var BillingDetails = new Array();
+        $("#billTable TBODY TR").each(function () {
+            var row = $(this);
+            var BillDetail = {};
+            BillDetail.CategoryId = row.find("td:eq(0)").text();
+            BillDetail.SubCategoryId = row.find("td:eq(1)").text();
+            BillDetail.ItemId = row.find("td:eq(2)").text();
+            BillDetail.Qty = row.find("td:eq(5)").text();
+            BillDetail.Remark = row.find("td:eq(3)").text();
+            BillDetail.Amount = row.find("td:eq(6)").text();
+            BillDetail.FinalAmount = row.find("td:eq(7)").text();
+
+            BillingDetails.push(BillDetail);
+        });
+
+        return BillingDetails;
+    }
+
+    function storeTextboxValues() {
+        var txtBoxValues = new Array();
+        $("#InvoiceForm").each(function () {
+            var Value = {};
+            Value.BookingId = $("#BookingId").val();
+            Value.BookingCode = $("#BookingCode").val();
+            Value.DepartmentId = $("#DeptId").val();
+            Value.BillCode = $("#BillingCode").val();
+            Value.CustomerId = $("#custId").text();
+            Value.ContactNo = $("#custNo").text();
+            Value.CustomerName = $("#custName").text();
+            Value.Address = $("#custAdd").text();
+            Value.BillDate = $("#BillDate").val();
+            Value.GSTPerc = $("#GSTPerc").val();
+            Value.GSTAmount = $("#GSTAmount").val();
+            Value.BaseAmount = $("#BaseAmt").text();
+            Value.DiscountPerc = $("#DiscountPerc").val();
+            Value.Discount = $("#discount").text();
+            Value.FinalAmount = $("#finaltotal").text();
+            //Value.PaidAmount = $("#paidAmount").text();
+
+            txtBoxValues.push(Value);
+        });
+
+        return txtBoxValues;
+    }
+
+    function StoreAllValues(_Action) {
+        billTableDataFill();
+        var DepartmentId = $("#DeptId").val();
+        var BillDate = $("#BillDate").val();
+        var BillCode = $("#BillingCode").val();
+        var BookingId = $("#BookingId").val();
+        //var PaidAmount = $("#PayAmount").val();
+
+        if (DepartmentId == "" || BillDate == "" || BillCode == "" || BookingId == "") {
+            Swal.fire({
+                title: "Warning!",
+                text: "Please fill all required feilds !!",
+                type: "warning"
+            });
+        }
+        else {
+            var url = "@System.Configuration.ConfigurationManager.AppSettings["myKey"]" + "/Invoice/AddInvoice";
+
+            var BillingHeaderData = {};
+            BillingHeaderData = storeTextboxValues();
+
+            var BillingDetailsData = {};
+            BillingDetailsData = storeTblValues();
+
+            BiilingData = JSON.stringify({ 'BillingHeaderData': BillingHeaderData, 'BillingDetailsData': BillingDetailsData });
+
+            $.ajax({
+                url: url,
+                cache: false,
+                contentType: "application/json",
+                type: "Post",
+                data: BiilingData,
+                dataType: 'json',
+                traditional: true,
+                success: function (response) {
+                    if (response.includes("saved successfully")) {
+                        Swal.fire({
+                            position: 'top-end',
+                            icon: 'success',
+                            title: response,
+                            showConfirmButton: false,
+                            timer: 3000
+                        });
+                        setTimeout(function () {
+                           if (_Action === "download") {
+                                downloadPDF();
+                            }
+
+                            // Redirect after the delay
+                            setTimeout(function () {
+                                window.location.href = '../Invoice/Invoice';
+                            }, 2000);
+                        }, 2000);
+                    }
+                    else {
+                        Swal.fire({
+                            position: 'top-end',
+                            icon: 'error',
+                            title: response,
+                            showConfirmButton: false,
+                            timer: 3000
+                        })
+                    }
+                }
+            });
+        }
+    }
+
+    function populateBookingTable(data) {
+        var BookingtableBody = $("#BookingTable tbody");
+        BookingtableBody.empty();
+
+        if (data.bhv && data.bhv.length > 0) {
+            for (var i = 0; i < data.bhv.length; i++) {
+                var rowData = data.bhv[i];
+                var newRow = $("<tr>");
+                newRow.append("<td>" + rowData.BookingCode + "</td>");
+                newRow.append("<td>" + rowData.BDate + "</td>");
+                newRow.append("<td>" + rowData.DepartmentName + "</td>");
+                newRow.append("<td>" + rowData.CustomerName + "</td>");
+                newRow.append("<td>" + rowData.ContactNo + "</td>");
+                newRow.append("<td>" + rowData.FinalAmount + "</td>");
+                newRow.append("<td><button type='button' name='BookingHeaderId' id='BookingHeaderId' value='" + rowData.BookingId + "' class='btn btn-outline-primary' onclick='GetDetailData(this.value)'><i class='fas fa-solid fa-file-invoice px-2'></i>Invoice</button></td>");
+                BookingtableBody.append(newRow);
+            }
+        } else {
+            BookingtableBody.append("<tr><td colspan='7'>Not Found Any Completed Booking!!</td></tr>");
+        }
+
+        var PastRecordTableBody = $("#PastRecordTable tbody");
+        PastRecordTableBody.empty();
+        if (data.pbhv && data.pbhv.length > 0) {
+            for (var i = 0; i < data.pbhv.length; i++) {
+                var rowData = data.pbhv[i];
+                var newRow = $("<tr>");
+                newRow.append("<td>" + rowData.BookingCode + "</td>");
+                newRow.append("<td>" + rowData.BDate + "</td>");
+                newRow.append("<td>" + rowData.DepartmentName + "</td>");
+                newRow.append("<td>" + rowData.CustomerName + "</td>");
+                newRow.append("<td>" + rowData.ContactNo + "</td>");
+                newRow.append("<td>" + rowData.FinalAmount + "</td>");
+                PastRecordTableBody.append(newRow);
+            }
+        } else {
+            PastRecordTableBody.append("<tr><td colspan='6'>Not Found Any Previous Data!!</td></tr>");
+        }
+    }
+
+    $('.AddNewItem').on('click', function () {
+        var individualFieldset = document.getElementById("individualFieldset");
+
+        individualFieldset.style.display = "block";
+
+    });
+</script>
+
+<script>
+    var rowCount = $('.data-contact-person').length;
+    $(document).ready(function () {
+        $("#BookingContactNo, #BookingCode").on("input", function () {
+            var InvoiceForm = document.getElementById("InvoiceForm");
+            InvoiceForm.style.display = "none";
+
+            var bookingFieldset = document.getElementById("BookingFieldset");
+            bookingFieldset.style.display = "none";
+        });
+
+        $("#showBooking").click(function () {
+            var bookingContactNo = $("#BookingContactNo").val();
+            var bookingCode = $("#BookingCode").val();
+
+            if (bookingContactNo == "" && bookingCode == "") {
+                Swal.fire({
+                    title: "Warning!",
+                    text: "Please fill all required feilds !!",
+                    type: "warning"
+                });
+            }
+            else {
+                $.ajax({
+                    url: "@System.Configuration.ConfigurationManager.AppSettings["myKey"]" + "/Invoice/FetchBooking",
+                    data: { BookingContactNo: bookingContactNo, BookingCode: bookingCode },
+                    cache: false,
+                    type: "POST",
+                    datatype: "json",
+                    traditional: true,
+                    success: function (response) {
+                        populateBookingTable(response);
+                        $("#BookingFieldset").show();
+                    },
+                    error: function (error) {
+                        console.error(error);
+                    }
+                });
+            }
+        });
+
+        $("#BillDate").flatpickr({
+            dateFormat: "d-m-Y",
+            defaultDate: "today"
+        });
+        var inputValue = $('#BillDate').val();
+        $("#invoiceDateDisplay").text(inputValue);
+
+        $("#BillDateIcon").on('click', function () {
+            $("#BillDate").click();
+        });
+
+        var tooltip = $('<div class="tooltiptext">Discount % must be less than 100</div>');
+        $('#DiscountPerc').after(tooltip);
+        tooltip.hide();
+
+        $('#DiscountPerc').on('input', function () {
+            var discountPercValue = parseFloat($(this).val());
+            if (discountPercValue !== '') {
+                $('#Discount').prop('disabled', true);
+                var regex = /^(100(\.0{1,2})?|\d{0,2}(\.\d{1,2})?)$/;
+                if (!regex.test(discountPercValue)) {
+                    tooltip.show();
+                    $(this).val('');
+                    $('#Discount').prop('disabled', false);
+                }
+                else {
+                    tooltip.hide();
+                }
+            } else {
+                $('#Discount').prop('disabled', false);
+            }
+        });
+
+        $('#Discount').on('input', function () {
+            tooltip.hide();
+            $('#DiscountPerc').prop('disabled', $(this).val() !== '');
+        });
+
+        var dropdown = $("#ddlDeptId");
+        var paragraph = $("#billDept");
+
+        dropdown.on("change", function () {
+            var selectedText = $(this).find("option:selected").text();
+            paragraph.text(selectedText);
+        });
+
+        //text reflect
+        $("#BillDate").on("input", function () {
+            var inputValue = $(this).val();
+            $("#invoiceDateDisplay").text(inputValue);
+        });
+
+        // Bind onchange event to Discount and PaidAmount inputs
+        $('#DiscountPerc').on('change', function () {
+            updateTotalBasedOnDiscountPerc();
+        });
+
+        // Bind onchange event to Discount input
+        $('#Discount').on('change', function () {
+            updateTotalBasedOnDiscount();
+        });
+
+        $(document).on("click", ".classAdd", function () {
+
+            ItemList = JSON.parse('@Html.Raw(Json.Encode(Model.ItemRetrieve))');
+             var ItemOptions = '';
+
+            ItemOptions += '<option value="">Select Item</option>';
+            for (var i = 0; i < ItemList.length; i++) {
+                ItemOptions += '<option value="' + ItemList[i].ItemId + '">' +
+                    ItemList[i].ItemName +
+            '</option>';
+            }
+
+            var contactdiv = '<tr class="data-contact-person newOne newRow' + rowCount + '">' +
+                '<td>' +
+                '<select name="ItemId" id="ddlitemlist' + rowCount + '" class="form-control form-select selectDropdown w-100" style="width: 200px; !important" required>' +
+                ItemOptions +
+                '</select></td>' +
+                '<td> <input type="text" name="Qty" id="Qty"' + rowCount + '" class="form-control"  required/> </td> ' + '<td> <input type="text" name="Amount" id="Amount"' + rowCount + '" class="form-control" required/> </td> ' + '<td> <textarea  name="Remark" id="Remark"' + rowCount + '" class="form-control w-100" required> </textarea></td> ' +
+                '<td>' +
+                '<button type="button" class="btn btn-sm btn-primary classAdd mx-1"> <i class="fa fa-plus-square" aria-hidden="true"></i> </button>' +
+                '<button type="button" class="btn btn-sm btn-danger deleteContact"><i class="fa fa-trash" aria-hidden="true"></i></button>' +
+                '</td>' +
+                '</tr>';
+
+                    $('#Maintable').append(contactdiv);
+                    $('.selectDropdown').select2();
+
+            $(document).on("click", ".deleteContact", function () {
+
+                var $row = $(this).closest("tr");
+                var rowJson = getRowJson($row);
+                if (!rowJson) {
+                    $row.remove();
+                    return;
+                }
+            });
+
+
+            rowCount++;
+
+        });
+
+        $(document).on("click", "#ViewBill", function () {
+            billTableDataFill();
+        });
+
+        $(document).on("click", "#removeAll", function () {
+            var $secondTableBody = $('#Maintable tbody tr');
+            $secondTableBody.each(function () {
+                $(this).find('input[type="text"]').val('');
+
+                // Clear dropdown values (set to default option)
+                $(this).find('select').val('');
+
+            });
+            var $secondTable = $('#Maintable tbody');
+            $secondTable.find('.newOne').remove();
+
+            var individualFieldset = document.getElementById("individualFieldset");
+
+            individualFieldset.style.display = "none";
+        });
+
+    });
+</script>
+

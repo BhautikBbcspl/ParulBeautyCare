@@ -4,7 +4,7 @@
     ViewBag.Module = "Master";
 }
 
-<div class="content-wrapper">
+<div class="content-wrapper"  style="overflow: hidden !important">
     <div class="row">
         <div class="col-12 grid-margin">
             <div class="card">
@@ -20,7 +20,7 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    @using (Html.BeginForm("AddIntePackageServiceMaster", "Master", FormMethod.Post, new { @class = "forms-sample" }))
+                    @using (Html.BeginForm("AddIntePackageServiceMaster", "Master", FormMethod.Post, new { @class = "forms-sample", autocomplete = "off" }))
                     {
                         @Html.AntiForgeryToken()
                         @Html.HiddenFor(x => x.Action)

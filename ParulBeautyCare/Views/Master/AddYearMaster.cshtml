@@ -1,6 +1,7 @@
 ﻿@model ParulBeautyCareViewModel.ViewModel.Master.YearMasterViewModel
 @{
-    ViewBag.Title = "AddYearMaster";
+    ViewBag.Title = "Year Master";
+    ViewBag.Module = "Master";
 }
 
 <div class="content-wrapper">
@@ -41,7 +42,7 @@
                 </a>
             </div>
         </div>*@
-                    @using (Html.BeginForm("AddYearMaster", "Master", FormMethod.Post, new { @class = "forms-sample" }))
+                    @using (Html.BeginForm("AddYearMaster", "Master", FormMethod.Post, new { @class = "forms-sample", autocomplete = "off" }))
                     {
                         @Html.AntiForgeryToken()
                         @Html.HiddenFor(x => x.Action)
@@ -51,7 +52,7 @@
                         <div class="row form-group">
                             <div class="col-sm-3">
                                 <label for="exampleInputUsername2" class="col-form-label">
-                                    FromDate
+                                    From Date
                                     @Html.ValidationMessageFor(m => m.FromDate, "", new { @class = "text-danger" })
                                 </label>
 
@@ -65,7 +66,7 @@
                             </div>
                             <div class="col-sm-3">
                                 <label for="exampleInputUsername2" class="col-form-label">
-                                    ToDate
+                                    To Date
                                     @Html.ValidationMessageFor(m => m.ToDate, "", new { @class = "text-danger" })
                                 </label>
                                 @Html.TextBoxFor(m => m.ToDate, new Dictionary<string, object>() {
@@ -78,7 +79,7 @@
                             </div>
                             <div class="col-sm-3">
                                 <label for="exampleInputUsername2" class="col-form-label">
-                                    Yearperiod
+                                    Year Period
                                     @Html.ValidationMessageFor(m => m.Yearperiod, "", new { @class = "text-danger" })
                                 </label>
                                 @Html.TextBoxFor(m => m.Yearperiod, new Dictionary<string, object>() {

@@ -37,5 +37,7 @@ namespace ParulBeautyCareDbClasses.DataModels
         public Nullable<int> DepartmentId { get; set; }
         public string DepartmentName { get; set; }
         public Nullable<decimal> Price { get; set; }
+        public Nullable<int> GSTId { get; set; }
+        public Nullable<decimal> GSTPerc { get; set; }
     }
 }

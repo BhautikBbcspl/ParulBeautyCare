@@ -35,7 +35,7 @@
                 </div>
                 <div class="card-body">
 
-                    @using (Html.BeginForm("ServiceComplition", "BookingManagement", FormMethod.Post, new { @class = "forms-sample", id = "myForm" }))
+                    @using (Html.BeginForm("ServiceComplition", "BookingManagement", FormMethod.Post, new { @class = "forms-sample", autocomplete = "off", id = "myForm" }))
                     {
                         @Html.AntiForgeryToken();
                         @Html.HiddenFor(model => model.BookingId)

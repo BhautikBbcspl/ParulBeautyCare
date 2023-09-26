@@ -4,7 +4,7 @@
     ViewBag.Module = "Master";
 }
 
-<div class="content-wrapper">
+<div class="content-wrapper" style="overflow: hidden !important">
     <div class="row">
         <div class="col-12 grid-margin">
             <div class="card">
@@ -34,7 +34,7 @@
                 </a>
             </div>
         </div>*@
-                    @using (Html.BeginForm("AddProductMaster", "Master", FormMethod.Post, new { @class = "forms-sample", enctype = "multipart/form-data" }))
+                    @using (Html.BeginForm("AddProductMaster", "Master", FormMethod.Post, new { @class = "forms-sample", autocomplete = "off", enctype = "multipart/form-data" }))
                     {
                         @Html.AntiForgeryToken()
                         @Html.HiddenFor(x => x.Action)

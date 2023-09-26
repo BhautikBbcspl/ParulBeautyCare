@@ -27,7 +27,7 @@
             </div>
         </div>
         <div class="card-body">
-            @using (Html.BeginForm("BookingStaffAllocation", "BookingManagement", FormMethod.Post, new { @class = "forms-sample" }))
+            @using (Html.BeginForm("BookingStaffAllocation", "BookingManagement", FormMethod.Post, new { @class = "forms-sample", autocomplete = "off" }))
             {
                 @Html.AntiForgeryToken();
                 <div class="row form-group">
@@ -55,7 +55,7 @@
                                         <div class="card-body2 p-3 innerCardBody">
                                             <div class="media">
                                                 <i class="typcn typcn-user icon-sm me-3"></i>
-                                                <h3 class="customer-name"></h3>
+                                                <h3 class="customer-name mt-1"></h3>
                                             </div>
                                             <div class="media">
                                                 <i class="typcn typcn-phone icon-sm me-3"></i>
@@ -148,7 +148,7 @@
                                 .val(item.AppointmentDate);
 
                             var AppointmentDateInputGroupAppend = $('<div class="input-group-append"></div>');
-                            var AppointmentDateInputGroupText = $('<span class="input-group-text" id="appointmentIcon' + index + '"><i class="fa fa-calendar"></i></span>');
+                            var AppointmentDateInputGroupText = $('<span class="input-group-text datepicker-icon" id="appointmentIcon' + index + '"><i class="fa fa-calendar"></i></span>');
 
                             AppointmentDateDiv.append(AppointmentDateTimePicker, AppointmentDateInputGroupAppend.append(AppointmentDateInputGroupText));
 

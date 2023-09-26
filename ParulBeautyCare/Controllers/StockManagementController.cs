@@ -67,8 +67,6 @@ namespace ParulBeautyCare.Controllers
                 spvm = JsonConvert.DeserializeObject<StockPurchaseViewModel>(StockPurchaseList);
                 //
 
-
-
                 return View(spvm);
 
             }
@@ -115,6 +113,13 @@ namespace ParulBeautyCare.Controllers
                 var VendList = ApiCall.PostApi("VendorMasterRetrieve", Newtonsoft.Json.JsonConvert.SerializeObject(spvm));
                 vnd = JsonConvert.DeserializeObject<VendorMasterViewModel>(VendList);
                 spvm.VendorList = vnd.VendorList;
+                //
+
+                //GST Master List Bind
+                GSTMasterViewModel gvm = new GSTMasterViewModel();
+                var GSTList = ApiCall.PostApi("GSTMasterRtr", Newtonsoft.Json.JsonConvert.SerializeObject(spvm));
+                gvm = JsonConvert.DeserializeObject<GSTMasterViewModel>(GSTList);
+                spvm.GSTMasterList = gvm.GSTMasterList;
                 //
 
                 return View(spvm);

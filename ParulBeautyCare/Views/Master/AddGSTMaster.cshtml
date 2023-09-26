@@ -1,0 +1,134 @@
+﻿@model ParulBeautyCareViewModel.ViewModel.Master.GSTMasterViewModel
+
+@{
+    ViewBag.Title = "AddGSTMaster";
+}
+
+<div class="content-wrapper">
+    <div class="row">
+        <div class="col-12 grid-margin">
+            <div class="card">
+                <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+                    <div class="bg-gradient-pinkHeader shadow-primary border-radius-lg pt-3 d-flex justify-content-between row">
+                        <h2 class="text-white text-capitalize ps-3 title_margin col-md-6"><b>Create GST</b></h2>
+                        <a class="dedcription-btn anc col-md-6" href="@Url.Action("ViewGSTMaster","Master")">
+                            <span class="name-descripeion"> <b> VIEW RECORDS</b> </span>
+                            <div class="btn-icon brain">
+                                <i class="fa-solid fa-list-check"> </i>
+                            </div>
+                        </a>
+                        @*}*@
+                    </div>
+                </div>
+              
+
+                <div class="card-body">
+                    @using (Html.BeginForm("AddGSTMaster", "Master", FormMethod.Post, new { @class = "forms-sample", autocomplete = "off", enctype = "multipart/form-data" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.HiddenFor(x => x.Action)
+                        @Html.HiddenFor(x => x.GSTId)
+                        <div class="row form-group">
+                            <div class="col-sm-3">
+                                <label for="exampleInputUsername2" class="col-form-label">
+                                    GST Name
+                                    @Html.ValidationMessageFor(m => m.GSTName, "", new { @class = "text-danger h3" })
+                                </label>
+
+                                @Html.TextBoxFor(m => m.GSTName, new Dictionary<string, object>() {
+                                                                            {"id","txtGSTName"},
+                                                                            {"class","form-control text-capitalize"},
+                                                                               {"autocomplete","off"},
+                                                                            {"required","required"},
+                                                                            {"placeholder","Enter GST Name"}
+                                                                            })
+                            </div>
+                            <div class="col-sm-3">
+                                <label for="exampleInputUsername2" class="col-form-label">
+                                    GST PERCENTAGE
+                                    @Html.ValidationMessageFor(m => m.GSTPerc, "", new { @class = "text-danger h3" })
+                                </label>
+                                @Html.TextBoxFor(m => m.GSTPerc, new Dictionary<string, object>() {
+                                                                            {"id","txtPackageAmount"},
+                                                                            {"class","form-control"},
+                                                                             {"autocomplete","off"},
+                                                                            {"required","required"},
+                                                                            {"placeholder","Enter GST PERCENTAGE"}
+                                                                            })
+                            </div>
+                            <div class="col-sm-3">
+                                <label class="col-form-label">From Date   @Html.ValidationMessageFor(m => m.FromDate, "", new { @class = "text-danger h3" })</label>
+
+                                <div class="input-group date">
+                                    @Html.TextBoxFor(model => model.FromDate, new { @class = "form-control GSTDates", id = "FromDate", placeholder = "From Date ", required = "required" })
+                                    <div class="input-group-append d-flex">
+                                        <!-- Use d-flex class for flexbox behavior -->
+                                        <span class="input-group-text datepicker-icon" id="FromDateIcon" style="color: #212529 !important; border: 1px solid #ced4da !important; ">
+                                            <i class="fa fa-calendar"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                                @*<span toggle="#calander-field" class="fa fa-fw fa-calendar field-icon"></span>*@
+                            </div>
+                            <div class="col-sm-3">
+                                <label class="col-form-label">To Date  @Html.ValidationMessageFor(m => m.ToDate, "", new { @class = "text-danger h3" })</label>
+
+
+                                <div class="input-group date">
+                                    @Html.TextBoxFor(model => model.ToDate, new { @class = "form-control GSTDates", id = "ToDate", placeholder = "To Date", required = "required" })
+                                    <div class="input-group-append d-flex">
+                                        <!-- Use d-flex class for flexbox behavior -->
+                                        <span class="input-group-text datepicker-icon" id="ToDateIcon" style="color: #212529 !important; border: 1px solid #ced4da !important; ">
+                                            <i class="fa fa-calendar"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-3">
+                                <label class="col-form-label">Is Active</label>
+                                <div class="input-group input-group-outline mb-3">
+                                    @Html.DropDownListFor(x => x.IsActive, new List<SelectListItem>
+                                           {
+                                               new SelectListItem{ Text="Enable", Value = "true",Selected=true },
+                                               new SelectListItem{ Text="Disable", Value = "false" }
+                                            }, new { @class = "js-example-basic-single  w-100", @id = "IsActive" })
+                                </div>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary mr-2 mt-3" onclick="return formSubmit('Are You sure you want to save data?')">Submit</button>
+
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    $(document).ready(function () {
+        $(".GSTDates").flatpickr({
+            dateFormat: "d-m-Y",
+            maxDate: "today",
+            onClose: function (selectedDates, dateStr, instance) {
+                if (selectedDates.length > 0) {
+                    var selectedDate = selectedDates[0];
+                    $(".GSTDates").not(instance.element).flatpickr({
+                        dateFormat: "d-m-Y",
+                        minDate: selectedDate
+                    });
+                }
+            }
+        });
+
+        $("#FromDateIcon").on('click', function () {
+            $("#FromDate").click();
+        });
+
+        $("#ToDateIcon").on('click', function () {
+            $("#ToDate").click();
+        });
+    });
+</script>

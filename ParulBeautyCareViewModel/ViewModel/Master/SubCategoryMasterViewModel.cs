@@ -44,6 +44,7 @@ namespace ParulBeautyCareViewModel.ViewModel.Master
 
         [Required(ErrorMessage = "*")]
         public string Amount { get; set; }
+        public List<PBGSTMasterRetrieve_Result> GSTMasterList { get; set; }
         public List<PBSubCategoryMasterRetrieve_Result> SubCategoryMasterList { get; set; }
         public List<PBYearMasterRetrieve_Result> YearMasterList { get; set; }
         public List<PBCategoryMasterRetrieve_Result> CategoryMasterList { get; set; }     

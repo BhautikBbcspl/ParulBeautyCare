@@ -1,0 +1,200 @@
+﻿@model ParulBeautyCareViewModel.ViewModel.BookAppointmentViewModel
+@{
+    ViewBag.Title = "Booking Calender";
+    Layout = null;
+}
+<link href="~/Content/assets/vendors/fullcalendar/fullcalendar.min.css" rel="stylesheet" />
+
+<!-- Modal -->
+@*<div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content  modal-md">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Booking Calender</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body" id="modalContent2">
+                ...
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>*@
+<div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content  modal-xl" style=" border: 2px solid #f2125e">
+            <div class="modal-header" style="background-color: #f2125e">
+                <h5 class="modal-title" style="color:white" id="exampleModalLabel">Booking Calender</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body" id="modalContent2">
+                ...
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="d-flex justify-content-center align-items-center row">
+
+        <div class="card m-3">
+            <div class="card-body" style="padding:0px !important">
+                <div id="Mycalendar" class="full-calendar"></div>
+            </div>
+        </div>
+   
+</div>
+
+<script src="~/Content/assets/vendors/moment/moment.min.js"></script>
+<script src="~/Content/assets/vendors/fullcalendar/fullcalendar.min.js"></script>
+<script src="~/Content/assets/js/calendar.js"></script>
+<script>
+    (function ($) {
+        'use strict';
+        $(function () {
+            if ($('#Mycalendar').length) {
+                $('#Mycalendar').fullCalendar({
+                    header: {
+                        left: 'prev,next today',
+                        center: 'title',
+                        right: 'basicDay,basicWeek,month'
+                    },
+                    defaultDate: "@Model.FunctionDate",
+                    defaultView: 'basicDay',
+                    navLinks: true,
+                    editable: false,
+                    eventLimit: true,
+                    eventClick: function (calEvent, jsEvent, view) {
+                        // Call your function here with the calEvent data
+                        openEventDetailsModal(calEvent._id);
+                    },
+                    events: function (start, end, timezone, callback) {
+                        $.ajax({
+                            url: '/BookingManagement/ViewBookingsCalander',
+                            dataType: 'json',
+                            success: function (data) {
+
+                                var events = [];
+                                data.forEach(function (item) {
+
+                                    var event = {
+                                        title: item.CustomerName,
+                                        start: item.bookingdate,
+                                        _id: item.BookingId
+                                    };
+                                    events.push(event);
+                                });
+
+                                callback(events);
+                            }
+                        });
+                    }
+                });
+            }
+        });
+    })(jQuery);
+    function openEventDetailsModal(id) {
+        $.get("@Url.Action("GetData", "BookingManagement")/" + id, function (data) {
+            var customerName = data[0].CustomerName;
+            var bookingCode = data[0].BookingCode;
+            var contactNumber = data[0].ContactNo;
+
+            $('#modalContent2').html(
+                `<table class="table">
+<tr>
+<td>Customer Name</td>
+<td>${customerName}</td>
+</tr>
+<tr>
+<td>Booking Code</td>
+<td>${bookingCode}</td>
+</tr>
+<tr>
+<td>Contact Number</td>
+<td>${contactNumber}</td>
+</tr>
+<table>`
+            );
+
+        $("#exampleModal2").modal("show");
+    });
+}
+</script>
+@*<script>
+    (function ($) {
+        'use strict';
+        $(function () {
+            if ($('#Mycalendar').length) {
+                $('#Mycalendar').fullCalendar({
+                    header: {
+                        left: 'prev,next today',
+                        center: 'title',
+                        right: 'month,basicWeek,basicDay'
+                    },
+                    defaultDate: '2023-08-17',
+                    navLinks: true,
+                    editable: false,
+                    eventLimit: true,
+                    eventClick: function (calEvent, jsEvent, view) {
+                        // Call your function here with the calEvent data
+                        openEventDetailsModal(calEvent._id);
+                    },
+                    events: function (start, end, timezone, callback) {
+                        $.ajax({
+                            url: '/BookingManagement/ViewBookingsCalander',
+                            dataType: 'json',
+                            success: function (data) {
+
+                                var events = [];
+                                data.forEach(function (item) {
+
+                                    var event = {
+                                        title: item.CustomerName,
+                                        start: item.bookingdate,
+                                        _id: item.BookingId
+                                    };
+                                    events.push(event);
+                                });
+
+                                callback(events);
+                            }
+                        });
+                    }
+                });
+            }
+        });
+    })(jQuery);
+    function openEventDetailsModal(id) {
+        $.get("@Url.Action("GetData", "BookingManagement")/" + id, function (data) {
+            var customerName = data[0].CustomerName;
+            var bookingCode = data[0].BookingCode;
+            var contactNumber = data[0].ContactNo;
+
+            $('#modalContent2').html(
+                `<table class="table">
+<tr>
+<td>Customer Name</td>
+<td>${customerName}</td>
+</tr>
+<tr>
+<td>Booking Code</td>
+<td>${bookingCode}</td>
+</tr>
+<tr>
+<td>Contact Number</td>
+<td>${contactNumber}</td>
+</tr>
+<table>`
+            );
+
+        $("#exampleModal2").modal("show");
+    });
+}
+</script>*@

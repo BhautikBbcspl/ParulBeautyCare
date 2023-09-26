@@ -4,36 +4,38 @@
     ViewBag.Module = "User Management";
 }
 
-    <div class="col-lg-12 grid-margin stretch-card">
-        <div class="card">
-            <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
-                <div class="bg-gradient-pinkHeader shadow-primary border-radius-lg pt-3 d-flex justify-content-between row">
-                    <h2 class="text-white text-capitalize ps-3 title_margin col-md-6"><b>Role Module List</b></h2>
-                
-                    @if (Convert.ToInt32(TempData["InsertRight"]) == 1)
-                    {
-                        @*<a class="btn btn-light btn-icon mb-2 mx-2 title_a" href="@Url.Action("AddRoleModuleMaster", "UserManagement")">
-                <i class="fa fa-plus mx-2 text-black"></i><b>Add</b>
-            </a>*@
+<div class="content-wrapper">
+    <div class="card">
+        <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+            <div class="bg-gradient-pinkHeader shadow-primary border-radius-lg pt-3 d-flex justify-content-between row">
+                <h2 class="text-white text-capitalize ps-3 title_margin col-md-6"><b>Role Module List</b></h2>
 
-                        <a class="dedcription-btn anc col-md-6" href="@Url.Action("AddRoleModuleMaster","UserManagement")">
-                            <span class="name-descripeion"> <b> ADD RECORDS</b> </span>
-                            <div class="btn-icon brain">
-                                <i class="fas fa-plus"> </i>
-                            </div>
-                        </a>
-                    }
-                </div>
-            </div>
-            <div class="card-body">
-                @*<div class="row">
-                <div class="d-xl-flex justify-content-between align-items-center">
-                    <h1 class="pink"><b>Role Module Master</b></h1>
-                    <a class="btn btn-sm btn-outline-primary btn-round mb-3" href="@Url.Action("AddRoleModuleMaster","UserManagement")">
-                        <i class="fa fa-plus mx-2 "></i>Add
+                @if (Convert.ToInt32(TempData["InsertRight"]) == 1)
+                {
+                    @*<a class="btn btn-light btn-icon mb-2 mx-2 title_a" href="@Url.Action("AddRoleModuleMaster", "UserManagement")">
+                            <i class="fa fa-plus mx-2 text-black"></i><b>Add</b>
+                        </a>*@
+
+                    <a class="dedcription-btn anc col-md-6" href="@Url.Action("AddRoleModuleMaster","UserManagement")">
+                        <span class="name-descripeion"> <b> ADD RECORDS</b> </span>
+                        <div class="btn-icon brain">
+                            <i class="fas fa-plus"> </i>
+                        </div>
                     </a>
-                </div>
-            </div>*@
+                }
+            </div>
+        </div>
+        <div class="card-body">
+            @*<div class="row">
+                    <div class="d-xl-flex justify-content-between align-items-center">
+                        <h1 class="pink"><b>Role Module Master</b></h1>
+                        <a class="btn btn-sm btn-outline-primary btn-round mb-3" href="@Url.Action("AddRoleModuleMaster","UserManagement")">
+                            <i class="fa fa-plus mx-2 "></i>Add
+                        </a>
+                    </div>
+                </div>*@            
+            <div class="row">
+                <div class="col-12">
                     <table id="Mybase-style" class="table table-striped">
                         <thead>
                             <tr>
@@ -96,9 +98,9 @@
                                     </td>
                                     <td>
                                         @*<label class="toggle">
-            <input class="toggle-checkbox" type="checkbox" onclick='ActiveDeactiveStatusChange(this, "@item.InteId", "InteRoleModule")' @(item.IsActive == true ? "checked" : "")>
-            <span class="toggle-switch"></span>
-        </label>*@
+                                                <input class="toggle-checkbox" type="checkbox" onclick='ActiveDeactiveStatusChange(this, "@item.InteId", "InteRoleModule")' @(item.IsActive == true ? "checked" : "")>
+                                                <span class="toggle-switch"></span>
+                                            </label>*@
 
                                         <div class="button r" id="button-2">
                                             <input type="checkbox" class="checkbox" onclick='UmActiveDeactiveStatusChange(this,"@item.InteId","InteRoleModule")' @(item.IsActive == true ? "checked" : "")>
@@ -112,7 +114,8 @@
                             }
                         </tbody>
                     </table>
-                
+                </div>
             </div>
         </div>
     </div>
+</div>

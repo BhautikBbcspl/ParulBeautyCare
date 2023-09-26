@@ -18,6 +18,7 @@
         border-radius: 1px;
         transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
     }
+
     .form-check {
         min-height: 18px;
         display: block;
@@ -88,7 +89,6 @@
         outline: 0;
         box-shadow: 0 0 0 -0.75rem rgba(13, 110, 253, 0.25);
     }
-
 </style>
 <div class="content-wrapper">
     <div class="card">
@@ -98,7 +98,7 @@
             </div>
         </div>
         <div class="card-body">
-            @using (Html.BeginForm("BookingStaffAllocation", "BookingManagement", FormMethod.Post, new { @class = "forms-sample" }))
+            @using (Html.BeginForm("BookingStaffAllocation", "BookingManagement", FormMethod.Post, new { @class = "forms-sample", autocomplete = "off" }))
             {
                 @Html.AntiForgeryToken();
                 <div class="row form-group">
@@ -115,6 +115,12 @@
                                            { "class","form-control form-select js-example-basic-single w-100"},
                                             {"onchange" ,"javascript:GetDetailData(this.value)" }
                              })
+                        </div>
+                        <div>
+                            <h1 id="showDropdown" style="display:none">
+                                <input type="checkbox" id="RecPmtChkBox" class="form-check-input booking-detail-checkbox" />
+                                <label for="showDropdown" class="label_checkbox">Insert Payment Information</label>
+                            </h1>
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-6 col-sm-6" id="detailCardContainer" style="display:none;">
@@ -138,6 +144,71 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="row form-group">
+                        <div class="col-4">
+                            <div id="dropdownContainer" style="display: none;">
+                                <label for="dropdown" class="col-form-label">Select Payment Method</label>
+                                <div class="input-group input-group-outline mb-3">
+                                    <select id="dropdown" class="form-control form-select js-example-basic-single w-100">
+                                        <option value="none">Select Payment method</option>
+                                        <option value="Cash">Cash</option>
+                                        <option value="Cheque">Cheque</option>
+                                        <option value="G-pay">G-pay</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div id="Cashtextbox" style="display: none;">
+
+                                <label class="col-form-label">
+                                    Amount
+                                    @Html.ValidationMessageFor(m => m.CustomerName, "", new { @class = "text-danger h3" })
+                                </label>
+                                @Html.TextBoxFor(m => m.CustomerName, new Dictionary<string, object>() {
+                                                                            {"id","txtAmount"},
+                                                                            {"class","form-control"},
+                                                                            {"autocomplete","off"},
+                                                                            {"required","required"},
+                                                                            {"placeholder","Enter Amount"}
+                                                                            })
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div id="Chequetextbox" style="display: none;">
+
+                                <label class="col-form-label">
+                                    Cheque Number
+                                    @Html.ValidationMessageFor(m => m.CustomerName, "", new { @class = "text-danger h3" })
+                                </label>
+                                @Html.TextBoxFor(m => m.CustomerName, new Dictionary<string, object>() {
+                                    {"id","txtCheckNo"},
+                                    {"class","form-control"},
+                                    {"autocomplete","off"},
+                                    {"required","required"},
+                                    {"placeholder","Enter Cheque Number"}
+                                })
+                            </div>
+
+                            <div id="Gpaytextbox" style="display: none;">
+
+                                <label class="col-form-label">
+                                    Gpay No
+                                    @Html.ValidationMessageFor(m => m.CustomerName, "", new { @class = "text-danger h3" })
+                                </label>
+                                @Html.TextBoxFor(m => m.CustomerName, new Dictionary<string, object>() {
+                                    {"id","txtGpayNo"},
+                                    {"class","form-control"},
+                                    {"autocomplete","off"},
+                                    {"required","required"},
+                                    {"placeholder","Enter   Gpay No"}
+                                })
+                                @Html.HiddenFor(x => x.BookingCode, new { id = "BookingCode" })
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             }
 
@@ -152,8 +223,8 @@
                                         @Html.DisplayName("Action")
                                     </th>
                                     @*<th>
-                            @Html.DisplayName("Customer Name")
-                        </th>*@
+                                            @Html.DisplayName("Customer Name")
+                                        </th>*@
                                     <th>
                                         @Html.DisplayName("Category")
                                     </th>
@@ -197,22 +268,41 @@
                 if (data.bhv.length === 0 && data.bdv.length === 0) {
                     // Both data.bhv and data.bdv are null, hide the card and table
                     $('#detailCardContainer').hide();
+                    $("#RecPmtChkBox").prop("checked", false);
+                    $('#showDropdown').hide();
+                    $("#dropdownContainer").hide();
+                    $('#Cashtextbox').hide();
+                    $('#Gpaytextbox').hide();
+                    $("#Chequetextbox").hide();
+
                     var tableBody = $('#DetailTable tbody');
                     tableBody.empty();
                 } else {
+                    $('#showDropdown').show();
                     $('#detailCardContainer').show();
                     $.each(data.bhv, function (index, item) {
+                        debugger
                         var customerName = item.CustomerName;
                         var contactNo = item.ContactNo;
+                        $('#BookingCode').val(item.BookingCode);
                         $('.customer-name').text(customerName);
                         $('.contact-number').text('Contact No: ' + contactNo);
+
+                        var FinalAmount = item.FinalAmount;
+                        var PaidAmount = item.PaidAmount;
+
+                        // Check if finalAmount is equal to paidAmount
+                        if (FinalAmount === PaidAmount) {
+                            $('#showDropdown').hide();
+                        }
                     })
+
 
                     var tableBody = $('#DetailTable tbody');
                     tableBody.empty();
                     $.each(data.bdv, function (index, item) {
                         var row = $('<tr></tr>');
-                        if (item.Status == "0") {
+                        if (item.Status == "2") {
                             var BookingDetailCheckbox = $('<div class="form-check"><input type="checkbox" class="form-check-input booking-detail-checkbox" name="BookingDetailsId" value="' + item.BookingDetailId + '" checked disabled><label class="form-check-label"></label></div>');
                         } else {
                             var BookingDetailCheckbox = $('<div class="form-check"><input type="checkbox" class="form-check-input booking-detail-checkbox" name="BookingDetailsId" value="' + item.BookingDetailId + '"><label class="form-check-label"></label></div>');
@@ -230,10 +320,10 @@
                             var Status = $('<label class="badge badge-warning"></label>').text('Pending');
                         }
 
-                        else if (item.Status == "0"){
+                        else if (item.Status == "2"){
                             var Status = $('<label class="badge badge-success"></label>').text('Completed');
                         }
-                      
+
                         var row = $('<tr></tr>').append(
                             $('<td></td>').append(BookingDetailCheckbox),
                             $('<td></td>').append(CategoryNameLabel),
@@ -256,11 +346,55 @@
 </script>
 <script>
     $(document).ready(function () {
-    
+
+        function togglePaymentInformation() {
+            if ($("#showDropdown input").is(":checked")) {
+                $("#dropdownContainer").show();
+            } else {
+                $("#dropdownContainer").hide();
+                $("#Cashtextbox").hide();
+                $("#Chequetextbox").hide();
+                $("#Gpaytextbox").hide();
+            }
+        }
+
+        // Checkbox click event handler
+        $("#showDropdown").click(function () {
+            togglePaymentInformation();
+        });
+
+        // Dropdown change event handler
+        $("#dropdown").change(function () {
+            var selectedOption = $(this).val();
+
+            if (selectedOption === "Cash") {
+                $("#Cashtextbox").show();
+                $("#Chequetextbox").hide();
+                $("#Gpaytextbox").hide();
+            } else if (selectedOption === "Cheque") {
+                $("#Cashtextbox").show();
+                $("#Chequetextbox").show();
+                $("#Gpaytextbox").hide();
+            } else if (selectedOption === "G-pay") {
+                $("#Cashtextbox").show();
+                $("#Chequetextbox").hide();
+                $("#Gpaytextbox").show();
+            } else if (selectedOption === "none") {
+                $("#Cashtextbox").hide();
+                $("#Chequetextbox").hide();
+                $("#Gpaytextbox").hide();
+            }
+        });
+
         $("#Completed").click(function (e) {
-            e.preventDefault(); // Prevent default form submission
+            e.preventDefault();
 
             var formDataArray = [];
+            var paymentHistoryArray = [];
+            var dataToSend = {
+                formDataArray: formDataArray,
+                paymentHistoryArray: paymentHistoryArray
+            };
 
             $('#DetailTable tbody tr').each(function () {
                 debugger
@@ -270,6 +404,12 @@
                 var SubCategoryFieldId = row.find('.sub-categoryid');
                 var AllocatedToField = row.find('.allocated-to');
                 var BookingID = row.find('.bookingid');
+                var IsPaymentRecived = $("#RecPmtChkBox").is(':checked') ? '1' : '0';
+                var PaymentType = $("#dropdown").val();
+                var PayAmount = parseFloat($("#txtAmount").val()) || 0;
+                var ChequeNo = $("#txtCheckNo").val();
+                var GpayNo = $("#txtGpayNo").val();
+                var BookingCode = $("#BookingCode").val();
 
                 if (bookingDetailCheckbox.is(':checked')) {
                     var bookingDetailId = bookingDetailCheckbox.val();
@@ -277,7 +417,6 @@
                     var subCategoryID = SubCategoryFieldId.text();
                     var staffId = AllocatedToField.val(); // StaffId from data-staff-id attribute
                     var bookingid = BookingID.text(); // StaffId from data-staff-id attribute
-
 
                     var formDataItem = {
                         BookingDetailId: bookingDetailId,
@@ -289,23 +428,45 @@
 
                     formDataArray.push(formDataItem);
                 }
+
+                var paymentHistoryItem = {
+                    BookingId: bookingid,
+                    BookingCode: BookingCode,
+                    IsPaymentReceived: IsPaymentRecived,
+                    PaymentType: PaymentType,
+                    ReceivedAmount: PayAmount,
+                    ChequeNo: ChequeNo,
+                    GpayNo: GpayNo
+
+                };
+                paymentHistoryArray.push(paymentHistoryItem);
             });
 
-            
-
-            $.ajax({
-                url: "@System.Configuration.ConfigurationManager.AppSettings["myKey"]" + "/BookingManagement/ServiceCompletion",
-                type: "POST",
-                contentType: "application/json",
-                data: JSON.stringify(formDataArray),
-                success: function (data) {
-                    SweetAlert(data.Message, data.Type);
-                    GetDetailData(data.BId);
-                },
-                error: function (error) {
-                    SweetAlert(error.Message, error.Type);
-                }
-            });
+            debugger
+            if (formDataArray.length == 0) {
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'error',
+                    title: 'Please select service !!',
+                    showConfirmButton: false,
+                    timer: 3000
+                })
+            }
+            else {
+                  $.ajax({
+                    url: "@System.Configuration.ConfigurationManager.AppSettings["myKey"]" + "/BookingManagement/ServiceCompletion",
+                    type: "POST",
+                    contentType: "application/json",
+                    data: JSON.stringify(dataToSend),
+                    success: function (data) {
+                        SweetAlert(data.Message, data.Type);
+                        GetDetailData(data.BId);
+                    },
+                    error: function (error) {
+                        SweetAlert(error.Message, error.Type);
+                    }
+                });
+            }
         });
     });
     function SweetAlert(Message, Type) {

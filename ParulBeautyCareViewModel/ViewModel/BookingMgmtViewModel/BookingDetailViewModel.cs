@@ -11,6 +11,7 @@ namespace ParulBeautyCareViewModel.ViewModel.BookingMgmtViewModel
     {
         public string BookingDetailId { get; set; }
         public string BookingId { get; set; }
+        public string BookingCode { get; set; }
         public string CategoryId { get; set; }
         public string SubCategoryId { get; set; }
         public string AllocatedTo { get; set; }
@@ -37,5 +38,10 @@ namespace ParulBeautyCareViewModel.ViewModel.BookingMgmtViewModel
         public string Action { get; set; }
         public string CompanyCode { get; set; }
         public string result { get; set; }
+        public string IsPaymentReceived { get; set; }
+        public string PaymentType { get; set; }
+        public string PayAmount { get; set; }
+        public string ChequeNo { get; set; }
+        public string GpayNo { get; set; }
     }
 }

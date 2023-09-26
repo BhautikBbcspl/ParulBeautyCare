@@ -4,7 +4,7 @@
     ViewBag.Module = "Master";
 }
 
-<div class="content-wrapper">
+<div class="content-wrapper" style="overflow:hidden !important">
     <div class="row">
         <div class="col-12 grid-margin">
             <div class="card">
@@ -34,7 +34,7 @@
                 </a>
             </div>
         </div>*@
-                    @using (Html.BeginForm("AddSubCategoryMaster", "Master", FormMethod.Post, new { @class = "forms-sample" }))
+                    @using (Html.BeginForm("AddSubCategoryMaster", "Master", FormMethod.Post, new { @class = "forms-sample", autocomplete = "off" }))
                     {
                         @Html.AntiForgeryToken()
                         @Html.HiddenFor(x => x.Action)
@@ -173,16 +173,17 @@
                         </div>
                         <div class="col-sm-3">
                             <label class="col-form-label">
-                                GST %
-                                @Html.ValidationMessageFor(m => m.GSTPercentage, "", new { @class = "text-danger" })
+                                Select GST %
+                                @Html.ValidationMessageFor(m => m.GSTPercentage, "", new { @class = "text-danger h3" })
                             </label>
-                            @Html.TextBoxFor(m => m.GSTPercentage, new Dictionary<string, object>() {
-                                                               {"id","txtGSTPercentage"},
-                                                               {"class","form-control numberdecimal"},
-                                                                  {"autocomplete","off"},
-                                                               {"required","required"},
-                                                               {"placeholder","Enter GST %"}
-                                                               })
+
+                            <div class="input-group input-group-outline mb-3">
+                                @Html.DropDownListFor(m => m.GSTPercentage, new SelectList(Model.GSTMasterList, "GSTId", "GSTPerc"), "Select GST %",
+                                    new Dictionary<string, object>() {
+                                               {"id","ddlGstId"},
+                                               { "class","form-control form-select js-example-basic-single w-100"}
+                                        })
+                            </div>
                         </div>
                         <div class="col-sm-3">
                             <label for="exampleInputPassword2" class="col-form-label">IsActive</label>

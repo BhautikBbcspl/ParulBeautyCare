@@ -730,153 +730,6 @@ namespace ParulBeautyCareDbClasses.DataModels
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PBYearMasterRetrieve_Result>("PBYearMasterRetrieve", actionParameter, companycodeParameter, yearIdParameter);
         }
     
-        public virtual ObjectResult<PBDepartmentMasterRetrieve_Result> PBDepartmentMasterRetrieve(string action, string companycode, string id)
-        {
-            var actionParameter = action != null ?
-                new ObjectParameter("action", action) :
-                new ObjectParameter("action", typeof(string));
-    
-            var companycodeParameter = companycode != null ?
-                new ObjectParameter("companycode", companycode) :
-                new ObjectParameter("companycode", typeof(string));
-    
-            var idParameter = id != null ?
-                new ObjectParameter("id", id) :
-                new ObjectParameter("id", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PBDepartmentMasterRetrieve_Result>("PBDepartmentMasterRetrieve", actionParameter, companycodeParameter, idParameter);
-        }
-    
-        public virtual ObjectResult<string> PBDepartmentMasterInsUpd(string departmentId, string departmentname, string companyCode, string activestatus, string createdate, string updatedate, string createuser, string action)
-        {
-            var departmentIdParameter = departmentId != null ?
-                new ObjectParameter("DepartmentId", departmentId) :
-                new ObjectParameter("DepartmentId", typeof(string));
-    
-            var departmentnameParameter = departmentname != null ?
-                new ObjectParameter("Departmentname", departmentname) :
-                new ObjectParameter("Departmentname", typeof(string));
-    
-            var companyCodeParameter = companyCode != null ?
-                new ObjectParameter("CompanyCode", companyCode) :
-                new ObjectParameter("CompanyCode", typeof(string));
-    
-            var activestatusParameter = activestatus != null ?
-                new ObjectParameter("activestatus", activestatus) :
-                new ObjectParameter("activestatus", typeof(string));
-    
-            var createdateParameter = createdate != null ?
-                new ObjectParameter("createdate", createdate) :
-                new ObjectParameter("createdate", typeof(string));
-    
-            var updatedateParameter = updatedate != null ?
-                new ObjectParameter("updatedate", updatedate) :
-                new ObjectParameter("updatedate", typeof(string));
-    
-            var createuserParameter = createuser != null ?
-                new ObjectParameter("createuser", createuser) :
-                new ObjectParameter("createuser", typeof(string));
-    
-            var actionParameter = action != null ?
-                new ObjectParameter("action", action) :
-                new ObjectParameter("action", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("PBDepartmentMasterInsUpd", departmentIdParameter, departmentnameParameter, companyCodeParameter, activestatusParameter, createdateParameter, updatedateParameter, createuserParameter, actionParameter);
-        }
-    
-        public virtual int PBBookingInsert(string bookingId, string customerId, string contactNo, string customerName, string address, string bookDate, string createDate, string createUser, string updateDate, string updateUser, string noOfPerson, string totalAmount, string discountPerc, string discount, string finalAmount, string advanceBookingCharge, string paidAmount, string companyCode, string functionDate, string readyTime, string status, string action)
-        {
-            var bookingIdParameter = bookingId != null ?
-                new ObjectParameter("BookingId", bookingId) :
-                new ObjectParameter("BookingId", typeof(string));
-    
-            var customerIdParameter = customerId != null ?
-                new ObjectParameter("CustomerId", customerId) :
-                new ObjectParameter("CustomerId", typeof(string));
-    
-            var contactNoParameter = contactNo != null ?
-                new ObjectParameter("ContactNo", contactNo) :
-                new ObjectParameter("ContactNo", typeof(string));
-    
-            var customerNameParameter = customerName != null ?
-                new ObjectParameter("CustomerName", customerName) :
-                new ObjectParameter("CustomerName", typeof(string));
-    
-            var addressParameter = address != null ?
-                new ObjectParameter("Address", address) :
-                new ObjectParameter("Address", typeof(string));
-    
-            var bookDateParameter = bookDate != null ?
-                new ObjectParameter("BookDate", bookDate) :
-                new ObjectParameter("BookDate", typeof(string));
-    
-            var createDateParameter = createDate != null ?
-                new ObjectParameter("CreateDate", createDate) :
-                new ObjectParameter("CreateDate", typeof(string));
-    
-            var createUserParameter = createUser != null ?
-                new ObjectParameter("CreateUser", createUser) :
-                new ObjectParameter("CreateUser", typeof(string));
-    
-            var updateDateParameter = updateDate != null ?
-                new ObjectParameter("UpdateDate", updateDate) :
-                new ObjectParameter("UpdateDate", typeof(string));
-    
-            var updateUserParameter = updateUser != null ?
-                new ObjectParameter("UpdateUser", updateUser) :
-                new ObjectParameter("UpdateUser", typeof(string));
-    
-            var noOfPersonParameter = noOfPerson != null ?
-                new ObjectParameter("NoOfPerson", noOfPerson) :
-                new ObjectParameter("NoOfPerson", typeof(string));
-    
-            var totalAmountParameter = totalAmount != null ?
-                new ObjectParameter("TotalAmount", totalAmount) :
-                new ObjectParameter("TotalAmount", typeof(string));
-    
-            var discountPercParameter = discountPerc != null ?
-                new ObjectParameter("DiscountPerc", discountPerc) :
-                new ObjectParameter("DiscountPerc", typeof(string));
-    
-            var discountParameter = discount != null ?
-                new ObjectParameter("Discount", discount) :
-                new ObjectParameter("Discount", typeof(string));
-    
-            var finalAmountParameter = finalAmount != null ?
-                new ObjectParameter("FinalAmount", finalAmount) :
-                new ObjectParameter("FinalAmount", typeof(string));
-    
-            var advanceBookingChargeParameter = advanceBookingCharge != null ?
-                new ObjectParameter("AdvanceBookingCharge", advanceBookingCharge) :
-                new ObjectParameter("AdvanceBookingCharge", typeof(string));
-    
-            var paidAmountParameter = paidAmount != null ?
-                new ObjectParameter("PaidAmount", paidAmount) :
-                new ObjectParameter("PaidAmount", typeof(string));
-    
-            var companyCodeParameter = companyCode != null ?
-                new ObjectParameter("CompanyCode", companyCode) :
-                new ObjectParameter("CompanyCode", typeof(string));
-    
-            var functionDateParameter = functionDate != null ?
-                new ObjectParameter("FunctionDate", functionDate) :
-                new ObjectParameter("FunctionDate", typeof(string));
-    
-            var readyTimeParameter = readyTime != null ?
-                new ObjectParameter("ReadyTime", readyTime) :
-                new ObjectParameter("ReadyTime", typeof(string));
-    
-            var statusParameter = status != null ?
-                new ObjectParameter("Status", status) :
-                new ObjectParameter("Status", typeof(string));
-    
-            var actionParameter = action != null ?
-                new ObjectParameter("action", action) :
-                new ObjectParameter("action", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PBBookingInsert", bookingIdParameter, customerIdParameter, contactNoParameter, customerNameParameter, addressParameter, bookDateParameter, createDateParameter, createUserParameter, updateDateParameter, updateUserParameter, noOfPersonParameter, totalAmountParameter, discountPercParameter, discountParameter, finalAmountParameter, advanceBookingChargeParameter, paidAmountParameter, companyCodeParameter, functionDateParameter, readyTimeParameter, statusParameter, actionParameter);
-        }
-    
         public virtual ObjectResult<string> PBProductMasterInsUpd(string productId, string productCode, string productName, string productImage, string numberOfPerson, string productTypeId, string isactive, string companyCode, string createDate, string updatedate, string createUser, string updateUser, string action)
         {
             var productIdParameter = productId != null ?
@@ -1293,12 +1146,179 @@ namespace ParulBeautyCareDbClasses.DataModels
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PBInteServiceProductMasterRetrieve_Result>("PBInteServiceProductMasterRetrieve", actionParameter, companycodeParameter, inteServiceProductIdParameter);
         }
     
-        public virtual ObjectResult<PBBookingDetailRtr_Result> PBBookingDetailRtr(string bookingId, string action, string companycode)
+        public virtual ObjectResult<string> PBEnquiryIns(string personname, string personemail, string personcontactno, string personaddress, string personenquiryfor, string createdate, string createuser, string action)
         {
-            var bookingIdParameter = bookingId != null ?
-                new ObjectParameter("BookingId", bookingId) :
-                new ObjectParameter("BookingId", typeof(string));
+            var personnameParameter = personname != null ?
+                new ObjectParameter("personname", personname) :
+                new ObjectParameter("personname", typeof(string));
     
+            var personemailParameter = personemail != null ?
+                new ObjectParameter("personemail", personemail) :
+                new ObjectParameter("personemail", typeof(string));
+    
+            var personcontactnoParameter = personcontactno != null ?
+                new ObjectParameter("personcontactno", personcontactno) :
+                new ObjectParameter("personcontactno", typeof(string));
+    
+            var personaddressParameter = personaddress != null ?
+                new ObjectParameter("personaddress", personaddress) :
+                new ObjectParameter("personaddress", typeof(string));
+    
+            var personenquiryforParameter = personenquiryfor != null ?
+                new ObjectParameter("personenquiryfor", personenquiryfor) :
+                new ObjectParameter("personenquiryfor", typeof(string));
+    
+            var createdateParameter = createdate != null ?
+                new ObjectParameter("createdate", createdate) :
+                new ObjectParameter("createdate", typeof(string));
+    
+            var createuserParameter = createuser != null ?
+                new ObjectParameter("createuser", createuser) :
+                new ObjectParameter("createuser", typeof(string));
+    
+            var actionParameter = action != null ?
+                new ObjectParameter("action", action) :
+                new ObjectParameter("action", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("PBEnquiryIns", personnameParameter, personemailParameter, personcontactnoParameter, personaddressParameter, personenquiryforParameter, createdateParameter, createuserParameter, actionParameter);
+        }
+    
+        public virtual ObjectResult<PBEnquiryRtr_Result> PBEnquiryRtr(string action)
+        {
+            var actionParameter = action != null ?
+                new ObjectParameter("action", action) :
+                new ObjectParameter("action", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PBEnquiryRtr_Result>("PBEnquiryRtr", actionParameter);
+        }
+    
+        public virtual ObjectResult<PBAvailableStockRtr_Result> PBAvailableStockRtr(string staffid)
+        {
+            var staffidParameter = staffid != null ?
+                new ObjectParameter("staffid", staffid) :
+                new ObjectParameter("staffid", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PBAvailableStockRtr_Result>("PBAvailableStockRtr", staffidParameter);
+        }
+    
+        public virtual ObjectResult<PBAllocatedStockToStaffRtr_Result> PBAllocatedStockToStaffRtr(string action, string staffid, string productid)
+        {
+            var actionParameter = action != null ?
+                new ObjectParameter("action", action) :
+                new ObjectParameter("action", typeof(string));
+    
+            var staffidParameter = staffid != null ?
+                new ObjectParameter("staffid", staffid) :
+                new ObjectParameter("staffid", typeof(string));
+    
+            var productidParameter = productid != null ?
+                new ObjectParameter("productid", productid) :
+                new ObjectParameter("productid", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PBAllocatedStockToStaffRtr_Result>("PBAllocatedStockToStaffRtr", actionParameter, staffidParameter, productidParameter);
+        }
+    
+        public virtual ObjectResult<PBIntePackageServiceRtr_Result> PBIntePackageServiceRtr(string action, string packageId)
+        {
+            var actionParameter = action != null ?
+                new ObjectParameter("action", action) :
+                new ObjectParameter("action", typeof(string));
+    
+            var packageIdParameter = packageId != null ?
+                new ObjectParameter("PackageId", packageId) :
+                new ObjectParameter("PackageId", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PBIntePackageServiceRtr_Result>("PBIntePackageServiceRtr", actionParameter, packageIdParameter);
+        }
+    
+        public virtual ObjectResult<string> PBGenBillingCode(string abbr, string companycode)
+        {
+            var abbrParameter = abbr != null ?
+                new ObjectParameter("abbr", abbr) :
+                new ObjectParameter("abbr", typeof(string));
+    
+            var companycodeParameter = companycode != null ?
+                new ObjectParameter("Companycode", companycode) :
+                new ObjectParameter("Companycode", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("PBGenBillingCode", abbrParameter, companycodeParameter);
+        }
+    
+        public virtual ObjectResult<string> PBStockPurchaseMasterInsUpd(string purchaseId, string companyCode, string createDate, string createUser, string updateDate, string updateUser, string productId, string productTypeId, string quantity, string mfgDate, string expDate, string purchaseDate, string vendorId, string deptId, string gSTId, string price, string action)
+        {
+            var purchaseIdParameter = purchaseId != null ?
+                new ObjectParameter("PurchaseId", purchaseId) :
+                new ObjectParameter("PurchaseId", typeof(string));
+    
+            var companyCodeParameter = companyCode != null ?
+                new ObjectParameter("CompanyCode", companyCode) :
+                new ObjectParameter("CompanyCode", typeof(string));
+    
+            var createDateParameter = createDate != null ?
+                new ObjectParameter("CreateDate", createDate) :
+                new ObjectParameter("CreateDate", typeof(string));
+    
+            var createUserParameter = createUser != null ?
+                new ObjectParameter("CreateUser", createUser) :
+                new ObjectParameter("CreateUser", typeof(string));
+    
+            var updateDateParameter = updateDate != null ?
+                new ObjectParameter("UpdateDate", updateDate) :
+                new ObjectParameter("UpdateDate", typeof(string));
+    
+            var updateUserParameter = updateUser != null ?
+                new ObjectParameter("UpdateUser", updateUser) :
+                new ObjectParameter("UpdateUser", typeof(string));
+    
+            var productIdParameter = productId != null ?
+                new ObjectParameter("ProductId", productId) :
+                new ObjectParameter("ProductId", typeof(string));
+    
+            var productTypeIdParameter = productTypeId != null ?
+                new ObjectParameter("ProductTypeId", productTypeId) :
+                new ObjectParameter("ProductTypeId", typeof(string));
+    
+            var quantityParameter = quantity != null ?
+                new ObjectParameter("Quantity", quantity) :
+                new ObjectParameter("Quantity", typeof(string));
+    
+            var mfgDateParameter = mfgDate != null ?
+                new ObjectParameter("MfgDate", mfgDate) :
+                new ObjectParameter("MfgDate", typeof(string));
+    
+            var expDateParameter = expDate != null ?
+                new ObjectParameter("ExpDate", expDate) :
+                new ObjectParameter("ExpDate", typeof(string));
+    
+            var purchaseDateParameter = purchaseDate != null ?
+                new ObjectParameter("PurchaseDate", purchaseDate) :
+                new ObjectParameter("PurchaseDate", typeof(string));
+    
+            var vendorIdParameter = vendorId != null ?
+                new ObjectParameter("VendorId", vendorId) :
+                new ObjectParameter("VendorId", typeof(string));
+    
+            var deptIdParameter = deptId != null ?
+                new ObjectParameter("DeptId", deptId) :
+                new ObjectParameter("DeptId", typeof(string));
+    
+            var gSTIdParameter = gSTId != null ?
+                new ObjectParameter("GSTId", gSTId) :
+                new ObjectParameter("GSTId", typeof(string));
+    
+            var priceParameter = price != null ?
+                new ObjectParameter("Price", price) :
+                new ObjectParameter("Price", typeof(string));
+    
+            var actionParameter = action != null ?
+                new ObjectParameter("action", action) :
+                new ObjectParameter("action", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("PBStockPurchaseMasterInsUpd", purchaseIdParameter, companyCodeParameter, createDateParameter, createUserParameter, updateDateParameter, updateUserParameter, productIdParameter, productTypeIdParameter, quantityParameter, mfgDateParameter, expDateParameter, purchaseDateParameter, vendorIdParameter, deptIdParameter, gSTIdParameter, priceParameter, actionParameter);
+        }
+    
+        public virtual ObjectResult<PBStockPurchaseRetrieve_Result> PBStockPurchaseRetrieve(string action, string companycode, string purchaseid)
+        {
             var actionParameter = action != null ?
                 new ObjectParameter("action", action) :
                 new ObjectParameter("action", typeof(string));
@@ -1307,7 +1327,52 @@ namespace ParulBeautyCareDbClasses.DataModels
                 new ObjectParameter("companycode", companycode) :
                 new ObjectParameter("companycode", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PBBookingDetailRtr_Result>("PBBookingDetailRtr", bookingIdParameter, actionParameter, companycodeParameter);
+            var purchaseidParameter = purchaseid != null ?
+                new ObjectParameter("purchaseid", purchaseid) :
+                new ObjectParameter("purchaseid", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PBStockPurchaseRetrieve_Result>("PBStockPurchaseRetrieve", actionParameter, companycodeParameter, purchaseidParameter);
+        }
+    
+        public virtual int PBStockTransferInsert(string stockHeaderId, string transferDate, string fromStaffId, string toStaffId, string createDate, string createUser, string updateDate, string updateUser, string action)
+        {
+            var stockHeaderIdParameter = stockHeaderId != null ?
+                new ObjectParameter("StockHeaderId", stockHeaderId) :
+                new ObjectParameter("StockHeaderId", typeof(string));
+    
+            var transferDateParameter = transferDate != null ?
+                new ObjectParameter("TransferDate", transferDate) :
+                new ObjectParameter("TransferDate", typeof(string));
+    
+            var fromStaffIdParameter = fromStaffId != null ?
+                new ObjectParameter("FromStaffId", fromStaffId) :
+                new ObjectParameter("FromStaffId", typeof(string));
+    
+            var toStaffIdParameter = toStaffId != null ?
+                new ObjectParameter("ToStaffId", toStaffId) :
+                new ObjectParameter("ToStaffId", typeof(string));
+    
+            var createDateParameter = createDate != null ?
+                new ObjectParameter("CreateDate", createDate) :
+                new ObjectParameter("CreateDate", typeof(string));
+    
+            var createUserParameter = createUser != null ?
+                new ObjectParameter("CreateUser", createUser) :
+                new ObjectParameter("CreateUser", typeof(string));
+    
+            var updateDateParameter = updateDate != null ?
+                new ObjectParameter("UpdateDate", updateDate) :
+                new ObjectParameter("UpdateDate", typeof(string));
+    
+            var updateUserParameter = updateUser != null ?
+                new ObjectParameter("UpdateUser", updateUser) :
+                new ObjectParameter("UpdateUser", typeof(string));
+    
+            var actionParameter = action != null ?
+                new ObjectParameter("action", action) :
+                new ObjectParameter("action", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PBStockTransferInsert", stockHeaderIdParameter, transferDateParameter, fromStaffIdParameter, toStaffIdParameter, createDateParameter, createUserParameter, updateDateParameter, updateUserParameter, actionParameter);
         }
     
         public virtual ObjectResult<string> PBSubCategoryMasterInsUpd(string subCategoryId, string subCategoryname, string categoryId, string isMultiPerson, string numberOfPerson, string yearId, string noOfSitting, string timeDuraion, string amount, string companyCode, string activeStatus, string createdate, string updatedate, string createuser, string dayinterval, string incentive, string gSTPercentage, string action)
@@ -1387,48 +1452,56 @@ namespace ParulBeautyCareDbClasses.DataModels
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("PBSubCategoryMasterInsUpd", subCategoryIdParameter, subCategorynameParameter, categoryIdParameter, isMultiPersonParameter, numberOfPersonParameter, yearIdParameter, noOfSittingParameter, timeDuraionParameter, amountParameter, companyCodeParameter, activeStatusParameter, createdateParameter, updatedateParameter, createuserParameter, dayintervalParameter, incentiveParameter, gSTPercentageParameter, actionParameter);
         }
     
-        public virtual ObjectResult<PBBookingHeaderRtr_Result> PBBookingHeaderRtr(string bookingId, string action, string companycode)
+        public virtual ObjectResult<PB_DateWiseBillReportRtr_Result> PB_DateWiseBillReportRtr(string fromDate, string toDate, string bookingId, string departmentId, string action)
         {
+            var fromDateParameter = fromDate != null ?
+                new ObjectParameter("FromDate", fromDate) :
+                new ObjectParameter("FromDate", typeof(string));
+    
+            var toDateParameter = toDate != null ?
+                new ObjectParameter("ToDate", toDate) :
+                new ObjectParameter("ToDate", typeof(string));
+    
             var bookingIdParameter = bookingId != null ?
                 new ObjectParameter("BookingId", bookingId) :
                 new ObjectParameter("BookingId", typeof(string));
+    
+            var departmentIdParameter = departmentId != null ?
+                new ObjectParameter("DepartmentId", departmentId) :
+                new ObjectParameter("DepartmentId", typeof(string));
     
             var actionParameter = action != null ?
                 new ObjectParameter("action", action) :
                 new ObjectParameter("action", typeof(string));
     
-            var companycodeParameter = companycode != null ?
-                new ObjectParameter("companycode", companycode) :
-                new ObjectParameter("companycode", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PBBookingHeaderRtr_Result>("PBBookingHeaderRtr", bookingIdParameter, actionParameter, companycodeParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PB_DateWiseBillReportRtr_Result>("PB_DateWiseBillReportRtr", fromDateParameter, toDateParameter, bookingIdParameter, departmentIdParameter, actionParameter);
         }
     
-        public virtual ObjectResult<string> PBEnquiryIns(string personname, string personemail, string personcontactno, string personaddress, string personenquiryfor, string createdate, string createuser, string action)
+        public virtual ObjectResult<string> PBItemMasterInsUpd(string itemId, string itemname, string companyCode, string activestatus, string createdate, string updatedate, string createuser, string action)
         {
-            var personnameParameter = personname != null ?
-                new ObjectParameter("personname", personname) :
-                new ObjectParameter("personname", typeof(string));
+            var itemIdParameter = itemId != null ?
+                new ObjectParameter("ItemId", itemId) :
+                new ObjectParameter("ItemId", typeof(string));
     
-            var personemailParameter = personemail != null ?
-                new ObjectParameter("personemail", personemail) :
-                new ObjectParameter("personemail", typeof(string));
+            var itemnameParameter = itemname != null ?
+                new ObjectParameter("Itemname", itemname) :
+                new ObjectParameter("Itemname", typeof(string));
     
-            var personcontactnoParameter = personcontactno != null ?
-                new ObjectParameter("personcontactno", personcontactno) :
-                new ObjectParameter("personcontactno", typeof(string));
+            var companyCodeParameter = companyCode != null ?
+                new ObjectParameter("CompanyCode", companyCode) :
+                new ObjectParameter("CompanyCode", typeof(string));
     
-            var personaddressParameter = personaddress != null ?
-                new ObjectParameter("personaddress", personaddress) :
-                new ObjectParameter("personaddress", typeof(string));
-    
-            var personenquiryforParameter = personenquiryfor != null ?
-                new ObjectParameter("personenquiryfor", personenquiryfor) :
-                new ObjectParameter("personenquiryfor", typeof(string));
+            var activestatusParameter = activestatus != null ?
+                new ObjectParameter("activestatus", activestatus) :
+                new ObjectParameter("activestatus", typeof(string));
     
             var createdateParameter = createdate != null ?
                 new ObjectParameter("createdate", createdate) :
                 new ObjectParameter("createdate", typeof(string));
+    
+            var updatedateParameter = updatedate != null ?
+                new ObjectParameter("updatedate", updatedate) :
+                new ObjectParameter("updatedate", typeof(string));
     
             var createuserParameter = createuser != null ?
                 new ObjectParameter("createuser", createuser) :
@@ -1438,88 +1511,10 @@ namespace ParulBeautyCareDbClasses.DataModels
                 new ObjectParameter("action", action) :
                 new ObjectParameter("action", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("PBEnquiryIns", personnameParameter, personemailParameter, personcontactnoParameter, personaddressParameter, personenquiryforParameter, createdateParameter, createuserParameter, actionParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("PBItemMasterInsUpd", itemIdParameter, itemnameParameter, companyCodeParameter, activestatusParameter, createdateParameter, updatedateParameter, createuserParameter, actionParameter);
         }
     
-        public virtual ObjectResult<PBEnquiryRtr_Result> PBEnquiryRtr(string action)
-        {
-            var actionParameter = action != null ?
-                new ObjectParameter("action", action) :
-                new ObjectParameter("action", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PBEnquiryRtr_Result>("PBEnquiryRtr", actionParameter);
-        }
-    
-        public virtual ObjectResult<string> PBStockPurchaseMasterInsUpd(string purchaseId, string companyCode, string createDate, string createUser, string updateDate, string updateUser, string productId, string productTypeId, string quantity, string mfgDate, string expDate, string purchaseDate, string vendorId, string deptId, string price, string action)
-        {
-            var purchaseIdParameter = purchaseId != null ?
-                new ObjectParameter("PurchaseId", purchaseId) :
-                new ObjectParameter("PurchaseId", typeof(string));
-    
-            var companyCodeParameter = companyCode != null ?
-                new ObjectParameter("CompanyCode", companyCode) :
-                new ObjectParameter("CompanyCode", typeof(string));
-    
-            var createDateParameter = createDate != null ?
-                new ObjectParameter("CreateDate", createDate) :
-                new ObjectParameter("CreateDate", typeof(string));
-    
-            var createUserParameter = createUser != null ?
-                new ObjectParameter("CreateUser", createUser) :
-                new ObjectParameter("CreateUser", typeof(string));
-    
-            var updateDateParameter = updateDate != null ?
-                new ObjectParameter("UpdateDate", updateDate) :
-                new ObjectParameter("UpdateDate", typeof(string));
-    
-            var updateUserParameter = updateUser != null ?
-                new ObjectParameter("UpdateUser", updateUser) :
-                new ObjectParameter("UpdateUser", typeof(string));
-    
-            var productIdParameter = productId != null ?
-                new ObjectParameter("ProductId", productId) :
-                new ObjectParameter("ProductId", typeof(string));
-    
-            var productTypeIdParameter = productTypeId != null ?
-                new ObjectParameter("ProductTypeId", productTypeId) :
-                new ObjectParameter("ProductTypeId", typeof(string));
-    
-            var quantityParameter = quantity != null ?
-                new ObjectParameter("Quantity", quantity) :
-                new ObjectParameter("Quantity", typeof(string));
-    
-            var mfgDateParameter = mfgDate != null ?
-                new ObjectParameter("MfgDate", mfgDate) :
-                new ObjectParameter("MfgDate", typeof(string));
-    
-            var expDateParameter = expDate != null ?
-                new ObjectParameter("ExpDate", expDate) :
-                new ObjectParameter("ExpDate", typeof(string));
-    
-            var purchaseDateParameter = purchaseDate != null ?
-                new ObjectParameter("PurchaseDate", purchaseDate) :
-                new ObjectParameter("PurchaseDate", typeof(string));
-    
-            var vendorIdParameter = vendorId != null ?
-                new ObjectParameter("VendorId", vendorId) :
-                new ObjectParameter("VendorId", typeof(string));
-    
-            var deptIdParameter = deptId != null ?
-                new ObjectParameter("DeptId", deptId) :
-                new ObjectParameter("DeptId", typeof(string));
-    
-            var priceParameter = price != null ?
-                new ObjectParameter("Price", price) :
-                new ObjectParameter("Price", typeof(string));
-    
-            var actionParameter = action != null ?
-                new ObjectParameter("action", action) :
-                new ObjectParameter("action", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("PBStockPurchaseMasterInsUpd", purchaseIdParameter, companyCodeParameter, createDateParameter, createUserParameter, updateDateParameter, updateUserParameter, productIdParameter, productTypeIdParameter, quantityParameter, mfgDateParameter, expDateParameter, purchaseDateParameter, vendorIdParameter, deptIdParameter, priceParameter, actionParameter);
-        }
-    
-        public virtual ObjectResult<PBStockPurchaseRetrieve_Result> PBStockPurchaseRetrieve(string action, string companycode, string purchaseid)
+        public virtual ObjectResult<PBItemMasterRetrieve_Result> PBItemMasterRetrieve(string action, string companycode, string itemId)
         {
             var actionParameter = action != null ?
                 new ObjectParameter("action", action) :
@@ -1529,22 +1524,22 @@ namespace ParulBeautyCareDbClasses.DataModels
                 new ObjectParameter("companycode", companycode) :
                 new ObjectParameter("companycode", typeof(string));
     
-            var purchaseidParameter = purchaseid != null ?
-                new ObjectParameter("purchaseid", purchaseid) :
-                new ObjectParameter("purchaseid", typeof(string));
+            var itemIdParameter = itemId != null ?
+                new ObjectParameter("ItemId", itemId) :
+                new ObjectParameter("ItemId", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PBStockPurchaseRetrieve_Result>("PBStockPurchaseRetrieve", actionParameter, companycodeParameter, purchaseidParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PBItemMasterRetrieve_Result>("PBItemMasterRetrieve", actionParameter, companycodeParameter, itemIdParameter);
         }
     
-        public virtual ObjectResult<string> PBStockAllocationMasterInsUpd(string stockAllocationId, string productId, string qty, string allocationDate, string allocateUser, string staffId, string updateDate, string updateUser, string stockUsed, string createDate, string createUser, string noOfPerson, string personUsed, string expDate, string price, string action)
+        public virtual ObjectResult<string> PBStockAllocationMasterInsUpd(string stockAllocationId, string purchaseId, string qty, string allocationDate, string allocateUser, string staffId, string updateDate, string updateUser, string stockUsed, string createDate, string createUser, string noOfPerson, string personUsed, string expDate, string price, string action)
         {
             var stockAllocationIdParameter = stockAllocationId != null ?
                 new ObjectParameter("StockAllocationId", stockAllocationId) :
                 new ObjectParameter("StockAllocationId", typeof(string));
     
-            var productIdParameter = productId != null ?
-                new ObjectParameter("ProductId", productId) :
-                new ObjectParameter("ProductId", typeof(string));
+            var purchaseIdParameter = purchaseId != null ?
+                new ObjectParameter("PurchaseId", purchaseId) :
+                new ObjectParameter("PurchaseId", typeof(string));
     
             var qtyParameter = qty != null ?
                 new ObjectParameter("Qty", qty) :
@@ -1602,7 +1597,7 @@ namespace ParulBeautyCareDbClasses.DataModels
                 new ObjectParameter("action", action) :
                 new ObjectParameter("action", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("PBStockAllocationMasterInsUpd", stockAllocationIdParameter, productIdParameter, qtyParameter, allocationDateParameter, allocateUserParameter, staffIdParameter, updateDateParameter, updateUserParameter, stockUsedParameter, createDateParameter, createUserParameter, noOfPersonParameter, personUsedParameter, expDateParameter, priceParameter, actionParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("PBStockAllocationMasterInsUpd", stockAllocationIdParameter, purchaseIdParameter, qtyParameter, allocationDateParameter, allocateUserParameter, staffIdParameter, updateDateParameter, updateUserParameter, stockUsedParameter, createDateParameter, createUserParameter, noOfPersonParameter, personUsedParameter, expDateParameter, priceParameter, actionParameter);
         }
     
         public virtual ObjectResult<PBStockAllocationRetrieve_Result> PBStockAllocationRetrieve(string action, string stockAllocationId)
@@ -1616,86 +1611,6 @@ namespace ParulBeautyCareDbClasses.DataModels
                 new ObjectParameter("StockAllocationId", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PBStockAllocationRetrieve_Result>("PBStockAllocationRetrieve", actionParameter, stockAllocationIdParameter);
-        }
-    
-        public virtual int PBStockTransferInsert(string stockHeaderId, string transferDate, string fromStaffId, string toStaffId, string createDate, string createUser, string updateDate, string updateUser, string action)
-        {
-            var stockHeaderIdParameter = stockHeaderId != null ?
-                new ObjectParameter("StockHeaderId", stockHeaderId) :
-                new ObjectParameter("StockHeaderId", typeof(string));
-    
-            var transferDateParameter = transferDate != null ?
-                new ObjectParameter("TransferDate", transferDate) :
-                new ObjectParameter("TransferDate", typeof(string));
-    
-            var fromStaffIdParameter = fromStaffId != null ?
-                new ObjectParameter("FromStaffId", fromStaffId) :
-                new ObjectParameter("FromStaffId", typeof(string));
-    
-            var toStaffIdParameter = toStaffId != null ?
-                new ObjectParameter("ToStaffId", toStaffId) :
-                new ObjectParameter("ToStaffId", typeof(string));
-    
-            var createDateParameter = createDate != null ?
-                new ObjectParameter("CreateDate", createDate) :
-                new ObjectParameter("CreateDate", typeof(string));
-    
-            var createUserParameter = createUser != null ?
-                new ObjectParameter("CreateUser", createUser) :
-                new ObjectParameter("CreateUser", typeof(string));
-    
-            var updateDateParameter = updateDate != null ?
-                new ObjectParameter("UpdateDate", updateDate) :
-                new ObjectParameter("UpdateDate", typeof(string));
-    
-            var updateUserParameter = updateUser != null ?
-                new ObjectParameter("UpdateUser", updateUser) :
-                new ObjectParameter("UpdateUser", typeof(string));
-    
-            var actionParameter = action != null ?
-                new ObjectParameter("action", action) :
-                new ObjectParameter("action", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PBStockTransferInsert", stockHeaderIdParameter, transferDateParameter, fromStaffIdParameter, toStaffIdParameter, createDateParameter, createUserParameter, updateDateParameter, updateUserParameter, actionParameter);
-        }
-    
-        public virtual ObjectResult<PBAvailableStockRtr_Result> PBAvailableStockRtr(string staffid)
-        {
-            var staffidParameter = staffid != null ?
-                new ObjectParameter("staffid", staffid) :
-                new ObjectParameter("staffid", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PBAvailableStockRtr_Result>("PBAvailableStockRtr", staffidParameter);
-        }
-    
-        public virtual ObjectResult<PBAllocatedStockToStaffRtr_Result> PBAllocatedStockToStaffRtr(string action, string staffid, string productid)
-        {
-            var actionParameter = action != null ?
-                new ObjectParameter("action", action) :
-                new ObjectParameter("action", typeof(string));
-    
-            var staffidParameter = staffid != null ?
-                new ObjectParameter("staffid", staffid) :
-                new ObjectParameter("staffid", typeof(string));
-    
-            var productidParameter = productid != null ?
-                new ObjectParameter("productid", productid) :
-                new ObjectParameter("productid", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PBAllocatedStockToStaffRtr_Result>("PBAllocatedStockToStaffRtr", actionParameter, staffidParameter, productidParameter);
-        }
-    
-        public virtual ObjectResult<PBIntePackageServiceRtr_Result> PBIntePackageServiceRtr(string action, string packageId)
-        {
-            var actionParameter = action != null ?
-                new ObjectParameter("action", action) :
-                new ObjectParameter("action", typeof(string));
-    
-            var packageIdParameter = packageId != null ?
-                new ObjectParameter("PackageId", packageId) :
-                new ObjectParameter("PackageId", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PBIntePackageServiceRtr_Result>("PBIntePackageServiceRtr", actionParameter, packageIdParameter);
         }
     
         public virtual ObjectResult<PBSubCategoryMasterRetrieve_Result> PBSubCategoryMasterRetrieve(string action, string companycode, string subCategoryId)
@@ -1713,6 +1628,447 @@ namespace ParulBeautyCareDbClasses.DataModels
                 new ObjectParameter("SubCategoryId", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PBSubCategoryMasterRetrieve_Result>("PBSubCategoryMasterRetrieve", actionParameter, companycodeParameter, subCategoryIdParameter);
+        }
+    
+        public virtual ObjectResult<string> PBDepartmentMasterInsUpd(string departmentId, string departmentname, string deptAbrv, string gSTNo, string deptAddress, string companyCode, string activestatus, string createdate, string updatedate, string createuser, string action)
+        {
+            var departmentIdParameter = departmentId != null ?
+                new ObjectParameter("DepartmentId", departmentId) :
+                new ObjectParameter("DepartmentId", typeof(string));
+    
+            var departmentnameParameter = departmentname != null ?
+                new ObjectParameter("Departmentname", departmentname) :
+                new ObjectParameter("Departmentname", typeof(string));
+    
+            var deptAbrvParameter = deptAbrv != null ?
+                new ObjectParameter("DeptAbrv", deptAbrv) :
+                new ObjectParameter("DeptAbrv", typeof(string));
+    
+            var gSTNoParameter = gSTNo != null ?
+                new ObjectParameter("GSTNo", gSTNo) :
+                new ObjectParameter("GSTNo", typeof(string));
+    
+            var deptAddressParameter = deptAddress != null ?
+                new ObjectParameter("DeptAddress", deptAddress) :
+                new ObjectParameter("DeptAddress", typeof(string));
+    
+            var companyCodeParameter = companyCode != null ?
+                new ObjectParameter("CompanyCode", companyCode) :
+                new ObjectParameter("CompanyCode", typeof(string));
+    
+            var activestatusParameter = activestatus != null ?
+                new ObjectParameter("activestatus", activestatus) :
+                new ObjectParameter("activestatus", typeof(string));
+    
+            var createdateParameter = createdate != null ?
+                new ObjectParameter("createdate", createdate) :
+                new ObjectParameter("createdate", typeof(string));
+    
+            var updatedateParameter = updatedate != null ?
+                new ObjectParameter("updatedate", updatedate) :
+                new ObjectParameter("updatedate", typeof(string));
+    
+            var createuserParameter = createuser != null ?
+                new ObjectParameter("createuser", createuser) :
+                new ObjectParameter("createuser", typeof(string));
+    
+            var actionParameter = action != null ?
+                new ObjectParameter("action", action) :
+                new ObjectParameter("action", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("PBDepartmentMasterInsUpd", departmentIdParameter, departmentnameParameter, deptAbrvParameter, gSTNoParameter, deptAddressParameter, companyCodeParameter, activestatusParameter, createdateParameter, updatedateParameter, createuserParameter, actionParameter);
+        }
+    
+        public virtual ObjectResult<PBDepartmentMasterRetrieve_Result> PBDepartmentMasterRetrieve(string action, string companycode, string id)
+        {
+            var actionParameter = action != null ?
+                new ObjectParameter("action", action) :
+                new ObjectParameter("action", typeof(string));
+    
+            var companycodeParameter = companycode != null ?
+                new ObjectParameter("companycode", companycode) :
+                new ObjectParameter("companycode", typeof(string));
+    
+            var idParameter = id != null ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PBDepartmentMasterRetrieve_Result>("PBDepartmentMasterRetrieve", actionParameter, companycodeParameter, idParameter);
+        }
+    
+        public virtual ObjectResult<string> PBGSTMasterInsUpd(string gSTId, string gSTName, string gSTPerc, string fromdate, string todate, string companyCode, string activestatus, string createdate, string updatedate, string createuser, string action)
+        {
+            var gSTIdParameter = gSTId != null ?
+                new ObjectParameter("GSTId", gSTId) :
+                new ObjectParameter("GSTId", typeof(string));
+    
+            var gSTNameParameter = gSTName != null ?
+                new ObjectParameter("GSTName", gSTName) :
+                new ObjectParameter("GSTName", typeof(string));
+    
+            var gSTPercParameter = gSTPerc != null ?
+                new ObjectParameter("GSTPerc", gSTPerc) :
+                new ObjectParameter("GSTPerc", typeof(string));
+    
+            var fromdateParameter = fromdate != null ?
+                new ObjectParameter("Fromdate", fromdate) :
+                new ObjectParameter("Fromdate", typeof(string));
+    
+            var todateParameter = todate != null ?
+                new ObjectParameter("Todate", todate) :
+                new ObjectParameter("Todate", typeof(string));
+    
+            var companyCodeParameter = companyCode != null ?
+                new ObjectParameter("CompanyCode", companyCode) :
+                new ObjectParameter("CompanyCode", typeof(string));
+    
+            var activestatusParameter = activestatus != null ?
+                new ObjectParameter("activestatus", activestatus) :
+                new ObjectParameter("activestatus", typeof(string));
+    
+            var createdateParameter = createdate != null ?
+                new ObjectParameter("createdate", createdate) :
+                new ObjectParameter("createdate", typeof(string));
+    
+            var updatedateParameter = updatedate != null ?
+                new ObjectParameter("updatedate", updatedate) :
+                new ObjectParameter("updatedate", typeof(string));
+    
+            var createuserParameter = createuser != null ?
+                new ObjectParameter("createuser", createuser) :
+                new ObjectParameter("createuser", typeof(string));
+    
+            var actionParameter = action != null ?
+                new ObjectParameter("action", action) :
+                new ObjectParameter("action", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("PBGSTMasterInsUpd", gSTIdParameter, gSTNameParameter, gSTPercParameter, fromdateParameter, todateParameter, companyCodeParameter, activestatusParameter, createdateParameter, updatedateParameter, createuserParameter, actionParameter);
+        }
+    
+        public virtual ObjectResult<PBGSTMasterRetrieve_Result> PBGSTMasterRetrieve(string action, string companycode, string gSTId)
+        {
+            var actionParameter = action != null ?
+                new ObjectParameter("action", action) :
+                new ObjectParameter("action", typeof(string));
+    
+            var companycodeParameter = companycode != null ?
+                new ObjectParameter("companycode", companycode) :
+                new ObjectParameter("companycode", typeof(string));
+    
+            var gSTIdParameter = gSTId != null ?
+                new ObjectParameter("GSTId", gSTId) :
+                new ObjectParameter("GSTId", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PBGSTMasterRetrieve_Result>("PBGSTMasterRetrieve", actionParameter, companycodeParameter, gSTIdParameter);
+        }
+    
+        public virtual ObjectResult<PBBookingDetailRtr_Result> PBBookingDetailRtr(string bookingId, string action, string companycode)
+        {
+            var bookingIdParameter = bookingId != null ?
+                new ObjectParameter("BookingId", bookingId) :
+                new ObjectParameter("BookingId", typeof(string));
+    
+            var actionParameter = action != null ?
+                new ObjectParameter("action", action) :
+                new ObjectParameter("action", typeof(string));
+    
+            var companycodeParameter = companycode != null ?
+                new ObjectParameter("companycode", companycode) :
+                new ObjectParameter("companycode", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PBBookingDetailRtr_Result>("PBBookingDetailRtr", bookingIdParameter, actionParameter, companycodeParameter);
+        }
+    
+        public virtual ObjectResult<PBBookingHeaderRtr_Result> PBBookingHeaderRtr(string bookingId, string action, string companycode)
+        {
+            var bookingIdParameter = bookingId != null ?
+                new ObjectParameter("BookingId", bookingId) :
+                new ObjectParameter("BookingId", typeof(string));
+    
+            var actionParameter = action != null ?
+                new ObjectParameter("action", action) :
+                new ObjectParameter("action", typeof(string));
+    
+            var companycodeParameter = companycode != null ?
+                new ObjectParameter("companycode", companycode) :
+                new ObjectParameter("companycode", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PBBookingHeaderRtr_Result>("PBBookingHeaderRtr", bookingIdParameter, actionParameter, companycodeParameter);
+        }
+    
+        public virtual int PBBookingInsert_new(string bookingId, string advanceBookingId, string customerId, string customerNo, string customerName, string departmentId, string address, string bookDate, string createDate, string createUser, string updateDate, string updateUser, string noOfPerson, string totalAmount, string discountPerc, string totalDiscount, string finalAmount, string advanceBookingCharge, string paidAmount, string companyCode, string functionDate, string readyTime, string status, string action)
+        {
+            var bookingIdParameter = bookingId != null ?
+                new ObjectParameter("BookingId", bookingId) :
+                new ObjectParameter("BookingId", typeof(string));
+    
+            var advanceBookingIdParameter = advanceBookingId != null ?
+                new ObjectParameter("AdvanceBookingId", advanceBookingId) :
+                new ObjectParameter("AdvanceBookingId", typeof(string));
+    
+            var customerIdParameter = customerId != null ?
+                new ObjectParameter("CustomerId", customerId) :
+                new ObjectParameter("CustomerId", typeof(string));
+    
+            var customerNoParameter = customerNo != null ?
+                new ObjectParameter("CustomerNo", customerNo) :
+                new ObjectParameter("CustomerNo", typeof(string));
+    
+            var customerNameParameter = customerName != null ?
+                new ObjectParameter("CustomerName", customerName) :
+                new ObjectParameter("CustomerName", typeof(string));
+    
+            var departmentIdParameter = departmentId != null ?
+                new ObjectParameter("DepartmentId", departmentId) :
+                new ObjectParameter("DepartmentId", typeof(string));
+    
+            var addressParameter = address != null ?
+                new ObjectParameter("Address", address) :
+                new ObjectParameter("Address", typeof(string));
+    
+            var bookDateParameter = bookDate != null ?
+                new ObjectParameter("BookDate", bookDate) :
+                new ObjectParameter("BookDate", typeof(string));
+    
+            var createDateParameter = createDate != null ?
+                new ObjectParameter("CreateDate", createDate) :
+                new ObjectParameter("CreateDate", typeof(string));
+    
+            var createUserParameter = createUser != null ?
+                new ObjectParameter("CreateUser", createUser) :
+                new ObjectParameter("CreateUser", typeof(string));
+    
+            var updateDateParameter = updateDate != null ?
+                new ObjectParameter("UpdateDate", updateDate) :
+                new ObjectParameter("UpdateDate", typeof(string));
+    
+            var updateUserParameter = updateUser != null ?
+                new ObjectParameter("UpdateUser", updateUser) :
+                new ObjectParameter("UpdateUser", typeof(string));
+    
+            var noOfPersonParameter = noOfPerson != null ?
+                new ObjectParameter("NoOfPerson", noOfPerson) :
+                new ObjectParameter("NoOfPerson", typeof(string));
+    
+            var totalAmountParameter = totalAmount != null ?
+                new ObjectParameter("TotalAmount", totalAmount) :
+                new ObjectParameter("TotalAmount", typeof(string));
+    
+            var discountPercParameter = discountPerc != null ?
+                new ObjectParameter("DiscountPerc", discountPerc) :
+                new ObjectParameter("DiscountPerc", typeof(string));
+    
+            var totalDiscountParameter = totalDiscount != null ?
+                new ObjectParameter("TotalDiscount", totalDiscount) :
+                new ObjectParameter("TotalDiscount", typeof(string));
+    
+            var finalAmountParameter = finalAmount != null ?
+                new ObjectParameter("FinalAmount", finalAmount) :
+                new ObjectParameter("FinalAmount", typeof(string));
+    
+            var advanceBookingChargeParameter = advanceBookingCharge != null ?
+                new ObjectParameter("AdvanceBookingCharge", advanceBookingCharge) :
+                new ObjectParameter("AdvanceBookingCharge", typeof(string));
+    
+            var paidAmountParameter = paidAmount != null ?
+                new ObjectParameter("PaidAmount", paidAmount) :
+                new ObjectParameter("PaidAmount", typeof(string));
+    
+            var companyCodeParameter = companyCode != null ?
+                new ObjectParameter("CompanyCode", companyCode) :
+                new ObjectParameter("CompanyCode", typeof(string));
+    
+            var functionDateParameter = functionDate != null ?
+                new ObjectParameter("FunctionDate", functionDate) :
+                new ObjectParameter("FunctionDate", typeof(string));
+    
+            var readyTimeParameter = readyTime != null ?
+                new ObjectParameter("ReadyTime", readyTime) :
+                new ObjectParameter("ReadyTime", typeof(string));
+    
+            var statusParameter = status != null ?
+                new ObjectParameter("Status", status) :
+                new ObjectParameter("Status", typeof(string));
+    
+            var actionParameter = action != null ?
+                new ObjectParameter("action", action) :
+                new ObjectParameter("action", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PBBookingInsert_new", bookingIdParameter, advanceBookingIdParameter, customerIdParameter, customerNoParameter, customerNameParameter, departmentIdParameter, addressParameter, bookDateParameter, createDateParameter, createUserParameter, updateDateParameter, updateUserParameter, noOfPersonParameter, totalAmountParameter, discountPercParameter, totalDiscountParameter, finalAmountParameter, advanceBookingChargeParameter, paidAmountParameter, companyCodeParameter, functionDateParameter, readyTimeParameter, statusParameter, actionParameter);
+        }
+    
+        public virtual ObjectResult<PBBookingServicesRtr_Result> PBBookingServicesRtr(string bookingId, string action, string companycode)
+        {
+            var bookingIdParameter = bookingId != null ?
+                new ObjectParameter("BookingId", bookingId) :
+                new ObjectParameter("BookingId", typeof(string));
+    
+            var actionParameter = action != null ?
+                new ObjectParameter("action", action) :
+                new ObjectParameter("action", typeof(string));
+    
+            var companycodeParameter = companycode != null ?
+                new ObjectParameter("companycode", companycode) :
+                new ObjectParameter("companycode", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PBBookingServicesRtr_Result>("PBBookingServicesRtr", bookingIdParameter, actionParameter, companycodeParameter);
+        }
+    
+        public virtual ObjectResult<string> PBBillingDetailInsert(string billingDetailId, string bookingId, string action)
+        {
+            var billingDetailIdParameter = billingDetailId != null ?
+                new ObjectParameter("BillingDetailId", billingDetailId) :
+                new ObjectParameter("BillingDetailId", typeof(string));
+    
+            var bookingIdParameter = bookingId != null ?
+                new ObjectParameter("BookingId", bookingId) :
+                new ObjectParameter("BookingId", typeof(string));
+    
+            var actionParameter = action != null ?
+                new ObjectParameter("action", action) :
+                new ObjectParameter("action", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("PBBillingDetailInsert", billingDetailIdParameter, bookingIdParameter, actionParameter);
+        }
+    
+        public virtual ObjectResult<PBBillingRetrieve_Result> PBBillingRetrieve(string action, string companycode)
+        {
+            var actionParameter = action != null ?
+                new ObjectParameter("action", action) :
+                new ObjectParameter("action", typeof(string));
+    
+            var companycodeParameter = companycode != null ?
+                new ObjectParameter("Companycode", companycode) :
+                new ObjectParameter("Companycode", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PBBillingRetrieve_Result>("PBBillingRetrieve", actionParameter, companycodeParameter);
+        }
+    
+        public virtual ObjectResult<PBBillingDetailRetrieve_Result> PBBillingDetailRetrieve(string action, string bookingHeaderId)
+        {
+            var actionParameter = action != null ?
+                new ObjectParameter("action", action) :
+                new ObjectParameter("action", typeof(string));
+    
+            var bookingHeaderIdParameter = bookingHeaderId != null ?
+                new ObjectParameter("BookingHeaderId", bookingHeaderId) :
+                new ObjectParameter("BookingHeaderId", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PBBillingDetailRetrieve_Result>("PBBillingDetailRetrieve", actionParameter, bookingHeaderIdParameter);
+        }
+    
+        public virtual ObjectResult<PB_AdvanceBookingRtr_Result> PB_AdvanceBookingRtr(string fromDate, string toDate, string advanceBookingId, string departmentId, string action)
+        {
+            var fromDateParameter = fromDate != null ?
+                new ObjectParameter("FromDate", fromDate) :
+                new ObjectParameter("FromDate", typeof(string));
+    
+            var toDateParameter = toDate != null ?
+                new ObjectParameter("ToDate", toDate) :
+                new ObjectParameter("ToDate", typeof(string));
+    
+            var advanceBookingIdParameter = advanceBookingId != null ?
+                new ObjectParameter("AdvanceBookingId", advanceBookingId) :
+                new ObjectParameter("AdvanceBookingId", typeof(string));
+    
+            var departmentIdParameter = departmentId != null ?
+                new ObjectParameter("DepartmentId", departmentId) :
+                new ObjectParameter("DepartmentId", typeof(string));
+    
+            var actionParameter = action != null ?
+                new ObjectParameter("action", action) :
+                new ObjectParameter("action", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PB_AdvanceBookingRtr_Result>("PB_AdvanceBookingRtr", fromDateParameter, toDateParameter, advanceBookingIdParameter, departmentIdParameter, actionParameter);
+        }
+    
+        public virtual ObjectResult<string> PBAdvanceBookingInsUpd(string advanceBookingId, string name, string contactNo, string address, string sPName, string sPContactNo, string sPAddress, string bridalDeposit, string sidersDeposit, string totalDeposit, string numOfSiders, string functionDate, string departmentId, string beforeRemark, string afterRemark, string companyCode, string createdate, string updatedate, string createuser, string updateuser, string action)
+        {
+            var advanceBookingIdParameter = advanceBookingId != null ?
+                new ObjectParameter("AdvanceBookingId", advanceBookingId) :
+                new ObjectParameter("AdvanceBookingId", typeof(string));
+    
+            var nameParameter = name != null ?
+                new ObjectParameter("Name", name) :
+                new ObjectParameter("Name", typeof(string));
+    
+            var contactNoParameter = contactNo != null ?
+                new ObjectParameter("ContactNo", contactNo) :
+                new ObjectParameter("ContactNo", typeof(string));
+    
+            var addressParameter = address != null ?
+                new ObjectParameter("Address", address) :
+                new ObjectParameter("Address", typeof(string));
+    
+            var sPNameParameter = sPName != null ?
+                new ObjectParameter("SPName", sPName) :
+                new ObjectParameter("SPName", typeof(string));
+    
+            var sPContactNoParameter = sPContactNo != null ?
+                new ObjectParameter("SPContactNo", sPContactNo) :
+                new ObjectParameter("SPContactNo", typeof(string));
+    
+            var sPAddressParameter = sPAddress != null ?
+                new ObjectParameter("SPAddress", sPAddress) :
+                new ObjectParameter("SPAddress", typeof(string));
+    
+            var bridalDepositParameter = bridalDeposit != null ?
+                new ObjectParameter("BridalDeposit", bridalDeposit) :
+                new ObjectParameter("BridalDeposit", typeof(string));
+    
+            var sidersDepositParameter = sidersDeposit != null ?
+                new ObjectParameter("SidersDeposit", sidersDeposit) :
+                new ObjectParameter("SidersDeposit", typeof(string));
+    
+            var totalDepositParameter = totalDeposit != null ?
+                new ObjectParameter("TotalDeposit", totalDeposit) :
+                new ObjectParameter("TotalDeposit", typeof(string));
+    
+            var numOfSidersParameter = numOfSiders != null ?
+                new ObjectParameter("NumOfSiders", numOfSiders) :
+                new ObjectParameter("NumOfSiders", typeof(string));
+    
+            var functionDateParameter = functionDate != null ?
+                new ObjectParameter("FunctionDate", functionDate) :
+                new ObjectParameter("FunctionDate", typeof(string));
+    
+            var departmentIdParameter = departmentId != null ?
+                new ObjectParameter("DepartmentId", departmentId) :
+                new ObjectParameter("DepartmentId", typeof(string));
+    
+            var beforeRemarkParameter = beforeRemark != null ?
+                new ObjectParameter("BeforeRemark", beforeRemark) :
+                new ObjectParameter("BeforeRemark", typeof(string));
+    
+            var afterRemarkParameter = afterRemark != null ?
+                new ObjectParameter("AfterRemark", afterRemark) :
+                new ObjectParameter("AfterRemark", typeof(string));
+    
+            var companyCodeParameter = companyCode != null ?
+                new ObjectParameter("CompanyCode", companyCode) :
+                new ObjectParameter("CompanyCode", typeof(string));
+    
+            var createdateParameter = createdate != null ?
+                new ObjectParameter("createdate", createdate) :
+                new ObjectParameter("createdate", typeof(string));
+    
+            var updatedateParameter = updatedate != null ?
+                new ObjectParameter("updatedate", updatedate) :
+                new ObjectParameter("updatedate", typeof(string));
+    
+            var createuserParameter = createuser != null ?
+                new ObjectParameter("createuser", createuser) :
+                new ObjectParameter("createuser", typeof(string));
+    
+            var updateuserParameter = updateuser != null ?
+                new ObjectParameter("updateuser", updateuser) :
+                new ObjectParameter("updateuser", typeof(string));
+    
+            var actionParameter = action != null ?
+                new ObjectParameter("action", action) :
+                new ObjectParameter("action", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("PBAdvanceBookingInsUpd", advanceBookingIdParameter, nameParameter, contactNoParameter, addressParameter, sPNameParameter, sPContactNoParameter, sPAddressParameter, bridalDepositParameter, sidersDepositParameter, totalDepositParameter, numOfSidersParameter, functionDateParameter, departmentIdParameter, beforeRemarkParameter, afterRemarkParameter, companyCodeParameter, createdateParameter, updatedateParameter, createuserParameter, updateuserParameter, actionParameter);
         }
     
         public virtual ObjectResult<string> PBBookingDetailInsUpd(string bookingDetailId, string bookingId, string categoryId, string subCategoryId, string allocatedTo, string allocationDate, string appointmentDate, string appointmentTime, string doneBy, string doneDate, string amount, string discount, string finalAmount, string status, string createDate, string createUser, string updateDate, string updateUser, string customerName, string action)
@@ -1798,6 +2154,59 @@ namespace ParulBeautyCareDbClasses.DataModels
                 new ObjectParameter("Action", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("PBBookingDetailInsUpd", bookingDetailIdParameter, bookingIdParameter, categoryIdParameter, subCategoryIdParameter, allocatedToParameter, allocationDateParameter, appointmentDateParameter, appointmentTimeParameter, doneByParameter, doneDateParameter, amountParameter, discountParameter, finalAmountParameter, statusParameter, createDateParameter, createUserParameter, updateDateParameter, updateUserParameter, customerNameParameter, actionParameter);
+        }
+    
+        public virtual ObjectResult<string> PBPaymentHistoryInsUpd(string bookingId, string bookingCode, string paymentRecievedDate, string paymentType, string chequeNo, string gPayNo, string receivedAmount, string previousAmount, string companyCode, string createDate, string createUser, string action)
+        {
+            var bookingIdParameter = bookingId != null ?
+                new ObjectParameter("BookingId", bookingId) :
+                new ObjectParameter("BookingId", typeof(string));
+    
+            var bookingCodeParameter = bookingCode != null ?
+                new ObjectParameter("BookingCode", bookingCode) :
+                new ObjectParameter("BookingCode", typeof(string));
+    
+            var paymentRecievedDateParameter = paymentRecievedDate != null ?
+                new ObjectParameter("PaymentRecievedDate", paymentRecievedDate) :
+                new ObjectParameter("PaymentRecievedDate", typeof(string));
+    
+            var paymentTypeParameter = paymentType != null ?
+                new ObjectParameter("PaymentType", paymentType) :
+                new ObjectParameter("PaymentType", typeof(string));
+    
+            var chequeNoParameter = chequeNo != null ?
+                new ObjectParameter("ChequeNo", chequeNo) :
+                new ObjectParameter("ChequeNo", typeof(string));
+    
+            var gPayNoParameter = gPayNo != null ?
+                new ObjectParameter("GPayNo", gPayNo) :
+                new ObjectParameter("GPayNo", typeof(string));
+    
+            var receivedAmountParameter = receivedAmount != null ?
+                new ObjectParameter("ReceivedAmount", receivedAmount) :
+                new ObjectParameter("ReceivedAmount", typeof(string));
+    
+            var previousAmountParameter = previousAmount != null ?
+                new ObjectParameter("PreviousAmount", previousAmount) :
+                new ObjectParameter("PreviousAmount", typeof(string));
+    
+            var companyCodeParameter = companyCode != null ?
+                new ObjectParameter("CompanyCode", companyCode) :
+                new ObjectParameter("CompanyCode", typeof(string));
+    
+            var createDateParameter = createDate != null ?
+                new ObjectParameter("CreateDate", createDate) :
+                new ObjectParameter("CreateDate", typeof(string));
+    
+            var createUserParameter = createUser != null ?
+                new ObjectParameter("CreateUser", createUser) :
+                new ObjectParameter("CreateUser", typeof(string));
+    
+            var actionParameter = action != null ?
+                new ObjectParameter("Action", action) :
+                new ObjectParameter("Action", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("PBPaymentHistoryInsUpd", bookingIdParameter, bookingCodeParameter, paymentRecievedDateParameter, paymentTypeParameter, chequeNoParameter, gPayNoParameter, receivedAmountParameter, previousAmountParameter, companyCodeParameter, createDateParameter, createUserParameter, actionParameter);
         }
     }
 }

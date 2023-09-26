@@ -36,7 +36,7 @@
                                 </a>
                             </div>
                         </div>*@
-                    @using (Html.BeginForm("AddStockAllocation", "StockManagement", FormMethod.Post, new { @class = "forms-sample" }))
+                    @using (Html.BeginForm("AddStockAllocation", "StockManagement", FormMethod.Post, new { @class = "forms-sample", autocomplete = "off" }))
                     {
                         @Html.AntiForgeryToken();
                         @Html.HiddenFor(m => m.StockAllocationId)
@@ -64,7 +64,7 @@
                                 <div class="col-sm-3">
                                     <label class="col-form-label">
                                         Select Product
-                                        @Html.ValidationMessageFor(m => m.ProductId, "", new { @class = "text-danger h3" })
+                                        @Html.ValidationMessageFor(m => m.PurchaseId, "", new { @class = "text-danger h3" })
                                     </label>
 
                                     <div class="input-group input-group-outline mb-3">
