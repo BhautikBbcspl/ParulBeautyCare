@@ -27,9 +27,11 @@ namespace ParulBeautyCareDbClasses.DataModels
         public string CreateUser { get; set; }
         public string UpdateDate { get; set; }
         public string UpdateUser { get; set; }
-        public Nullable<decimal> TotalAmount { get; set; }
+        public Nullable<decimal> BaseAmount { get; set; }
         public Nullable<decimal> DiscountPerc { get; set; }
         public Nullable<decimal> Discount { get; set; }
+        public Nullable<decimal> GSTPerc { get; set; }
+        public Nullable<decimal> GSTAmount { get; set; }
         public Nullable<decimal> FinalAmount { get; set; }
         public Nullable<decimal> PaidAmount { get; set; }
         public string CompanyCode { get; set; }

@@ -149,6 +149,12 @@
                                             @Html.DisplayName("Discount(Rs)")
                                         </th>
                                         <th>
+                                            @Html.DisplayName("GST(%)")
+                                        </th>
+                                        <th>
+                                            @Html.DisplayName("GST(Rs)")
+                                        </th>
+                                        <th>
                                             @Html.DisplayName("Final Amount")
                                         </th>
                                         <th>
@@ -180,9 +186,11 @@
                                         <td>
                                             @Html.DisplayFor(modelItem => item.ContactNo)
                                         </td>
-                                        <td> @Html.DisplayFor(modelItem => item.TotalAmount)</td>
+                                        <td> @Html.DisplayFor(modelItem => item.BaseAmount)</td>
                                         <td> @Html.DisplayFor(modelItem => item.DiscountPerc)</td>
                                         <td> @Html.DisplayFor(modelItem => item.Discount)</td>
+                                        <td> @Html.DisplayFor(modelItem => item.GSTPerc)</td>
+                                        <td> @Html.DisplayFor(modelItem => item.GSTAmount)</td>
                                         <td> @Html.DisplayFor(modelItem => item.FinalAmount)</td>
                                         <td> @Html.DisplayFor(modelItem => item.PaidAmount)</td>
                                     </tr>
@@ -192,6 +200,8 @@
                                     {
                                         <tr>
                                             <td>You have no rights to view data</td>
+                                            <td></td>
+                                            <td></td>
                                             <td></td>
                                             <td></td>
                                             <td></td>
@@ -264,7 +274,12 @@
             if (data.BillDetailList.length != 0) {
                 data.BillDetailList.forEach(function (rowData) {
                     additionalRows += '<tr>';
-                    additionalRows += '<td>' + rowData.ItemName + '</td>';
+                    if (rowData.ItemName == null || rowData.ItemName == '') {
+                        additionalRows += '<td>' + rowData.CategoryName + '(' + rowData.SubCategoryName + ')' + '</td>';
+                    }
+                    else {
+                        additionalRows += '<td>' + rowData.ItemName + '</td>';
+                    }
                     additionalRows += '<td>' + rowData.Amount + '</td>';
                     additionalRows += '<td>' + (rowData.Qty !== 0 ? rowData.Qty : '-') +'</td>';
                     additionalRows += '<td>' + rowData.FinalAmount + '</td>';

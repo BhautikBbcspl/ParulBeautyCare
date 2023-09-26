@@ -1452,31 +1452,6 @@ namespace ParulBeautyCareDbClasses.DataModels
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("PBSubCategoryMasterInsUpd", subCategoryIdParameter, subCategorynameParameter, categoryIdParameter, isMultiPersonParameter, numberOfPersonParameter, yearIdParameter, noOfSittingParameter, timeDuraionParameter, amountParameter, companyCodeParameter, activeStatusParameter, createdateParameter, updatedateParameter, createuserParameter, dayintervalParameter, incentiveParameter, gSTPercentageParameter, actionParameter);
         }
     
-        public virtual ObjectResult<PB_DateWiseBillReportRtr_Result> PB_DateWiseBillReportRtr(string fromDate, string toDate, string bookingId, string departmentId, string action)
-        {
-            var fromDateParameter = fromDate != null ?
-                new ObjectParameter("FromDate", fromDate) :
-                new ObjectParameter("FromDate", typeof(string));
-    
-            var toDateParameter = toDate != null ?
-                new ObjectParameter("ToDate", toDate) :
-                new ObjectParameter("ToDate", typeof(string));
-    
-            var bookingIdParameter = bookingId != null ?
-                new ObjectParameter("BookingId", bookingId) :
-                new ObjectParameter("BookingId", typeof(string));
-    
-            var departmentIdParameter = departmentId != null ?
-                new ObjectParameter("DepartmentId", departmentId) :
-                new ObjectParameter("DepartmentId", typeof(string));
-    
-            var actionParameter = action != null ?
-                new ObjectParameter("action", action) :
-                new ObjectParameter("action", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PB_DateWiseBillReportRtr_Result>("PB_DateWiseBillReportRtr", fromDateParameter, toDateParameter, bookingIdParameter, departmentIdParameter, actionParameter);
-        }
-    
         public virtual ObjectResult<string> PBItemMasterInsUpd(string itemId, string itemname, string companyCode, string activestatus, string createdate, string updatedate, string createuser, string action)
         {
             var itemIdParameter = itemId != null ?
@@ -2207,6 +2182,31 @@ namespace ParulBeautyCareDbClasses.DataModels
                 new ObjectParameter("Action", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("PBPaymentHistoryInsUpd", bookingIdParameter, bookingCodeParameter, paymentRecievedDateParameter, paymentTypeParameter, chequeNoParameter, gPayNoParameter, receivedAmountParameter, previousAmountParameter, companyCodeParameter, createDateParameter, createUserParameter, actionParameter);
+        }
+    
+        public virtual ObjectResult<PB_DateWiseBillReportRtr_Result> PB_DateWiseBillReportRtr(string fromDate, string toDate, string bookingId, string departmentId, string action)
+        {
+            var fromDateParameter = fromDate != null ?
+                new ObjectParameter("FromDate", fromDate) :
+                new ObjectParameter("FromDate", typeof(string));
+    
+            var toDateParameter = toDate != null ?
+                new ObjectParameter("ToDate", toDate) :
+                new ObjectParameter("ToDate", typeof(string));
+    
+            var bookingIdParameter = bookingId != null ?
+                new ObjectParameter("BookingId", bookingId) :
+                new ObjectParameter("BookingId", typeof(string));
+    
+            var departmentIdParameter = departmentId != null ?
+                new ObjectParameter("DepartmentId", departmentId) :
+                new ObjectParameter("DepartmentId", typeof(string));
+    
+            var actionParameter = action != null ?
+                new ObjectParameter("action", action) :
+                new ObjectParameter("action", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PB_DateWiseBillReportRtr_Result>("PB_DateWiseBillReportRtr", fromDateParameter, toDateParameter, bookingIdParameter, departmentIdParameter, actionParameter);
         }
     }
 }

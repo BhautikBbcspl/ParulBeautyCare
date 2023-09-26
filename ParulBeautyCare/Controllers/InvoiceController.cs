@@ -236,7 +236,7 @@ namespace ParulBeautyCare.Controllers
         }
         #endregion
 
-        #region==> Invoice Edit
+        #region==> Invoice Edit (Bhautik)
         public ActionResult InvoiceRegister()
         {
             InvoiceDetailViewModel invm = new InvoiceDetailViewModel();
@@ -561,7 +561,7 @@ namespace ParulBeautyCare.Controllers
                 string title = "Invoice Report " + brm.FromDate + " to " + brm.ToDate;
 
 
-                worksheet.Range("A1:J1").Merge().Value = title;
+                worksheet.Range("A1:L1").Merge().Value = title;
 
                 worksheet.Row(1).Height = 45;
                 worksheet.Row(1).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
@@ -584,13 +584,15 @@ namespace ParulBeautyCare.Controllers
                 worksheet.Cell("C2").Value = "Bill Date";
                 worksheet.Cell("D2").Value = "Customer";
                 worksheet.Cell("E2").Value = "Customer Contact No";
-                worksheet.Cell("F2").Value = "Total Amount";
+                worksheet.Cell("F2").Value = "Base Amount";
                 worksheet.Cell("G2").Value = "Discount(%)";
                 worksheet.Cell("H2").Value = "Discount(Rs)";
-                worksheet.Cell("I2").Value = "Final Amount";
-                worksheet.Cell("J2").Value = "Paid Amount";
+                worksheet.Cell("I2").Value = "GST(%)";
+                worksheet.Cell("J2").Value = "GST(Rs)";
+                worksheet.Cell("K2").Value = "Final Amount";
+                worksheet.Cell("L2").Value = "Paid Amount";
 
-                string[] cellNames = { "A2", "B2", "C2", "D2", "E2", "F2", "G2", "H2", "I2", "J2" };
+                string[] cellNames = { "A2", "B2", "C2", "D2", "E2", "F2", "G2", "H2", "I2", "J2" ,"K2","L2"};
 
                 foreach (string cellName in cellNames)
                 {
@@ -601,7 +603,7 @@ namespace ParulBeautyCare.Controllers
                     worksheet.Cell(cellName).Style.Fill.BackgroundColor = XLColor.FromHtml("#fe7bab");
                 }
 
-                string[] columnNames = { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J" };
+                string[] columnNames = { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J","K","L"};
 
                 foreach (string columnName in columnNames)
                 {
@@ -618,11 +620,13 @@ namespace ParulBeautyCare.Controllers
                     worksheet.Cell("C" + rowIndex).Value = item.BillDate;
                     worksheet.Cell("D" + rowIndex).Value = item.CustomerName;
                     worksheet.Cell("E" + rowIndex).Value = item.ContactNo;
-                    worksheet.Cell("F" + rowIndex).Value = item.TotalAmount;
+                    worksheet.Cell("F" + rowIndex).Value = item.BaseAmount;
                     worksheet.Cell("G" + rowIndex).Value = item.DiscountPerc;
                     worksheet.Cell("H" + rowIndex).Value = item.Discount;
-                    worksheet.Cell("I" + rowIndex).Value = item.FinalAmount;
-                    worksheet.Cell("J" + rowIndex).Value = item.PaidAmount;
+                    worksheet.Cell("I" + rowIndex).Value = item.GSTPerc;
+                    worksheet.Cell("J" + rowIndex).Value = item.GSTAmount;
+                    worksheet.Cell("K" + rowIndex).Value = item.FinalAmount;
+                    worksheet.Cell("L" + rowIndex).Value = item.PaidAmount;
 
                     BillDetailViewModel model = new BillDetailViewModel();
                     model.Action = "all";
@@ -634,10 +638,10 @@ namespace ParulBeautyCare.Controllers
                     {
                         rowIndex++;
                         worksheet.Cell("B" + rowIndex).Value = "Invoice " + item.BillCode + " Details";
-                        worksheet.Range("B" + rowIndex + ":J" + rowIndex).Merge().Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
-                        worksheet.Range("B" + rowIndex + ":J" + rowIndex).Merge().Style.Font.FontSize = 14;
-                        worksheet.Range("B" + rowIndex + ":J" + rowIndex).Merge().Style.Font.FontColor = XLColor.White;
-                        worksheet.Range("B" + rowIndex + ":J" + rowIndex).Style.Fill.BackgroundColor = XLColor.FromHtml("#17c964");
+                        worksheet.Range("B" + rowIndex + ":K" + rowIndex).Merge().Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+                        worksheet.Range("B" + rowIndex + ":K" + rowIndex).Merge().Style.Font.FontSize = 14;
+                        worksheet.Range("B" + rowIndex + ":K" + rowIndex).Merge().Style.Font.FontColor = XLColor.White;
+                        worksheet.Range("B" + rowIndex + ":K" + rowIndex).Style.Fill.BackgroundColor = XLColor.FromHtml("#17c964");
 
                         rowIndex++;
                         worksheet.Range("B" + rowIndex + ":D" + rowIndex).Merge();
@@ -645,12 +649,13 @@ namespace ParulBeautyCare.Controllers
                         worksheet.Cell("E" + rowIndex).Value = "Rate";
                         worksheet.Cell("F" + rowIndex).Value = "Quantity";
                         worksheet.Cell("G" + rowIndex).Value = "Final Amount";
+                        worksheet.Range("H" + rowIndex + ":I" + rowIndex).Merge();
                         worksheet.Cell("H" + rowIndex).Value = "Remark";
-                        worksheet.Cell("I" + rowIndex).Value = "CreateDate";
-                        worksheet.Cell("J" + rowIndex).Value = "CreateUser";
+                        worksheet.Cell("J" + rowIndex).Value = "CreateDate";
+                        worksheet.Cell("K" + rowIndex).Value = "CreateUser";
 
                         // Apply formatting to child table header row
-                        string[] childHeaderCellNames = { "B" + rowIndex, "C" + rowIndex, "D" + rowIndex, "E" + rowIndex, "F" + rowIndex, "G" + rowIndex, "H" + rowIndex, "I" + rowIndex, "J" + rowIndex };
+                        string[] childHeaderCellNames = { "B" + rowIndex, "C" + rowIndex, "D" + rowIndex, "E" + rowIndex, "F" + rowIndex, "G" + rowIndex, "H" + rowIndex, "I" + rowIndex, "J" + rowIndex ,"K" + rowIndex };
                         foreach (string cellName in childHeaderCellNames)
                         {
                             worksheet.Cell(cellName).Style.Alignment.WrapText = true;
@@ -665,13 +670,21 @@ namespace ParulBeautyCare.Controllers
                         foreach (var item2 in re2)
                         {
                             worksheet.Range("B" + rowIndex + ":D" + rowIndex).Merge();
-                            worksheet.Cell("B" + rowIndex).Value = item2.ItemName;
+                            if(item2.ItemName==null || item2.ItemName=="")
+                            {
+                                worksheet.Cell("B" + rowIndex).Value = item2.CategoryName+"("+ item2.SubCategoryName+")";
+                            }
+                            else
+                            {
+                                worksheet.Cell("B" + rowIndex).Value = item2.ItemName;
+                            }
                             worksheet.Cell("E" + rowIndex).Value = item2.Amount;
                             worksheet.Cell("F" + rowIndex).Value = item2.Qty;
                             worksheet.Cell("G" + rowIndex).Value = item2.FinalAmount;
+                            worksheet.Range("H" + rowIndex + ":I" + rowIndex).Merge();
                             worksheet.Cell("H" + rowIndex).Value = item2.Remark;
-                            worksheet.Cell("I" + rowIndex).Value = item2.CreateDate;
-                            worksheet.Cell("J" + rowIndex).Value = item2.CreateUser;
+                            worksheet.Cell("J" + rowIndex).Value = item2.CreateDate;
+                            worksheet.Cell("K" + rowIndex).Value = item2.CreateUser;
 
                             rowIndex++;
                         }
