@@ -19,5 +19,6 @@ namespace ParulBeautyCareDbClasses.DataModels
         public string ProductName { get; set; }
         public Nullable<int> TotalStockAllocated { get; set; }
         public Nullable<int> TotalStockUsed { get; set; }
+        public Nullable<int> AvailableStock { get; set; }
     }
 }

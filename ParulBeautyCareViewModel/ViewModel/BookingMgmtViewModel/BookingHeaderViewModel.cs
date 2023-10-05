@@ -37,6 +37,8 @@ namespace ParulBeautyCareViewModel.ViewModel.BookingMgmtViewModel
         public List<PBBookingDetailRtr_Result> BookingDetailList { get; set; }
         public string success { get; set; }
         public string message { get; set; }
+        public string FromDate { get; set; }
+        public string ToDate { get; set; }
 
     }
 }

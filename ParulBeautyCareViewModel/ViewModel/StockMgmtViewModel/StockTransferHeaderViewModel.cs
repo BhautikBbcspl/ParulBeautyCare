@@ -35,7 +35,7 @@ namespace ParulBeautyCareViewModel.ViewModel.StockMgmtViewModel
         public string ProductName { get; set; }
         public List<PBAvailableStockRtr_Result> AvailableStockList { get; set; }
         public List<StockTransferTypeViewModel> StockTransferTypeTable { get; set; }
-        public string StaffId { get; set; }
+        public string StaffCode { get; set; }
         public string ProductId { get; set; }
         public List<PBAllocatedStockToStaffRtr_Result> StockAllocatedToStaffList { get; set; }
     }

@@ -1,0 +1,112 @@
+﻿@model ParulBeautyCareViewModel.ViewModel.BookingMgmtViewModel.BookingDetailViewModel
+@{
+    ViewBag.Title = "Completed Work Calendar";
+    ViewBag.Module = "My Completed Work";
+}
+
+<link href="~/Content/assets/vendors/fullcalendar/fullcalendar.min.css" rel="stylesheet" />
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content" style="border:none !important">
+            <div class="modal-header" style="background: linear-gradient(90deg, rgba(255,0,87,0.7231267507002801) 0%, rgba(255,78,138,0.6418942577030813) 100%)">
+                <h5 class="modal-title" style="color:white" id="exampleModalLabel">Completed Work Calendar</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body table-responsive" id="modalContent2" style="border-left: 2px solid #ff88b0; border-right: 2px solid #ff88b0 !important">
+                ...
+            </div>
+            <div class="modal-footer" style="border-left: 2px solid #ff88b0; border-right: 2px solid #ff88b0; border-bottom: 2px solid #ff88b0 !important">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="d-flex justify-content-center align-items-center row">
+    <div class="col-md-12 col-sm-12 col-xl-12 h-100">
+        <div class="card m-3">
+            <div class="card-body">
+                <h4 class="card-title">Completed Work Calendar</h4>
+                <div id="CompletedServiceCalendar" class="full-calendar"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Content/assets/vendors/moment/moment.min.js"></script>
+<script src="~/Content/assets/vendors/fullcalendar/fullcalendar.min.js"></script>
+
+<script>
+    (function ($) {
+        'use strict';
+        $(function () {
+            if ($('#CompletedServiceCalendar').length) {
+                $('#CompletedServiceCalendar').fullCalendar({
+                    header: {
+                        left: 'prev,next today',
+                        center: 'title',
+                        right: 'month,basicWeek,basicDay'
+                    },
+                    defaultDate: "@Model.serviceDate",
+                    navLinks: true,
+                    editable: false,
+                    eventLimit: true,
+                    eventClick: function (calEvent, jsEvent, view) {
+                        // Call your function here with the calEvent data
+                        openEventDetailsModal(calEvent._id);
+                    },
+                    events: function (start, end, timezone, callback) {
+                        $.ajax({
+                            url: "@System.Configuration.ConfigurationManager.AppSettings["myKey"]" + "/StaffManagement/ViewCompletedServicesCalendar",
+                            dataType: 'json',
+                            success: function (data) {
+
+                                var events = [];
+                                data.forEach(function (item) {
+
+                                    var event = {
+                                        title: item.CategoryName+" ("+item.SubCategoryName+")",
+                                        start: item.serviceDate,
+                                        _id: item.BookingId
+                                    };
+                                    events.push(event);
+                                });
+
+                                callback(events);
+                            }
+                        });
+                    }
+                });
+            }
+        });
+    })(jQuery);
+    function openEventDetailsModal(id) {
+        $.get("@Url.Action("GetCompletedServiceData", "StaffManagement")/" + id, function (data) {
+            var listOfItems = data; // Assuming your data structure contains a list
+
+            var tableHtml = '<table class="table w-100"><tr><th>Customer</th><th>Address</th><th>ContactNo</th><th>Category</th><th>Service</th><th>Work Completed Date-Time</th></tr >';
+
+            listOfItems.forEach(function (item) {
+                tableHtml += `
+
+            <tr>
+                <td style="min-width:150px">${item.CustomerName}</td>
+                <td style="min-width:150px">${item.Address}</td>
+                <td style="min-width:150px">${item.ContactNo}</td>
+                <td style="min-width:150px">${item.CategoryName}</td>
+                <td style="min-width:150px">${item.SubCategoryName}</td>
+                <td style="min-width:150px">${item.ServiceCompletedDate}</td>
+            </tr>
+        `;
+            });
+            tableHtml += '</table>';
+
+            $('#modalContent2').html(tableHtml);
+            $("#exampleModal2").modal("show");
+    });
+}
+</script>

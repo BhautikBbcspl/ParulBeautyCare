@@ -1,6 +1,6 @@
 ﻿@model ParulBeautyCareViewModel.ViewModel.InvoiceMgmtViewModel.InvoiceDetailViewModel
 @{
-    ViewBag.Title = "Invoice Register";
+    ViewBag.Title = "Edit Invoice";
     ViewBag.Module = "Parul Beauty Care";
 }
 <style>
@@ -79,11 +79,11 @@
             <div class="card">
                 <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
                     <div class="bg-gradient-pinkHeader shadow-primary border-radius-lg pt-3 d-flex justify-content-between row">
-                        <h2 class="text-white text-capitalize ps-3 title_margin col-md-6 mb-3"><b>Invoice Register</b></h2>
+                        <h2 class="text-white text-capitalize ps-3 title_margin col-md-6 mb-3"><b>Edit Invoice</b></h2>
                     </div>
                 </div>
                 <div class="card-body">
-                    <div class="row form-group">
+                    @*<div class="row form-group">
                         <div class="col-sm-3">
                             <label class="col-form-label">Booking Contact No</label>
                             <div class="input-group input-group-outline">
@@ -101,9 +101,9 @@
                                 <button id="showBooking" type="button" class="btn btn-outline-primary float-left  mt-4"><i class="fa fa-search px-2" aria-hidden="true"></i>Search Invoice</button>
                             </div>
                         </div>
-                    </div>
+                    </div>*@
 
-                    <fieldset id="InvoiceFieldset" class="ml-2 mr-2 m-1 table-responsive" style="display: none; text-align: center;">
+                    <fieldset id="InvoiceFieldset" class="ml-2 mr-2 m-1 table-responsive" style="text-align: center;">
                         <table id="InvoiceTable" class="table table-bordered" style="border-color: #d0d0da !important;">
                             <thead>
                                 <tr>
@@ -117,6 +117,18 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @foreach (var item in Model.DoneBookingsList)
+                                {
+                                <tr>
+                                    <td><button type='button' name='BookingHeaderId' id='BookingHeaderId' value='@item.BookingId' class='btn btn-outline-primary' onclick='GetDetailData(this.value)'><i class='fa-solid fa-pencil px-2'></i>Edit Invoice</button></td>
+                                    <td> @Html.DisplayFor(modelItem => item.BookingCode)</td>
+                                    <td> @Html.DisplayFor(modelItem => item.BDate)</td>
+                                    <td> @Html.DisplayFor(modelItem => item.DepartmentName)</td>
+                                    <td> @Html.DisplayFor(modelItem => item.CustomerName)</td>
+                                    <td> @Html.DisplayFor(modelItem => item.ContactNo)</td>
+                                    <td> @Html.DisplayFor(modelItem => item.FinalAmount)</td>
+                                </tr>
+                                }
                             </tbody>
                         </table>
                     </fieldset><br />
@@ -234,8 +246,6 @@
                                 </tbody>
 
                             </table><br />
-
-                            <button id="removeAll" type="button" class="btn btn-outline-primary" style=" margin: auto; float: right;"><i class="fa fa-trash px-2" aria-hidden="true"></i>Remove All</button>
 
                         </fieldset>
 
@@ -701,7 +711,6 @@
     }
 
     function deleteBillingDetail(rowJson, button) {
-        debugger
         var rowJson = getRowJson(button);
         if (!rowJson) {
             $(button).closest("tr").remove();
@@ -1020,7 +1029,7 @@
 
                         // Redirect after the delay
                         setTimeout(function () {
-                            window.location.href = '../Invoice/InvoiceRegister';
+                            window.location.href = '../ViewCompletedInvoice';
                         }, 2000);
                     }, 2000);
                 }
@@ -1038,31 +1047,31 @@
 
     }
 
-    function populateBookingTable(data) {
-        var InvoiceTableBody = $("#InvoiceTable tbody");
-        InvoiceTableBody.empty();
+    //function populateBookingTable(data) {
+    //    var InvoiceTableBody = $("#InvoiceTable tbody");
+    //    InvoiceTableBody.empty();
 
-        if (data.bhv && data.bhv.length > 0) {
-            for (var i = 0; i < data.bhv.length; i++) {
-                var rowData = data.bhv[i];
-                var newRow = $("<tr>");
-                newRow.append("<td><button type='button' name='BookingHeaderId' id='BookingHeaderId' value='" + rowData.BookingId + "' class='btn btn-outline-primary' onclick='GetDetailData(this.value)'><i class='fa-solid fa-pencil px-2'></i>Edit Invoice</button></td>");
-                newRow.append("<td>" + rowData.BookingCode + "</td>");
-                newRow.append("<td>" + rowData.BDate + "</td>");
-                newRow.append("<td>" + rowData.DepartmentName + "</td>");
-                newRow.append("<td>" + rowData.CustomerName + "</td>");
-                newRow.append("<td>" + rowData.ContactNo + "</td>");
-                newRow.append("<td>" + rowData.FinalAmount + "</td>");
+    //    if (data.bhv && data.bhv.length > 0) {
+    //        for (var i = 0; i < data.bhv.length; i++) {
+    //            var rowData = data.bhv[i];
+    //            var newRow = $("<tr>");
+    //            newRow.append("<td><button type='button' name='BookingHeaderId' id='BookingHeaderId' value='" + rowData.BookingId + "' class='btn btn-outline-primary' onclick='GetDetailData(this.value)'><i class='fa-solid fa-pencil px-2'></i>Edit Invoice</button></td>");
+    //            newRow.append("<td>" + rowData.BookingCode + "</td>");
+    //            newRow.append("<td>" + rowData.BDate + "</td>");
+    //            newRow.append("<td>" + rowData.DepartmentName + "</td>");
+    //            newRow.append("<td>" + rowData.CustomerName + "</td>");
+    //            newRow.append("<td>" + rowData.ContactNo + "</td>");
+    //            newRow.append("<td>" + rowData.FinalAmount + "</td>");
 
-                InvoiceTableBody.append(newRow);
-            }
-        } else {
-            InvoiceTableBody.append("<tr><td colspan='7'>Not Found Any Completed Booking!!</td></tr>");
-        }
-    }
+    //            InvoiceTableBody.append(newRow);
+    //        }
+    //    } else {
+    //        InvoiceTableBody.append("<tr><td colspan='7'>Not Found Any Completed Booking!!</td></tr>");
+    //    }
+    //}
 
     $(document).ready(function () {
-        $("#BookingContactNo, #BookingCode").on("input", function () {
+        @*$("#BookingContactNo, #BookingCode").on("input", function () {
 
             var InvoiceFieldset = document.getElementById("InvoiceFieldset");
             InvoiceFieldset.style.display = "none";
@@ -1096,7 +1105,7 @@
                     }
                 });
             }
-        });
+        });*@
 
 
         $("#BillDate").flatpickr({
@@ -1236,21 +1245,6 @@
             billTableDataFill();
         });
 
-        $(document).on("click", "#removeAll", function () {
-            var $secondTableBody = $('#Maintable tbody tr');
-            $secondTableBody.each(function () {
-                $(this).find('input[type="text"]').val('');
-
-                // Clear dropdown values (set to default option)
-                $(this).find('select').val('');
-
-            });
-            var $secondTable = $('#Maintable tbody');
-            $secondTable.find('.newOne').remove();
-
-            var individualFieldset = document.getElementById("individualFieldset");
-
-            individualFieldset.style.display = "none";
-        });
+       
     });
 </script>

@@ -54,49 +54,58 @@
                 </div>
                 </div>
             }
-                <div class="row">
-                    <div class="col-12">
-                        <div class="table-responsive">
-                            <table id="base-style" class="table table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>
-                                            @Html.DisplayName("Action")
-                                        </th>
-                                        <th>
-                                            @Html.DisplayName("Name")
-                                        </th>
-                                        <th>
-                                            @Html.DisplayName("Contact No")
-                                        </th>
-                                        <th>
-                                            @Html.DisplayName("Bridal Person")
-                                        </th>
-                                        <th>
-                                            @Html.DisplayName("Bridal Contact No")
-                                        </th>
-                                        <th>
-                                            @Html.DisplayName("Deposit Amount")
-                                        </th>
-                                        <th>
-                                            @Html.DisplayName("Function Date")
-                                        </th>
-                                        <th>
-                                            @Html.DisplayName("Add Package")
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @if (Convert.ToInt32(TempData["ViewRight"]) == 1)
-                    {
+        <div class="row">
+            <div class="col-12">
+                <div class="table-responsive">
+                    <table id="base-style" class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>
+                                    @Html.DisplayName("Action")
+                                </th>
+                                <th>
+                                    @Html.DisplayName("Name")
+                                </th>
+                                <th>
+                                    @Html.DisplayName("Contact No")
+                                </th>
+                                <th>
+                                    @Html.DisplayName("Bridal Person")
+                                </th>
+                                <th>
+                                    @Html.DisplayName("Bridal Contact No")
+                                </th>
+                                <th>
+                                    @Html.DisplayName("Deposit Amount")
+                                </th>
+                                <th>
+                                    @Html.DisplayName("Payment Type")
+                                </th>
+                                <th>
+                                    @Html.DisplayName("Cheque No")
+                                </th>
+                                <th>
+                                    @Html.DisplayName("GPay No")
+                                </th>
+                                <th>
+                                    @Html.DisplayName("Function Date")
+                                </th>
+                                <th>
+                                    @Html.DisplayName("Add Package")
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Convert.ToInt32(TempData["ViewRight"]) == 1)
+                            {
 
-                                    foreach (var item in Model.AdvanceBookingList)
-                                    {
+                                foreach (var item in Model.AdvanceBookingList)
+                                {
                                     <tr>
                                         <td>
                                             @if (Convert.ToInt32(TempData["UpdateRight"]) == 1)
-            {
-                                            <a href="@Url.Action("EditAdvanceBooking","BookingManagement",new { id = item.AdvanceBookingId })" class="mx-3"><i class="fa fa-pencil"></i></a>
+                                            {
+                                                <a href="@Url.Action("EditAdvanceBooking","BookingManagement",new { id = item.AdvanceBookingId })" class="mx-3"><i class="fa fa-pencil"></i></a>
                                             }
                                         </td>
                                         <td>
@@ -114,35 +123,46 @@
                                         <td>
                                             @Html.DisplayFor(modelItem => item.totaldeposit)
                                         </td>
+
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.PaymentType)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.ChequeNo)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Gpayno)
+                                        </td>
+
                                         <td>
                                             @Html.DisplayFor(modelItem => item.fdate)
                                         </td>
                                         <td>
                                             @if (Convert.ToInt32(TempData["UpdateRight"]) == 1)
-        {
-                                            <a href="#" class="mx-3 post-link" data-advance-booking-id="@item.AdvanceBookingId"><i class="fa fa-calendar-plus"></i></a>
+                                            {
+                                                <a href="#" class="mx-3 post-link" data-advance-booking-id="@item.AdvanceBookingId"><i class="fa fa-calendar-plus"></i></a>
                                             }
                                         </td>
                                     </tr>
-                                    }
+                                }
 
-                                    }
-                    else
-                    {
-                        <tr>
-                            <td>You have no rights to view data</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                    }
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-           
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td>You have no rights to view data</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
             </div>
+
+        </div>
     </div>
 </div>
     </div>

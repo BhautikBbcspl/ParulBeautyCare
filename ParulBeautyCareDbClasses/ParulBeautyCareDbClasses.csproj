@@ -102,6 +102,18 @@
     <Compile Include="DataModels\PBCheckInCheckOutRetrieve_Result.cs">
       <DependentUpon>ParulBeautyCaredb.tt</DependentUpon>
     </Compile>
+    <Compile Include="DataModels\PBDashboardAppointmentsRtr_Result.cs">
+      <DependentUpon>ParulBeautyCaredb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModels\PBDashboardCountRtr_Result.cs">
+      <DependentUpon>ParulBeautyCaredb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModels\PBDashboardStaffTodayServicesRtr_Result.cs">
+      <DependentUpon>ParulBeautyCaredb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModels\PBDashboardWeeklyAppointmentChart_Result.cs">
+      <DependentUpon>ParulBeautyCaredb.tt</DependentUpon>
+    </Compile>
     <Compile Include="DataModels\PBDepartmentMasterRetrieve_Result.cs">
       <DependentUpon>ParulBeautyCaredb.tt</DependentUpon>
     </Compile>
@@ -154,6 +166,15 @@
       <DependentUpon>ParulBeautyCaredb.tt</DependentUpon>
     </Compile>
     <Compile Include="DataModels\PBRoleMasterRetrieve_Result.cs">
+      <DependentUpon>ParulBeautyCaredb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModels\PBStaffDashboardAppointmentsRtr_Result.cs">
+      <DependentUpon>ParulBeautyCaredb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModels\PBStaffDashboardTodayServicesRtr_Result.cs">
+      <DependentUpon>ParulBeautyCaredb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModels\PBStaffIncentiveReport_Result.cs">
       <DependentUpon>ParulBeautyCaredb.tt</DependentUpon>
     </Compile>
     <Compile Include="DataModels\PBStaffMasterRtr_Result.cs">

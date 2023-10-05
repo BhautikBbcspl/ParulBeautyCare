@@ -50,5 +50,9 @@ namespace ParulBeautyCareViewModel.ViewModel.BookingMgmtViewModel
         public string TotalSidersDeposit { get; set; }
         public List<PBDepartmentMasterRetrieve_Result> DepartmentList { get; set; }
         public List<PB_AdvanceBookingRtr_Result> AdvanceBookingList { get; set; }
+
+        public string ChequeNumber { get; set; }
+        public string Gpayno { get; set; }
+        public string PaymentType { get; set; }
     }
 }

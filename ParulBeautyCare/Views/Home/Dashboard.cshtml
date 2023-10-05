@@ -1,296 +1,29 @@
-﻿@{
+﻿@model ParulBeautyCareViewModel.ViewModel.DashboardViewModel
+@{
     ViewBag.Title = "Dashboard";
     ViewBag.Module = "Parul Beauty Care";
-    Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
-<style>
-
-    .bg-gradient-primary {
-        background-image: linear-gradient(195deg, #EC407A 0%, #D81B60 100%);
-    }
-
-    .bg-gradient-secondary {
-        background-image: linear-gradient(195deg, #747b8a 0%, #495361 100%);
-    }
-
-    .bg-gradient-success {
-        background-image: linear-gradient(195deg, #66BB6A 0%, #43A047 100%);
-    }
-
-    .bg-gradient-info {
-        background-image: linear-gradient(195deg, #49a3f1 0%, #1A73E8 100%);
-    }
-
-    .bg-gradient-warning {
-        background-image: linear-gradient(195deg, #FFA726 0%, #FB8C00 100%);
-    }
-
-    .bg-gradient-danger {
-        background-image: linear-gradient(195deg, #EF5350 0%, #E53935 100%);
-    }
-
-    .bg-gradient-light {
-        background-image: linear-gradient(195deg, #EBEFF4 0%, #CED4DA 100%);
-    }
-
-    .bg-gradient-dark {
-        background-image: linear-gradient(195deg, #42424a 0%, #191919 100%);
-    }
-
-    .bg-gradient-faded-primary {
-        background-image: radial-gradient(370px circle at 80% 50%, rgba(233, 30, 99, 0.6) 0, #c1134e 100%);
-    }
-
-    .bg-gradient-faded-secondary {
-        background-image: radial-gradient(370px circle at 80% 50%, rgba(, 128, 154, 0.6) 0, #626780 100%);
-    }
-
-    .bg-gradient-faded-success {
-        background-image: radial-gradient(370px circle at 80% 50%, rgba(76, 175, 80, 0.6) 0, #3d8b40 100%);
-    }
-
-    .bg-gradient-faded-info {
-        background-image: radial-gradient(370px circle at 80% 50%, rgba(26, 115, 232, 0.6) 0, #135cbc 100%);
-    }
-
-    .bg-gradient-faded-warning {
-        background-image: radial-gradient(370px circle at 80% 50%, rgba(251, 140, 0, 0.6) 0, #c87000 100%);
-    }
-
-    .bg-gradient-faded-danger {
-        background-image: radial-gradient(370px circle at 80% 50%, rgba(244, 67, 53, 0.6) 0, #e91d0d 100%);
-    }
-
-    .bg-gradient-faded-light {
-        background-image: radial-gradient(370px circle at 80% 50%, rgba(240, 242, 245, 0.6) 0, #d1d7e1 100%);
-    }
-
-    .bg-gradient-faded-dark {
-        background-image: radial-gradient(370px circle at 80% 50%, rgba(52, 71, 103, 0.6) 0, #233045 100%);
-    }
-
-    .bg-gradient-faded-white {
-        background-image: radial-gradient(370px circle at 80% 50%, rgba(255, 255, 255, 0.6) 0, #e6e6e6 100%);
-    }
-
-    .bg-gradient-faded-dark-blue {
-        background-image: radial-gradient(370px circle at 80% 50%, rgba(26, 35, 126, 0.6) 0, #111754 100%);
-    }
-
-    .bg-gradient-faded-primary-vertical {
-        background-image: radial-gradient(200px circle at 50% 70%, rgba(233, 30, 99, 0.3) 0, #e91e63 100%);
-    }
-
-    .bg-gradient-faded-secondary-vertical {
-        background-image: radial-gradient(200px circle at 50% 70%, rgba(, 128, 154, 0.3) 0, #7b809a 100%);
-    }
-
-    .bg-gradient-faded-success-vertical {
-        background-image: radial-gradient(200px circle at 50% 70%, rgba(76, 175, 80, 0.3) 0, #4CAF50 100%);
-    }
-
-    .bg-gradient-faded-info-vertical {
-        background-image: radial-gradient(200px circle at 50% 70%, rgba(26, 115, 232, 0.3) 0, #1A73E8 100%);
-    }
-
-    .bg-gradient-faded-warning-vertical {
-        background-image: radial-gradient(200px circle at 50% 70%, rgba(251, 140, 0, 0.3) 0, #fb8c00 100%);
-    }
-
-    .bg-gradient-faded-danger-vertical {
-        background-image: radial-gradient(200px circle at 50% 70%, rgba(244, 67, 53, 0.3) 0, #F44335 100%);
-    }
-
-    .bg-gradient-faded-light-vertical {
-        background-image: radial-gradient(200px circle at 50% 70%, rgba(240, 242, 245, 0.3) 0, #f0f2f5 100%);
-    }
-
-    .bg-gradient-faded-dark-vertical {
-        background-image: radial-gradient(200px circle at 50% 70%, rgba(52, 71, 103, 0.3) 0, #344767 100%);
-    }
-
-    .bg-gradient-faded-white-vertical {
-        background-image: radial-gradient(200px circle at 50% 70%, rgba(255, 255, 255, 0.3) 0, #fff 100%);
-    }
-
-    .bg-gradient-faded-dark-blue-vertical {
-        background-image: radial-gradient(200px circle at 50% 70%, rgba(26, 35, 126, 0.3) 0, #1A237E 100%);
-    }
-
-    .material-icons {
-        font-family: 'Material Icons Round' !important;
-        font-weight: normal !important;
-        font-style: normal !important;
-        font-size: 20px !important;
-        /* Preferred icon size */
-        display: inline-block !important;
-        line-height: 1 !important;
-        text-transform: none !important;
-        letter-spacing: normal !important;
-        word-wrap: normal !important;
-        white-space: nowrap !important;
-        direction: ltr !important;
-        /* Support for all WebKit browsers. */
-        -webkit-font-smoothing: antialiased !important;
-        /* Support for Safari and Chrome. */
-        text-rendering: optimizeLegibility !important;
-        /* Support for Firefox. */
-        -moz-osx-font-smoothing: grayscale !important;
-        /* Support for IE. */
-        font-feature-settings: 'liga' !important;
-    }
-
-    .nav.nav-pills .nav-link .material-icons {
-        top: 3px !important;
-    }
-
-    .icon-shape {
-        width: 48px !important;
-        height: 48px !important;
-        background-position: center !important;
-        border-radius: 0.5rem !important;
-    }
-
-        .icon-shape i {
-            color: #fff !important;
-            opacity: 0.8 !important;
-            top: 5px !important;
-            position: relative !important;
-        }
-
-        .icon-shape .ni {
-            top: 14px !important;
-        }
-
-    .icon-xxs {
-        width: 20px !important;
-        height: 20px !important;
-    }
-
-        .icon-xxs i {
-            top: 0 !important;
-            font-size: 0.65rem !important;
-        }
-
-    .icon-xs {
-        width: 24px !important;
-        height: 24px !important;
-    }
-
-        .icon-xs i {
-            top: -1px !important;
-            font-size: 0.75rem !important;
-        }
-
-    .icon-sm {
-        width: 32px !important;
-        height: 32px !important;
-    }
-
-        .icon-sm i {
-            top: 4px !important;
-            font-size: 0.875rem !important;
-        }
-
-    .icon-md {
-        width: 48px !important;
-        height: 48px !important;
-    }
-
-        .icon-md i {
-            top: 30% !important;
-            font-size: 1.125rem !important;
-        }
-
-        .icon-md.icon-striped {
-            background-position-x: 85px !important;
-            background-position-y: 85px !important;
-        }
-
-            .icon-md.icon-striped i {
-                top: 11% !important;
-                margin-left: -10px !important;
-                font-size: 0.875rem !important;
-            }
-
-    .icon-lg {
-        width: 64px !important;
-        height: 64px !important;
-    }
-
-        .icon-lg i {
-            /* top: 31% !important ;*/
-            font-size: 1.5rem !important;
-        }
-
-        .icon-lg.icon-striped {
-            background-position-x: 111px !important;
-            background-position-y: 111px !important;
-        }
-
-            .icon-lg.icon-striped i {
-                top: 21% !important;
-                margin-left: -15px !important;
-            }
-
-    .icon-xl {
-        width: 100px !important;
-        height: 100px !important;
-        border-radius: 0.5rem !important;
-    }
-
-        .icon-xl i {
-            top: 35% !important;
-            font-size: 2.1rem !important;
-        }
-
-        .icon-xl.icon-striped {
-            background-position-x: 80px !important;
-            background-position-y: 80px !important;
-        }
-
-            .icon-xl.icon-striped i {
-                top: 30% !important;
-                margin-left: -15px !important;
-            }
-
-    .shadow-primary {
-        box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(233, 30, 99, 0.4) !important;
-    }
-
-    .text-center {
-        text-align: center !important;
-    }
-
-    .mt-n4 {
-        margin-top: -1.5rem !important;
-        /*  margin-left: 272px !important;*/
-    }
-
-    .position-absolute {
-        position: absolute !important;
-    }
-</style>
+<link href="~/Content/assets/css/Dashboard.css" rel="stylesheet" />
 <div class="content-wrapper">
 
     <br />
     <!--Cards-->
     <div class="row">
         <div class="col-12">
-            <div class="row">
+            <div class="row hoverCard">
                 <div class="col-12 col-sm-6 col-md-6 col-xl-3 grid-margin stretch-card">
                     <div class="card">
                         <div class="p-3 pt-2">
                             <div class="icon icon-lg icon-shape bg-gradient-dark shadow-info text-center border-radius-xl mt-n4 position-absolute">
-                                <i class="opacity-10 fa fa-user"></i>
+                                <i class="opacity-10 fa fa-users"></i>
                             </div>
+                            <h2 class="text-end mt-2 mx-2">Total Customers</h2>
                         </div>
                         <div class="card-body">
-                            <h4 class="card-title">Total Customers</h4>
+
                             <div class="d-flex justify-content-between">
-                                @*<p>Avg. Session</p>*@
-                                <p>80 Customers</p>
+                                <p></p>
+                                <h2>@Model.TotalCustomers</h2>
                             </div>
                             <div class="progress progress-md">
                                 <div class="progress-bar bg-info w-100" role="progressbar"></div>
@@ -302,14 +35,14 @@
                     <div class="card">
                         <div class="p-3 pt-2">
                             <div class="icon icon-lg icon-shape bg-gradient-primary shadow-info text-center border-radius-xl mt-n4 position-absolute">
-                                <i class="fa fa-check-circle opacity-10"></i>
+                                <i class="fa fa-regular fa-calendar-day opacity-10"></i>
                             </div>
+                            <h2 class="text-end mt-2 mx-2">Today's Appointments</h2>
                         </div>
                         <div class="card-body">
-                            <h4 class="card-title">Today's Appointments</h4>
                             <div class="d-flex justify-content-between">
                                 <p></p>
-                                <p>15</p>
+                                <h2>@Model.TodayAppointments</h2>
                             </div>
                             <div class="progress progress-md">
                                 <div class="progress-bar bg-success w-100" role="progressbar"></div>
@@ -321,14 +54,14 @@
                     <div class="card">
                         <div class="p-3 pt-2">
                             <div class="icon icon-lg icon-shape bg-gradient-success shadow-info text-center border-radius-xl mt-n4 position-absolute">
-                                <i class="fa fa-2x fa-users opacity-10"></i>
+                                <i class="fa fa-users-crown opacity-10"></i>
                             </div>
+                            <h2 class="text-end mt-2 mx-2">Total Staff</h2>
                         </div>
                         <div class="card-body">
-                            <h4 class="card-title">Total Staff</h4>
                             <div class="d-flex justify-content-between">
                                 <p></p>
-                                <p>45</p>
+                                <h2>@Model.TotalStaff</h2>
                             </div>
                             <div class="progress progress-md">
                                 <div class="progress-bar bg-danger w-100"></div>
@@ -340,14 +73,14 @@
                     <div class="card">
                         <div class="p-3 pt-2">
                             <div class="icon icon-lg icon-shape bg-gradient-info shadow-info text-center border-radius-xl mt-n4 position-absolute">
-                                <i class="fa fa-rupee opacity-10"></i>
+                                <i class="fa fa-regular fa-calendar-check opacity-10"></i>
                             </div>
+                            <h2 class="text-end mt-2 mx-2">Today's Bookings</h2>
                         </div>
                         <div class="card-body">
-                            <h4 class="card-title">Monthly Sales</h4>
                             <div class="d-flex justify-content-between">
                                 <p></p>
-                                <p>25000</p>
+                                <h2>@Model.TodaysBookings</h2>
                             </div>
                             <div class="progress progress-md">
                                 <div class="progress-bar bg-warning w-100" role="progressbar"></div>
@@ -361,18 +94,18 @@
     </div>
     <!---->
     <!--Charts-->
-    <div class="row mt-4">
+    <div class="row mt-4 hoverCard">
         <div class="col-lg-4 col-md-6 mt-4 mb-4">
             <div class="card z-index-2 ">
                 <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2 bg-transparent">
                     <div class="bg-gradient-primary shadow-primary border-radius-lg py-3 pe-1">
                         <div class="chart">
-                            <canvas id="chart-bars" class="chart-canvas" height="170"></canvas>
+                            <canvas id="PreviousWeekChart" class="chart-canvas" height="170"></canvas>
                         </div>
                     </div>
                 </div>
                 <div class="card-body">
-                    <h2 class="mb-0 ">Appointments (Weekly)</h2>
+                    <h2 class="mb-0 ">Previous Week Appointments</h2>
                     <hr class="dark horizontal">
                 </div>
             </div>
@@ -382,12 +115,12 @@
                 <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2 bg-transparent">
                     <div class="bg-gradient-success shadow-success border-radius-lg py-3 pe-1">
                         <div class="chart">
-                            <canvas id="chart-line" class="chart-canvas" height="170"></canvas>
+                            <canvas id="CurrentWeekChart" class="chart-canvas" height="170"></canvas>
                         </div>
                     </div>
                 </div>
                 <div class="card-body">
-                    <h2 class="mb-0 ">Sales (Monthly)</h2>
+                    <h2 class="mb-0 ">Current Week Appointments</h2>
                     <hr class="dark horizontal">
                 </div>
             </div>
@@ -411,137 +144,88 @@
     <!---->
 
     <div class="row mt-3">
-        <div class="col-xl-5 col-lg-6 d-flex grid-margin stretch-card">
+        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 d-flex grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
-                    <div class="d-flex flex-wrap justify-content-between">
-                        <h4 class="card-title mb-3">Monthly Sales</h4>
+                    <div class="d-flex flex-wrap justify-content-between  border-bottom">
+                        <h4 class="card-title mb-3">Today's Staff Work(Services)</h4>
                     </div>
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="row">
-                                <div class="col-lg-6">
-                                    <div id="circleProgress6" class="progressbar-js-circle rounded p-3"></div>
-                                </div>
-                                <div class="col-lg-6">
-
-                                    <ul class="session-by-channel-legend">
-                                        <li>
-                                            <div><b>Product</b></div>
-                                            <div><b>Qty</b></div>
-                                        </li>
-                                        <li>
-                                            <div>Nykaa Cosmetics</div>
-                                            <div>66</div>
-                                        </li>
-                                        <li>
-                                            <div>Pond's Sunscreen</div>
-                                            <div>63</div>
-                                        </li>
-                                        <li>
-                                            <div>Mamaearth Lipstics</div>
-                                            <div>58</div>
-                                        </li>
-                                        <li>
-                                            <div>Loreal Facial Spray</div>
-                                            <div>50</div>
-                                        </li>
-                                        <li>
-                                            <div>Mamaearth Foundation</div>
-                                            <div>40</div>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
+                    <div class="row mt-3">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped DashboardTable text-center">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>@Html.DisplayName("Staff Code")</th>
+                                        <th>@Html.DisplayName("Name")</th>
+                                        <th>@Html.DisplayName("Work Count")</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.StaffTodayServicesList)
+                                    {
+                                        <tr>
+                                            <td>
+                                                <a class="btn btn-outline-primary" style=" padding: 0.875rem 1.5rem !important;" id="@item.StaffId" onclick="AllocatedServices(this.id)">Allocated Work</a>
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.StaffCode)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.StaffName)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.ServiceCount)
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
             </div>
-            @*<div class="card">
-                <div class="card-body">
-                    <form id="enquiryForm">
-                        <h4 class="card-title">Enquiry Form</h4>
-                        <p class="card-description">
-                            A simple suggestion engine
-                        </p>
-                        <div class="form-group row">
-                            <div class="col">
-                                <label>Name</label>
-                                <div id="the-basics">
-                                    <input class="typeahead" id="txtPName" type="text" name="PersonName" placeholder="Enter Name">
-                                </div>
-                            </div>
-                            <div class="col">
-                                <label>Contact No</label>
-                                <div id="bloodhound">
-                                    <input class="typeahead" id="txtEmail" type="text" name="PersonContactNo" placeholder="Enter Contact No">
-                                </div>
-                            </div>
-                            <button type="button" id="submitBtn" class=" mt-5 add btn btn-primary font-weight-bold todo-list-add-btn">Submit</button>
-                        </div>
-                    </form>
-                </div>
-            </div>*@
         </div>
 
-        <div class="col-lg-7 col-xl-7 d-flex grid-margin stretch-card">
+        <div class="col-lg-6 col-xl-6 col-md-6 col-sm-12 d-flex grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
-                    <div class="d-flex flex-wrap justify-content-between">
+                    <div class="d-flex flex-wrap justify-content-between  border-bottom">
                         <h4 class="card-title mb-3">Today's Appointments</h4>
+                        <a href="@Url.Action("BookAppointment","BookingManagement")" target="_blank" class="btn btn-outline-primary p-2 mb-3"><i class="fa fa-calendar-plus mx-2"></i>Book Appointment</a>
                     </div>
-                    <div class="add-items d-flex">
-                        <input type="text" class="form-control todo-list-input" placeholder="Add Cutomer No | Name">
-                        <button class="add btn btn-primary font-weight-bold todo-list-add-btn">Add</button>
-                    </div>
-                    <div class="list-wrapper">
-                        <ul class="d-flex flex-column-reverse todo-list">
-                            <li>
-                                <div class="form-check">
-                                    <label class="form-check-label">
-                                        <input class="checkbox" type="checkbox">
-                                        Customer No : PBC001 | Arpita Macwana | 9904587654
-                                    </label>
-                                </div>
-                                <i class="remove typcn  typcn-delete-outline"></i>
-                            </li>
-                            <li>
-                                <div class="form-check">
-                                    <label class="form-check-label">
-                                        <input class="checkbox" type="checkbox">
-                                        Customer No : PBC051 | Krutika Shah | 7785469854
-                                    </label>
-                                </div>
-                                <i class="remove typcn  typcn-delete-outline"></i>
-                            </li>
-                            <li>
-                                <div class="form-check">
-                                    <label class="form-check-label">
-                                        <input class="checkbox" type="checkbox">
-                                        Customer No : PBC145 | Vidhisha Thakkar | 8865321547
-                                    </label>
-                                </div>
-                                <i class="remove typcn  typcn-delete-outline"></i>
-                            </li>
-                            <li>
-                                <div class="form-check">
-                                    <label class="form-check-label">
-                                        <input class="checkbox" type="checkbox">
-                                        Customer No : PBC174 | Sukoon Patel | 7785496521
-                                    </label>
-                                </div>
-                                <i class="remove typcn  typcn-delete-outline"></i>
-                            </li>
-                            <li>
-                                <div class="form-check">
-                                    <label class="form-check-label">
-                                        <input class="checkbox" type="checkbox">
-                                        Customer No : PBC241 | Shrusti Makwaana | 9965321587
-                                    </label>
-                                </div>
-                                <i class="remove typcn  typcn-delete-outline"></i>
-                            </li>
-                        </ul>
+                    <div class="row mt-3">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped DashboardTable text-center">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>@Html.DisplayName("Booking Code")</th>
+                                        <th>@Html.DisplayName("Customer Name")</th>
+                                        <th>@Html.DisplayName("Contact No")</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.AppointmentsList)
+                                    {
+                                        <tr>
+                                            <td>
+                                                <a class="btn btn-outline-primary" style=" padding: 0.875rem 1.5rem !important;" id="@item.BookingId" onclick="AllServices(this.id)">Appointment Detail</a>
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.BookingCode)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.CustomerName)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.ContactNo)
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -553,96 +237,146 @@
         <div class="col-lg-12 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title">Today's Completed Appointments</h4>
-
-                    <div class="table-responsive">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Customer No</th>
-                                    <th>Name</th>
-                                    <th>Contact No</th>
-                                    <th>Service</th>
-                                    <th>Status</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>PBC4594</td>
-                                    <td>Vidhya patel</td>
-                                    <td>7845125698</td>
-                                    <td>Bridal Package</td>
-                                    <td><label class="badge badge-success">Completed</label></td>
-                                </tr>
-                                <tr>
-                                    <td>PBC8334</td>
-                                    <td>Rupal Shah</td>
-                                    <td>8631549658</td>
-                                    <td>Hair Straightning</td>
-                                    <td><label class="badge badge-success">Completed</label></td>
-                                </tr>
-                                <tr>
-                                    <td>PBC3544</td>
-                                    <td>Anjali Ka. Patel</td>
-                                    <td>9965884565</td>
-                                    <td>Manicure Pedicure</td>
-                                    <td><label class="badge badge-success">Completed</label></td>
-                                </tr>
-                                <tr>
-                                    <td>PBC0354</td>
-                                    <td>Simran Khan</td>
-                                    <td>8865421145</td>
-                                    <td>Makeup</td>
-                                    <td><label class="badge badge-success">Completed</label></td>
-                                </tr>
-
-                            </tbody>
-                        </table>
+                    <div class="d-flex flex-wrap justify-content-between  border-bottom">
+                        <h4 class="card-title mb-3">Today's Completed Appointments</h4>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped DashboardTable text-center">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>@Html.DisplayName("Booking Code")</th>
+                                        <th>@Html.DisplayName("Customer Name")</th>
+                                        <th>@Html.DisplayName("Contact No")</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.CompletedAppointmentsList)
+                                    {
+                                        <tr>
+                                            <td>
+                                                <a class="btn btn-outline-primary" style=" padding: 0.875rem 1.5rem !important;" id="@item.BookingId" onclick="CompletedServices(this.id)">Appointment Detail</a>
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.BookingCode)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.CustomerName)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.ContactNo)
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-
 </div>
-<script>
-    $(document).ready(function () {
-        $("#submitBtn").click(function () {
-            var formData = $("#enquiryForm").serialize(); // Serialize the form data
 
-            $.ajax({
-                type: "POST",
-                url: "/Home/Enquiry", // Change this URL to match your controller action
-                data: formData,
-                success: function (response) {
-                    debugger
-                    // Handle the success response from the server
-                    $("#txtPName").val('');
-                    $("#txtEmail").val('');
-                    Swal.fire({
-                        position: 'top-end',
-                        icon: 'success',
-                        title: 'Enquiry saved successfully',
-                        showConfirmButton: false,
-                        timer: 3000
-                    })
-                },
-                error: function (error) {
-                    // Handle errors
-                    SweetAlert(error.Message, error.Type);
-                }
-            });
-        });
-    });
-</script>
+<div class="modal fade" id="AllocatedServicesModal" tabindex="-1" role="dialog" a ria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header border-bottom-0">
+                <h4 class="card-title modal-title" id="exampleModalLabel">Allocated Work</h4>
+                <button type="button" class="btn btn-close close AllocatedServicesClose" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true"></span>
+                </button>
+            </div>
+            <div class="modal-body AllocatedServicesModalBody">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="CompletedServicesModal" tabindex="-1" role="dialog" a ria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header border-bottom-0">
+                <h4 class="card-title modal-title" id="exampleModalLabel">Today's Completed Appointments</h4>
+                <button type="button" class="btn btn-close close CompletedServicesClose" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true"></span>
+                </button>
+            </div>
+            <div class="modal-body  CompletedServicesModalBody">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="AllServicesModal" tabindex="-1" role="dialog" a ria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header border-bottom-0">
+                <h4 class="card-title modal-title" id="exampleModalLabel">Today's Appointments</h4>
+                <button type="button" class="btn btn-close close AllServicesClose" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true"></span>
+                </button>
+            </div>
+            <div class="modal-body  AllServicesModalBody">
+
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
-    var ctx = document.getElementById("chart-bars").getContext("2d");
+     function AllServices(id) {
+        $.get("@Url.Action("AllServicesDetails", "Home")/" + id,
+            function (data) {
+                $('.AllServicesModalBody').html(data);
+                $("#AllServicesModal").modal("show");
+            });
+     }
+
+    function CompletedServices(id) {
+        $.get("@Url.Action("CompletedServicesDetails", "Home")/" + id,
+            function (data) {
+                $('.CompletedServicesModalBody').html(data);
+                $("#CompletedServicesModal").modal("show");
+        });
+    }
+    function AllocatedServices(id) {
+        $.get("@Url.Action("AllocatedServicesDetails", "Home")/" + id,
+            function (data) {
+                $('.AllocatedServicesModalBody').html(data);
+                $("#AllocatedServicesModal").modal("show");
+        });
+     }
+</script>
+
+<script>
+
+    function extractData(chartData) {
+        var labels = [];
+        var values = [];
+
+        chartData.forEach(function (item) {
+            labels.push(item.WeekdayName);
+            values.push(item.AppointmentCount);
+        });
+
+        return { labels: labels, values: values };
+    }
+
+    var LastWeekchartData = @Html.Raw(Json.Encode(Model.DashboardPreviousWeekAppointmentChartList));
+
+    var data = extractData(LastWeekchartData);
+
+    var ctx = document.getElementById("PreviousWeekChart").getContext("2d");
 
     new Chart(ctx, {
         type: "bar",
         data: {
-            labels: ["M", "T", "W", "T", "F", "S", "S"],
+            labels: data.labels, // Use the extracted labels
             datasets: [{
                 label: "Appointments",
                 tension: 0.4,
@@ -650,9 +384,9 @@
                 borderRadius: 4,
                 borderSkipped: false,
                 backgroundColor: "rgba(255, 255, 255, .8)",
-                data: [5, 8, 10, 6, 12, 8, 9],
+                data: data.values, // Use the extracted values
                 maxBarThickness: 6
-            },],
+            }],
         },
         options: {
             responsive: true,
@@ -677,8 +411,8 @@
                         color: 'rgba(255, 255, 255, .2)'
                     },
                     ticks: {
-                        suggestedMin: 0,
-                        suggestedMax: 500,
+                        min: 0,
+                        stepSize: 1,
                         beginAtZero: true,
                         padding: 10,
                         font: {
@@ -717,15 +451,18 @@
         },
     });
 
+    var CurrenttWeekchartData = @Html.Raw(Json.Encode(Model.DashboardCurrentWeekAppointmentChartList));
 
-    var ctx2 = document.getElementById("chart-line").getContext("2d");
+    var data2 = extractData(CurrenttWeekchartData);
+
+    var ctx2 = document.getElementById("CurrentWeekChart").getContext("2d");
 
     new Chart(ctx2, {
-        type: "line",
+        type: "bar",
         data: {
-            labels: ["Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+            labels: data2.labels,
             datasets: [{
-                label: "Sales",
+                label: "Appointments",
                 tension: 0,
                 borderWidth: 0,
                 pointRadius: 5,
@@ -736,7 +473,7 @@
                 borderWidth: 4,
                 backgroundColor: "transparent",
                 fill: true,
-                data: [50, 40, 300, 320, 500, 350, 200, 230, 500],
+                data: data2.values,
                 maxBarThickness: 6
 
             }],
@@ -764,6 +501,8 @@
                         color: 'rgba(255, 255, 255, .2)'
                     },
                     ticks: {
+                        min: 0,
+                        stepSize: 1,
                         display: true,
                         color: '#f8f9fa',
                         padding: 10,

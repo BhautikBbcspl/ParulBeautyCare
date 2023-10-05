@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<ParulBeautyCareDbClasses.DataModels.PBAllocatedStockToStaffRtr_Result>
 @{
     ViewBag.Title = "Stock Allocated to Staff";
-    ViewBag.Module = "Master";
+    ViewBag.Module = "Stock Management";
 }
 
 <div class="content-wrapper">
@@ -24,10 +24,13 @@
                                     @Html.DisplayName("Product")
                                 </th>
                                 <th>
-                                    @Html.DisplayName("Stock Allocated")
+                                    @Html.DisplayName("Allocated Stock")
                                 </th>
                                 <th>
-                                    @Html.DisplayName("Stock Used")
+                                    @Html.DisplayName("Used Stock")
+                                </th>
+                                <th>
+                                    @Html.DisplayName("Available Stock")
                                 </th>
                             </tr>
                         </thead>
@@ -36,25 +39,23 @@
                             {
                                 foreach (var item in Model)
                                 {
-                                <tr>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.StaffName)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.ProductName)
-                                    </td>
-                                    <td> @Html.DisplayFor(modelItem => item.TotalStockAllocated)</td>
-                                    <td> @Html.DisplayFor(modelItem => item.TotalStockUsed)</td>
-                                </tr>
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.StaffName)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.ProductName)
+                                        </td>
+                                        <td> @Html.DisplayFor(modelItem => item.TotalStockAllocated)</td>
+                                        <td> @Html.DisplayFor(modelItem => item.TotalStockUsed)</td>
+                                        <td> @Html.DisplayFor(modelItem => item.AvailableStock)</td>
+                                    </tr>
                                 }
                             }
                             else
                             {
                                 <tr>
-                                    <td>You have no rights to view data</td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
+                                    <td colspan="5">You have no rights to view data</td>
                                 </tr>
                             }
                         </tbody>
@@ -64,4 +65,20 @@
         </div>
     </div>
 </div>
+
+<script src="~/Content/assets/js/exceljs.min.js"></script>
+<script>
+    function getExportFileName() {
+        var filename = "Products_Wise_Staff_Stock_Data"
+        return filename;
+    }
+    function MainTitle() {
+        var mainTitle = "Products Wise Staff Stock Data "
+        return mainTitle;
+    }
+    function SubTitle() {
+        var subTitle = "@ViewBag.Subtitle"
+        return subTitle;
+    }
+</script>
 

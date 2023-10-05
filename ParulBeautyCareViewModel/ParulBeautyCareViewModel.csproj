@@ -51,6 +51,7 @@
     <Compile Include="ViewModel\BookingMgmtViewModel\BookingServicesViewModel.cs" />
     <Compile Include="ViewModel\BookingMgmtViewModel\BookingStaffAllocationViewModel.cs" />
     <Compile Include="ViewModel\BookingMgmtViewModel\CheckInCheckOutViewModel.cs" />
+    <Compile Include="ViewModel\DashboardViewModel.cs" />
     <Compile Include="ViewModel\EnquiryViewModel.cs" />
     <Compile Include="ViewModel\InvoiceMgmtViewModel\BillReportViewModel.cs" />
     <Compile Include="ViewModel\InvoiceMgmtViewModel\InvoiceDetailViewModel.cs" />
@@ -66,6 +67,8 @@
     <Compile Include="ViewModel\Master\CategoryMasterViewModel.cs" />
     <Compile Include="ViewModel\Master\YearMasterViewModel.cs" />
     <Compile Include="ViewModel\PaymentHistoryViewModel.cs" />
+    <Compile Include="ViewModel\StaffMgmtViewModel\IncentiveReportViewModel.cs" />
+    <Compile Include="ViewModel\StaffMgmtViewModel\StaffDashboardViewModel.cs" />
     <Compile Include="ViewModel\StockMgmtViewModel\ProductTypeMasterViewModel.cs" />
     <Compile Include="ViewModel\Master\RoleMasterViewModel.cs" />
     <Compile Include="ViewModel\Master\StaffMasterViewModel.cs" />

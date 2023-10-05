@@ -22,6 +22,9 @@ namespace ParulBeautyCareDbClasses.DataModels
         public string createuser { get; set; }
         public Nullable<bool> status { get; set; }
         public Nullable<decimal> totaldeposit { get; set; }
+        public string PaymentType { get; set; }
+        public string ChequeNo { get; set; }
+        public string Gpayno { get; set; }
         public Nullable<int> NumOfSiders { get; set; }
         public Nullable<decimal> SidersDeposit { get; set; }
         public Nullable<decimal> BridalDeposit { get; set; }

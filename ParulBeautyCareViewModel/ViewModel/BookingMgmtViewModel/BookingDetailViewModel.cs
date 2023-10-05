@@ -17,6 +17,8 @@ namespace ParulBeautyCareViewModel.ViewModel.BookingMgmtViewModel
         public string AllocatedTo { get; set; }
         public string AllocationDate { get; set; }
         public string AppointmentDate { get; set; }
+        public string serviceDate { get; set; }
+        public string StaffUserCode { get; set; }
         public string AppointmentTime { get; set; }
         public string DoneBy { get; set; }
         public string DoneDate { get; set; }

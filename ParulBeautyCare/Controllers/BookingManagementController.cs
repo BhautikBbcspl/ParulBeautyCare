@@ -446,7 +446,6 @@ namespace ParulBeautyCare.Controllers
             return PartialView("AppointmentChecking", bvm);
         }
 
-
         //public ActionResult SelectPackageJson(string ddlCategoryDropdown)
         //{
         //    BookAppointmentViewModel mv = new BookAppointmentViewModel();
@@ -552,10 +551,14 @@ namespace ParulBeautyCare.Controllers
                     var BookingList = ApiCall.PostApi("BookingHeaderRetrieve", Newtonsoft.Json.JsonConvert.SerializeObject(model));
                     bvm = JsonConvert.DeserializeObject<BookingHeaderViewModel>(BookingList);
                     model.BookingHeaderList = bvm.BookingHeaderList;
-                    model.BookingHeaderList.ForEach(e =>
+
+                    if (model.BookingHeaderList != null)
                     {
-                        e.CustomerName = $"{e.BookingCode} - {e.CustomerName}";
-                    });
+                        model.BookingHeaderList.ForEach(e =>
+                        {
+                            e.CustomerName = $"{e.BookingCode} - {e.CustomerName}";
+                        });
+                    }
                 }
                 return View(model);
             }
@@ -802,7 +805,7 @@ namespace ParulBeautyCare.Controllers
         }
         public ActionResult CheckOut()
         {
-            
+
             CheckInCheckOutViewModel chkinout = new CheckInCheckOutViewModel();
             chkinout.IsBooking = false;
 
@@ -1054,7 +1057,6 @@ namespace ParulBeautyCare.Controllers
         #endregion
 
         #region ==> Service Completion
-
         public ActionResult ServiceCompletion()
         {
             try
@@ -1088,10 +1090,13 @@ namespace ParulBeautyCare.Controllers
                 bhv = JsonConvert.DeserializeObject<BookingHeaderViewModel>(BookingHeaderList);
                 bdv.BookingHeaderList = bhv.BookingHeaderList;
 
-                bdv.BookingHeaderList.ForEach(e =>
+                if (bdv.BookingHeaderList != null)
                 {
-                    e.CustomerName = $"{e.BookingCode} - {e.CustomerName}";
-                });
+                    bdv.BookingHeaderList.ForEach(e =>
+                    {
+                        e.CustomerName = $"{e.BookingCode} - {e.CustomerName}";
+                    });
+                }
                 bdv.Action = "details";
                 var bookingDetailList = ApiCall.PostApi("BookingDetailRetrieve", Newtonsoft.Json.JsonConvert.SerializeObject(bdv));
                 bdv = JsonConvert.DeserializeObject<BookingDetailViewModel>(bookingDetailList);
@@ -1167,14 +1172,17 @@ namespace ParulBeautyCare.Controllers
                 var data1 = new { Message = "Service completed but amount exceeds the total amount of booking!!", Type = "success", BId = data.FormDataArray.FirstOrDefault().BookingId };
                 return Json(data1, JsonRequestBehavior.AllowGet);
             }
+            else if (msg.Contains("Completed"))
+            {
+                var data1 = new { Message = msg, Type = "success" };
+                return Json(data1, JsonRequestBehavior.AllowGet);
+            }
             else
             {
                 var data1 = new { Message = msg, Type = "error" };
                 return Json(data1, JsonRequestBehavior.AllowGet);
             }
         }
-
-
         #endregion
 
         #region =======> Check In 2

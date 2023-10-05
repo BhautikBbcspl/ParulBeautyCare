@@ -1,0 +1,97 @@
+﻿@model  IEnumerable<ParulBeautyCareDbClasses.DataModels.PBBookingHeaderRtr_Result>
+@{
+    ViewBag.Title = "Invoice Register";
+    ViewBag.Module = "Parul Beauty Care";
+}
+
+
+<div class="content-wrapper">
+    <div class="card">
+        <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+            <div class="bg-gradient-pinkHeader shadow-primary border-radius-lg pt-3 d-flex justify-content-between row">
+                <h2 class="text-white text-capitalize ps-3 title_margin col-md-6"><b>Invoice Register</b></h2>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-12">
+                    <table id="Mybase-style" class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>
+                                    @Html.DisplayName("Action")
+                                </th>
+                                <th>
+                                    @Html.DisplayName("Booking Code")
+                                </th>
+                                <th>
+                                    @Html.DisplayName("Company Name")
+                                </th>
+                                <th>
+                                    @Html.DisplayName("Customer Name")
+                                </th>
+                                <th>
+                                    @Html.DisplayName("Contact No")
+                                </th>
+                                <th>
+                                    @Html.DisplayName("Address")
+                                </th>
+                                <th>
+                                    @Html.DisplayName("Function Date")
+                                </th>
+                                <th>
+                                    @Html.DisplayName("Final Amount")
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Convert.ToInt32(TempData["ViewRight"]) == 0)
+                            {
+                                foreach (var item in Model)
+                                {
+                            <tr>
+                                <td>
+                                    @if (Convert.ToInt32(TempData["UpdateRight"]) == 0)
+                                    {
+                                        <a href="@Url.Action("InvoiceRegister","Invoice",new { id = item.BookingId })" class="mx-3"><i class="fa fa-pencil"></i></a>
+                                    }
+                                    else
+                                    {
+                                        <img src="~/Images/icons8-no-edit-16 (1).png" />
+                                    }
+
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.BookingCode)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.DepartmentName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.CustomerName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ContactNo)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Address)
+                                </td>
+                                <td> @Html.DisplayFor(modelItem => item.FunctionDate)</td>
+                                <td> @Html.DisplayFor(modelItem => item.FinalAmount)</td>
+                            </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td colspan="8" class="text-center">You have no rights to view data</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

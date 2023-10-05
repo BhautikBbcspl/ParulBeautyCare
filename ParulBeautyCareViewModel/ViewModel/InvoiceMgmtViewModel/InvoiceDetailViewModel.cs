@@ -32,7 +32,6 @@ namespace ParulBeautyCareViewModel.ViewModel.InvoiceMgmtViewModel
         public decimal? RemainingAmount { get; set; }
         public string Remark { get; set; }
 
-
         public string CompanyCode { get; set; }
         public string CreateDate { get; set; }
         public string CreateUser { get; set; }

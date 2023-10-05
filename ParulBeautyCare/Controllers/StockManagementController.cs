@@ -936,7 +936,6 @@ namespace ParulBeautyCare.Controllers
 
         #endregion
 
-
         #region==> Stock Allocated to Staff Report
         public ActionResult ViewStockAllocatedToStaff()
         {
@@ -954,10 +953,6 @@ namespace ParulBeautyCare.Controllers
                 mv1 = JsonConvert.DeserializeObject<MenuRightsViewModel>(MenuRtr);
                 if (mv1.MenuRightsList.Count > 0)
                 {
-                    //ViewBag.ViewRight = mv1.MenuRightsList.FirstOrDefault().ViewRight;
-                    //ViewBag.InsertRight = mv1.MenuRightsList.FirstOrDefault().InsertRight;
-                    //ViewBag.UpdateRight = mv1.MenuRightsList.FirstOrDefault().UpdateRight;
-                    //ViewBag.DeleteRight = mv1.MenuRightsList.FirstOrDefault().DeleteRight;
                     TempData["ViewRight"] = mv1.MenuRightsList.FirstOrDefault().ViewRight;
                     TempData["InsertRight"] = mv1.MenuRightsList.FirstOrDefault().InsertRight;
                     TempData["UpdateRight"] = mv1.MenuRightsList.FirstOrDefault().UpdateRight;
@@ -974,6 +969,7 @@ namespace ParulBeautyCare.Controllers
                 StockTransferHeaderViewModel sdmvm = new StockTransferHeaderViewModel();
                 sdmvm.Action = "All";
                 sdmvm.CompanyCode = LoggedUserDetails.CompanyCode;
+                ViewBag.Subtitle = "Staff Products Stock Details";
                 var StockAllocatedToStaffList = ApiCall.PostApi("StockAllocatedToStaffRetrieve", Newtonsoft.Json.JsonConvert.SerializeObject(sdmvm));
                 sdmvm = JsonConvert.DeserializeObject<StockTransferHeaderViewModel>(StockAllocatedToStaffList);
                 return View(sdmvm.StockAllocatedToStaffList);

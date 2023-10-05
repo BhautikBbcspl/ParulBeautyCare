@@ -5,6 +5,7 @@ using ParulBeautyCareViewModel.ViewModel;
 using ParulBeautyCareViewModel.ViewModel.BookingMgmtViewModel;
 using ParulBeautyCareViewModel.ViewModel.InvoiceMgmtViewModel;
 using ParulBeautyCareViewModel.ViewModel.Master;
+using ParulBeautyCareViewModel.ViewModel.StaffMgmtViewModel;
 using ParulBeautyCareViewModel.ViewModel.StockMgmtViewModel;
 using System;
 using System.Collections.Generic;
@@ -64,6 +65,110 @@ namespace ParulBeautyCareAPI.Controllers
             }
             return Json(lvm);
         }
+
+        #region==> Dashboard
+
+        #region==> Dashboard Count Rtr
+        [HttpPost]
+        [Route("api/parulbeautycareAPI/DashboardCountRtr")]
+        public IHttpActionResult DashboardCountRtr([FromBody] DashboardCountViewModel lvm)
+        {
+            iNotifyLogger obj = new iNotifyLogger();
+            try
+            {
+                using (parulbeautycareEntities db = new parulbeautycareEntities())
+                {
+                    lvm.DashboardCountList = db.PBDashboardCountRtr(lvm.TodayDate, lvm.Action, lvm.CompanyCode).ToList();
+                    var response = Request.CreateResponse(HttpStatusCode.OK, lvm);
+                    lvm.success = "true";
+                }
+            }
+            catch (Exception e)
+            {
+                lvm.success = "false";
+                lvm.message = e.Message;
+                obj.LogMessage("APIController", "DashboardCountRtr", e.Message, iNotifyLogger.LogType.Exception);
+            }
+            return Json(lvm);
+        }
+        #endregion
+
+        #region==> Dashboard Weekly Appointment Chart Rtr
+        [HttpPost]
+        [Route("api/parulbeautycareAPI/DashboardWeeklyAppointmentChartRtr")]
+        public IHttpActionResult DashboardWeeklyAppointmentChartRtr([FromBody] DashboardWeeklyChartViewModel lvm)
+        {
+            iNotifyLogger obj = new iNotifyLogger();
+            try
+            {
+                using (parulbeautycareEntities db = new parulbeautycareEntities())
+                {
+                    lvm.DashboardWeeklyAppointmentChartList = db.PBDashboardWeeklyAppointmentChart(lvm.Action, lvm.CompanyCode).ToList();
+                    var response = Request.CreateResponse(HttpStatusCode.OK, lvm);
+                    lvm.success = "true";
+                }
+            }
+            catch (Exception e)
+            {
+                lvm.success = "false";
+                lvm.message = e.Message;
+                obj.LogMessage("APIController", "DashboardWeeklyAppointmentChartRtr", e.Message, iNotifyLogger.LogType.Exception);
+            }
+            return Json(lvm);
+        }
+        #endregion
+
+        #region==> Today's Staff Services Retrieve
+        [HttpPost]
+        [Route("api/parulbeautycareAPI/DashboardstaffTodayServicesRtr")]
+        public IHttpActionResult DashboardstaffTodayServicesRtr([FromBody] StaffServicesViewModel lvm)
+        {
+            iNotifyLogger obj = new iNotifyLogger();
+            try
+            {
+                using (parulbeautycareEntities db = new parulbeautycareEntities())
+                {
+                    lvm.StaffTodayServicesList = db.PBDashboardStaffTodayServicesRtr(lvm.TodayDate, lvm.Action, lvm.CompanyCode).ToList();
+                    var response = Request.CreateResponse(HttpStatusCode.OK, lvm);
+                    lvm.success = "true";
+                }
+            }
+            catch (Exception e)
+            {
+                lvm.success = "false";
+                lvm.message = e.Message;
+                obj.LogMessage("APIController", "DashboardstaffTodayServicesRtr", e.Message, iNotifyLogger.LogType.Exception);
+            }
+            return Json(lvm);
+        }
+        #endregion
+
+        #region==> Today's Appointments Retrieve
+        [HttpPost]
+        [Route("api/parulbeautycareAPI/DashboardAppointmentsRtr")]
+        public IHttpActionResult DashboardAppointmentsRtr([FromBody] AppointmentsViewModel lvm)
+        {
+            iNotifyLogger obj = new iNotifyLogger();
+            try
+            {
+                using (parulbeautycareEntities db = new parulbeautycareEntities())
+                {
+                    lvm.AppointmentsList = db.PBDashboardAppointmentsRtr(lvm.TodayDate, lvm.Action,lvm.CompanyCode).ToList();
+                    var response = Request.CreateResponse(HttpStatusCode.OK, lvm);
+                    lvm.success = "true";
+                }
+            }
+            catch (Exception e)
+            {
+                lvm.success = "false";
+                lvm.message = e.Message;
+                obj.LogMessage("APIController", "DashboardAppointmentsRtr", e.Message, iNotifyLogger.LogType.Exception);
+            }
+            return Json(lvm);
+        }
+        #endregion
+
+        #endregion
 
         #region ==> UserManagement
         [HttpPost]
@@ -1275,7 +1380,7 @@ namespace ParulBeautyCareAPI.Controllers
 
                 using (parulbeautycareEntities db = new parulbeautycareEntities())
                 {
-                    savm.StockAllocatedToStaffList = db.PBAllocatedStockToStaffRtr(savm.Action, savm.StaffId, savm.ProductId).ToList();
+                    savm.StockAllocatedToStaffList = db.PBAllocatedStockToStaffRtr(savm.Action, savm.StaffCode, savm.ProductId).ToList();
                     var response = Request.CreateResponse(HttpStatusCode.OK, savm);
                     savm.success = "true";
                 }
@@ -1304,7 +1409,7 @@ namespace ParulBeautyCareAPI.Controllers
             {
                 using (parulbeautycareEntities db = new parulbeautycareEntities())
                 {
-                    bhvm.BookingHeaderList = db.PBBookingHeaderRtr(bhvm.BookingId, bhvm.Action, bhvm.CompanyCode).ToList();
+                    bhvm.BookingHeaderList = db.PBBookingHeaderRtr(bhvm.BookingId,bhvm.FromDate,bhvm.ToDate, bhvm.Action, bhvm.CompanyCode).ToList();
                     var response = Request.CreateResponse(HttpStatusCode.OK, bhvm);
                     bhvm.success = "true";
                 }
@@ -1401,7 +1506,7 @@ namespace ParulBeautyCareAPI.Controllers
             {
                 using (parulbeautycareEntities db = new parulbeautycareEntities())
                 {
-                    bdvm.BookingDetailList = db.PBBookingDetailRtr(bdvm.BookingId, bdvm.Action, bdvm.CompanyCode).ToList();
+                    bdvm.BookingDetailList = db.PBBookingDetailRtr(bdvm.BookingId, bdvm.Action, bdvm.CompanyCode,bdvm.StaffUserCode).ToList();
                     var response = Request.CreateResponse(HttpStatusCode.OK, bdvm);
                     bdvm.success = "true";
                 }
@@ -1784,7 +1889,7 @@ namespace ParulBeautyCareAPI.Controllers
             {
                 using (parulbeautycareEntities db = new parulbeautycareEntities())
                 {
-                    sm.Result = db.PBAdvanceBookingInsUpd(sm.AdvanceBookingId.ToString(), sm.Name, sm.ContactNo, sm.Address, sm.SPersonName, sm.SPersonContact, sm.SPersonAddress, sm.BridalDeposit, sm.SidersDeposit, sm.TotalDeposit, sm.NumOfSiders, sm.FunctionDate, sm.DepartmentId, sm.BeforeRemark, sm.AfterRemark, sm.CompanyCode, sm.CreateDate, sm.UpdateDate, sm.CreateUser, sm.UpdateUser, sm.Action).FirstOrDefault();
+                    sm.Result = db.PBAdvanceBookingInsUpd(sm.AdvanceBookingId.ToString(), sm.Name, sm.ContactNo, sm.Address, sm.SPersonName, sm.SPersonContact, sm.SPersonAddress, sm.BridalDeposit, sm.SidersDeposit, sm.TotalDeposit, sm.NumOfSiders, sm.FunctionDate, sm.DepartmentId, sm.BeforeRemark, sm.AfterRemark, sm.CompanyCode, sm.CreateDate, sm.UpdateDate, sm.CreateUser, sm.UpdateUser, sm.PaymentType, sm.ChequeNumber, sm.Gpayno, sm.Action).FirstOrDefault();
                     var response = Request.CreateResponse(HttpStatusCode.OK, sm);
                     sm.Success = "true";
                 }
@@ -1797,6 +1902,90 @@ namespace ParulBeautyCareAPI.Controllers
             }
             return Json(sm);
         }
+        #endregion
+
+        #region==> Staff Management API
+
+        #region==> Staff Dashboard
+
+        #region==> Today's Appointment Work Retrieve
+        [HttpPost]
+        [Route("api/parulbeautycareAPI/StaffDashboardTodayServicesRtr")]
+        public IHttpActionResult StaffDashboardTodayServicesRtr([FromBody] StaffDashboardServicesViewModel lvm)
+        {
+            iNotifyLogger obj = new iNotifyLogger();
+            try
+            {
+                using (parulbeautycareEntities db = new parulbeautycareEntities())
+                {
+                    lvm.StaffDashboardTodayServicesList = db.PBStaffDashboardTodayServicesRtr(lvm.TodayDate, lvm.StaffCode, lvm.Action, lvm.CompanyCode).ToList();
+                    var response = Request.CreateResponse(HttpStatusCode.OK, lvm);
+                    lvm.success = "true";
+                }
+            }
+            catch (Exception e)
+            {
+                lvm.success = "false";
+                lvm.message = e.Message;
+                obj.LogMessage("APIController", "StaffDashboardTodayServicesRtr", e.Message, iNotifyLogger.LogType.Exception);
+            }
+            return Json(lvm);
+        }
+        #endregion
+
+        #region==> Today's Appointment Retrieve
+        [HttpPost]
+        [Route("api/parulbeautycareAPI/StaffDashboardAppointmentsRtr")]
+        public IHttpActionResult StaffDashboardAppointmentsRtr([FromBody] StaffAppointmentsViewModel lvm)
+        {
+            iNotifyLogger obj = new iNotifyLogger();
+            try
+            {
+                using (parulbeautycareEntities db = new parulbeautycareEntities())
+                {
+                    lvm.StaffAppointmentsList = db.PBStaffDashboardAppointmentsRtr( lvm.TodayDate, lvm.StaffCode, lvm.Action, lvm.CompanyCode).ToList();
+                    var response = Request.CreateResponse(HttpStatusCode.OK, lvm);
+                    lvm.success = "true";
+                }
+            }
+            catch (Exception e)
+            {
+                lvm.success = "false";
+                lvm.message = e.Message;
+                obj.LogMessage("APIController", "StaffDashboardAppointmentsRtr", e.Message, iNotifyLogger.LogType.Exception);
+            }
+            return Json(lvm);
+        }
+        #endregion
+
+        #endregion
+
+        #region==> Staff Incentive Report
+        [HttpPost]
+        [Route("api/parulbeautycareAPI/IncentiveReport")]
+        public IHttpActionResult IncentiveReport([FromBody] IncentiveReportViewModel savm)
+        {
+            iNotifyLogger obj = new iNotifyLogger();
+            try
+            {
+
+                using (parulbeautycareEntities db = new parulbeautycareEntities())
+                {
+                    savm.StaffIncentiveReportList = db.PBStaffIncentiveReport(savm.FromDate, savm.ToDate, savm.StaffCode, savm.Action).ToList();
+                    var response = Request.CreateResponse(HttpStatusCode.OK, savm);
+                    savm.success = "true";
+                }
+            }
+            catch (Exception e)
+            {
+                savm.success = "false";
+                savm.message = e.Message;
+                obj.LogMessage("APIController", "IncentiveReport", e.Message, iNotifyLogger.LogType.Exception);
+            }
+            return Json(savm);
+        }
+        #endregion
+
         #endregion
     }
 

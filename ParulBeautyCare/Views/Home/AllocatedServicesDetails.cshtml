@@ -1,0 +1,51 @@
+﻿@model IEnumerable<ParulBeautyCareDbClasses.DataModels.PBBookingDetailRtr_Result>
+
+<div class="table-responsive">
+    <table class="table table-bordered table-striped text-center">
+        <thead>
+            <tr>
+                <th>@Html.DisplayName("Customer Name")</th>
+                <th>@Html.DisplayName("Contact No")</th>
+                <th>@Html.DisplayName("Address")</th>
+                <th>@Html.DisplayName("Service")</th>
+                <th>@Html.DisplayName("Time")</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CustomerName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ContactNo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Address)
+                </td>
+                <td>
+                    @{
+                        string formattedService = item.CategoryName;
+                        if (!string.IsNullOrEmpty(item.SubCategoryName))
+                        {
+                            formattedService += " (" + item.SubCategoryName + ")";
+                        }
+                    }
+
+                    @Html.DisplayName(formattedService)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SlotName)
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<script>
+    $(".AllocatedServicesClose").click(function () {
+        $("#AllocatedServicesModal").modal("hide");
+    });
+</script>

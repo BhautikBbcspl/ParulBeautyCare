@@ -237,7 +237,24 @@ namespace ParulBeautyCare.Controllers
         #endregion
 
         #region==> Invoice Edit (Bhautik)
-        public ActionResult InvoiceRegister()
+        public ActionResult ViewCompletedInvoice()
+        {
+            InvoiceDetailViewModel invm = new InvoiceDetailViewModel();
+            invm.CompanyCode = LoggedUserDetails.CompanyCode;
+            invm.Action = "active";
+            invm.CreateDate = generalFunctions.getTimeZoneDatetimedb();
+            invm.CreateUser = User.Identity.Name;
+
+            BookingHeaderViewModel bhm = new BookingHeaderViewModel();
+            bhm.CompanyCode = LoggedUserDetails.CompanyCode;
+            bhm.Action = "all";
+            var BookingHeaderList = ApiCall.PostApi("BookingHeaderRetrieve", Newtonsoft.Json.JsonConvert.SerializeObject(bhm));
+            bhm = JsonConvert.DeserializeObject<BookingHeaderViewModel>(BookingHeaderList);
+            invm.DoneBookingsList=bhm.BookingHeaderList.Where(x => x.Status == 4).ToList();
+
+            return View(invm.DoneBookingsList);
+        }
+        public ActionResult InvoiceRegister(int id)
         {
             InvoiceDetailViewModel invm = new InvoiceDetailViewModel();
             invm.CompanyCode = LoggedUserDetails.CompanyCode;
@@ -250,6 +267,13 @@ namespace ParulBeautyCare.Controllers
             itm = JsonConvert.DeserializeObject<ItemMasterViewModel>(itmList);
             invm.ItemRetrieve = itm.ItemMasterList;
             ViewBag.ItemList = new SelectList(invm.ItemRetrieve, "ItemId", "ItemName");
+
+            BookingHeaderViewModel bhm = new BookingHeaderViewModel();
+            bhm.CompanyCode = LoggedUserDetails.CompanyCode;
+            bhm.Action = "all";
+            var BookingHeaderList = ApiCall.PostApi("BookingHeaderRetrieve", Newtonsoft.Json.JsonConvert.SerializeObject(bhm));
+            bhm = JsonConvert.DeserializeObject<BookingHeaderViewModel>(BookingHeaderList);
+            invm.DoneBookingsList = bhm.BookingHeaderList.Where(x => x.BookingId == id && x.Status == 4).ToList();
 
             return View(invm);
         }
@@ -337,7 +361,6 @@ namespace ParulBeautyCare.Controllers
                 return Json(obj, JsonRequestBehavior.AllowGet);
             }
         }
-
         [HttpPost]
         public ActionResult BillingDetailRTR(string BookingHeaderId)
         {

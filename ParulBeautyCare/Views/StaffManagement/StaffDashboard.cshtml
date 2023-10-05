@@ -1,0 +1,177 @@
+﻿@model ParulBeautyCareViewModel.ViewModel.StaffMgmtViewModel.StaffDashboardViewModel
+@{
+    ViewBag.Title = "Home";
+    ViewBag.Module = "Parul Beauty Care";
+}
+
+<link href="~/Content/assets/css/Dashboard.css" rel="stylesheet" />
+<div class="content-wrapper">
+
+    <!--Cards-->
+    <div class="row">
+        <div class="col-12">
+            <div class="row hoverCard">
+                <div class="col-12 col-sm-6 col-md-6 col-xl-4 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="p-3 pt-2">
+                            <div class="icon icon-lg icon-shape bg-gradient-info shadow-info text-center border-radius-xl mt-n4 position-absolute">
+                                <i class="fa fa-regular fa-calendar-check opacity-10"></i>
+                            </div>
+                            <h2 class="text-end mt-2 mx-2">Today's Remaining Work</h2>
+                        </div>
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between">
+                                <p></p>
+                                <h2>@Model.TodayWorks</h2>
+                            </div>
+                            <div class="progress progress-md">
+                                <div class="progress-bar bg-warning w-100" role="progressbar"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!---->
+
+    <div class="row mt-3">
+        <div class="col-lg-6 col-xl-6 col-md-6 col-sm-12 d-flex grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex flex-wrap justify-content-between  border-bottom">
+                        <h4 class="card-title mb-3">Today's Appointments</h4>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped DashboardTable text-center">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>@Html.DisplayName("Booking Code")</th>
+                                        <th>@Html.DisplayName("Customer Name")</th>
+                                        <th>@Html.DisplayName("Contact No")</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.StaffAppointmentsList)
+                                    {
+                                        <tr>
+                                            <td>
+                                                <a class="btn btn-outline-primary" style=" padding: 0.875rem 1.5rem !important;" id="@item.BookingId" onclick="AllServices(this.id)">Appointment Detail</a>
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.BookingCode)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.CustomerName)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.ContactNo)
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+   
+        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 d-flex grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex flex-wrap justify-content-between  border-bottom">
+                        <h4 class="card-title mb-3">Today's Completed Appointments</h4>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped DashboardTable text-center">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>@Html.DisplayName("Booking Code")</th>
+                                        <th>@Html.DisplayName("Customer Name")</th>
+                                        <th>@Html.DisplayName("Contact No")</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.StaffCompletedAppointmentsList)
+                                    {
+                                        <tr>
+                                            <td>
+                                                <a class="btn btn-outline-primary" style=" padding: 0.875rem 1.5rem !important;" id="@item.BookingId" onclick="CompletedServices(this.id)">Appointment Detail</a>
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.BookingCode)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.CustomerName)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.ContactNo)
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="CompletedServicesModal" tabindex="-1" role="dialog" a ria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header border-bottom-0">
+                <h4 class="card-title modal-title" id="exampleModalLabel">Today's Completed Appointments</h4>
+                <button type="button" class="btn btn-close close CompletedServicesClose" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true"></span>
+                </button>
+            </div>
+            <div class="modal-body  CompletedServicesModalBody">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="AllServicesModal" tabindex="-1" role="dialog" a ria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header border-bottom-0">
+                <h4 class="card-title modal-title" id="exampleModalLabel">Today's Appointments</h4>
+                <button type="button" class="btn btn-close close AllServicesClose" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true"></span>
+                </button>
+            </div>
+            <div class="modal-body  AllServicesModalBody">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+     function AllServices(id) {
+        $.get("@Url.Action("AllServicesDetails", "Home")/" + id,
+            function (data) {
+                $('.AllServicesModalBody').html(data);
+                $("#AllServicesModal").modal("show");
+            });
+     }
+
+    function CompletedServices(id) {
+        $.get("@Url.Action("CompletedServicesDetails", "Home")/" + id,
+            function (data) {
+                $('.CompletedServicesModalBody').html(data);
+                $("#CompletedServicesModal").modal("show");
+        });
+     }
+</script>

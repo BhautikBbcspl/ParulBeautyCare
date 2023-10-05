@@ -33,160 +33,212 @@
                         @Html.AntiForgeryToken()
                         @Html.HiddenFor(x => x.Action)
                         @Html.HiddenFor(x => x.AdvanceBookingId,new { @id = "txtAdvanceBookingId"})
-                        <div class="row form-group">
-                            <div class="col-sm-12 col-md-4 col-lg-3">
-                                <label class="col-form-label">
-                                    Name
-                                    @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger h3" })
-                                </label>
-                                @Html.TextBoxFor(m => m.Name, new Dictionary<string, object>() {
-                                                                            {"id","txtName"},
-                                                                            {"class","form-control"},
-                                                                               {"autocomplete","off"},
-                                                                            {"required","required"},
-                                                                            {"placeholder","Enter Name"}
-                                                                            })
-                            </div>
-                            <div class="col-sm-12 col-md-4 col-lg-3">
-                                <label class="col-form-label">
-                                    Contact No
-                                    @Html.ValidationMessageFor(m => m.ContactNo, "", new { @class = "text-danger h3" })
-                                </label>
-                                @Html.TextBoxFor(m => m.ContactNo, new Dictionary<string, object>() {
-                                                                            {"id","txtContactNo"},
-                                                                            {"class","form-control"},
-                                                                               {"autocomplete","off"},
-                                                                            {"required","required"},
-                                                                            {"placeholder","Enter Contact No"}
-                                                                            })
-                            </div>
-                            <div class="col-sm-12 col-md-4 col-lg-3">
-                                <label class="col-form-label">
-                                    Address
-                                    @Html.ValidationMessageFor(m => m.Address, "", new { @class = "text-danger h3" })
-                                </label>
-                                @Html.TextBoxFor(m => m.Address, new Dictionary<string, object>() {
-                                                                            {"id","txtAddress"},
-                                                                            {"class","form-control"},
-                                                                               {"autocomplete","off"},
-                                                                            {"placeholder","Enter Address"}
-                                                                            })
-                            </div>
-                            <div class="col-sm-12 col-md-4 col-lg-3">
-                                <label class="col-form-label">
-                                   Person Name
-                                    @Html.ValidationMessageFor(m => m.SPersonName, "", new { @class = "text-danger h3" })
-                                </label>
-                                @Html.TextBoxFor(m => m.SPersonName, new Dictionary<string, object>() {
-                                                                            {"id","txtSPersonName"},
-                                                                            {"class","form-control"},
-                                                                               {"autocomplete","off"},
-                                                                            {"required","required"},
-                                                                            {"placeholder","Enter Person Name"}
-                                                                            })
-                            </div>
-                            <div class="col-sm-12 col-md-4 col-lg-3">
-                                <label class="col-form-label">
-                                   Person Contact No
-                                    @Html.ValidationMessageFor(m => m.SPersonContact, "", new { @class = "text-danger h3" })
-                                </label>
-                                @Html.TextBoxFor(m => m.SPersonContact, new Dictionary<string, object>() {
-                                                                            {"id","txtSPersonContact"},
-                                                                            {"class","form-control"},
-                                                                               {"autocomplete","off"},
-                                                                            {"required","required"},
-                                                                            {"placeholder","Enter Person Contact"}
-                                                                            })
-                            </div>
-                            <div class="col-sm-12 col-md-4 col-lg-3">
-                                <label class="col-form-label">
-                                    Person Address
-                                    @Html.ValidationMessageFor(m => m.SPersonAddress, "", new { @class = "text-danger h3" })
-                                </label>
-                                @Html.TextBoxFor(m => m.SPersonAddress, new Dictionary<string, object>() {
-                                                                            {"id","txtSPersonAddress"},
-                                                                            {"class","form-control"},
-                                                                               {"autocomplete","off"},
-                                                                            {"placeholder","Enter Person Address"}
-                                                                            })
-                            </div>
-                            @*<div class="col-sm-12 col-md-4 col-lg-3">
-                                <label class="col-form-label">
-                                    Department
-                                    @Html.ValidationMessageFor(m => m.DepartmentId, "", new { @class = "text-danger" })
-                                </label>
-                                @Html.DropDownListFor(model => model.DepartmentId, new SelectList(Model.DepartmentList, "DepartmentId", "DepartmentName"), "Select Department", new Dictionary<string, object>
-                                          () {
-                                          {"id","ddlDepartment"},
-                                          { "class","js-example-basic-single  w-100"},
-                                          {"autocomplete","off"},
-                                          {"required","required"},
-                                          {"placeholder","Select Department"}
-                                           })
-                            </div>*@
-                            <div class="col-sm-12 col-md-4 col-lg-3">
-                                <label class="col-form-label">
-                                    Siders
-                                    @Html.ValidationMessageFor(m => m.NumOfSiders, "", new { @class = "text-danger h3" })
-                                </label>
-                                @Html.HiddenFor(m => m.SidersDeposit, new { id = "txtSidersDeposit" })
-                                @Html.HiddenFor(m => m.BridalDeposit, new { id = "txtBridalDeposit" })
-                                @Html.TextBoxFor(m => m.NumOfSiders, new Dictionary<string, object>() {
-                                                                            {"id","txtNumOfSiders"},
-                                                                            {"class","form-control"},
-                                                                               {"autocomplete","off"},
-                                                                            {"required","required"},
-                                                                            {"type","number"},
-                                                                            {"placeholder","Enter Siders"},
-                                                                           {"inputchange", "updateDeposits(this.value)"},
-                                                                           {"min", "0"}
-                                                                            })
-                            </div>
-                            <div class="col-sm-12 col-md-4 col-lg-3">
-                                <label class="col-form-label">
-                                    Total Deposit
-                                    @Html.ValidationMessageFor(m => m.TotalDeposit, "", new { @class = "text-danger h3" })
-                                </label>
-                                @Html.TextBoxFor(m => m.TotalDeposit, new Dictionary<string, object>() {
-                                                                            {"id","txtTotalSidersDeposit"},
-                                                                            {"class","form-control"},
-                                                                               {"autocomplete","off"},
-                                                                            {"required","required"},
-                                                                            {"readonly","readonly"}
-                                                                            })
-                            </div>
-                            <div class="col-sm-12 col-md-4 col-lg-3">
-                                <label class="col-form-label"> 
-                                    FunctionDate
-                                    @Html.ValidationMessageFor(m => m.FunctionDate, "", new { @class = "text-danger h3" })
-                                </label>
-                                <div class="input-group">
-                                    @Html.TextBoxFor(m => m.FunctionDate, new Dictionary<string, object>() {
-                                                                                  {"id","txtFunctionDate"},
-                                                                                  {"class","form-control"},
-                                                                                  {"required","required"},
-                                                                                  {"placeholder","Select Function Date"}
-                                                                                  })
-                                    <div class="input-group-append d-flex">
-                                        <span class="input-group-text" id="datepickerIcon" style="color: #212529 !important; border: 1px solid #ced4da !important; ">
-                                            <i class="fa fa-calendar"></i>
-                                        </span>
-                                    </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-12 col-md-4 col-lg-3">
-                                    <label class="col-form-label">
-                                        Remark
-                                        @Html.ValidationMessageFor(m => m.BeforeRemark, "", new { @class = "text-danger h3" })
-                                    </label>
-                                    @Html.TextBoxFor(m => m.BeforeRemark, new Dictionary<string, object>() {
-                                                                                {"id","txtBeforeRemark"},
-                                                                                {"class","form-control"},
-                                                                                   {"autocomplete","off"},
-                                                                                {"placeholder","Enter Remark"}
-                                                                                })
+                    <div class="row form-group">
+                        <div class="col-sm-12 col-md-4 col-lg-3">
+                            <label class="col-form-label">
+                                Name
+                                @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger h3" })
+                            </label>
+                            @Html.TextBoxFor(m => m.Name, new Dictionary<string, object>() {
+                                                                        {"id","txtName"},
+                                                                        {"class","form-control"},
+                                                                           {"autocomplete","off"},
+                                                                        {"required","required"},
+                                                                        {"placeholder","Enter Name"}
+                                                                        })
+                        </div>
+                        <div class="col-sm-12 col-md-4 col-lg-3">
+                            <label class="col-form-label">
+                                Contact No
+                                @Html.ValidationMessageFor(m => m.ContactNo, "", new { @class = "text-danger h3" })
+                            </label>
+                            @Html.TextBoxFor(m => m.ContactNo, new Dictionary<string, object>() {
+                                                                        {"id","txtContactNo"},
+                                                                        {"class","form-control"},
+                                                                           {"autocomplete","off"},
+                                                                        {"required","required"},
+                                                                        {"placeholder","Enter Contact No"}
+                                                                        })
+                        </div>
+                        <div class="col-sm-12 col-md-4 col-lg-3">
+                            <label class="col-form-label">
+                                Address
+                                @Html.ValidationMessageFor(m => m.Address, "", new { @class = "text-danger h3" })
+                            </label>
+                            @Html.TextBoxFor(m => m.Address, new Dictionary<string, object>() {
+                                                                        {"id","txtAddress"},
+                                                                        {"class","form-control"},
+                                                                           {"autocomplete","off"},
+                                                                        {"placeholder","Enter Address"}
+                                                                        })
+                        </div>
+                        <div class="col-sm-12 col-md-4 col-lg-3">
+                            <label class="col-form-label">
+                                Person Name
+                                @Html.ValidationMessageFor(m => m.SPersonName, "", new { @class = "text-danger h3" })
+                            </label>
+                            @Html.TextBoxFor(m => m.SPersonName, new Dictionary<string, object>() {
+                                                                        {"id","txtSPersonName"},
+                                                                        {"class","form-control"},
+                                                                           {"autocomplete","off"},
+                                                                        {"required","required"},
+                                                                        {"placeholder","Enter Person Name"}
+                                                                        })
+                        </div>
+                        <div class="col-sm-12 col-md-4 col-lg-3">
+                            <label class="col-form-label">
+                                Person Contact No
+                                @Html.ValidationMessageFor(m => m.SPersonContact, "", new { @class = "text-danger h3" })
+                            </label>
+                            @Html.TextBoxFor(m => m.SPersonContact, new Dictionary<string, object>() {
+                                                                        {"id","txtSPersonContact"},
+                                                                        {"class","form-control"},
+                                                                           {"autocomplete","off"},
+                                                                        {"required","required"},
+                                                                        {"placeholder","Enter Person Contact"}
+                                                                        })
+                        </div>
+                        <div class="col-sm-12 col-md-4 col-lg-3">
+                            <label class="col-form-label">
+                                Person Address
+                                @Html.ValidationMessageFor(m => m.SPersonAddress, "", new { @class = "text-danger h3" })
+                            </label>
+                            @Html.TextBoxFor(m => m.SPersonAddress, new Dictionary<string, object>() {
+                                                                        {"id","txtSPersonAddress"},
+                                                                        {"class","form-control"},
+                                                                           {"autocomplete","off"},
+                                                                        {"placeholder","Enter Person Address"}
+                                                                        })
+                        </div>
+                        @*<div class="col-sm-12 col-md-4 col-lg-3">
+            <label class="col-form-label">
+                Department
+                @Html.ValidationMessageFor(m => m.DepartmentId, "", new { @class = "text-danger" })
+            </label>
+            @Html.DropDownListFor(model => model.DepartmentId, new SelectList(Model.DepartmentList, "DepartmentId", "DepartmentName"), "Select Department", new Dictionary<string, object>
+                      () {
+                      {"id","ddlDepartment"},
+                      { "class","js-example-basic-single  w-100"},
+                      {"autocomplete","off"},
+                      {"required","required"},
+                      {"placeholder","Select Department"}
+                       })
+        </div>*@
+                        <div class="col-sm-12 col-md-4 col-lg-3">
+                            <label class="col-form-label">
+                                Siders
+                                @Html.ValidationMessageFor(m => m.NumOfSiders, "", new { @class = "text-danger h3" })
+                            </label>
+                            @Html.HiddenFor(m => m.SidersDeposit, new { id = "txtSidersDeposit" })
+                            @Html.HiddenFor(m => m.BridalDeposit, new { id = "txtBridalDeposit" })
+                            @Html.TextBoxFor(m => m.NumOfSiders, new Dictionary<string, object>() {
+                                                                        {"id","txtNumOfSiders"},
+                                                                        {"class","form-control"},
+                                                                           {"autocomplete","off"},
+                                                                        {"required","required"},
+                                                                        {"type","number"},
+                                                                        {"placeholder","Enter Siders"},
+                                                                       {"inputchange", "updateDeposits(this.value)"},
+                                                                       {"min", "0"}
+                                                                        })
+                        </div>
+                        <div class="col-sm-12 col-md-4 col-lg-3">
+                            <label class="col-form-label">
+                                Total Deposit
+                                @Html.ValidationMessageFor(m => m.TotalDeposit, "", new { @class = "text-danger h3" })
+                            </label>
+                            @Html.TextBoxFor(m => m.TotalDeposit, new Dictionary<string, object>() {
+                                                                        {"id","txtTotalSidersDeposit"},
+                                                                        {"class","form-control"},
+                                                                           {"autocomplete","off"},
+                                                                        {"required","required"},
+                                                                        {"readonly","readonly"}
+                                                                        })
+                        </div>
+                        <div class="col-sm-12 col-md-4 col-lg-3">
+                            <label class="col-form-label">
+                                FunctionDate
+                                @Html.ValidationMessageFor(m => m.FunctionDate, "", new { @class = "text-danger h3" })
+                            </label>
+                            <div class="input-group">
+                                @Html.TextBoxFor(m => m.FunctionDate, new Dictionary<string, object>() {
+                                                                              {"id","txtFunctionDate"},
+                                                                              {"class","form-control"},
+                                                                              {"required","required"},
+                                                                              {"placeholder","Select Function Date"}
+                                                                              })
+                                <div class="input-group-append d-flex">
+                                    <span class="input-group-text" id="datepickerIcon" style="color: #212529 !important; border: 1px solid #ced4da !important; ">
+                                        <i class="fa fa-calendar"></i>
+                                    </span>
                                 </div>
                             </div>
+                        </div>
+
+                        <div class="col-sm-12 col-md-4 col-lg-3">
+
+
+                            <div id="dropdownContainer">
+                                <label for="dropdown" class="col-form-label">Select Payment Method</label>
+                                <div class="input-group input-group-outline mb-3">
+                                    <select id="dropdown" name="PaymentType" class="form-control form-select js-example-basic-single w-100">
+                                        <option value="none">Select Payment method</option>
+                                        <option value="Cash">Cash</option>
+                                        <option value="Cheque">Cheque</option>
+                                        <option value="G-pay">G-pay</option>
+                                    </select>
+                                </div>
+
+
+
+                            </div>
+
+                        </div>
+                        <div class="col-sm-12 col-md-4 col-lg-3" style="display: none;" id="Chequetextbox">
+
+                            <label class="col-form-label">
+                                Cheque Number
+                                @*@Html.ValidationMessageFor(m => m.ChequeNumber, "", new { @class = "text-danger h3" })*@
+                            </label>
+                            @Html.TextBoxFor(m => m.ChequeNumber, new Dictionary<string, object>() {
+                                {"id","txtCheckNo"},
+                                {"class","form-control"},
+                                {"autocomplete","off"},
+                                {"required","required"},
+                                {"placeholder","Enter Cheque Number"}
+                            })
+
+                        </div>
+                        <div class="col-sm-12 col-md-4 col-lg-3" id="Gpaytextbox" style="display: none;">
+
+
+                            <label class="col-form-label">
+                                Gpay No
+                                @*@Html.ValidationMessageFor(m => m.GpayNo, "", new { @class = "text-danger h3" })*@
+                            </label>
+                            @Html.TextBoxFor(m => m.Gpayno, new Dictionary<string, object>() {
+                                {"id","txtGpayNo"},
+                                {"class","form-control"},
+                                {"autocomplete","off"},
+                                {"required","required"},
+                                {"placeholder","Enter   Gpay No"}
+                            })
+
+
+                        </div>
+                        <div class="col-sm-12 col-md-4 col-lg-3">
+                            <label class="col-form-label">
+                                Remark
+                                @Html.ValidationMessageFor(m => m.BeforeRemark, "", new { @class = "text-danger h3" })
+                            </label>
+                            @Html.TextBoxFor(m => m.BeforeRemark, new Dictionary<string, object>() {
+                                                                        {"id","txtBeforeRemark"},
+                                                                        {"class","form-control"},
+                                                                           {"autocomplete","off"},
+                                                                        {"placeholder","Enter Remark"}
+                                                                        })
+                        </div>
+                    </div>
                         <button type="submit" class="btn btn-primary mr-2 mt-3" value="@ViewBag.action" onclick="return formSubmit('Are You sure you want to save data?')">@ViewBag.action</button>
                     }
                 </div>
@@ -199,7 +251,29 @@
         $("#txtFunctionDate").click();
     });
     $(document).ready(function () {
-        debugger
+        // Function to toggle the visibility of text boxes
+        function toggleTextBoxes() {
+            var selectedPaymentMethod = $("#dropdown").val();
+
+            // Hide all text boxes first
+            $("#Chequetextbox, #Gpaytextbox").hide();
+
+            // Show the relevant text box based on the selected payment method
+            if (selectedPaymentMethod === "Cheque") {
+                $("#Chequetextbox").show();
+            } else if (selectedPaymentMethod === "G-pay") {
+                $("#Gpaytextbox").show();
+            }
+        }
+
+        // Initial toggle on page load
+        toggleTextBoxes();
+
+        // Bind the toggle function to the change event of the dropdown
+        $("#dropdown").change(function () {
+            toggleTextBoxes();
+        });
+
         var textInput = $("#txtAdvanceBookingId").val();
         if (textInput != 0 || textInput == null) {
             document.getElementById("txtName").readOnly = true;

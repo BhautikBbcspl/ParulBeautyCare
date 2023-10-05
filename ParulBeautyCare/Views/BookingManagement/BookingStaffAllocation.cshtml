@@ -32,19 +32,26 @@
                 @Html.AntiForgeryToken();
                 <div class="row form-group">
                     <div class="col-lg-4 col-md-6 col-sm-4">
-                        <label class="col-form-label">
-                            Select Customer
-                            @Html.ValidationMessageFor(m => m.BookingId, "", new { @class = "text-danger h3" })
-                        </label>
+                        @if (Model.BookingHeaderList != null)
+                        {
+                            <label class="col-form-label">
+                                Select Customer
+                                @Html.ValidationMessageFor(m => m.BookingId, "", new { @class = "text-danger h3" })
+                            </label>
 
-                        <div class="input-group input-group-outline mb-3">
-                            @Html.DropDownListFor(m => m.BookingId, new SelectList(Model.BookingHeaderList.GroupBy(header => header.CustomerName).Select(group => group.First()), "BookingId", "CustomerName"), "Select Customer",
-                         new Dictionary<string, object>() {
-                                           {"id","ddlBookingId"},
-                                           { "class","form-control form-select js-example-basic-single w-100"},
-                                            {"onchange" ,"javascript:GetDetailData(this.value)" }
-                             })
-                        </div>
+                            <div class="input-group input-group-outline mb-3">
+                                @Html.DropDownListFor(m => m.BookingId, new SelectList(Model.BookingHeaderList.GroupBy(header => header.CustomerName).Select(group => group.First()), "BookingId", "CustomerName"), "Select Customer",
+                             new Dictionary<string, object>() {
+                                               {"id","ddlBookingId"},
+                                               { "class","form-control form-select js-example-basic-single w-100"},
+                                                {"onchange" ,"javascript:GetDetailData(this.value)" }
+                                 })
+                            </div>
+                        }
+                        else
+                        {
+                            <h2>There is no Booking Found..</h2>
+                        }
                     </div>
                     <div class="col-lg-4 col-md-6 col-sm-4" id="detailCardContainer" style="display:none;">
                         <div class="card2">

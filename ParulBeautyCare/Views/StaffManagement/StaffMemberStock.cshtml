@@ -1,0 +1,74 @@
+﻿@model IEnumerable<ParulBeautyCareDbClasses.DataModels.PBAllocatedStockToStaffRtr_Result>
+@{
+    ViewBag.Title = "My Stock";
+    ViewBag.Module = "Products Stock";
+}
+<div class="content-wrapper">
+    <div class="card">
+        <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+            <div class="bg-gradient-pinkHeader shadow-primary border-radius-lg pt-3 d-flex justify-content-between row">
+                <h2 class="text-white text-capitalize ps-3 title_margin col-md-6"><b>Products Stock</b></h2>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-12">
+                    <table id="Mybase-style2" class="table table-striped">
+                        <thead class=" text-center" style="background-color: #e6a1ba;">
+                            <tr>
+                                <th>
+                                    @Html.DisplayName("Product")
+                                </th>
+                                <th>
+                                    @Html.DisplayName("Allocated Stock")
+                                </th>
+                                <th>
+                                    @Html.DisplayName("Used Stock")
+                                </th>
+                                <th>
+                                    @Html.DisplayName("Available Stock")
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody class=" text-center">
+                            @if (Convert.ToInt32(TempData["ViewRight"]) == 1)
+                            {
+                                foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.ProductName)
+                                        </td>
+                                        <td> @Html.DisplayFor(modelItem => item.TotalStockAllocated)</td>
+                                        <td> @Html.DisplayFor(modelItem => item.TotalStockUsed)</td>
+                                        <td> @Html.DisplayFor(modelItem => item.AvailableStock)</td>
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td colspan="4">You have no rights to view data</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function getExportFileName() {
+        var filename = "Products_Wise_Stock_Data"
+        return filename;
+    }
+    function MainTitle() {
+        var mainTitle = "Products Wise Stock Data "
+        return mainTitle;
+    }
+    function SubTitle() {
+        var subTitle = "@ViewBag.Subtitle"
+        return subTitle;
+    }
+</script>

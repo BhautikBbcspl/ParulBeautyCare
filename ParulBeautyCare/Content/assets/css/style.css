@@ -25754,13 +25754,12 @@ dl {
 }
 
     .modal .modal-dialog .modal-content .modal-header {
-        padding: 25px 26px;
+        padding: 15px 20px 5px 20px;
     }
 
         .modal .modal-dialog .modal-content .modal-header .close {
             border: none;
             box-shadow: none;
-            background: transparent;
         }
 
             .modal .modal-dialog .modal-content .modal-header .close span {
@@ -25770,7 +25769,7 @@ dl {
             }
 
     .modal .modal-dialog .modal-content .modal-body {
-        padding: 35px 26px;
+        padding: 15px 20px 20px 20px;
     }
 
     .modal .modal-dialog .modal-content .modal-footer {
@@ -33090,7 +33089,7 @@ div.tagsinput {
 
 /*Customized*/
 /*Customized*/
-#Mybase-style_wrapper .dt-buttons .dt-button, #Mybase-style2_wrapper .dt-buttons .dt-button {
+#Mybase-style_wrapper .dt-buttons .dt-button, #Mybase-style2_wrapper .dt-buttons .dt-button, #ReportTable_wrapper .dt-buttons .dt-button {
     position: absolute;
     right: 28px;
     font-size: 15px !important;
@@ -33101,7 +33100,7 @@ div.tagsinput {
     background: #d9e3f194 !important;
 }
 
-    #Mybase-style_wrapper .dt-buttons .dt-button:hover, #Mybase-style2_wrapper .dt-buttons .dt-button:hover {
+    #Mybase-style_wrapper .dt-buttons .dt-button:hover, #Mybase-style2_wrapper .dt-buttons .dt-button:hover, #ReportTable_wrapper .dt-buttons .dt-button:hover {
         background: #f2125e !important;
         color: #fff;
     }

@@ -185,6 +185,7 @@
     <Content Include="Content\assets\bootstrap\jquery-3.7.0.js" />
     <Content Include="Content\assets\bootstrap\jquery-3.7.0.min.js" />
     <Content Include="Content\assets\css\code.jquery.com_ui_1.12.1_themes_base_jquery-ui.css" />
+    <Content Include="Content\assets\css\Dashboard.css" />
     <Content Include="Content\assets\css\error.css" />
     <Content Include="Content\assets\css\html2pdf.bundle.min.js" />
     <Content Include="Content\assets\css\remixicon.css" />
@@ -196,12 +197,15 @@
     <Content Include="Content\assets\datatables\js\datatables.init.js" />
     <Content Include="Content\assets\datatables\js\jquery.dataTables.min.js" />
     <Content Include="Content\assets\datatables\js\jszip.min.js" />
+    <Content Include="Content\assets\fontawesome-free-6.4.0-web\css\all.css" />
     <Content Include="Content\assets\fontawesome-free-6.4.0-web\css\all.min.css" />
+    <Content Include="Content\assets\fontawesome-free-6.4.0-web\css\fontawesome.min.css" />
     <Content Include="Content\assets\js\calendar.js" />
     <Content Include="Content\assets\js\chartjs.min.js" />
     <Content Include="Content\assets\js\dashboard.js" />
     <Content Include="Content\assets\js\data-table.js" />
     <Content Include="Content\assets\js\dropify.js" />
+    <Content Include="Content\assets\js\exceljs.min.js" />
     <Content Include="Content\assets\js\hoverable-collapse.js" />
     <Content Include="Content\assets\js\jquery-ui.min.js" />
     <Content Include="Content\assets\js\jquery.cookie.js" />
@@ -214,6 +218,17 @@
     <Content Include="Content\assets\login_assets\css\material-dashboard.min.css" />
     <Content Include="Content\assets\login_assets\css\nucleo-icons.css" />
     <Content Include="Content\assets\login_assets\css\nucleo-svg.css" />
+    <Content Include="Content\assets\login_assets\fonts\feather.hxd" />
+    <Content Include="Content\assets\login_assets\fonts\feather.svg" />
+    <Content Include="Content\assets\login_assets\fonts\fontawesome-webfont-1.hxd" />
+    <Content Include="Content\assets\login_assets\fonts\fontawesome-webfont.hxd" />
+    <Content Include="Content\assets\login_assets\fonts\fontawesome-webfont.svg" />
+    <Content Include="Content\assets\login_assets\fonts\Linearicons-Free-1.hxd" />
+    <Content Include="Content\assets\login_assets\fonts\Linearicons-Free.hxd" />
+    <Content Include="Content\assets\login_assets\fonts\Linearicons-Free.svg" />
+    <Content Include="Content\assets\login_assets\fonts\themify-1.hxd" />
+    <Content Include="Content\assets\login_assets\fonts\themify.hxd" />
+    <Content Include="Content\assets\login_assets\fonts\themify.svg" />
     <Content Include="Content\assets\login_assets\js\core\bootstrap.min.js" />
     <Content Include="Content\assets\login_assets\js\core\popper.min.js" />
     <Content Include="Content\assets\login_assets\js\material-dashboard.mine63c.js" />
@@ -279,12 +294,34 @@
     <Content Include="Content\assets\css\vecteezy_modern-animation-illustration-of-beautiful-woman-with-long_19548359_595.mp4" />
     <Content Include="Content\assets\css\StyleSheet1.scss" />
     <Content Include="Images\Login.cshtml" />
+    <Content Include="Content\assets\login_assets\fonts\feather.ttf" />
+    <Content Include="Content\assets\login_assets\fonts\feather.woff" />
+    <Content Include="Content\assets\login_assets\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\assets\login_assets\fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\assets\login_assets\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Content\assets\login_assets\fonts\Linearicons-Free.ttf" />
+    <Content Include="Content\assets\login_assets\fonts\Linearicons-Free.woff" />
+    <Content Include="Content\assets\login_assets\fonts\Linearicons-Free.woff2" />
+    <Content Include="Content\assets\login_assets\fonts\themify.ttf" />
+    <Content Include="Content\assets\login_assets\fonts\themify.woff" />
     <Content Include="Content\assets\fontawesome-free-6.4.0-web\webfonts\fa-brands-400.ttf" />
+    <Content Include="Content\assets\fontawesome-free-6.4.0-web\webfonts\fa-brands-400.woff" />
     <Content Include="Content\assets\fontawesome-free-6.4.0-web\webfonts\fa-brands-400.woff2" />
+    <Content Include="Content\assets\fontawesome-free-6.4.0-web\webfonts\fa-duotone-900.ttf" />
+    <Content Include="Content\assets\fontawesome-free-6.4.0-web\webfonts\fa-duotone-900.woff" />
+    <Content Include="Content\assets\fontawesome-free-6.4.0-web\webfonts\fa-duotone-900.woff2" />
+    <Content Include="Content\assets\fontawesome-free-6.4.0-web\webfonts\fa-light-300.ttf" />
+    <Content Include="Content\assets\fontawesome-free-6.4.0-web\webfonts\fa-light-300.woff" />
+    <Content Include="Content\assets\fontawesome-free-6.4.0-web\webfonts\fa-light-300.woff2" />
     <Content Include="Content\assets\fontawesome-free-6.4.0-web\webfonts\fa-regular-400.ttf" />
+    <Content Include="Content\assets\fontawesome-free-6.4.0-web\webfonts\fa-regular-400.woff" />
     <Content Include="Content\assets\fontawesome-free-6.4.0-web\webfonts\fa-regular-400.woff2" />
     <Content Include="Content\assets\fontawesome-free-6.4.0-web\webfonts\fa-solid-900.ttf" />
+    <Content Include="Content\assets\fontawesome-free-6.4.0-web\webfonts\fa-solid-900.woff" />
     <Content Include="Content\assets\fontawesome-free-6.4.0-web\webfonts\fa-solid-900.woff2" />
+    <Content Include="Content\assets\fontawesome-free-6.4.0-web\webfonts\fa-thin-100.ttf" />
+    <Content Include="Content\assets\fontawesome-free-6.4.0-web\webfonts\fa-thin-100.woff" />
+    <Content Include="Content\assets\fontawesome-free-6.4.0-web\webfonts\fa-thin-100.woff2" />
     <Content Include="Content\assets\fontawesome-free-6.4.0-web\webfonts\fa-v4compatibility.ttf" />
     <Content Include="Content\assets\fontawesome-free-6.4.0-web\webfonts\fa-v4compatibility.woff2" />
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
@@ -311,13 +348,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Home\Dashboard.cshtml" />
     <Content Include="Views\BookingManagement\ViewBookings.cshtml" />
     <Content Include="Views\Home\Login.cshtml" />
     <Content Include="Views\Home\Profile.cshtml" />
-    <Content Include="Views\Home\Staffmgmt.cshtml" />
-    <Content Include="Views\Home\Stockmgmt.cshtml" />
-    <Content Include="Views\Home\Login1.cshtml" />
     <Content Include="Views\Shared\_Layout1.cshtml" />
     <Content Include="Views\UserManagement\AddModuleMaster.cshtml" />
     <Content Include="Views\UserManagement\AddPageMaster.cshtml" />
@@ -391,6 +424,16 @@
     <Content Include="Views\BookingManagement\OrderBook.cshtml" />
     <Content Include="Views\BookingManagement\AddAdvanceBooking.cshtml" />
     <Content Include="Views\BookingManagement\ViewAdvanceBooking.cshtml" />
+    <Content Include="Views\Invoice\ViewCompletedInvoice.cshtml" />
+    <Content Include="Views\StaffManagement\StaffDashboard.cshtml" />
+    <Content Include="Views\StaffManagement\ViewAllocatedService.cshtml" />
+    <Content Include="Views\StaffManagement\StaffMemberStock.cshtml" />
+    <Content Include="Views\StaffManagement\ViewCompletedService.cshtml" />
+    <Content Include="Views\StaffManagement\StaffIncentiveReport.cshtml" />
+    <Content Include="Views\Home\Dashboard.cshtml" />
+    <Content Include="Views\Home\CompletedServicesDetails.cshtml" />
+    <Content Include="Views\Home\AllServicesDetails.cshtml" />
+    <Content Include="Views\Home\AllocatedServicesDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

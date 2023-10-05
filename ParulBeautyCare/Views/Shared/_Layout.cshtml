@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Parul's Beauty Care</title>
     <link href="~/Content/assets/vendors/typicons.font/font/typicons.css" rel="stylesheet" />
-    <link href="~/Content/assets/fontawesome-free-6.4.0-web/css/all.min.css" rel="stylesheet" />
+    <link href="~/Content/assets/fontawesome-free-6.4.0-web/css/all.css" rel="stylesheet" />
+        <link href="~/Content/assets/fontawesome-free-6.4.0-web/css/fontawesome.min.css" rel="stylesheet" />
     <link href="~/Content/assets/vendors/css/vendor.bundle.base.css" rel="stylesheet" />
     <link href="~/Content/assets/vendors/select2/select2.min.css" rel="stylesheet" />
     <link href="~/Content/assets/vendors/select2-bootstrap-theme/select2-bootstrap.min.css" rel="stylesheet" />
@@ -25,7 +26,7 @@
     <link href="~/Content/assets/css/remixicon.css" rel="stylesheet" />
 
     <link href="~/Content/assets/bootstrap/flatpickr.min.css" rel="stylesheet" />
-    
+
     <script src="~/Content/assets/css/sweetalert.js"></script>
     <!--File Upload CSS-->
     <link rel="stylesheet" href="~/Content/assets/vendors/dropify/dropify.min.css">
@@ -91,7 +92,6 @@
 </head>
 <body>
     <div class="container-scroller">
-
         <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
             <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
                 <a class="navbar-brand brand-logo" href="index.html">
@@ -185,8 +185,6 @@
         </div>
     </div>
 
-
-
     <script src="~/Content/assets/js/jquery-ui.min.js"></script>
     <script src="~/Content/assets/vendors/js/vendor.bundle.base.js"></script>
     <script src="~/Content/assets/js/off-canvas.js"></script>
@@ -215,6 +213,7 @@
     <script src="~/Content/assets/js/data-table.js"></script>
     <script src="~/Content/assets/datatables/js/datatables.init.js"></script>
 
+    <script src="~/Content/assets/js/exceljs.min.js"></script>
     <script src="~/Content/assets/bootstrap/Custom.js"></script>
     <script src="~/Content/assets/bootstrap/flatpickr.js"></script>
 
@@ -222,7 +221,7 @@
     <script src="~/Content/assets/vendors/dropify/dropify.min.js"></script>
     <script src="~/Content/assets/js/dropify.js"></script>
     <!---->
-   
+
     @if (TempData["SweetAlert"] != null)
     {
         <script>

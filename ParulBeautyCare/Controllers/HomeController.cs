@@ -8,6 +8,7 @@ using Newtonsoft.Json;
 using ParulBeautyCare.GeneralClasses;
 using ParulBeautyCareDbClasses.DataModels;
 using ParulBeautyCareViewModel.ViewModel;
+using ParulBeautyCareViewModel.ViewModel.BookingMgmtViewModel;
 
 namespace ParulBeautyCare.Controllers
 {
@@ -70,7 +71,7 @@ namespace ParulBeautyCare.Controllers
                     var Staff = ApiCall.PostApi("LoginUserRtr", Newtonsoft.Json.JsonConvert.SerializeObject(lm));
                     lm = JsonConvert.DeserializeObject<LoginViewModel>(Staff);       
                     //LoginMaster um = db.LoginMasters.Where(x => x.UserName == lm.UserName && x.Password == lm.Password).FirstOrDefault();
-
+                   
                     HttpCookie LoginMaster = new HttpCookie("LoginMaster");
                     if (lm.UserName != null)
                     {
@@ -79,7 +80,14 @@ namespace ParulBeautyCare.Controllers
                         LoginMaster["CompanyCode"] = lm.LoginUserList.FirstOrDefault().Companycode.ToString();
                     }
                     Response.Cookies.Add(LoginMaster);
-                    return RedirectToAction("Dashboard", "Home");
+                    if (lm.LoginUserList.FirstOrDefault().RoleId.ToString() == "2")
+                    {
+                        return RedirectToAction("StaffDashboard", "StaffManagement");
+                    }
+                    else
+                    {
+                        return RedirectToAction("Dashboard", "Home");
+                    }
                 }
                 else
                 {
@@ -95,20 +103,68 @@ namespace ParulBeautyCare.Controllers
         }
         #endregion
 
-        #region => Demo Pages 
+        #region => Dashboard
         public ActionResult Dashboard()
         {
             try
             {
                 if (!User.Identity.IsAuthenticated)
                 {
-                    Response.Redirect("Home/Login");
-                   // FormsAuthentication.RedirectToLoginPage();
+                    return RedirectToAction("Login", "Home");
                 }
                 HttpCookie reqCookies = Request.Cookies["LoginMaster"];
                 if (reqCookies != null)
                 {
-                    return View();
+                    DashboardViewModel dm = new DashboardViewModel();
+
+                    DashboardCountViewModel dcm = new DashboardCountViewModel();
+                    dcm.Action = "Count";
+                    dcm.CompanyCode = LoggedUserDetails.CompanyCode;
+                    dcm.TodayDate = generalFunctions.getDate();
+                    var DashboardCountList = ApiCall.PostApi("DashboardCountRtr", Newtonsoft.Json.JsonConvert.SerializeObject(dcm));
+                    dcm = JsonConvert.DeserializeObject<DashboardCountViewModel>(DashboardCountList);
+                    dm.TotalCustomers = dcm.DashboardCountList.FirstOrDefault().TotalCustomers.ToString();
+                    dm.TotalStaff = dcm.DashboardCountList.FirstOrDefault().TotalStaff.ToString();
+                    dm.TodaysBookings = dcm.DashboardCountList.FirstOrDefault().TodaysBookings.ToString();
+                    dm.TodayAppointments = dcm.DashboardCountList.FirstOrDefault().TodayAppointments.ToString();
+
+                    DashboardWeeklyChartViewModel dwvm = new DashboardWeeklyChartViewModel();
+                    dwvm.Action = "lastWeekAppointment";
+                    dwvm.CompanyCode = LoggedUserDetails.CompanyCode;
+                    var DashboardPreviousWeekChartList = ApiCall.PostApi("DashboardWeeklyAppointmentChartRtr", Newtonsoft.Json.JsonConvert.SerializeObject(dwvm));
+                    dwvm = JsonConvert.DeserializeObject<DashboardWeeklyChartViewModel>(DashboardPreviousWeekChartList);
+                    dm.DashboardPreviousWeekAppointmentChartList = dwvm.DashboardWeeklyAppointmentChartList;
+
+                    dwvm.Action = "currentWeekAppointment";
+                    dwvm.CompanyCode = LoggedUserDetails.CompanyCode;
+                    var DashboardCurrentWeekChartList = ApiCall.PostApi("DashboardWeeklyAppointmentChartRtr", Newtonsoft.Json.JsonConvert.SerializeObject(dwvm));
+                    dwvm = JsonConvert.DeserializeObject<DashboardWeeklyChartViewModel>(DashboardCurrentWeekChartList);
+                    dm.DashboardCurrentWeekAppointmentChartList = dwvm.DashboardWeeklyAppointmentChartList;
+
+                    StaffServicesViewModel svm = new StaffServicesViewModel();
+                    svm.Action = "staffTodayServices";
+                    svm.CompanyCode = LoggedUserDetails.CompanyCode;
+                    svm.TodayDate = generalFunctions.getDate();
+                    var StaffServicesList = ApiCall.PostApi("DashboardstaffTodayServicesRtr", Newtonsoft.Json.JsonConvert.SerializeObject(svm));
+                    svm = JsonConvert.DeserializeObject<StaffServicesViewModel>(StaffServicesList);
+                    dm.StaffTodayServicesList = svm.StaffTodayServicesList;
+
+                    AppointmentsViewModel dvm = new AppointmentsViewModel();
+                    dvm.Action = "all";
+                    dvm.CompanyCode = LoggedUserDetails.CompanyCode;
+                    dvm.TodayDate = generalFunctions.getDate();
+                    var AppointmentsList = ApiCall.PostApi("DashboardAppointmentsRtr", Newtonsoft.Json.JsonConvert.SerializeObject(dvm));
+                    dvm = JsonConvert.DeserializeObject<AppointmentsViewModel>(AppointmentsList);
+                    dm.AppointmentsList = dvm.AppointmentsList;
+
+                    dvm.Action = "todayCompleted";
+                    dvm.CompanyCode = LoggedUserDetails.CompanyCode;
+                    dvm.TodayDate = generalFunctions.getDate();
+                    var CompletedAppointmentsList = ApiCall.PostApi("DashboardAppointmentsRtr", Newtonsoft.Json.JsonConvert.SerializeObject(dvm));
+                    dvm = JsonConvert.DeserializeObject<AppointmentsViewModel>(CompletedAppointmentsList);
+                    dm.CompletedAppointmentsList = dvm.AppointmentsList;
+
+                    return View(dm);
                 }
                 else
                 {
@@ -125,7 +181,71 @@ namespace ParulBeautyCare.Controllers
                 return RedirectToAction("Login", "Home");
             }
         }
-      
+
+        public ActionResult AllocatedServicesDetails(string id)
+        {
+            try
+            {
+                BookingDetailViewModel bvm = new BookingDetailViewModel();
+                bvm.CompanyCode = LoggedUserDetails.CompanyCode;
+                bvm.Action = "all";
+                var BookingDetailList = ApiCall.PostApi("BookingDetailRetrieve", Newtonsoft.Json.JsonConvert.SerializeObject(bvm));
+                bvm = JsonConvert.DeserializeObject<BookingDetailViewModel>(BookingDetailList);
+                List<PBBookingDetailRtr_Result> bdv = bvm.BookingDetailList.Where(x => x.AllocatedTo.ToString() == id && x.AppointmentDate == generalFunctions.dateconvert(generalFunctions.getDate())).ToList();
+
+                return PartialView("AllocatedServicesDetails", bdv);
+
+            }
+            catch (Exception ex)
+            {
+                Danger(ex.Message.ToString(), true);
+                return RedirectToAction("Dashboard", "Home");
+            }
+        }
+
+        public ActionResult CompletedServicesDetails(string id)
+        {
+            try
+            {
+                BookingDetailViewModel bvm = new BookingDetailViewModel();
+                bvm.BookingId = id;
+                bvm.CompanyCode = LoggedUserDetails.CompanyCode;
+                bvm.Action = "details";
+                var BookingDetailList = ApiCall.PostApi("BookingDetailRetrieve", Newtonsoft.Json.JsonConvert.SerializeObject(bvm));
+                bvm = JsonConvert.DeserializeObject<BookingDetailViewModel>(BookingDetailList);
+                List<PBBookingDetailRtr_Result> bdv = bvm.BookingDetailList;
+
+                return PartialView("CompletedServicesDetails", bdv);
+
+            }
+            catch (Exception ex)
+            {
+                Danger(ex.Message.ToString(), true);
+                return RedirectToAction("Dashboard", "Home");
+            }
+        }
+
+        public ActionResult AllServicesDetails(string id)
+        {
+            try
+            {
+                BookingDetailViewModel bvm = new BookingDetailViewModel();
+                bvm.BookingId = id;
+                bvm.CompanyCode = LoggedUserDetails.CompanyCode;
+                bvm.Action = "details";
+                var BookingDetailList = ApiCall.PostApi("BookingDetailRetrieve", Newtonsoft.Json.JsonConvert.SerializeObject(bvm));
+                bvm = JsonConvert.DeserializeObject<BookingDetailViewModel>(BookingDetailList);
+                List<PBBookingDetailRtr_Result> bdv = bvm.BookingDetailList;
+
+                return PartialView("AllServicesDetails", bdv);
+
+            }
+            catch (Exception ex)
+            {
+                Danger(ex.Message.ToString(), true);
+                return RedirectToAction("Dashboard", "Home");
+            }
+        }
         #endregion
 
         #region => Menu

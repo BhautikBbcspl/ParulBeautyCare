@@ -65,7 +65,7 @@
                     },
                     events: function (start, end, timezone, callback) {
                         $.ajax({
-                            url: '/BookingManagement/ViewBookingsCalander',
+                            url:  "@System.Configuration.ConfigurationManager.AppSettings["myKey"]" +"/BookingManagement/ViewBookingsCalander",
                             dataType: 'json',
                             success: function (data) {
 
