@@ -340,6 +340,7 @@ namespace ParulBeautyCareDbClasses.DataModels.ParulBeautyCareDatasetTableAdapter
             ((global::System.Data.SqlClient.SqlCommand)(this._commandCollection[2])).Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@FunctionDate", global::System.Data.SqlDbType.NVarChar, 50, global::System.Data.ParameterDirection.Input, 0, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             ((global::System.Data.SqlClient.SqlCommand)(this._commandCollection[2])).Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ReadyTime", global::System.Data.SqlDbType.NVarChar, 50, global::System.Data.ParameterDirection.Input, 0, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             ((global::System.Data.SqlClient.SqlCommand)(this._commandCollection[2])).Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Status", global::System.Data.SqlDbType.NVarChar, 50, global::System.Data.ParameterDirection.Input, 0, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            ((global::System.Data.SqlClient.SqlCommand)(this._commandCollection[2])).Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@AppointmentType", global::System.Data.SqlDbType.NVarChar, 50, global::System.Data.ParameterDirection.Input, 0, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             ((global::System.Data.SqlClient.SqlCommand)(this._commandCollection[2])).Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@action", global::System.Data.SqlDbType.NVarChar, 50, global::System.Data.ParameterDirection.Input, 0, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             ((global::System.Data.SqlClient.SqlCommand)(this._commandCollection[2])).Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@type", global::System.Data.SqlDbType.Structured, 2147483647, global::System.Data.ParameterDirection.Input, 0, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             ((global::System.Data.SqlClient.SqlCommand)(this._commandCollection[2])).Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@type1", global::System.Data.SqlDbType.Structured, 2147483647, global::System.Data.ParameterDirection.Input, 0, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
@@ -649,6 +650,7 @@ namespace ParulBeautyCareDbClasses.DataModels.ParulBeautyCareDatasetTableAdapter
                     string FunctionDate, 
                     string ReadyTime, 
                     string Status, 
+                    string AppointmentType, 
                     string action, 
                     object type, 
                     object type1) {
@@ -791,23 +793,29 @@ namespace ParulBeautyCareDbClasses.DataModels.ParulBeautyCareDatasetTableAdapter
             else {
                 command.Parameters[23].Value = ((string)(Status));
             }
-            if ((action == null)) {
+            if ((AppointmentType == null)) {
                 command.Parameters[24].Value = global::System.DBNull.Value;
             }
             else {
-                command.Parameters[24].Value = ((string)(action));
+                command.Parameters[24].Value = ((string)(AppointmentType));
             }
-            if ((type == null)) {
+            if ((action == null)) {
                 command.Parameters[25].Value = global::System.DBNull.Value;
             }
             else {
-                command.Parameters[25].Value = ((object)(type));
+                command.Parameters[25].Value = ((string)(action));
             }
-            if ((type1 == null)) {
+            if ((type == null)) {
                 command.Parameters[26].Value = global::System.DBNull.Value;
             }
             else {
-                command.Parameters[26].Value = ((object)(type1));
+                command.Parameters[26].Value = ((object)(type));
+            }
+            if ((type1 == null)) {
+                command.Parameters[27].Value = global::System.DBNull.Value;
+            }
+            else {
+                command.Parameters[27].Value = ((object)(type1));
             }
             global::System.Data.ConnectionState previousConnectionState = command.Connection.State;
             if (((command.Connection.State & global::System.Data.ConnectionState.Open) 

@@ -11,6 +11,8 @@ namespace ParulBeautyCareViewModel.ViewModel
     public class BookAppointmentViewModel
     {
         public int BookingId { get; set; }
+        public int BookingServiceId { get; set; }
+        public int count { get; set; }
         public int CustomerId { get; set; }
         public string Number { get; set; }
         public string Date { get; set; }
@@ -92,8 +94,10 @@ namespace ParulBeautyCareViewModel.ViewModel
         public string IntePackageServiceId { get; set; }
         public string CategoryId { get; set; }
         public string PackageId { get; set; }
+        public string count { get; set; }
+        public int BookAppID { get; set; }
+        public int BookServiceID { get; set; }
         [Required(ErrorMessage = "*")]
-
         public string TimeSlotId { get; set; }
         public string AppointmentDateTime { get; set; }
         public string NoOfSitting { get; set; }
@@ -101,6 +105,7 @@ namespace ParulBeautyCareViewModel.ViewModel
         public string DoneBy { get; set; }
         public string DoneDate { get; set; }
         public string Amount { get; set; }
+        public string DeleteStatus { get; set; }
         public string Discount { get; set; }
         public string Remark { get; set; }
         public string FinalAmount { get; set; }

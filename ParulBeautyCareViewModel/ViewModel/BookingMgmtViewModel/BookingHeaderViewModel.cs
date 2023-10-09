@@ -38,6 +38,8 @@ namespace ParulBeautyCareViewModel.ViewModel.BookingMgmtViewModel
         public string success { get; set; }
         public string message { get; set; }
         public string FromDate { get; set; }
+        public string NewToDate { get; set; }
+        public string NewFromDate { get; set; }
         public string ToDate { get; set; }
 
     }

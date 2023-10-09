@@ -28,5 +28,8 @@ namespace ParulBeautyCareDbClasses.DataModels
         public string CreateUser { get; set; }
         public string Remark { get; set; }
         public string CompanyCode { get; set; }
+        public Nullable<int> noofsitting { get; set; }
+        public string dayinterval { get; set; }
+        public string DeleteStatus { get; set; }
     }
 }

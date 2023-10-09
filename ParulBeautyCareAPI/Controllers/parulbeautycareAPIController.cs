@@ -1448,6 +1448,31 @@ namespace ParulBeautyCareAPI.Controllers
         }
         #endregion
 
+        #region==> Booking Services Delete
+        [HttpPost]
+        [Route("api/parulbeautycareAPI/BookingServiceDelete")]
+        public IHttpActionResult BookingServiceDelete([FromBody] BookAppointmentViewModel sm)
+        {
+            iNotifyLogger obj = new iNotifyLogger();
+            try
+            {
+                using (parulbeautycareEntities db = new parulbeautycareEntities())
+                {
+                    sm.Result = db.PBBookingServiceDelete(sm.BookingServiceId.ToString(), sm.SubCategoryId.ToString(), sm.Action).FirstOrDefault();
+                    var response = Request.CreateResponse(HttpStatusCode.OK, sm);
+                    sm.success = "true";
+                }
+            }
+            catch (Exception e)
+            {
+                sm.success = "false";
+                sm.Message = e.Message;
+                obj.LogMessage("APIController", "BookingServiceDelete", e.Message, iNotifyLogger.LogType.Exception);
+            }
+            return Json(sm);
+        }
+        #endregion
+
         #region ==> Booking Package Retrieve
         [HttpPost]
         [Route("api/parulbeautycareAPI/BookingPackageRetrieve")]
@@ -1482,7 +1507,7 @@ namespace ParulBeautyCareAPI.Controllers
             QueriesTableAdapter db1 = new QueriesTableAdapter();
             try
             {
-                mv.Result = db1.PBBookingInsert_new(mv.BookingId.ToString(),mv.AdvanceBookingId.ToString(), mv.CustomerId.ToString(), mv.ContactNo, mv.CustomerName, mv.DepartmentId, mv.Address, mv.FunctionDate, mv.CreateDate, mv.CreateUser, "", "", "", mv.Amount, "", "", mv.BookingAmount, "", "", mv.CompanyCode, mv.FunctionDate, mv.ReadyTime, "1", mv.Action, mv.mytable, mv.mytable1).ToString();
+                mv.Result = db1.PBBookingInsert_new(mv.BookingId.ToString(), mv.AdvanceBookingId.ToString(), mv.CustomerId.ToString(), mv.ContactNo, mv.CustomerName, mv.DepartmentId, mv.Address, mv.FunctionDate, mv.CreateDate, mv.CreateUser, "", "", "", mv.Amount, "", "", mv.BookingAmount, "", "", mv.CompanyCode, mv.FunctionDate, mv.ReadyTime, "1", mv.AppointmentType, mv.Action, mv.mytable, mv.mytable1).ToString();
                 var response = Request.CreateResponse(HttpStatusCode.OK, mv);
                 mv.success = "true";
             }

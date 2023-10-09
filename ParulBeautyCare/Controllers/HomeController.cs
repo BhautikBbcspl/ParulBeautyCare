@@ -46,15 +46,6 @@ namespace ParulBeautyCare.Controllers
             }
             return View();
         }
-        public ActionResult Login1()
-        {
-            HttpCookie reqCookies = Request.Cookies["LoginMaster"];
-            if (reqCookies != null)
-            {
-                return View();
-            }
-            return View();
-        }
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Login(LoginViewModel lm)

@@ -1,0 +1,206 @@
+﻿@model ParulBeautyCareViewModel.ViewModel.BookingMgmtViewModel.BookingHeaderViewModel
+@{
+    ViewBag.Title = "ViewBookedAppointment";
+    ViewBag.Module = "BookingManagement";
+}
+
+<div class="content-wrapper">
+    <div class="card">
+        <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+            <div class="bg-gradient-pinkHeader shadow-primary border-radius-lg pt-3 d-flex justify-content-between row">
+                <h2 class="text-white text-capitalize ps-3 title_margin col-md-6"><b>Bookings Record</b></h2>
+                <a class="dedcription-btn anc col-md-6" href="@Url.Action("BookAppointment", "BookingManagement")">
+                    <span class="name-descripeion"> <b> ADD BOOKING</b> </span>
+                    <div class="btn-icon brain">
+                        <i class="fas fa-plus"> </i>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="card-body">
+            @using (Html.BeginForm("ViewBookedAppointment", "BookingManagement", FormMethod.Post, new { @class = "forms-sample", autocomplete = "off" }))
+
+            {
+                @Html.AntiForgeryToken();
+                <div class="row form-group">
+
+                    <div class="col-sm-12 col-md-4 col-lg-3">
+                        <label class="col-form-label">From Date  @Html.ValidationMessageFor(m => m.FromDate, "", new { @class = "text-danger h3" })</label>
+                        <div class="input-group date">
+                            @Html.TextBoxFor(model => model.FromDate, new { @class = "form-control AdvanceDates", id = "FromDate", placeholder = "From Date", required = "required" })
+                            <div class="input-group-append d-flex">
+                                <span class="input-group-text datepicker-icon" id="FromDateIcon" style="color: #212529 !important; border: 1px solid #ced4da !important; ">
+                                    <i class="fa fa-calendar"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12 col-md-4 col-lg-3">
+                        <label class="col-form-label">To Date  @Html.ValidationMessageFor(m => m.ToDate, "", new { @class = "text-danger h3" })</label>
+
+                        <div class="input-group date">
+                            @Html.TextBoxFor(model => model.ToDate, new { @class = "form-control AdvanceDates", id = "ToDate", placeholder = "To Date", required = "required" })
+                            <div class="input-group-append d-flex">
+                                <span class="input-group-text datepicker-icon" id="ToDateIcon" style="color: #212529 !important; border: 1px solid #ced4da !important; ">
+                                    <i class="fa fa-calendar"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-4 col-lg-3">
+                        <label class="col-form-label"></label>
+                        <div class="input-group-append d-flex mt-2">
+                            <button type="submit" class="btn btn-primary mr-2 mt-3" value="@ViewBag.action">View</button>
+                        </div>
+                    </div>
+                </div>
+            }
+            <div class="row">
+                <div class="col-12">
+                    <div class="table-responsive">
+                        <table id="base-style" class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        @Html.DisplayName("Action")
+                                    </th>
+                                    <th>
+                                        @Html.DisplayName("Booking Code")
+                                    </th>
+                                    <th>
+                                        @Html.DisplayName("Department")
+                                    </th>
+                                    <th>
+                                        @Html.DisplayName("Customer Name")
+                                    </th>
+                                    <th>
+                                        @Html.DisplayName("Contact No")
+                                    </th>
+                                    <th>
+                                        @Html.DisplayName("Amount")
+                                    </th>
+                                    <th>
+                                        @Html.DisplayName("Function Date")
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Convert.ToInt32(TempData["ViewRight"]) == 1)
+                                {
+
+                                    foreach (var item in Model.BookingHeaderList)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @if (Convert.ToInt32(TempData["UpdateRight"]) == 1)
+                                                {
+                                                    @*<a href="@Url.Action("EditAdvanceBooking","BookingManagement",new { id = item.BookingId })" class="mx-3"><i class="fa fa-pencil"></i></a>*@
+
+                                                    <a href="#" class="mx-3 post-link" data-booking-id="@item.BookingId"><i class="fa fa-pencil"></i></a>
+                                                }
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.BookingCode)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.DepartmentName)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.CustomerName)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.ContactNo)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.TotalAmount)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.BDate)
+                                            </td>
+                                            @*<td>
+                                                    @if (Convert.ToInt32(TempData["UpdateRight"]) == 1)
+                                                    {
+                                                        <a href="#" class="mx-3 post-link" data-advance-booking-id="@item.AdvanceBookingId"><i class="fa fa-calendar-plus"></i></a>
+                                                    }
+                                                </td>*@
+                                        </tr>
+                                    }
+
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <td>You have no rights to view data</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+       function submitForm(BookingId) {
+    $.post({
+        url: '@Url.Action("EditBookAppointment", "BookingManagement")',
+        data: { id: 0, id1: BookingId},
+        success: function(data) {
+            window.location.href = '@Url.Action("EditBookAppointment", "BookingManagement")';
+        }
+    });
+}
+     @*$(document).ready(function () {
+
+         $('.post-link').click(function (e) {
+                debugger
+                e.preventDefault()
+             var BookingId = $(this).data('booking-id');
+            $.ajax({
+                 url: '@Url.Action("BookAppointment", "BookingManagement")',
+                type: 'POST',
+                data: { id: 0, id1: BookingId },
+                success: function (data) {
+                    debugger
+                  //window.location.href = '@Url.Action("BookAppointment", "BookingManagement")';
+                },
+                error: function (error) {
+                    window.location.href = '@Url.Action("ViewBookedAppointment", "BookingManagement")';
+                }
+            });
+        });*@
+
+
+  $(document).ready(function () {
+       $('.post-link').on('click', function (e) {
+        e.preventDefault();
+
+        var BookingId = $(this).data('booking-id');
+
+        var form = $('<form action="@Url.Action("EditBookAppointment", "BookingManagement")" method="post"></form>');
+        form.append($('<input type="hidden" name="id1" value="' + BookingId + '">'));
+        form.appendTo('body').submit();
+    });
+        $(".AdvanceDates").flatpickr({
+            dateFormat: "d-m-Y",
+            minDate: "today",
+            onClose: function (selectedDates, dateStr, instance) {
+                if (selectedDates.length > 0) {
+                    var selectedDate = selectedDates[0];
+                    $(".AdvanceDates").not(instance.element).flatpickr({
+                        dateFormat: "d-m-Y",
+                       // minDate: "today",
+                        minDate: selectedDate,
+                    });
+                }
+            }
+        });
+    });
+</script>

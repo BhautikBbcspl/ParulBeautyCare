@@ -3,6 +3,7 @@ using ParulBeautyCare.GeneralClasses;
 using ParulBeautyCareDbClasses.DataModels;
 using ParulBeautyCareViewModel.ViewModel;
 using ParulBeautyCareViewModel.ViewModel.BookingMgmtViewModel;
+using ParulBeautyCareViewModel.ViewModel.Master;
 using ParulBeautyCareViewModel.ViewModel.StaffMgmtViewModel;
 using ParulBeautyCareViewModel.ViewModel.StockMgmtViewModel;
 using System;
@@ -47,7 +48,14 @@ namespace ParulBeautyCare.Controllers
                     svm.TodayDate = generalFunctions.getDate();
                     var StaffServicesList = ApiCall.PostApi("StaffDashboardTodayServicesRtr", Newtonsoft.Json.JsonConvert.SerializeObject(svm));
                     svm = JsonConvert.DeserializeObject<StaffDashboardServicesViewModel>(StaffServicesList);
-                    dm.TodayWorks = svm.StaffDashboardTodayServicesList.FirstOrDefault().ServiceCount.ToString();
+                    if(svm.StaffDashboardTodayServicesList.Count > 0)
+                    {
+                        dm.TodayWorks = svm.StaffDashboardTodayServicesList.FirstOrDefault().ServiceCount.ToString();
+                    }
+                    else
+                    {
+                        dm.TodayWorks = "0";
+                    }
 
                     StaffAppointmentsViewModel dvm = new StaffAppointmentsViewModel();
                     dvm.Action = "all";
@@ -81,6 +89,66 @@ namespace ParulBeautyCare.Controllers
                 }
                 FormsAuthentication.SignOut();
                 return RedirectToAction("Login", "Home");
+            }
+        }
+
+        public ActionResult CompletedServicesDetails(string id)
+        {
+            try
+            {
+                StaffMasterViewModel mv = new StaffMasterViewModel();
+                mv.Action = "All";
+                mv.CompanyCode = LoggedUserDetails.CompanyCode;
+                var emplog = ApiCall.PostApi("StaffMasterRetrieve", Newtonsoft.Json.JsonConvert.SerializeObject(mv));
+                mv = JsonConvert.DeserializeObject<StaffMasterViewModel>(emplog);
+
+                var StaffMemberId = mv.StaffMasterList.Where(x => x.StaffCode == LoggedUserDetails.UserName).FirstOrDefault().StaffId.ToString();
+
+                BookingDetailViewModel bvm = new BookingDetailViewModel();
+                bvm.BookingId = id;
+                bvm.CompanyCode = LoggedUserDetails.CompanyCode;
+                bvm.Action = "details";
+                var BookingDetailList = ApiCall.PostApi("BookingDetailRetrieve", Newtonsoft.Json.JsonConvert.SerializeObject(bvm));
+                bvm = JsonConvert.DeserializeObject<BookingDetailViewModel>(BookingDetailList);
+                List<PBBookingDetailRtr_Result> bdv = bvm.BookingDetailList.Where(x=>x.AllocatedTo.ToString() ==StaffMemberId).ToList();
+
+                return PartialView("StaffCompletedServicesDetails", bdv);
+
+            }
+            catch (Exception ex)
+            {
+                Danger(ex.Message.ToString(), true);
+                return RedirectToAction("Dashboard", "Home");
+            }
+        }
+
+        public ActionResult AllServicesDetails(string id)
+        {
+            try
+            {
+                StaffMasterViewModel mv = new StaffMasterViewModel();
+                mv.Action = "All";
+                mv.CompanyCode = LoggedUserDetails.CompanyCode;
+                var emplog = ApiCall.PostApi("StaffMasterRetrieve", Newtonsoft.Json.JsonConvert.SerializeObject(mv));
+                mv = JsonConvert.DeserializeObject<StaffMasterViewModel>(emplog);
+
+                var StaffMemberId = mv.StaffMasterList.Where(x => x.StaffCode == LoggedUserDetails.UserName).FirstOrDefault().StaffId.ToString();
+
+                BookingDetailViewModel bvm = new BookingDetailViewModel();
+                bvm.BookingId = id;
+                bvm.CompanyCode = LoggedUserDetails.CompanyCode;
+                bvm.Action = "details";
+                var BookingDetailList = ApiCall.PostApi("BookingDetailRetrieve", Newtonsoft.Json.JsonConvert.SerializeObject(bvm));
+                bvm = JsonConvert.DeserializeObject<BookingDetailViewModel>(BookingDetailList);
+                List<PBBookingDetailRtr_Result> bdv = bvm.BookingDetailList.Where(x => x.AllocatedTo.ToString() == StaffMemberId).ToList(); 
+
+                return PartialView("StaffServicesDetails", bdv);
+
+            }
+            catch (Exception ex)
+            {
+                Danger(ex.Message.ToString(), true);
+                return RedirectToAction("Dashboard", "Home");
             }
         }
         #endregion

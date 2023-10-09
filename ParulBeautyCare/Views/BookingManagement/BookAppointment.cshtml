@@ -13,12 +13,17 @@
     }
 </style>
 <div class="content-wrapper" style="height:auto !important;">
-    <div class="row">
-        <div class="col-12 grid-margin">
+  
             <div class="card">
                 <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
-                    <div class="bg-gradient-pinkHeader shadow-primary border-radius-lg pt-4 d-flex justify-content-between">
-                        <h2 class="text-white text-capitalize ps-3 title_margin"><b>Book Appointment</b></h2>
+                    <div class="bg-gradient-pinkHeader shadow-primary border-radius-lg pt-3 d-flex justify-content-between row">
+                        <h2 class="text-white text-capitalize ps-3 title_margin col-md-6"><b>Book Appointment</b></h2>
+                        <a class="dedcription-btn anc col-md-6" href="@Url.Action("ViewBookedAppointment", "BookingManagement")">
+                            <span class="name-descripeion"> <b> VIEW BOOKINGS</b> </span>
+                            <div class="btn-icon brain">
+                                <i class="fas fa-plus"> </i>
+                            </div>
+                        </a>
                     </div>
                 </div>
                 @using (Html.BeginForm("AddBookAppointment", "BookingManagement", FormMethod.Post, new { @class = "forms-sample", autocomplete = "off" }))
@@ -358,15 +363,20 @@
                     </div>
                 }
             </div>
-        </div>
-    </div>
+       
 </div>
 
-<script>
 
-    // Appointment Check Calendar Script start
+<script>
     $(document).ready(function () {
-        var textInput = $("#txtAdvanceBookingId").val();
+        $('.selectDropdown').select2();
+        $("#datepickerIcon").click(function () {
+            $("#txtFunctionDate").click();
+        });
+        $("#timepickerIcon").click(function () {
+            $("#txtReadyTime").focus();
+        });
+         var textInput = $("#txtAdvanceBookingId").val();
         if (textInput != 0 || textInput == null) {
             document.getElementById("txtCustomerName").readOnly = true;
             document.getElementById("txtContactNo").readOnly = true;
@@ -390,18 +400,6 @@
         $("#txtFunctionDate").change(function () {
             var selectedDate = $("#txtFunctionDate").val(); // Get the selected date here
             BookingCalendar(selectedDate);
-        });
-    });
-    // Appointment Check Calendar Script End
-</script>
-<script>
-    $(document).ready(function () {
-        $('.selectDropdown').select2();
-        $("#datepickerIcon").click(function () {
-            $("#txtFunctionDate").click();
-        });
-        $("#timepickerIcon").click(function () {
-            $("#txtReadyTime").focus();
         });
     });
     function SetAppointmentType() {
@@ -574,7 +572,7 @@
 
     });
     function calculateTotal() {
-       
+       debugger
         var selectedValue = $("#AppointmentType").val();
         var total = parseFloat(amountFromViewBag);
         if (!isNaN(total)) {

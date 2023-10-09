@@ -33,11 +33,12 @@
                         @Html.HiddenFor(m => m.ReadyTime, new { id = "textReadyTime" })
                         @Html.HiddenFor(m => m.FunctionDate, new { id = "textfunctionDate" })
                         @Html.HiddenFor(m => m.AdvanceBookingId, new { id = "textAdvanceBookingId" })
+                        @Html.HiddenFor(m => m.AppointmentType, new { id = "textAppointmentType" })
                         @Html.HiddenFor(m => m.DepartmentId)
                         {
                             var jsonData = Newtonsoft.Json.JsonConvert.SerializeObject(Model.BookServicesTable, Newtonsoft.Json.Formatting.None);
 
-                        @Html.Hidden("bookServicesTableJson", jsonData)
+                            @Html.Hidden("bookServicesTableJson", jsonData)
                         }
                         @Html.AntiForgeryToken();
                         <div class="row">
@@ -74,6 +75,8 @@
                                                         @Html.DisplayFor(modelItem => Model.BookAppointmentTable[i].CategoryName)
                                                         @Html.HiddenFor(modelItem => Model.BookAppointmentTable[i].CategoryId)
                                                         @Html.HiddenFor(modelItem => Model.BookAppointmentTable[i].IntePackageServiceId)
+                                                        @Html.HiddenFor(modelItem => Model.BookAppointmentTable[i].count)
+
                                                     </td>
                                                     <td>
                                                         @Html.DisplayFor(modelItem => Model.BookAppointmentTable[i].SubCategoryName)

@@ -36,25 +36,25 @@ namespace ParulBeautyCare.Controllers
             mv1.Usercode = LoggedUserDetails.UserName;
             string url = generalFunctions.getCommon(Request.Url.AbsoluteUri);
             mv1.PageName = url;
-            var MenuRtr = ApiCall.PostApi("MenuRightsRtr", Newtonsoft.Json.JsonConvert.SerializeObject(mv1));
-            mv1 = JsonConvert.DeserializeObject<MenuRightsViewModel>(MenuRtr);
-            if (mv1.MenuRightsList.Count > 0)
-            {
-                //ViewBag.ViewRight = mv1.MenuRightsList.FirstOrDefault().ViewRight;
-                //ViewBag.InsertRight = mv1.MenuRightsList.FirstOrDefault().InsertRight;
-                //ViewBag.UpdateRight = mv1.MenuRightsList.FirstOrDefault().UpdateRight;
-                //ViewBag.DeleteRight = mv1.MenuRightsList.FirstOrDefault().DeleteRight;
-                TempData["ViewRight"] = mv1.MenuRightsList.FirstOrDefault().ViewRight;
-                TempData["InsertRight"] = mv1.MenuRightsList.FirstOrDefault().InsertRight;
-                TempData["UpdateRight"] = mv1.MenuRightsList.FirstOrDefault().UpdateRight;
-                TempData["DeleteRight"] = mv1.MenuRightsList.FirstOrDefault().DeleteRight;
-            }
-            else
-            {
-                var data = new { Message = "Sorry,You have no rights to access this page", Type = "error" };
-                TempData["SweetAlert"] = data;
-                return RedirectToAction("Dashboard", "Home");
-            }
+            //var MenuRtr = ApiCall.PostApi("MenuRightsRtr", Newtonsoft.Json.JsonConvert.SerializeObject(mv1));
+            //mv1 = JsonConvert.DeserializeObject<MenuRightsViewModel>(MenuRtr);
+            //if (mv1.MenuRightsList.Count > 0)
+            //{
+            //    //ViewBag.ViewRight = mv1.MenuRightsList.FirstOrDefault().ViewRight;
+            //    //ViewBag.InsertRight = mv1.MenuRightsList.FirstOrDefault().InsertRight;
+            //    //ViewBag.UpdateRight = mv1.MenuRightsList.FirstOrDefault().UpdateRight;
+            //    //ViewBag.DeleteRight = mv1.MenuRightsList.FirstOrDefault().DeleteRight;
+            //    TempData["ViewRight"] = mv1.MenuRightsList.FirstOrDefault().ViewRight;
+            //    TempData["InsertRight"] = mv1.MenuRightsList.FirstOrDefault().InsertRight;
+            //    TempData["UpdateRight"] = mv1.MenuRightsList.FirstOrDefault().UpdateRight;
+            //    TempData["DeleteRight"] = mv1.MenuRightsList.FirstOrDefault().DeleteRight;
+            //}
+            //else
+            //{
+            //    var data = new { Message = "Sorry,You have no rights to access this page", Type = "error" };
+            //    TempData["SweetAlert"] = data;
+            //    return RedirectToAction("Dashboard", "Home");
+            //}
 
             BookAppointmentViewModel mv = new BookAppointmentViewModel();
             mv.Action = "active";
@@ -147,7 +147,7 @@ namespace ParulBeautyCare.Controllers
             var DeptList = ApiCall.PostApi("DepartmentMasterRetrieve", Newtonsoft.Json.JsonConvert.SerializeObject(dm));
             dm = JsonConvert.DeserializeObject<DepartmentMasterViewModel>(DeptList);
             mv.DeptList = dm.DepartmentList;
-            if (id != null || id != 0)
+            if (id != 0)
             {
                 AdvanceBookingViewModel samv = new AdvanceBookingViewModel();
                 samv.Action = "Details";
@@ -178,11 +178,13 @@ namespace ParulBeautyCare.Controllers
             var TimeslotList = ApiCall.PostApi("TimeSlotMasterRetrieve", Newtonsoft.Json.JsonConvert.SerializeObject(tsv));
             tsv = JsonConvert.DeserializeObject<TimeSlotMasterViewModel>(TimeslotList);
             mv.TimeSlotMasterList = tsv.TimeSlotMasterList;
+            mv.count = 0;
             if (myDataList.Count > 0)
             {
                 foreach (var serviceResult in myDataList)
                 {
-
+                    int count = (mv.count + 1);
+                    mv.count = count;
                     string CategoryId = serviceResult.CategoryId.ToString();
                     string SubCategoryId = serviceResult.SubCategoryId.ToString();
                     int noOfSitting = Convert.ToInt32(serviceResult.NoOfSitting);
@@ -198,7 +200,8 @@ namespace ParulBeautyCare.Controllers
                         IntePackageServiceId = IntePackageServiceId,
                         CategoryId = CategoryId,
                         SubCategoryId = SubCategoryId,
-                        Remark = remark
+                        Remark = remark,
+                        count = count.ToString(),
                     });
                     for (int i = 0; i < noOfSitting; i++)
                     {
@@ -213,7 +216,8 @@ namespace ParulBeautyCare.Controllers
                             DayInterval = DayInterval,
                             Remark = remark,
                             NoOfSitting = noOfSitting.ToString(),
-                            TimeSlotMasterList = mv.TimeSlotMasterList
+                            TimeSlotMasterList = mv.TimeSlotMasterList,
+                            count = count.ToString(),
                         });
                     }
                 }
@@ -291,7 +295,7 @@ namespace ParulBeautyCare.Controllers
             List<BookAppointmentDetailViewModel> bookServicesList = JsonConvert.DeserializeObject<List<BookAppointmentDetailViewModel>>(jsonData);
             mv.BookServicesTable = bookServicesList;
             dt.Columns.AddRange(
-                     new DataColumn[11] {
+                     new DataColumn[12] {
                        new DataColumn("CategoryId", typeof(string)),
                          new DataColumn("IntePackageServiceId", typeof(string)) { AllowDBNull = true },
                           new DataColumn("SubCategoryId", typeof(string)),
@@ -302,7 +306,8 @@ namespace ParulBeautyCare.Controllers
                           new DataColumn("Discount", typeof(string)) { AllowDBNull = true },
                           new DataColumn("FinalAmount", typeof(string)){ AllowDBNull = true },
                           new DataColumn("Remark", typeof(string)) { AllowDBNull = true },
-                          new DataColumn("TimeSlotId", typeof(string)) { AllowDBNull = true }
+                          new DataColumn("TimeSlotId", typeof(string)) { AllowDBNull = true },
+                          new DataColumn("count", typeof(string)) { AllowDBNull = true }
                        });
             if (mv.BookAppointmentTable != null)
             {
@@ -319,16 +324,18 @@ namespace ParulBeautyCare.Controllers
                     string DoneBy = item.DoneBy;
                     string DoneDate = item.DoneDate;
                     string TimeSlotId = item.TimeSlotId;
-                    dt.Rows.Add(CategoryId, IntePSId, SubCategoryId, AppointmentDate, DoneBy, DoneDate, Amount, Discount, FinalAmount, Remark, TimeSlotId);
+                    string count = item.count;
+                    dt.Rows.Add(CategoryId, IntePSId, SubCategoryId, AppointmentDate, DoneBy, DoneDate, Amount, Discount, FinalAmount, Remark, TimeSlotId, count);
                 }
             }
             dt1.Columns.AddRange(
-                   new DataColumn[5] {
+                   new DataColumn[6] {
                        new DataColumn("CategoryId", typeof(string)),
                          new DataColumn("IntePackageServiceId", typeof(string)) { AllowDBNull = true },
                           new DataColumn("SubCategoryId", typeof(string)),
                           new DataColumn("Amount", typeof(string)) { AllowDBNull = true },
-                          new DataColumn("Remark", typeof(string)) { AllowDBNull = true }
+                          new DataColumn("Remark", typeof(string)) { AllowDBNull = true },
+                          new DataColumn("count", typeof(string)) { AllowDBNull = true }
                      });
             if (mv.BookServicesTable != null)
             {
@@ -339,7 +346,8 @@ namespace ParulBeautyCare.Controllers
                     string SubCategoryId = item.SubCategoryId.Trim();
                     string Amount = item.Amount;
                     string Remark = item.Remark;
-                    dt1.Rows.Add(CategoryId, IntePSId, SubCategoryId, Amount, Remark);
+                    string count = item.count;
+                    dt1.Rows.Add(CategoryId, IntePSId, SubCategoryId, Amount, Remark, count);
                 }
             }
             mv.mytable = dt;
@@ -399,7 +407,6 @@ namespace ParulBeautyCare.Controllers
             {
                 foreach (var serviceResult in sm.PBIntePackageServiceList)
                 {
-
                     BookAppointmentDetailViewModel PackageDetail = new BookAppointmentDetailViewModel
                     {
                         NoOfSitting = serviceResult.NoOfSitting.ToString(),
@@ -425,19 +432,14 @@ namespace ParulBeautyCare.Controllers
                     //        PackageId = PackageId2.ToString(),
                     //        SubCategoryId = ServiceId,
                     //        SubCategoryName = SubCategoryName
-
                     //    };
-
                     // Add the current PackageDetail to the sittingList
-
                     sittingList.Add(PackageDetail);
                     // }
                 }
             }
             var obj = new { sittingList, amount = ViewBag.Amount };
-
             return Json(obj, JsonRequestBehavior.AllowGet);
-
         }
         public ActionResult AppointmentChecking(string selectedDate)
         {
@@ -550,7 +552,7 @@ namespace ParulBeautyCare.Controllers
                     BookingHeaderViewModel bvm = new BookingHeaderViewModel();
                     var BookingList = ApiCall.PostApi("BookingHeaderRetrieve", Newtonsoft.Json.JsonConvert.SerializeObject(model));
                     bvm = JsonConvert.DeserializeObject<BookingHeaderViewModel>(BookingList);
-                    model.BookingHeaderList = bvm.BookingHeaderList;
+                    model.BookingHeaderList = bvm.BookingHeaderList.Where(x => x.Status.ToString() != "4").ToList();
 
                     if (model.BookingHeaderList != null)
                     {
@@ -1563,6 +1565,380 @@ namespace ParulBeautyCare.Controllers
                 return View("BookAppointment", mv);
             }
             return View("ViewAdvanceBooking");
+        }
+        #endregion
+
+
+        #region==> Booking Edit
+        [HttpPost]
+        public ActionResult EditBookAppointment(int? id1)
+        {
+            BookAppointmentViewModel mv = new BookAppointmentViewModel();
+            mv.Action = "active";
+            mv.CompanyCode = LoggedUserDetails.CompanyCode;
+            mv.DayInterval = null;
+            mv.NoOfSitting = null;
+            mv.IntePackageServiceId = 0;
+
+            CategoryMasterViewModel pm = new CategoryMasterViewModel();
+            pm.Action = mv.Action;
+            pm.CompanyCode = mv.CompanyCode;
+            var CategoryList = ApiCall.PostApi("CategoryMasterRetrieve", Newtonsoft.Json.JsonConvert.SerializeObject(mv));
+            pm = JsonConvert.DeserializeObject<CategoryMasterViewModel>(CategoryList);
+            SubCategoryMasterViewModel sm = new SubCategoryMasterViewModel();
+            sm.Action = mv.Action;
+            sm.CompanyCode = mv.CompanyCode;
+            var SubCategoryList = ApiCall.PostApi("SubCategoryMasterRetrieve", Newtonsoft.Json.JsonConvert.SerializeObject(mv));
+            sm = JsonConvert.DeserializeObject<SubCategoryMasterViewModel>(SubCategoryList);
+            mv.CategoryList = pm.CategoryMasterList.Select(c => new BookCategoryViewModel()
+            {
+                CategoryId = c.CategoryId.ToString(),
+                CategoryName = c.CategoryName
+            }).ToList();
+            mv.SubCategoryList = sm.SubCategoryMasterList.Select(c => new BookSubCategoryViewModel()
+            {
+                SubCategoryId = c.SubCategoryId.ToString(),
+                SubCategoryName = c.SubCategoryName
+            }).ToList();
+            DepartmentMasterViewModel dm = new DepartmentMasterViewModel();
+            dm.Action = mv.Action;
+            dm.CompanyCode = mv.CompanyCode;
+            var DeptList = ApiCall.PostApi("DepartmentMasterRetrieve", Newtonsoft.Json.JsonConvert.SerializeObject(dm));
+            dm = JsonConvert.DeserializeObject<DepartmentMasterViewModel>(DeptList);
+            mv.DeptList = dm.DepartmentList;
+            if (id1 != 0 && id1 != null)
+            {
+                BookingHeaderViewModel mv1 = new BookingHeaderViewModel();
+                mv1.Action = "Details";
+                mv1.BookingId = id1.ToString();
+                mv1.CompanyCode = LoggedUserDetails.CompanyCode;
+                var BookingHeaderList = ApiCall.PostApi("BookingHeaderRetrieve", Newtonsoft.Json.JsonConvert.SerializeObject(mv1));
+                mv1 = JsonConvert.DeserializeObject<BookingHeaderViewModel>(BookingHeaderList);
+                mv.BookingId = mv1.BookingHeaderList.FirstOrDefault().BookingId;
+                mv.CustomerName = mv1.BookingHeaderList.FirstOrDefault().CustomerName;
+                mv.ContactNo = mv1.BookingHeaderList.FirstOrDefault().ContactNo;
+                mv.Address = mv1.BookingHeaderList.FirstOrDefault().Address;
+                mv.FunctionDate = mv1.BookingHeaderList.FirstOrDefault().BDate;
+                mv.DepartmentId = mv1.BookingHeaderList.FirstOrDefault().DepartmentId.ToString();
+                mv.BookingAmount = mv1.BookingHeaderList.FirstOrDefault().TotalAmount.ToString();
+                ViewBag.Amount = mv1.BookingHeaderList.FirstOrDefault().TotalAmount.ToString();
+                mv.ReadyTime = mv1.BookingHeaderList.FirstOrDefault().ReadyTime;
+                mv.AppointmentType = mv1.BookingHeaderList.FirstOrDefault().AppointmentType;
+
+                // BookingDetailViewModel bd = new BookingDetailViewModel();
+
+                //COMMENT ON 02-10-2023
+                //bd.BookingId = mv.BookingId.ToString();
+                //var BookingDetailsList = ApiCall.PostApi("BookingDetailRetrieve", Newtonsoft.Json.JsonConvert.SerializeObject(bd));
+                //bd = JsonConvert.DeserializeObject<BookingDetailViewModel>(BookingDetailsList);
+                //List<BookAppointmentDetailViewModel> sittingList = new List<BookAppointmentDetailViewModel>();
+                //if (bd.BookingDetailList.Count > 0)
+                //{
+                //    foreach (var serviceResult in bd.BookingDetailList)
+                //    {
+
+                //        BookAppointmentDetailViewModel PackageDetail = new BookAppointmentDetailViewModel
+                //        {
+                //            NoOfSitting = serviceResult.NoOfSitting.ToString(),
+                //            IntePackageServiceId = serviceResult.IntePackageServiceId.ToString(),
+                //            CategoryId = serviceResult.CategoryId.ToString(),
+                //            CategoryName = serviceResult.CategoryName.ToString(),
+                //            DayInterval = serviceResult.DayInterval,
+                //            SubCategoryId = serviceResult.SubCategoryId.ToString(),
+                //            SubCategoryName = serviceResult.SubCategoryName.ToString(),
+                //            Amount = serviceResult.Amount.ToString(),
+                //            Remark = "",
+                //            BookAppID = serviceResult.BookingId,
+                //        };
+                //        //for (int i = 0; i < noOfSitting; i++)
+                //        //{
+                //        //    BookAppointmentDetailViewModel PackageDetail = new BookAppointmentDetailViewModel
+                //        //    {
+                //        //        IntePackageServiceId = IntePackageServiceId,
+                //        //        CategoryId = CategoryId,
+                //        //        CategoryName = CategoryName,
+                //        //        DayInterval = DayInterval,
+                //        //        PackageId = PackageId2.ToString(),
+                //        //        SubCategoryId = ServiceId,
+                //        //        SubCategoryName = SubCategoryName
+
+                //        //    };
+
+                //        // Add the current PackageDetail to the sittingList
+
+                //        sittingList.Add(PackageDetail);
+                //        // }
+                //    }
+                //}
+                ////var data = new List<object>
+                ////    {
+                ////        new
+                ////        {
+                ////         CategoryId = bd.BookingDetailList.FirstOrDefault().CategoryId,
+                ////        CategoryName = bd.BookingDetailList.FirstOrDefault().CategoryName,
+                ////        SubCategoryId = bd.BookingDetailList.FirstOrDefault().SubCategoryId,
+                ////        SubCategoryName = bd.BookingDetailList.FirstOrDefault().SubCategoryName,
+                ////        NoOfSitting = bd.BookingDetailList.FirstOrDefault().NoOfSitting,
+                ////        DayInterval = bd.BookingDetailList.FirstOrDefault().DayInterval,
+                ////        Remark = bd.BookingDetailList.FirstOrDefault().Remark,
+                ////        IntePackageServiceId = bd.BookingDetailList.FirstOrDefault().IntePackageServiceId
+                ////        }
+                ////    };
+                ////string jsonString = JsonConvert.SerializeObject(data);
+                ////ViewBag.JsonData = jsonString;
+                ////[{ "CategoryId":"31","CategoryName":"Extra Ready","SubCategoryId":"328","SubCategoryName":"BASIC","NoOfSitting":"1","DayInterval":"1","Remark":"","IntePackageServiceId":0}] 
+
+                ////END COMMENT 02-10-2023
+            }
+            return View(mv);
+        }
+        [HttpPost]
+        public ActionResult UpdateBookAppointment(BookAppointmentViewModel mv)
+        {
+            DataTable dt = new DataTable();
+            DataTable dt1 = new DataTable();
+            string jsonData = Request.Form["bookServicesTableJson"];
+            List<BookAppointmentDetailViewModel> bookServicesList = JsonConvert.DeserializeObject<List<BookAppointmentDetailViewModel>>(jsonData);
+            mv.BookServicesTable = bookServicesList;
+            dt.Columns.AddRange(
+                     new DataColumn[11] {
+                       new DataColumn("CategoryId", typeof(string)),
+                         new DataColumn("IntePackageServiceId", typeof(string)) { AllowDBNull = true },
+                          new DataColumn("SubCategoryId", typeof(string)),
+                          new DataColumn("AppointmentDate", typeof(string)),
+                          new DataColumn("DoneBy", typeof(string)) { AllowDBNull = true },
+                          new DataColumn("DoneDate", typeof(string)) { AllowDBNull = true },
+                          new DataColumn("Amount", typeof(string)){ AllowDBNull = true },
+                          new DataColumn("Discount", typeof(string)) { AllowDBNull = true },
+                          new DataColumn("FinalAmount", typeof(string)){ AllowDBNull = true },
+                          new DataColumn("Remark", typeof(string)) { AllowDBNull = true },
+                          new DataColumn("TimeSlotId", typeof(string)) { AllowDBNull = true }
+                       });
+            if (mv.BookAppointmentTable != null)
+            {
+                foreach (BookAppointmentDetailViewModel item in mv.BookAppointmentTable)
+                {
+                    string CategoryId = item.CategoryId.Trim();
+                    string IntePSId = item.IntePackageServiceId;
+                    string SubCategoryId = item.SubCategoryId.Trim();
+                    string AppointmentDate = generalFunctions.dateconvert(item.AppointmentDateTime.Trim());
+                    string Amount = item.Amount;
+                    string Discount = item.Discount;
+                    string FinalAmount = item.FinalAmount;
+                    string Remark = item.Remark;
+                    string DoneBy = item.DoneBy;
+                    string DoneDate = item.DoneDate;
+                    string TimeSlotId = item.TimeSlotId;
+                    dt.Rows.Add(CategoryId, IntePSId, SubCategoryId, AppointmentDate, DoneBy, DoneDate, Amount, Discount, FinalAmount, Remark, TimeSlotId);
+                }
+            }
+            dt1.Columns.AddRange(
+                   new DataColumn[5] {
+                       new DataColumn("CategoryId", typeof(string)),
+                         new DataColumn("IntePackageServiceId", typeof(string)) { AllowDBNull = true },
+                          new DataColumn("SubCategoryId", typeof(string)),
+                          new DataColumn("Amount", typeof(string)) { AllowDBNull = true },
+                          new DataColumn("Remark", typeof(string)) { AllowDBNull = true }
+                     });
+            if (mv.BookServicesTable != null)
+            {
+                foreach (BookAppointmentDetailViewModel item in mv.BookServicesTable)
+                {
+                    string CategoryId = item.CategoryId.Trim();
+                    string IntePSId = item.IntePackageServiceId;
+                    string SubCategoryId = item.SubCategoryId.Trim();
+                    string Amount = item.Amount;
+                    string Remark = item.Remark;
+                    dt1.Rows.Add(CategoryId, IntePSId, SubCategoryId, Amount, Remark);
+                }
+            }
+            mv.mytable = dt;
+            mv.mytable1 = dt1;
+            mv.CompanyCode = LoggedUserDetails.CompanyCode;
+            mv.CreateDate = generalFunctions.getTimeZoneDatetimedb();
+            mv.CreateUser = LoggedUserDetails.UserName;
+            mv.FunctionDate = generalFunctions.dateconvert(mv.FunctionDate);
+            mv.Action = "Insert";
+            if (dt.Rows.Count > 0 && dt1.Rows.Count > 0)
+            {
+                var AttLog = ApiCall.PostApi("BookingAppointmentInsUpd", Newtonsoft.Json.JsonConvert.SerializeObject(mv));
+                mv = JsonConvert.DeserializeObject<BookAppointmentViewModel>(AttLog);
+                string msg = mv.Result;
+                bool containsOnlyNumbers = Regex.IsMatch(msg, "^[0-9]+$");
+                if (containsOnlyNumbers)
+                {
+                    var data = new { Message = "Appointment Booked Successfully", Type = "success" };
+                    TempData["SweetAlert"] = data;
+                    return RedirectToAction("OrderBook", "BookingManagement", new { msg = msg });
+                }
+                else
+                {
+                    return View("AddBookAppointment", mv);
+                }
+            }
+            else
+            {
+                var data = new { Message = "Please try Again", Type = "error" };
+                TempData["SweetAlert"] = data;
+                return View("AddBookAppointment", mv);
+            }
+        }
+
+        public ActionResult ViewBookedAppointment()
+        {
+            //Rights checking
+            if (!User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Login", "Home");
+            }
+            MenuRightsViewModel mv1 = new MenuRightsViewModel();
+            mv1.Usercode = LoggedUserDetails.UserName;
+            string url = generalFunctions.getCommon(Request.Url.AbsoluteUri);
+            mv1.PageName = url;
+            var MenuRtr = ApiCall.PostApi("MenuRightsRtr", Newtonsoft.Json.JsonConvert.SerializeObject(mv1));
+            mv1 = JsonConvert.DeserializeObject<MenuRightsViewModel>(MenuRtr);
+            if (mv1.MenuRightsList.Count > 0)
+            {
+                TempData["ViewRight"] = mv1.MenuRightsList.FirstOrDefault().ViewRight;
+                TempData["InsertRight"] = mv1.MenuRightsList.FirstOrDefault().InsertRight;
+                TempData["UpdateRight"] = mv1.MenuRightsList.FirstOrDefault().UpdateRight;
+                TempData["DeleteRight"] = mv1.MenuRightsList.FirstOrDefault().DeleteRight;
+            }
+            else
+            {
+                var data = new { Message = "Sorry,You have no rights to access this page", Type = "error" };
+                TempData["SweetAlert"] = data;
+                return RedirectToAction("Dashboard", "Home");
+            }
+            BookingHeaderViewModel mv = new BookingHeaderViewModel();
+            mv.Action = "Pending";
+            if (mv.FromDate == null)
+            {
+                mv.NewFromDate = generalFunctions.getDate();
+                mv.FromDate = generalFunctions.dateconvert(generalFunctions.getDate());
+            }
+            else
+            {
+                mv.NewFromDate = generalFunctions.dateconvert(mv.FromDate);
+            }
+            if (mv.ToDate == null)
+            {
+                mv.NewToDate = generalFunctions.getDate();
+                mv.ToDate = generalFunctions.dateconvert(generalFunctions.getDate());
+            }
+            else
+            {
+                mv.NewToDate = generalFunctions.dateconvert(mv.ToDate);
+            }
+
+            var BookingList = ApiCall.PostApi("BookingHeaderRetrieve", Newtonsoft.Json.JsonConvert.SerializeObject(mv));
+            mv = JsonConvert.DeserializeObject<BookingHeaderViewModel>(BookingList);
+            return View(mv);
+        }
+        [HttpPost]
+        public ActionResult ViewBookedAppointment(BookingHeaderViewModel mv)
+        {
+            //Rights checking
+            if (!User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Login", "Home");
+            }
+            MenuRightsViewModel mv1 = new MenuRightsViewModel();
+            mv1.Usercode = LoggedUserDetails.UserName;
+            string url = generalFunctions.getCommon(Request.Url.AbsoluteUri);
+            mv1.PageName = url;
+            var MenuRtr = ApiCall.PostApi("MenuRightsRtr", Newtonsoft.Json.JsonConvert.SerializeObject(mv1));
+            mv1 = JsonConvert.DeserializeObject<MenuRightsViewModel>(MenuRtr);
+            //if (mv1.MenuRightsList.Count > 0)
+            //{
+            //    //ViewBag.ViewRight = mv1.MenuRightsList.FirstOrDefault().ViewRight;
+            //    //ViewBag.InsertRight = mv1.MenuRightsList.FirstOrDefault().InsertRight;
+            //    //ViewBag.UpdateRight = mv1.MenuRightsList.FirstOrDefault().UpdateRight;
+            //    //ViewBag.DeleteRight = mv1.MenuRightsList.FirstOrDefault().DeleteRight;
+            //    //TempData["ViewRight"] = mv1.MenuRightsList.FirstOrDefault().ViewRight;
+            //    //TempData["InsertRight"] = mv1.MenuRightsList.FirstOrDefault().InsertRight;
+            //    //TempData["UpdateRight"] = mv1.MenuRightsList.FirstOrDefault().UpdateRight;
+            //    //TempData["DeleteRight"] = mv1.MenuRightsList.FirstOrDefault().DeleteRight;
+            //}
+            //else
+            //{
+            //    var data = new { Message = "Sorry,You have no rights to access this page", Type = "error" };
+            //    TempData["SweetAlert"] = data;
+            //    return RedirectToAction("Dashboard", "Home");
+            //}
+            TempData["ViewRight"] = 1;
+            TempData["InsertRight"] = 1;
+            TempData["UpdateRight"] = 1;
+            TempData["DeleteRight"] = 1;
+            mv.Action = "Pending";
+            if (mv.FromDate == null)
+            {
+                mv.NewFromDate = generalFunctions.getDate();
+                mv.FromDate = generalFunctions.dateconvert(generalFunctions.getDate());
+            }
+            else
+            {
+                mv.NewFromDate = generalFunctions.dateconvert(mv.FromDate);
+            }
+            if (mv.ToDate == null)
+            {
+                mv.NewToDate = generalFunctions.getDate();
+                mv.ToDate = generalFunctions.dateconvert(generalFunctions.getDate());
+            }
+            else
+            {
+                mv.NewToDate = generalFunctions.dateconvert(mv.ToDate);
+            }
+
+            var BookingList = ApiCall.PostApi("BookingHeaderRetrieve", Newtonsoft.Json.JsonConvert.SerializeObject(mv));
+            mv = JsonConvert.DeserializeObject<BookingHeaderViewModel>(BookingList);
+            return View(mv);
+        }
+
+        public ActionResult GetBookedAppointmentDetails(int BookAppId)
+        {
+            BookingServicesViewModel bd = new BookingServicesViewModel();
+            bd.BookingId = BookAppId.ToString();
+            bd.Action = "Getdetails";
+            bd.CompanyCode = LoggedUserDetails.CompanyCode;
+            var BookingDetailsList = ApiCall.PostApi("BookingServicesRetrieve", Newtonsoft.Json.JsonConvert.SerializeObject(bd));
+            bd = JsonConvert.DeserializeObject<BookingServicesViewModel>(BookingDetailsList);
+            List<BookAppointmentDetailViewModel> sittingList = new List<BookAppointmentDetailViewModel>();
+            if (bd.BookingServicesList.Count > 0)
+            {
+                foreach (var serviceResult in bd.BookingServicesList)
+                {
+                    BookAppointmentDetailViewModel PackageDetail = new BookAppointmentDetailViewModel
+                    {
+                        NoOfSitting = serviceResult.noofsitting.ToString(),
+                        IntePackageServiceId = serviceResult.IntePackageServiceId.ToString(),
+                        CategoryId = serviceResult.CategoryId.ToString(),
+                        CategoryName = serviceResult.CategoryName.ToString(),
+                        DayInterval = serviceResult.dayinterval,
+                        SubCategoryId = serviceResult.SubCategoryId.ToString(),
+                        SubCategoryName = serviceResult.SubCategoryName.ToString(),
+                        Amount = serviceResult.Amount.ToString(),
+                        Remark = "",
+                        BookAppID = Convert.ToInt32(serviceResult.BookingId),
+                        BookServiceID = serviceResult.BookingServiceId,
+                        DeleteStatus = serviceResult.DeleteStatus,
+                    };
+                    sittingList.Add(PackageDetail);
+                }
+            }
+            var obj = new { sittingList };
+            return Json(obj, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult DeleteBookedService(int id, int id1)
+        {
+            BookAppointmentViewModel bd = new BookAppointmentViewModel();
+            bd.Action = "delete";
+            bd.BookingServiceId = id;
+            bd.SubCategoryId = id1;
+            var BookingServiceList = ApiCall.PostApi("BookingServiceDelete", Newtonsoft.Json.JsonConvert.SerializeObject(bd));
+            bd = JsonConvert.DeserializeObject<BookAppointmentViewModel>(BookingServiceList);
+            return Json(bd.Result, JsonRequestBehavior.AllowGet);
         }
         #endregion
     }

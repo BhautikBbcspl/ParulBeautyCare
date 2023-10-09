@@ -160,15 +160,15 @@
 
 <script>
      function AllServices(id) {
-        $.get("@Url.Action("AllServicesDetails", "Home")/" + id,
+        $.get("@Url.Action("AllServicesDetails", "StaffManagement")/" + id,
             function (data) {
                 $('.AllServicesModalBody').html(data);
-                $("#AllServicesModal").modal("show");
+                $("#AllServicesModal").modal("show");   
             });
      }
 
     function CompletedServices(id) {
-        $.get("@Url.Action("CompletedServicesDetails", "Home")/" + id,
+        $.get("@Url.Action("CompletedServicesDetails", "StaffManagement")/" + id,
             function (data) {
                 $('.CompletedServicesModalBody').html(data);
                 $("#CompletedServicesModal").modal("show");
