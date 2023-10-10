@@ -1758,7 +1758,7 @@ namespace ParulBeautyCareAPI.Controllers
             {
                 using (parulbeautycareEntities db = new parulbeautycareEntities())
                 {
-                    sm.result = db.PBBillingDetailInsert(sm.BillingDetailId, sm.BookingId,sm.Action).FirstOrDefault();
+                    sm.result = db.PBBillingDetailInsert(sm.BillingDetailId,sm.BillingId, sm.BookingId,sm.Action).FirstOrDefault();
                     var response = Request.CreateResponse(HttpStatusCode.OK, sm);
                     sm.success = "true";
                 }
@@ -1796,6 +1796,7 @@ namespace ParulBeautyCareAPI.Controllers
             return Json(inm);
         }
 
+        #region==> Invoice Insert Update
         [HttpPost]
         [Route("api/parulbeautycareAPI/InvoiceInsUpd")]
         public IHttpActionResult InvoiceInsUpd(InvoiceDetailViewModel inm)
@@ -1840,7 +1841,7 @@ namespace ParulBeautyCareAPI.Controllers
                     }
                     else
                     {
-                        inm.result = hsb.PBBillingInsertUpdate(inm.BillId, "", "", "", inm.BillCode, "", "", "", "", "", "", "", inm.UpdateDate, inm.UpdateUser, inm.BaseAmount != null ? inm.BaseAmount.ToString() : null, inm.DiscountPerc != null ? inm.DiscountPerc.ToString() : null, inm.Discount != null ? inm.Discount.ToString() : null, inm.GSTPerc != null ? inm.GSTPerc.ToString() : null, inm.GSTAmount != null ? inm.GSTAmount.ToString() : null, inm.FinalAmount != null ? inm.FinalAmount.ToString() : null, "", inm.Action, dt).ToString();
+                        inm.result = hsb.PBBillingInsertUpdate(inm.BillId, inm.BookingId, "", "", inm.BillCode, "", "", "", "", "", "", "", inm.UpdateDate, inm.UpdateUser, inm.BaseAmount != null ? inm.BaseAmount.ToString() : null, inm.DiscountPerc != null ? inm.DiscountPerc.ToString() : null, inm.Discount != null ? inm.Discount.ToString() : null, inm.GSTPerc != null ? inm.GSTPerc.ToString() : null, inm.GSTAmount != null ? inm.GSTAmount.ToString() : null, inm.FinalAmount != null ? inm.FinalAmount.ToString() : null, "", inm.Action, dt).ToString();
                         var response = Request.CreateResponse(HttpStatusCode.OK, inm);
                         inm.success = "true";
                     }
@@ -1854,6 +1855,7 @@ namespace ParulBeautyCareAPI.Controllers
             }
             return Json(inm);
         }
+        #endregion
 
         [HttpPost]
         [Route("api/parulbeautycareAPI/InvoiceReport")]

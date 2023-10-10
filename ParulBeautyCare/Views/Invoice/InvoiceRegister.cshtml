@@ -126,7 +126,7 @@
                                     <td> @Html.DisplayFor(modelItem => item.DepartmentName)</td>
                                     <td> @Html.DisplayFor(modelItem => item.CustomerName)</td>
                                     <td> @Html.DisplayFor(modelItem => item.ContactNo)</td>
-                                    <td> @Html.DisplayFor(modelItem => item.FinalAmount)</td>
+                                    <td> @Html.DisplayFor(modelItem => item.BillAmountWithGST)</td>
                                 </tr>
                                 }
                             </tbody>
@@ -273,13 +273,13 @@
                     </div>
                     <hr />
                     <div class="container-fluid d-flex justify-content-between InfoDiv">
-                        <div class="col-lg-6 col-md-6 col-sm-6 justify-content-center d-flex">
-                            <img id="logoImage" src="~/Images/pb_logo.png" width="420" height="140">
+                        <div class="col-lg-6 col-md-6 col-sm-6 d-flex">
+                            <img id="logoImage" src="~/Images/pb_logo.png" width="350" height="140">
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-6 px-2">
                             <p class="d-flex"><i class="fa-solid fa-location-dot fa-xl mx-2 mt-3"></i><span id="Address">A-201,Nilkanth Residency, B/s. Patcon House,<br />Nr. Siddhi Vinayak Temple, 80 Feet Road,<br />Anand - 388001</span></p>
-                            <p><i class="fa-brands fa-square-whatsapp fa-xl mx-2"></i><span>96242 51323 - 98257 17517</span></p>
-                            <p><i class="fa-brands fa-square-instagram fa-xl mx-2"></i><span>paruls_bridal</span> <i class="fa-brands fa-square-facebook fa-xl mx-2"></i><span>parul's beauty care</span></p>
+                            <p><i class="fab fa-whatsapp fa-xl mx-2"></i><span>96242 51323 - 98257 17517</span></p>
+                            <p><i class="fab fa-instagram fa-xl mx-2"></i><span>paruls_bridal</span> <i class="fab fa-facebook fa-xl mx-2"></i><span>parul's beauty care</span></p>
                             <p><i class="fa-solid fa-envelope fa-xl mx-2"></i><span>paruls.beautycare@gmail.com</span></p>
                             <p><span><b>GST Number : </b></span><span id="gstNo"></span></p>
                         </div>
@@ -462,14 +462,14 @@
 
         $('#CGSTPerc').text('(' + gstPerc + '%) :');
         $('#SGSTPerc').text('(' + gstPerc + '%) :');
-        $('#CGST').text(CGST);
-        $('#SGST').text(SGST);
-        $('#GSTAmount').val(gstAmt); // Store In Table
+        $('#CGST').text(CGST.toFixed(2));
+        $('#SGST').text(SGST.toFixed(2));
+        $('#GSTAmount').val(gstAmt.toFixed(2)); // Store In Table
 
         $('#discountPerc').text(discount + '%'); // Store In Table
-        $('#discount').text(discountAmount); // Store In Table
-        $('#finaltotal').text(FinalTotal); // Store In Table
-        // $('#paidAmount').text(payAMt); // Store In Table
+        $('#discount').text(discountAmount.toFixed(2)); // Store In Table
+        $('#finaltotal').text(FinalTotal.toFixed(2)); // Store In Table
+        // $('#paidAmount').text(payAMt.toFixed(2)); // Store In Table
     }
 
     function updateTotalBasedOnDiscount() {
@@ -488,14 +488,14 @@
 
         $('#CGSTPerc').text('(' + gstPerc + '%) :');
         $('#SGSTPerc').text('(' + gstPerc + '%) :');
-        $('#CGST').text(CGST);
-        $('#SGST').text(SGST);
-        $('#GSTAmount').val(gstAmt); // Store In Table
+        $('#CGST').text(CGST.toFixed(2));
+        $('#SGST').text(SGST.toFixed(2));
+        $('#GSTAmount').val(gstAmt.toFixed(2)); // Store In Table
 
-        $('#discountPerc').text(discount); // Store In Table
-        $('#discount').text(discount); // Store In Table
-        $('#finaltotal').text(FinalTotal); // Store In Table
-        // $('#paidAmount').text(payAMt); // Store In Table
+        $('#discountPerc').text(discount.toFixed(2)); // Store In Table
+        $('#discount').text(discount.toFixed(2)); // Store In Table
+        $('#finaltotal').text(FinalTotal.toFixed(2)); // Store In Table
+        // $('#paidAmount').text(payAMt.toFixed(2)); // Store In Table
     }
 
     function updateFinalTotal() {
@@ -503,7 +503,6 @@
         var BaseAmt = parseInt($('#BaseAmt').text());
         var discount = parseInt($('#Discount').val() || 0);
         // var payAMt = parseInt($('#PayAmount').val() || 0);
-
 
         var total = BaseAmt - discount;
         var gstAmt = (total * gst / 100);
@@ -515,14 +514,14 @@
 
         $('#CGSTPerc').text('(' + gstPerc + '%) :');
         $('#SGSTPerc').text('(' + gstPerc + '%) :');
-        $('#CGST').text(CGST);
-        $('#SGST').text(SGST);
-        $('#GSTAmount').val(gstAmt); // Store In Table
+        $('#CGST').text(CGST.toFixed(2));
+        $('#SGST').text(SGST.toFixed(2));
+        $('#GSTAmount').val(gstAmt.toFixed(2)); // Store In Table
 
-        $('#discountPerc').text(discount); // Store In Table
-        $('#discount').text(discount); // Store In Table
-        $('#finaltotal').text(FinalTotal); // Store In Table
-        // $('#paidAmount').text(payAMt); // Store In Table
+        $('#discountPerc').text(discount.toFixed(2)); // Store In Table
+        $('#discount').text(discount.toFixed(2)); // Store In Table
+        $('#finaltotal').text(FinalTotal.toFixed(2));  // Store In Table
+        // $('#paidAmount').text(payAMt.toFixed(2)); // Store In Table
     }
 
     function getRowJson2($row) {
@@ -541,7 +540,6 @@
     }
 
     function billTableDataFill() {
-        debugger
         var $firstTableRows = $('#Maintable tbody tr');
         var $secondTableBody = $('#billTable tbody');
         var totalAmount = 0;
@@ -549,12 +547,19 @@
         $secondTableBody.find('.newRecords').remove();
         var totalOldRecords = $('.oldRecord').length;
         $firstTableRows.each(function () {
-            debugger
             var $row = $(this);
             var rowData = getRowJson2($row);
+            var hasNewOneClass = $row.hasClass('newOne'); // Check if the current row has class .newOne
+
             if (rowData) {
                 totalOldRecords += 1;
-                var newRow = '<tr class="newRecords">' +
+                var newRowClass = 'newRecords'; // Default class
+
+                // If the current row has class .newOne, add the newOne class to the new row
+                if (hasNewOneClass) {
+                    newRowClass += ' newOne';
+                }
+                var newRow = '<tr class="' + newRowClass + '">' +
                     '<td hidden></td>' +
                     '<td hidden></td>' +
                     '<td hidden>' + rowData.BillingDetailId + '</td>' +
@@ -571,9 +576,10 @@
         });
 
         var HeaderAmt = parseInt($('#BookingHeaderAmt').val());
-
-        var $billTableRows = $('#billTable TBODY .newRecords');
+        var $billTableRows = $('#billTable TBODY .newOne');
         $billTableRows.each(function () {
+
+            debugger
             var $row = $(this);
             var amount = parseInt($row.find('td:nth-child(9)').text()); // Get the text content of the 6th column (Total Amount)
 
@@ -582,6 +588,8 @@
             }
         });
         totalAmount = HeaderAmt + NewAmount;
+        totalAmount = totalAmount.toFixed(2);
+        debugger
         $('#BaseAmt').text(totalAmount);
         $('#grandtotal').text(totalAmount);
 
@@ -719,15 +727,31 @@
         try {
             const BillingDetailId = rowJson.BillingDetailId;
             const BillingHeaderId = $("#BillId").val();
+            const BookingId = $("#BookingId").val();
             var url = "@System.Configuration.ConfigurationManager.AppSettings["myKey"]" + "/Invoice/DeleteBillingDetail";
             $.ajax({
                 url: url,
-                data: { BillingDetailId: BillingDetailId, BillingHeaderId: BillingHeaderId },
+                data: { BillingDetailId: BillingDetailId, BillingHeaderId: BillingHeaderId, BookingId: BookingId },
                 type: "POST",
                 dataType: "json",
                 success: function (response)
                 {
                     GetDetailData(response.BookingId);
+
+                    debugger
+                    var $billTableRows = $('#billTable TBODY .oldRecord');
+                    var NewAmount = 0;
+                    $billTableRows.each(function () {
+                        var $row = $(this);
+                        debugger
+                        var amount = parseInt($row.find('td:nth-child(9)').text()); // Get the text content of the 6th column (Total Amount)
+
+                        if (!isNaN(amount)) {
+                            NewAmount += amount; // Accumulate the amount for each row
+                        }
+                    });
+                    NewAmount = NewAmount.toFixed(2);
+                    $('#BookingHeaderAmt').val(NewAmount);
                 },
                 error: function (error) {
                     SweetAlert(error.Message, error.Type);
@@ -740,6 +764,7 @@
     }
 
     function GetDetailData(_BookingHeaderId) {
+        debugger
         $.ajax({
             url: "@System.Configuration.ConfigurationManager.AppSettings["myKey"]" + "/Invoice/BillingDetailRTR",
             data: { BookingHeaderId: _BookingHeaderId },
@@ -865,7 +890,7 @@
                     var customerName = item.CustomerName;
                     var contactNo = item.ContactNo;
                     var Address = item.Address;
-                    var BookingHeaderAmt = item.FinalAmount;
+                    var BookingHeaderAmt = item.BillAmount;
                     var AdvancePaidAmt = item.AdvanceBookingCharge;
 
                     $('#DeptId').val(departmentId);
@@ -976,6 +1001,7 @@
         $("#InvoiceForm").each(function () {
             var Value = {};
 
+            Value.BookingId = $("#BookingId").val();
             Value.BillId = $("#BillId").val();
             Value.BillCode = $("#BillingCode").val();
             Value.GSTPerc = $("#GSTPerc").val();

@@ -239,6 +239,30 @@ namespace ParulBeautyCare.Controllers
         #region==> Invoice Edit (Bhautik)
         public ActionResult ViewCompletedInvoice()
         {
+            if (!User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Login", "Home");
+            }
+            MenuRightsViewModel mv1 = new MenuRightsViewModel();
+            mv1.Usercode = LoggedUserDetails.UserName;
+            string url = generalFunctions.getCommon(Request.Url.AbsoluteUri);
+            mv1.PageName = url;
+            var MenuRtr = ApiCall.PostApi("MenuRightsRtr", Newtonsoft.Json.JsonConvert.SerializeObject(mv1));
+            mv1 = JsonConvert.DeserializeObject<MenuRightsViewModel>(MenuRtr);
+            if (mv1.MenuRightsList.Count > 0)
+            {
+                TempData["ViewRight"] = mv1.MenuRightsList.FirstOrDefault().ViewRight;
+                TempData["InsertRight"] = mv1.MenuRightsList.FirstOrDefault().InsertRight;
+                TempData["UpdateRight"] = mv1.MenuRightsList.FirstOrDefault().UpdateRight;
+                TempData["DeleteRight"] = mv1.MenuRightsList.FirstOrDefault().DeleteRight;
+            }
+            else
+            {
+                var data = new { Message = "Sorry,You have no rights to access this page", Type = "error" };
+                TempData["SweetAlert"] = data;
+                return RedirectToAction("Dashboard", "Home");
+            }
+
             InvoiceDetailViewModel invm = new InvoiceDetailViewModel();
             invm.CompanyCode = LoggedUserDetails.CompanyCode;
             invm.Action = "active";
@@ -287,6 +311,7 @@ namespace ParulBeautyCare.Controllers
                 foreach (var TextboxItem in BillingHeaderData)
                 {
                    
+                    idvm.BookingId = TextboxItem.BookingId;
                     idvm.BillId = TextboxItem.BillId;
                     idvm.BillCode = TextboxItem.BillCode;
                     idvm.GSTPerc = TextboxItem.GSTPerc;
@@ -376,7 +401,7 @@ namespace ParulBeautyCare.Controllers
             idvm.CompanyCode = LoggedUserDetails.CompanyCode;
             var billingHeaderlist = ApiCall.PostApi("BillingRetrieve", Newtonsoft.Json.JsonConvert.SerializeObject(idvm));
             idvm = JsonConvert.DeserializeObject<InvoiceDetailViewModel>(billingHeaderlist);
-            List<PBBillingRetrieve_Result> bhdt = idvm.BillRtr;
+            List<PBBillingRetrieve_Result> bhdt = idvm.BillRtr.Where(x => x.BookingId.ToString() == BookingHeaderId).ToList();
 
             BookingServicesViewModel bvm = new BookingServicesViewModel();
             bvm.BookingId = BookingHeaderId;
@@ -406,11 +431,13 @@ namespace ParulBeautyCare.Controllers
 
         #region==> When click on (-)button delete row from table in Billing Detail
         [HttpPost]
-        public ActionResult DeleteBillingDetail(string BillingDetailId,string BillingHeaderId)
+        public ActionResult DeleteBillingDetail(string BillingDetailId,string BillingHeaderId,string BookingId)
         {
             BillDetailViewModel bdvm = new BillDetailViewModel();
             bdvm.Action = "delete";
             bdvm.BillingDetailId = BillingDetailId;
+            bdvm.BillingId = BillingHeaderId;
+            bdvm.BookingId = BookingId;
             var billDetaillist = ApiCall.PostApi("BillingDetailInsUpd", Newtonsoft.Json.JsonConvert.SerializeObject(bdvm));
             bdvm = JsonConvert.DeserializeObject<BillDetailViewModel>(billDetaillist);
 

@@ -43,5 +43,7 @@ namespace ParulBeautyCareDbClasses.DataModels
         public string CreateDate { get; set; }
         public string CreateUser { get; set; }
         public string AppointmentType { get; set; }
+        public Nullable<decimal> BillAmount { get; set; }
+        public Nullable<decimal> BillAmountWithGST { get; set; }
     }
 }

@@ -2068,23 +2068,6 @@ namespace ParulBeautyCareDbClasses.DataModels
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PBStaffDashboardTodayServicesRtr_Result>("PBStaffDashboardTodayServicesRtr", todayDateParameter, staffUserCodeParameter, actionParameter, companycodeParameter);
         }
     
-        public virtual ObjectResult<string> PBBillingDetailInsert(string billingDetailId, string bookingId, string action)
-        {
-            var billingDetailIdParameter = billingDetailId != null ?
-                new ObjectParameter("BillingDetailId", billingDetailId) :
-                new ObjectParameter("BillingDetailId", typeof(string));
-    
-            var bookingIdParameter = bookingId != null ?
-                new ObjectParameter("BookingId", bookingId) :
-                new ObjectParameter("BookingId", typeof(string));
-    
-            var actionParameter = action != null ?
-                new ObjectParameter("action", action) :
-                new ObjectParameter("action", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("PBBillingDetailInsert", billingDetailIdParameter, bookingIdParameter, actionParameter);
-        }
-    
         public virtual ObjectResult<PBBillingDetailRetrieve_Result> PBBillingDetailRetrieve(string action, string bookingHeaderId)
         {
             var actionParameter = action != null ?
@@ -2310,31 +2293,6 @@ namespace ParulBeautyCareDbClasses.DataModels
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PBBookingDetailRtr_Result>("PBBookingDetailRtr", bookingIdParameter, actionParameter, companycodeParameter, staffUserCodeParameter);
         }
     
-        public virtual ObjectResult<PBBookingHeaderRtr_Result> PBBookingHeaderRtr(string bookingId, string fromDate, string toDate, string action, string companycode)
-        {
-            var bookingIdParameter = bookingId != null ?
-                new ObjectParameter("BookingId", bookingId) :
-                new ObjectParameter("BookingId", typeof(string));
-    
-            var fromDateParameter = fromDate != null ?
-                new ObjectParameter("FromDate", fromDate) :
-                new ObjectParameter("FromDate", typeof(string));
-    
-            var toDateParameter = toDate != null ?
-                new ObjectParameter("ToDate", toDate) :
-                new ObjectParameter("ToDate", typeof(string));
-    
-            var actionParameter = action != null ?
-                new ObjectParameter("action", action) :
-                new ObjectParameter("action", typeof(string));
-    
-            var companycodeParameter = companycode != null ?
-                new ObjectParameter("companycode", companycode) :
-                new ObjectParameter("companycode", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PBBookingHeaderRtr_Result>("PBBookingHeaderRtr", bookingIdParameter, fromDateParameter, toDateParameter, actionParameter, companycodeParameter);
-        }
-    
         public virtual int PBBookingInsert_new(string bookingId, string advanceBookingId, string customerId, string customerNo, string customerName, string departmentId, string address, string bookDate, string createDate, string createUser, string updateDate, string updateUser, string noOfPerson, string totalAmount, string discountPerc, string totalDiscount, string finalAmount, string advanceBookingCharge, string paidAmount, string companyCode, string functionDate, string readyTime, string status, string appointmentType, string action)
         {
             var bookingIdParameter = bookingId != null ?
@@ -2472,6 +2430,52 @@ namespace ParulBeautyCareDbClasses.DataModels
                 new ObjectParameter("companycode", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PBBookingServicesRtr_Result>("PBBookingServicesRtr", bookingIdParameter, actionParameter, companycodeParameter);
+        }
+    
+        public virtual ObjectResult<PBBookingHeaderRtr_Result> PBBookingHeaderRtr(string bookingId, string fromDate, string toDate, string action, string companycode)
+        {
+            var bookingIdParameter = bookingId != null ?
+                new ObjectParameter("BookingId", bookingId) :
+                new ObjectParameter("BookingId", typeof(string));
+    
+            var fromDateParameter = fromDate != null ?
+                new ObjectParameter("FromDate", fromDate) :
+                new ObjectParameter("FromDate", typeof(string));
+    
+            var toDateParameter = toDate != null ?
+                new ObjectParameter("ToDate", toDate) :
+                new ObjectParameter("ToDate", typeof(string));
+    
+            var actionParameter = action != null ?
+                new ObjectParameter("action", action) :
+                new ObjectParameter("action", typeof(string));
+    
+            var companycodeParameter = companycode != null ?
+                new ObjectParameter("companycode", companycode) :
+                new ObjectParameter("companycode", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PBBookingHeaderRtr_Result>("PBBookingHeaderRtr", bookingIdParameter, fromDateParameter, toDateParameter, actionParameter, companycodeParameter);
+        }
+    
+        public virtual ObjectResult<string> PBBillingDetailInsert(string billingDetailId, string billId, string bookingId, string action)
+        {
+            var billingDetailIdParameter = billingDetailId != null ?
+                new ObjectParameter("BillingDetailId", billingDetailId) :
+                new ObjectParameter("BillingDetailId", typeof(string));
+    
+            var billIdParameter = billId != null ?
+                new ObjectParameter("BillId", billId) :
+                new ObjectParameter("BillId", typeof(string));
+    
+            var bookingIdParameter = bookingId != null ?
+                new ObjectParameter("BookingId", bookingId) :
+                new ObjectParameter("BookingId", typeof(string));
+    
+            var actionParameter = action != null ?
+                new ObjectParameter("action", action) :
+                new ObjectParameter("action", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("PBBillingDetailInsert", billingDetailIdParameter, billIdParameter, bookingIdParameter, actionParameter);
         }
     }
 }

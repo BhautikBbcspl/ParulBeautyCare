@@ -275,11 +275,18 @@ namespace ParulBeautyCare.Controllers
                 spvm.VendorList = vnd.VendorList;
                 //
 
+                //GST Master List Bind
+                GSTMasterViewModel gvm = new GSTMasterViewModel();
+                var GSTList = ApiCall.PostApi("GSTMasterRtr", Newtonsoft.Json.JsonConvert.SerializeObject(spvm));
+                gvm = JsonConvert.DeserializeObject<GSTMasterViewModel>(GSTList);
+                spvm.GSTMasterList = gvm.GSTMasterList;
+
                 spvm.PurchaseId = spvm.StockPurchaseList.FirstOrDefault().PurchaseId.ToString();
                 spvm.PurchaseDate = generalFunctions.ShortDateConvert(spvm.StockPurchaseList.FirstOrDefault().PurchaseDate.ToString());
                 spvm.MfgDate = generalFunctions.ShortDateConvert(spvm.StockPurchaseList.FirstOrDefault().MfgDate.ToString());
                 spvm.ExpDate = generalFunctions.ShortDateConvert(spvm.StockPurchaseList.FirstOrDefault().ExpDate.ToString());
                 spvm.Quantity = spvm.StockPurchaseList.FirstOrDefault().Quantity.ToString();
+                spvm.Price = spvm.StockPurchaseList.FirstOrDefault().Price.ToString();
                 spvm.VendorId = spvm.StockPurchaseList.FirstOrDefault().VendorId.ToString();
                 spvm.ProductId = spvm.StockPurchaseList.FirstOrDefault().ProductId.ToString();
                 spvm.DepartmentId = spvm.StockPurchaseList.FirstOrDefault().DepartmentId.ToString();
@@ -287,6 +294,7 @@ namespace ParulBeautyCare.Controllers
                 spvm.CreateDate = spvm.StockPurchaseList.FirstOrDefault().CreateDate.ToString();
                 spvm.CreateUser = spvm.StockPurchaseList.FirstOrDefault().CreateUser.ToString();
                 spvm.ProductTypeId = spvm.StockPurchaseList.FirstOrDefault().ProductTypeId.ToString();
+                spvm.GSTId = spvm.StockPurchaseList.FirstOrDefault().GSTId.ToString();
 
                 ViewBag.action = "Update";
                 spvm.Action = "Update";

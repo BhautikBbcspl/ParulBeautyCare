@@ -101,7 +101,7 @@
                                     </label>
 
                                     <div class="input-group input-group-outline mb-3">
-                                        @Html.DropDownListFor(m => m.ProductId, new SelectList(Model.ProductList, "ProductId", "ProductName"), "Select Product",
+                                        @Html.DropDownListFor(m => m.ProductId, new SelectList(Model.ProdListfromPurchaseMaster, "ProductId", "ProductName"), "Select Product",
                                             new Dictionary<string, object>() {
                                                        {"id","ddlProdId"},
                                                        { "class","form-control form-select js-example-basic-single w-100"},
